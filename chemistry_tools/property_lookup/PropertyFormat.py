@@ -31,6 +31,12 @@ def equals(string):
 
 
 def scientific(string):
+	"""
+	TODO: Finish
+	:param string:
+	:return:
+	"""
+	return string
 	import re
 	try:
 		magnitude = re.findall("X10.[0-9]+", string)[0].replace("X10", '').replace("-", "−")

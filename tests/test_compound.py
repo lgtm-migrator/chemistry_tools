@@ -106,50 +106,103 @@ def test_identifiers(c1):
 
 def test_properties_types(c1):
     assert isinstance(c1.molecular_mass, Decimal)
-    assert c1.molecular_mass == Decimal('78.11')
     assert isinstance(c1.molecular_weight, Decimal)
+    assert isinstance(c1.iupac_name, text_types)
+    assert isinstance(c1.systematic_name, text_types)
+    assert isinstance(c1.xlogp, Decimal)
+    assert isinstance(c1.exact_mass, Decimal)
+    assert isinstance(c1.monoisotopic_mass, Decimal)
+    assert isinstance(c1.tpsa, (int, Decimal))
+    assert isinstance(c1.complexity, Decimal)
+    assert isinstance(c1.h_bond_donor_count, Decimal)
+    assert isinstance(c1.h_bond_acceptor_count, Decimal)
+    assert isinstance(c1.rotatable_bond_count, Decimal)
+    assert isinstance(c1.heavy_atom_count, Decimal)
+    assert isinstance(c1.isotope_atom_count, Decimal)
+    assert isinstance(c1.atom_stereo_count, int)
+    assert isinstance(c1.defined_atom_stereo_count, Decimal)
+    assert isinstance(c1.undefined_atom_stereo_count, Decimal)
+    assert isinstance(c1.bond_stereo_count, int)
+    assert isinstance(c1.defined_bond_stereo_count, Decimal)
+    assert isinstance(c1.undefined_bond_stereo_count, Decimal)
+    assert isinstance(c1.covalent_unit_count, Decimal)
+    assert isinstance(c1.fingerprint, text_types)
+    assert isinstance(c1.hill_formula, text_types)
+    assert isinstance(c1.is_canonicalized, bool)
+    assert isinstance(c1.boiling_point, Decimal)
+    assert isinstance(c1.color, str)
+    assert isinstance(c1.density, str)
+    assert isinstance(c1.specific_gravity, str)
+    #assert isinstance(c1.dissociation_constant, )
+    # TODO
+    assert isinstance(c1.heat_combustion, str)
+    assert isinstance(c1.melting_point, Decimal)
+    assert isinstance(c1.partition_coeff, str)
+    assert isinstance(c1.odor, str)
+    assert isinstance(c1.other_props, str)
+    assert isinstance(c1.solubility, str)
+    assert isinstance(c1.spectral_props, str)
+    assert isinstance(c1.surface_tension, str)
+    assert isinstance(c1.vapor_density, str)
+    assert isinstance(c1.vapor_pressure, str)
+    assert isinstance(c1.full_record, dict)
+
+def test_properties_values(c1):
+    assert c1.molecular_mass == Decimal('78.11')
     assert c1.molecular_weight == Decimal('78.11')
     assert c1.molecular_mass == c1.molecular_weight
-    assert isinstance(c1.iupac_name, text_types)
     assert c1.iupac_name == "benzene"
-    assert isinstance(c1.systematic_name, text_types)
     assert c1.systematic_name == "benzene"
-    assert isinstance(c1.xlogp, Decimal)
     assert c1.xlogp == Decimal("2.1")
-    assert isinstance(c1.exact_mass, Decimal)
     assert c1.exact_mass == Decimal('78.04695')
-    assert isinstance(c1.monoisotopic_mass, Decimal)
     assert c1.monoisotopic_mass == Decimal('78.04695')
-    assert isinstance(c1.tpsa, (int, Decimal))
     assert c1.tpsa == Decimal(0)
-    assert isinstance(c1.complexity, Decimal)
     assert c1.complexity == Decimal("15.5")
-    assert isinstance(c1.h_bond_donor_count, Decimal)
     assert c1.h_bond_donor_count == Decimal("0")
-    assert isinstance(c1.h_bond_acceptor_count, Decimal)
     assert c1.h_bond_acceptor_count == Decimal("0")
-    assert isinstance(c1.rotatable_bond_count, Decimal)
     assert c1.rotatable_bond_count == Decimal("0")
-    assert isinstance(c1.heavy_atom_count, Decimal)
     assert c1.heavy_atom_count == Decimal("6")
-    assert isinstance(c1.isotope_atom_count, Decimal)
     assert c1.isotope_atom_count == Decimal("0")
-    assert isinstance(c1.atom_stereo_count, int)
     assert c1.atom_stereo_count == 0
-    assert isinstance(c1.defined_atom_stereo_count, Decimal)
     assert c1.defined_atom_stereo_count == Decimal("0")
-    assert isinstance(c1.undefined_atom_stereo_count, Decimal)
     assert c1.undefined_atom_stereo_count == Decimal("0")
-    assert isinstance(c1.bond_stereo_count, int)
     assert c1.bond_stereo_count == 0
-    assert isinstance(c1.defined_bond_stereo_count, Decimal)
     assert c1.defined_bond_stereo_count == Decimal("0")
-    assert isinstance(c1.undefined_bond_stereo_count, Decimal)
     assert c1.undefined_bond_stereo_count == Decimal("0")
-    assert isinstance(c1.covalent_unit_count, Decimal)
     assert c1.covalent_unit_count == Decimal("1")
-    assert isinstance(c1.fingerprint, text_types)
+    assert c1.hill_formula == 'C<sub>6</sub>H<sub>6</sub>'
+    assert c1.is_canonicalized == True
+    assert c1.boiling_point == Decimal('80.08')
+    assert c1.color == 'Clear, colorless liquid'
+    assert c1.density == '0.8756 g/cu cm at 20°C'
+    assert c1.specific_gravity == '0.8756 g/cu cm at 20°C'
+    #assert c1.dissociation_constant ==
+    # TODO
+    assert c1.heat_combustion == '-3267.6 kJ/mol (liquid)'
+    assert c1.melting_point == Decimal('5.558')
+    assert c1.partition_coeff == 'log Kow = 2.13'
+    assert c1.odor == 'Aromatic odor'
+    assert c1.other_props == 'Conversion factors: 1 mg/cu m = 0.31 ppm; 1 ppm = 3.26 mg/cu m'
+    assert c1.solubility == 'In water, 1.79×10<sup>+3</sup> mg/L at 25°C'
+    assert c1.spectral_props == 'MAX ABSORPTION (ALCOHOL): 243 NM (LOG E = 2.2), 249 NM (LOG E = 2.3), 256 NM (LOG E = 2.4), 261 NM (LOG E = 2.2); SADTLER REF NUMBER: 6402 (IR, PRISM), 1765 (UV)'
+    assert c1.surface_tension == '28.22 mN/m at 25°C'
+    assert c1.vapor_density == '2.8 (Air = 1)'
+    assert c1.vapor_pressure == '94.8 mm Hg at 25°C'
 
+def test_get_property(c1):
+    assert isinstance(c1.get_property("Melting Point"), dict)
+    assert isinstance(c1.get_property_value("Melting Point"), Decimal)
+    assert c1.get_property_value("Melting Point") == Decimal('5.558')
+    assert c1.melting_point == c1.get_property_value("Melting Point")
+    #assert isinstance(c1.get_property_description("Melting Point"), str)
+    assert c1.get_property_description("Melting Point") is None
+    assert isinstance(c1.get_property_unit("Melting Point"), str)
+    
+    
+    assert isinstance(c1.get_property("Boiling Point"), dict)
+    assert isinstance(c1.get_property("Heat Combustion"), dict)
+    assert isinstance(c1.get_property("Exact Mass"), dict)
+    
 
 def test_coordinate_type(c1):
     assert c1.coordinate_type == '2d'
@@ -197,14 +250,4 @@ def test_fingerprint(c1):
     # Raw fingerprint has 4 byte prefix, 7 bit suffix, and is hex encoded (/4) = 230
     assert len(c1.fingerprint) == (881 + (4 * 8) + 7) / 4
 
-# TODO: Compound.full_record, Compound.to_series,
-#  Compound.hill_formula, Compound.volume_3d, Compound.multipoles_3d, Compound.conformer_rmsd_3d
-#  Compound.effective_rotor_count_3d, Compound.pharmacophore_features_3d, Compound.mmff94_partial_charges_3d
-#  Compound.mmff94_energy_3d, Compound.conformer_id_3d, Compound.shape_selfoverlap_3d
-#  Compound.feature_selfoverlap_3d, Compound.shape_fingerprint_3d, Compound.get_property_description()
-#  Compound.get_property_value(), Compound.get_property_unit(), Compound.get_property()
-#  Compound.is_canonicalized, Compound.boiling_point, Compound.color, Compound.density
-#  Compound.specific_gravity, Compound.dissociation_constant, Compound.heat_combustion, Compound.melting_point
-#  Compound.partition_coeff, Compound.odor, Compound.other_props, Compound.solubility, Compound.spectral_props
-#  Compound.surface_tension, Compound.vapor_density, Compound.vapor_pressure, compounds_to_frame()
-#  Value check
+# TODO: Compound.to_series, compounds_to_frame()

@@ -25,8 +25,10 @@ def SpectrumSimilarity(spec_top, spec_bottom, t = 0.25, b = 10, top_label = None
                                print_graphic = True, output_list = False):
 	"""
 	Parameters:
-	spec_top (numpy.array): Array containing the experimental spectrum's peak list with the m/z values in the first column and corresponding intensities in the second
-	spec_bottom	(numpy.array): Array containing the reference spectrum's peak list with the m/z values in the first column and corresponding intensities in the second
+	spec_top (numpy.array): Array containing the experimental spectrum's peak list with the m/z values in the
+		first column and corresponding intensities in the second
+	spec_bottom	(numpy.array): Array containing the reference spectrum's peak list with the m/z values in the
+		first column and corresponding intensities in the second
 	t (float): numeric value specifying the tolerance used to align the m/z values of the two spectra.
 	b (float): numeric value specifying the baseline threshold for peak identification. Expressed as a percent of the maximum intensity.
 	top_label (str): string to label the top spectrum.
@@ -199,6 +201,8 @@ def normalize(row, max_val):
 	#http://jonathansoma.com/lede/foundations/classes/pandas%20columns%20and%20functions/apply-a-function-to-every-row-in-a-pandas-dataframe/
 	return (row["intensity"]/float(max_val))*100.0	
 
+def create_array(intensities, mz):
+	return np.column_stack((mz,intensities))
 
 
 

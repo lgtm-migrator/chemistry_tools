@@ -31,7 +31,7 @@ __version__ = '0.1.0'
 __license__ = 'LGPL'
 
 from .toxnet import toxnet
-from .property_format import *
+from .PropertyFormat import *
 
 from .errors import ResponseParseError, PubChemHTTPError, BadRequestError
 from .errors import NotFoundError, MethodNotAllowedError, TimeoutError

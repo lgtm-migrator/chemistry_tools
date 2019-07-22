@@ -32,7 +32,7 @@ from decimal import Decimal
 from .utils import memoized_property, _parse_prop, get_full_json, request, get_json
 
 from .toxnet import toxnet
-from .property_format import *
+from .PropertyFormat import *
 from .errors import ResponseParseError
 from .constants import log, ELEMENTS, CoordinateType
 

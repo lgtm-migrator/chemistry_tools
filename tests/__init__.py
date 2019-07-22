@@ -5,5 +5,4 @@
 #
 #
 
-# TODO: Atom, Bond, property_format
-# TODO: utils.format_string
+# TODO: SpectrumSimilarity
