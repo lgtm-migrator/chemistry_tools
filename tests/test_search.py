@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+"""
+test_search
+~~~~~~~~~~~
+
+Test searching.
+
+"""
+
+
+from chemistry_tools.property_lookup import text_types, get_compounds
+from chemistry_tools.property_lookup.Assay import get_assays
+
+
+def test_search_assays():
+    assays = get_assays([1, 1000, 490])
+    for assay in assays:
+        assert isinstance(assay.name, text_types)
+
+
+def test_substructure():
+    results = get_compounds('C1=CC2=C(C3=C(C=CC=N3)C=C2)N=C1', 'smiles', searchtype='substructure', listkey_count=3)
+    assert len(results) == 3
+    for result in results:
+        assert all(el in [a['element'] for a in result.atoms] for el in {'C', 'N', 'H'})
+        assert result.heavy_atom_count >= 14

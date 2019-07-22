@@ -1,0 +1,16 @@
+language: python
+sudo: false
+python:
+  - "2.7"
+  - "3.5"
+  - "3.6"
+env:
+  matrix:
+    - OPTIONAL_DEPS=true
+    - OPTIONAL_DEPS=false
+install:
+  - pip install -U coveralls pytest pandas
+script:
+  - coverage run --source=chemistry_tools -m pytest
+after_success:
+  - coveralls
