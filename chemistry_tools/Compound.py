@@ -3,9 +3,6 @@
 #
 #  Compound.py
 #
-#  Copyright (c) 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
-#  Based on PubChemPy by Matt Swain <m.swain@me.com>
-#  Available under the MIT License
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as
@@ -29,12 +26,12 @@ from collections import Counter
 from itertools import zip_longest
 from decimal import Decimal
 
-from .utils import memoized_property, _parse_prop, get_full_json, request, get_json
+from .Utils import memoized_property, _parse_prop, get_full_json, request, get_json
 
-from .toxnet import toxnet
+from .Toxnet import toxnet
 from .PropertyFormat import *
-from .errors import ResponseParseError
-from .constants import log, ELEMENTS, CoordinateType
+from .Errors import ResponseParseError
+from .Constants import log, ELEMENTS, CoordinateType
 
 from .Atom import Atom
 from .Bond import Bond
@@ -803,8 +800,6 @@ class CompoundIdType(object):
 	UNKNOWN = 255
 	
 
-
-
 def compounds_to_frame(compounds, properties=None):
 	"""Construct a pandas :class:`~pandas.DataFrame` from a list of :class:`~pubchempy.Compound` objects.
 
@@ -815,22 +810,3 @@ def compounds_to_frame(compounds, properties=None):
 		compounds = [compounds]
 	properties = set(properties) | set(['cid']) if properties else None
 	return pd.DataFrame.from_records([c.to_dict(properties) for c in compounds], index='cid')
-
-
-
-
-def get_compounds(identifier, namespace='cid', searchtype=None, as_dataframe=False, **kwargs):
-	"""Retrieve the specified compound records from PubChem.
-
-	:param identifier: The compound identifier to use as a search query.
-	:param namespace: (optional) The identifier type, one of cid, name, smiles, sdf, inchi, inchikey or formula.
-	:param searchtype: (optional) The advanced search type, one of substructure, superstructure or similarity.
-	:param as_dataframe: (optional) Automatically extract the :class:`~pubchempy.Compound` properties into a pandas
-						 :class:`~pandas.DataFrame` and return that.
-	"""
-	results = get_json(identifier, namespace, searchtype=searchtype, **kwargs)
-	compounds = [Compound(r) for r in results['PC_Compounds']] if results else []
-	if as_dataframe:
-		return compounds_to_frame(compounds)
-	return compounds
-

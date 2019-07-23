@@ -10,7 +10,7 @@ Test Atom class
 
 import pytest
 
-from chemistry_tools.property_lookup import Atom
+from chemistry_tools.Atom import Atom
 
 @pytest.fixture(scope='module')
 def a1():

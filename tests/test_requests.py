@@ -8,7 +8,7 @@ Test basic requests.
 """
 
 
-from chemistry_tools.property_lookup import request, get_json, get_sids
+from chemistry_tools.Utils import request, get_json, get_sids
 
 def test_requests():
     """Test a variety of basic raw requests and ensure they don't return an error code."""

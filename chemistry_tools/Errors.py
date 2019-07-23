@@ -1,12 +1,9 @@
 #  !/usr/bin/env python
 #   -*- coding: utf-8 -*-
 #
-#  errors.py
+#  Errors.py
 """Error handling functions"""
 #
-#  Copyright (c) 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
-#  Based on PubChemPy by Matt Swain <m.swain@me.com>
-#  Available under the MIT License
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as
@@ -25,6 +22,9 @@
 #
 
 import json
+import warnings
+import functools
+
 
 
 class PubChemPyError(Exception):
@@ -107,3 +107,26 @@ class ServerError(PubChemHTTPError):
 	
 	def __init__(self, msg='Some problem on the server side'):
 		self.msg = msg
+
+
+def deprecated(message=None):
+	"""Decorator to mark functions as deprecated. A warning will be emitted when the function is used."""
+	
+	def deco(func):
+		@functools.wraps(func)
+		def wrapped(*args, **kwargs):
+			warnings.warn(
+				message or 'Call to deprecated function {}'.format(func.__name__),
+				category=PubChemPyDeprecationWarning,
+				stacklevel=2
+			)
+			return func(*args, **kwargs)
+		
+		return wrapped
+	
+	return deco
+
+
+class PubChemPyDeprecationWarning(Warning):
+	"""Warning category for deprecated features."""
+	pass

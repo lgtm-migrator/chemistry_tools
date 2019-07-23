@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-test_errors
+test_Errors
 ~~~~~~~~~~~~~
 
-Test errors.
+Test Errors.
 
 """
 
 
 import pytest
 
-from chemistry_tools.property_lookup import Compound, get_compounds, get_substances, Substance
-from chemistry_tools.property_lookup.errors import BadRequestError, NotFoundError
+from chemistry_tools.Compound import Compound
+from chemistry_tools.Lookup import get_compounds, get_substances
+from chemistry_tools.Substance import Substance
+from chemistry_tools.Errors import BadRequestError, NotFoundError
 
 def test_invalid_identifier():
     """BadRequestError should be raised if identifier is not a positive integer."""

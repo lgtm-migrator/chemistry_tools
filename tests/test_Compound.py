@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-test_compound
+test_Compound
 ~~~~~~~~~~~~~
 
 Test compound object.
@@ -14,10 +14,12 @@ import re
 import warnings
 from decimal import Decimal
 
-from chemistry_tools.property_lookup import Compound, get_compounds, Atom
-from chemistry_tools.property_lookup.Bond import BondType
-from chemistry_tools.property_lookup.deprecation import PubChemPyDeprecationWarning
-from chemistry_tools.property_lookup.constants import text_types
+from chemistry_tools.Compound import Compound
+from chemistry_tools.Atom import Atom
+from chemistry_tools.Bond import BondType
+from chemistry_tools.Errors import PubChemPyDeprecationWarning
+from chemistry_tools.Constants import text_types
+from chemistry_tools.Lookup import get_compounds
 
 
 @pytest.fixture(scope='module')

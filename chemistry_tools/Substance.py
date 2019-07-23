@@ -3,9 +3,6 @@
 #
 #  Substance.py
 #
-#  Copyright (c) 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
-#  Based on PubChemPy by Matt Swain <m.swain@me.com>
-#  Available under the MIT License
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as
@@ -24,7 +21,7 @@
 #
 
 import json
-from .utils import request, memoized_property, get_json
+from .Utils import request, memoized_property, get_json
 from .Compound import Compound, CompoundIdType
 
 
@@ -151,7 +148,6 @@ class Substance(object):
 		return results['InformationList']['Information'][0]['AID'] if results else []
 
 
-
 def substances_to_frame(substances, properties=None):
 	"""Construct a pandas :class:`~pandas.DataFrame` from a list of :class:`~pubchempy.Substance` objects.
 
@@ -170,17 +166,3 @@ def substances_to_frame(substances, properties=None):
 #     # But consider what to do if the identifier column is an index?
 #     # What about having the Compound/Substance object as a column?
 
-
-def get_substances(identifier, namespace='sid', as_dataframe=False, **kwargs):
-	"""Retrieve the specified substance records from PubChem.
-
-	:param identifier: The substance identifier to use as a search query.
-	:param namespace: (optional) The identifier type, one of sid, name or sourceid/<source name>.
-	:param as_dataframe: (optional) Automatically extract the :class:`~pubchempy.Substance` properties into a pandas
-						 :class:`~pandas.DataFrame` and return that.
-	"""
-	results = get_json(identifier, namespace, 'substance', **kwargs)
-	substances = [Substance(r) for r in results['PC_Substances']] if results else []
-	if as_dataframe:
-		return substances_to_frame(substances)
-	return substances

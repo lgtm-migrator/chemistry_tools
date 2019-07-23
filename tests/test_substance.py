@@ -10,7 +10,8 @@ Test substance object.
 
 import pytest
 
-from chemistry_tools.property_lookup import Substance, get_substances
+from chemistry_tools.Substance import Substance
+from chemistry_tools.Lookup import get_substances
 
 
 @pytest.fixture(scope='module')

@@ -3,9 +3,6 @@
 #
 #  Assay.py
 #
-#  Copyright (c) 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
-#  Based on PubChemPy by Matt Swain <m.swain@me.com>
-#  Available under the MIT License
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as
@@ -24,7 +21,7 @@
 #
 
 import json
-from .utils import request, get_json
+from .Utils import request, get_json
 
 
 class Assay(object):
@@ -111,13 +108,3 @@ class Assay(object):
 	def aid_version(self):
 		"""Incremented when the original depositor updates the record."""
 		return self.record['assay']['descr']['aid']['version']
-
-
-def get_assays(identifier, namespace='aid', **kwargs):
-	"""Retrieve the specified assay records from PubChem.
-
-	:param identifier: The assay identifier to use as a search query.
-	:param namespace: (optional) The identifier type.
-	"""
-	results = get_json(identifier, namespace, 'assay', 'description', **kwargs)
-	return [Assay(r) for r in results['PC_AssayContainer']] if results else []

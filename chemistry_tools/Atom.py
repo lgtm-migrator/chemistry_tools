@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 #   -*- coding: utf-8 -*-
 #
+#
 #  Atom.py
 #
-#  Copyright (c) 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
-#  Based on PubChemPy by Matt Swain <m.swain@me.com>
-#  Available under the MIT License
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as
@@ -23,8 +21,8 @@
 #  MA 02110-1301, USA.
 #
 
-from .deprecation import deprecated
-from .constants import ELEMENTS
+from .Errors import deprecated
+from .Constants import ELEMENTS
 
 class Atom(object):
 	"""Class to represent an atom in a :class:`~pubchempy.Compound`."""

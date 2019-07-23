@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-test_assay
+test_Assay
 ~~~~~~~~~~
 
-Test assay object.
+Test Assay object.
 
 """
 
 
 import pytest
 
-from chemistry_tools.property_lookup import Assay, text_types, get_assays
-from chemistry_tools.property_lookup.constants import ProjectCategory
+from chemistry_tools.Constants import ProjectCategory, text_types
+from chemistry_tools.Assay import Assay
+from chemistry_tools.Lookup import get_assays
 
 
 @pytest.fixture(scope='module')

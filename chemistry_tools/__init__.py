@@ -5,6 +5,10 @@
 #
 #  Copyright (c) 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
+#  Assay, Atom, Bond, Compound, Constants, Errors, Lookup, Substance and
+#  Utils based on PubChemPy by Matt Swain <m.swain@me.com>
+#  Available under the MIT License
+#
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as
 #  published by the Free Software Foundation; either version 3 of the
@@ -21,15 +25,29 @@
 #  MA 02110-1301, USA.
 #
 
-
 __author__ = "Dominic Davis-Foster"
-__copyright__ = "Copyright 2019 Dominic Davis-Foster"
+__copyright__ = "2019 Dominic Davis-Foster"
 
 __license__ = "LGPL"
 __version__ = "0.1.0"
 __email__ = "dominic@davis-foster.co.uk"
 
-__all__ = ["SpectrumSimilarity", "property_lookup"]
+__all__ = ["SpectrumSimilarity", "Assay", "Atom", "Bond", "Compound", "Constants", "Errors", "PropertyFormat",
+		   "Substance", "Toxnet", "Utils"]
 
+from . import Assay
+from . import Atom
+from . import Bond
+from . import Compound
+from . import Constants
+from . import Errors
+from . import Lookup
+from . import PropertyFormat
 from . import SpectrumSimilarity
-from . import property_lookup
+from . import Substance
+from . import Toxnet
+from . import Utils
+
+if __name__ == '__main__':
+	print(__version__)
+

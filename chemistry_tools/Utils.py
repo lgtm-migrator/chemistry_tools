@@ -1,12 +1,9 @@
 #  !/usr/bin/env python
 #   -*- coding: utf-8 -*-
 #
-#  utils.py
+#  Utils.py
 """Various tools"""
 #
-#  Copyright (c) 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
-#  Based on PubChemPy by Matt Swain <m.swain@me.com>
-#  Available under the MIT License
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as
@@ -34,8 +31,8 @@ from decimal import Decimal
 
 import requests
 
-from .errors import PubChemHTTPError, NotFoundError
-from .constants import PROPERTY_MAP, log, text_types, API_BASE
+from .Errors import PubChemHTTPError, NotFoundError
+from .Constants import PROPERTY_MAP, log, text_types, API_BASE
 
 from urllib.request import urlopen
 from urllib.error import HTTPError

@@ -8,8 +8,8 @@ Test searching.
 """
 
 
-from chemistry_tools.property_lookup import text_types, get_compounds
-from chemistry_tools.property_lookup.Assay import get_assays
+from chemistry_tools.Constants import text_types
+from chemistry_tools.Lookup import get_assays, get_compounds
 
 
 def test_search_assays():

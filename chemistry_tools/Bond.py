@@ -3,9 +3,6 @@
 #
 #  Bond.py
 #
-#  Copyright (c) 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
-#  Based on PubChemPy by Matt Swain <m.swain@me.com>
-#  Available under the MIT License
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as
@@ -23,7 +20,7 @@
 #  MA 02110-1301, USA.
 #
 
-from .deprecation import deprecated
+from .Errors import deprecated
 
 
 class BondType(object):
