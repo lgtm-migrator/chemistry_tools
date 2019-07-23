@@ -5,7 +5,7 @@ python:
 - '3.6'
 - '3.7'
 install:
-- pip install -U -f doc-source/requirements.txt
+- pip install -U coveralls pytest -r requirements.txt
 script:
 - coverage run --source=chemistry_tools -m pytest
 after_success:
