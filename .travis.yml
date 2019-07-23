@@ -10,7 +10,7 @@ env:
   - OPTIONAL_DEPS=false
 install:
 - pip install -U coveralls pytest
-- pip install -f requirements.txt
+- pip install -U -f requirements.txt
 script:
 - coverage run --source=chemistry_tools -m pytest
 after_success:
