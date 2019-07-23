@@ -40,7 +40,7 @@ copyright   = """
 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 """
 
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 
 modname            = "chemistry_tools"
 py_modules		   = None
