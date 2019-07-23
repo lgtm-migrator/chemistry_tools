@@ -4,12 +4,8 @@ python:
 - 3.8-dev
 - '3.6'
 - '3.7'
-env:
-  matrix:
-  - OPTIONAL_DEPS=true
-  - OPTIONAL_DEPS=false
 install:
-- pip install -U coveralls pytest -f requirements.txt
+- pip install -U -f doc-source/requirements.txt
 script:
 - coverage run --source=chemistry_tools -m pytest
 after_success:
