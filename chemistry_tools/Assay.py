@@ -32,7 +32,9 @@ class Assay(object):
 
 		:param int aid: The PubChem Assay Identifier (AID).
 		"""
-		record = json.loads(request(aid, 'aid', 'assay', 'description').read().decode())['PC_AssayContainer'][0]
+		#record = json.loads(request(aid, 'aid', 'assay', 'description').read().decode())['PC_AssayContainer'][0]
+		print(json.loads(request(aid, 'aid', 'assay', 'description').content.decode()))
+		record = json.loads(request(aid, 'aid', 'assay', 'description').content.decode())['PC_AssayContainer'][0]
 		return cls(record)
 	
 	def __init__(self, record):

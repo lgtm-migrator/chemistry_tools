@@ -12,9 +12,12 @@ from chemistry_tools.Utils import request, get_json, get_sids
 
 def test_requests():
     """Test a variety of basic raw requests and ensure they don't return an error code."""
-    assert request('c1ccccc1', 'smiles').getcode() == 200
-    assert request('DTP/NCI', 'sourceid', 'substance', '747285', 'SDF').getcode() == 200
-    assert request('coumarin', 'name', output='PNG', image_size='50x50').getcode() == 200
+    #assert request('c1ccccc1', 'smiles').getcode() == 200
+    assert request('c1ccccc1', 'smiles').status_code == 200
+    #assert request('DTP/NCI', 'sourceid', 'substance', '747285', 'SDF').getcode() == 200
+    assert request('DTP/NCI', 'sourceid', 'substance', '747285', 'SDF').status_code == 200
+    #assert request('coumarin', 'name', output='PNG', image_size='50x50').getcode() == 200
+    assert request('coumarin', 'name', output='PNG', image_size='50x50').status_code == 200
 
 
 def test_content_type():
@@ -37,7 +40,8 @@ def test_listkey_requests():
 def test_xref_request():
     """Test requests with xref inputs."""
     response = request('US6187568B1', 'PatentID', 'substance',  operation='sids', searchtype='xref')
-    assert response.code == 200
+    #assert response.code == 200
+    assert response.statis_code == 200
     response2 = get_json('US6187568B1', 'PatentID', 'substance', operation='sids', searchtype='xref')
     assert 'IdentifierList' in response2
     assert 'SID' in response2['IdentifierList']

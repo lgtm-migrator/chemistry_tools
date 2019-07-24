@@ -43,7 +43,8 @@ class Substance(object):
 
 		:param int sid: The PubChem Substance Identifier (SID).
 		"""
-		record = json.loads(request(sid, 'sid', 'substance').read().decode())['PC_Substances'][0]
+		#record = json.loads(request(sid, 'sid', 'substance').read().decode())['PC_Substances'][0]
+		record = json.loads(request(sid, 'sid', 'substance').content.decode())['PC_Substances'][0]
 		return cls(record)
 	
 	def __init__(self, record):

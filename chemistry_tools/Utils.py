@@ -34,8 +34,9 @@ import requests
 from .Errors import PubChemHTTPError, NotFoundError
 from .Constants import PROPERTY_MAP, log, text_types, API_BASE
 
-from urllib.request import urlopen
-from urllib.error import HTTPError
+#from urllib.request import urlopen
+#from urllib.error import HTTPError
+from requests.exceptions import HTTPError
 from urllib.parse import quote, urlencode
 
 
@@ -55,19 +56,23 @@ def get_json(identifier, namespace='cid', domain='compound', operation=None, sea
 def get(identifier, namespace='cid', domain='compound', operation=None, output='JSON', searchtype=None, **kwargs):
 	"""Request wrapper that automatically handles async requests."""
 	if (searchtype and searchtype != 'xref') or namespace in ['formula']:
-		response = request(identifier, namespace, domain, None, 'JSON', searchtype, **kwargs).read()
+		#response = request(identifier, namespace, domain, None, 'JSON', searchtype, **kwargs).read()
+		response = request(identifier, namespace, domain, None, 'JSON', searchtype, **kwargs).content
 		status = json.loads(response.decode())
 		if 'Waiting' in status and 'ListKey' in status['Waiting']:
 			identifier = status['Waiting']['ListKey']
 			namespace = 'listkey'
 			while 'Waiting' in status and 'ListKey' in status['Waiting']:
 				time.sleep(2)
-				response = request(identifier, namespace, domain, operation, 'JSON', **kwargs).read()
+				#response = request(identifier, namespace, domain, operation, 'JSON', **kwargs).read()
+				response = request(identifier, namespace, domain, operation, 'JSON', **kwargs).content
 				status = json.loads(response.decode())
 			if not output == 'JSON':
-				response = request(identifier, namespace, domain, operation, output, searchtype, **kwargs).read()
+				#response = request(identifier, namespace, domain, operation, output, searchtype, **kwargs).read()
+				response = request(identifier, namespace, domain, operation, output, searchtype, **kwargs).content
 	else:
-		response = request(identifier, namespace, domain, operation, output, searchtype, **kwargs).read()
+		#response = request(identifier, namespace, domain, operation, output, searchtype, **kwargs).read()
+		response = request(identifier, namespace, domain, operation, output, searchtype, **kwargs).content
 	return response
 
 
@@ -101,15 +106,19 @@ def request(identifier, namespace='cid', domain='compound', operation=None, outp
 	if kwargs:
 		apiurl += '?%s' % urlencode(kwargs)
 	# Make request
-	try:
-		log.debug('Request URL: %s', apiurl)
-		log.debug('Request data: %s', postdata)
-		response = urlopen(apiurl, postdata)
-		return response
-	except HTTPError as e:
-		raise PubChemHTTPError(e)
+	#try:
+	log.debug('Request URL: %s', apiurl)
+	log.debug('Request data: %s', postdata)
+	#response = urlopen(apiurl, postdata)
+	response = requests.get(apiurl, postdata)
+	if response.status_code in ERROR_CODES:
+		raise PubChemHTTPError(response)
+#	print(f"#{response}")
+	return response
+	#except HTTPError as e:
+	#	raise PubChemHTTPError(e)
 
-
+ERROR_CODES = [400,404,405,504,501,500]
 
 def get_sdf(identifier, namespace='cid', domain='compound', operation=None, searchtype=None, **kwargs):
 	"""Request wrapper that automatically parses SDF response and supresses NotFoundError."""
