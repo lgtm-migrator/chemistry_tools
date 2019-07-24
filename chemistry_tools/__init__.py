@@ -29,7 +29,7 @@ __author__ = "Dominic Davis-Foster"
 __copyright__ = "2019 Dominic Davis-Foster"
 
 __license__ = "LGPL"
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 __email__ = "dominic@davis-foster.co.uk"
 
 __all__ = ["SpectrumSimilarity", "Assay", "Atom", "Bond", "Compound", "Constants", "Errors", "PropertyFormat",
