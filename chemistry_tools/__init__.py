@@ -35,6 +35,11 @@ __email__ = "dominic@davis-foster.co.uk"
 __all__ = ["SpectrumSimilarity", "Assay", "Atom", "Bond", "Compound", "Constants", "Errors", "PropertyFormat",
 		   "Substance", "Toxnet", "Utils"]
 
+import requests_cache
+
+requests_cache.install_cache(expire_after=3600)
+
+
 from . import Assay
 from . import Atom
 from . import Bond
