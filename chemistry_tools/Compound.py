@@ -259,8 +259,6 @@ class Compound(object):
 
 		:param int cid: The PubChem Compound Identifier (CID).
 		"""
-		#record = json.loads(request(cid, **kwargs).read().decode())['PC_Compounds'][0]
-		print(json.loads(request(cid, **kwargs).content.decode()))
 		record = json.loads(request(cid, **kwargs).content.decode())['PC_Compounds'][0]
 		return cls(record)
 	

@@ -41,12 +41,9 @@ class PubChemHTTPError(PubChemPyError):
 	"""Generic error class to handle all HTTP error codes."""
 	
 	def __init__(self, e):
-		#print(self.code)
-		#self.code = e.code
 		self.code = e.status_code
 		self.msg = e.reason
 		try:
-			#self.msg += ': %s' % json.loads(e.read().decode())['Fault']['Details'][0]
 			self.msg += ': %s' % json.loads(e.content.decode())['Fault']['Details'][0]
 		except (ValueError, IndexError, KeyError):
 			pass
