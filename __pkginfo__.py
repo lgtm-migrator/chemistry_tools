@@ -61,6 +61,7 @@ install_requires   = [
 					  "matplotlib >= 3.0.0",
 					  "requests >= 2.21.0",
 		 			  "beautifulsoup4 >= 4.7.0",
+					  "requests_cache >= 0.5.0",
 					  ]
 
 
