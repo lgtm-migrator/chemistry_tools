@@ -15,7 +15,7 @@ import tempfile
 
 import pytest
 
-from chemistry_tools.Utils import download
+from chemistry_tools.utils import download
 
 @pytest.fixture(scope='module')
 def tmp_dir():

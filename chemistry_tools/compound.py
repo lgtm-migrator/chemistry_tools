@@ -1,7 +1,6 @@
 #!/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
-#  Compound.py
+#  compound.py
 #
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -20,24 +19,23 @@
 #  MA 02110-1301, USA.
 #
 
+# stdlib
 import json
-
 from collections import Counter
-from itertools import zip_longest
 from decimal import Decimal
+from itertools import zip_longest
 
-from .Utils import memoized_property, _parse_prop, get_full_json, request, get_json
+# this package
+from .atom import Atom
+from .bond import Bond
+from .constants import CoordinateType, ELEMENTS, log
+from .errors import ResponseParseError
+from .property_format import *
+from .toxnet import toxnet
+from .utils import _parse_prop, get_full_json, get_json, memoized_property, request
 
-from .Toxnet import toxnet
-from .PropertyFormat import *
-from .Errors import ResponseParseError
-from .Constants import log, ELEMENTS, CoordinateType
 
-from .Atom import Atom
-from .Bond import Bond
-
-
-class Compound(object):
+class Compound:
 	"""Corresponds to a single record from the PubChem Compound database.
 
 	The PubChem Compound database is constructed from the Substance database using a standardization and deduplication
@@ -82,8 +80,11 @@ class Compound(object):
 		try:
 			for record in self.full_record["Record"]["Section"]:
 				if record["TOCHeading"] == "Chemical Safety":
-					for hazard in record["Information"][0]["Value"]["StringWithMarkup"][0]["Markup"]:
-						self.hazards.append(hazard["Extra"])
+					try:
+						for hazard in record["Information"][0]["Value"]["StringWithMarkup"][0]["Markup"]:
+							self.hazards.append(hazard["Extra"])
+					except KeyError:
+						pass
 				
 				elif record["TOCHeading"] == "Chemical and Physical Properties":
 					for section in record["Section"]:
@@ -96,9 +97,10 @@ class Compound(object):
 								
 								try:
 									self._physical_properties[name]["Value"] = Decimal(
-										str(physical_property["Information"][0]["Value"]["Number"][0]))
+											str(physical_property["Information"][0]["Value"]["Number"][0]))
 								except KeyError:
-									value = physical_property["Information"][0]["Value"]["StringWithMarkup"][0]["String"]
+									value = physical_property["Information"][0]["Value"]["StringWithMarkup"][0][
+										"String"]
 									if value == "Yes":
 										value = True
 									elif value == "No":
@@ -141,10 +143,11 @@ class Compound(object):
 								# TODO: Skip Physical Description, :
 								try:
 									self._physical_properties[name]["Value"] = Decimal(
-										str(physical_property["Information"][0]["Value"]["Number"][0]))
+											str(physical_property["Information"][0]["Value"]["Number"][0]))
 								except KeyError:
 									value = property_format(
-										physical_property["Information"][0]["Value"]["StringWithMarkup"][0]["String"])
+											physical_property["Information"][0]["Value"]["StringWithMarkup"][0][
+												"String"])
 									if value == "Yes":
 										value = True
 									elif value == "No":
@@ -157,8 +160,9 @@ class Compound(object):
 										physical_property["Information"][0]["Value"]["Unit"]
 								except KeyError:
 									self._physical_properties[name]["Unit"] = None
-				# import pprint
-				# pprint.pprint(self._physical_properties)
+							# import pprint
+							# pprint.pprint(self._physical_properties)
+				
 				elif record["TOCHeading"] == "Names and Identifiers":
 					for section in record["Section"]:
 						if section["TOCHeading"] == "Record Description":
@@ -295,7 +299,7 @@ class Compound(object):
 		string = list(stringwithmarkup["String"])
 		try:
 			markup_list = stringwithmarkup["Markup"]
-		except:
+		except KeyError:
 			markup_list = []
 		
 		for markup in markup_list:
@@ -306,7 +310,7 @@ class Compound(object):
 				style = "i"
 			# handle Other formats
 			
-			if style == None:
+			if style is None:
 				print(markup)
 				continue
 			
@@ -465,7 +469,7 @@ class Compound(object):
 		More information at ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt
 		"""
 		# Skip first 4 bytes (contain length of fingerprint) and last 7 bits (padding) then re-pad to 881 bits
-		return '{0:020b}'.format(int(self.fingerprint[8:], 16))[:-7].zfill(881)
+		return '{:020b}'.format(int(self.fingerprint[8:], 16))[:-7].zfill(881)
 	
 	"""Other"""
 	
@@ -780,8 +784,7 @@ class Compound(object):
 		return self.get_property_value("Vapor Pressure")
 
 
-class CompoundIdType(object):
-	""""""
+class CompoundIdType:
 	#: Original Deposited Compound
 	DEPOSITED = 0
 	#: Standardized Form of the Deposited Compound
@@ -798,15 +801,17 @@ class CompoundIdType(object):
 	IONIZED = 6
 	#: Unspecified or Unknown Compound Type
 	UNKNOWN = 255
-	
+
 
 def compounds_to_frame(compounds, properties=None):
-	"""Construct a pandas :class:`~pandas.DataFrame` from a list of :class:`~pubchempy.Compound` objects.
+	"""
+	Construct a pandas :class:`~pandas.DataFrame` from a list of :class:`~pubchempy.Compound` objects.
 
 	Optionally specify a list of the desired :class:`~pubchempy.Compound` properties.
 	"""
+	
 	import pandas as pd
 	if isinstance(compounds, Compound):
 		compounds = [compounds]
-	properties = set(properties) | set(['cid']) if properties else None
+	properties = set(properties) | {'cid'} if properties else None
 	return pd.DataFrame.from_records([c.to_dict(properties) for c in compounds], index='cid')

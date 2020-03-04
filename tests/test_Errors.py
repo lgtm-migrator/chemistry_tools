@@ -10,10 +10,10 @@ Test Errors.
 
 import pytest
 
-from chemistry_tools.Compound import Compound
-from chemistry_tools.Lookup import get_compounds, get_substances
-from chemistry_tools.Substance import Substance
-from chemistry_tools.Errors import BadRequestError, NotFoundError
+from chemistry_tools.compound import Compound
+from chemistry_tools.lookup import get_compounds, get_substances
+from chemistry_tools.substance import Substance
+from chemistry_tools.errors import BadRequestError, NotFoundError
 
 def test_invalid_identifier():
     """BadRequestError should be raised if identifier is not a positive integer."""

@@ -1,7 +1,6 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
-#  Assay.py
+#  assay.py
 #
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -20,24 +19,32 @@
 #  MA 02110-1301, USA.
 #
 
+# stdlib
 import json
-from .Utils import request, get_json
+
+# this package
+from .utils import request
 
 
-class Assay(object):
+class Assay:
 	
 	@classmethod
 	def from_aid(cls, aid):
-		"""Retrieve the Assay record for the specified AID.
+		"""
+		Retrieve the Assay record for the specified AID.
 
 		:param int aid: The PubChem Assay Identifier (AID).
 		"""
+		
 		record = json.loads(request(aid, 'aid', 'assay', 'description').content.decode())['PC_AssayContainer'][0]
 		return cls(record)
 	
 	def __init__(self, record):
+		"""
+		:param record: A dictionary containing the full Assay record that all other properties are obtained from.
+		:type record: dict
+		"""
 		self.record = record
-		"""A dictionary containing the full Assay record that all other properties are obtained from."""
 	
 	def __repr__(self):
 		return 'Assay(%s)' % self.aid if self.aid else 'Assay()'
@@ -46,12 +53,14 @@ class Assay(object):
 		return isinstance(other, type(self)) and self.record == other.record
 	
 	def to_dict(self, properties=None):
-		"""Return a dictionary containing Assay data.
+		"""
+		Return a dictionary containing Assay data.
 
 		If the properties parameter is not specified, everything is included.
 
 		:param properties: (optional) A list of the desired properties.
 		"""
+		
 		if not properties:
 			properties = [p for p in dir(Assay) if isinstance(getattr(Assay, p), property)]
 		return {p: getattr(self, p) for p in properties}

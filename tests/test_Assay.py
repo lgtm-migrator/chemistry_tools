@@ -10,9 +10,9 @@ Test Assay object.
 
 import pytest
 
-from chemistry_tools.Constants import ProjectCategory, text_types
-from chemistry_tools.Assay import Assay
-from chemistry_tools.Lookup import get_assays
+from chemistry_tools.constants import ProjectCategory, text_types
+from chemistry_tools.assay import Assay
+from chemistry_tools.lookup import get_assays
 
 
 @pytest.fixture(scope='module')

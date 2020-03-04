@@ -10,7 +10,7 @@ Test identifiers requests.
 
 import pytest
 
-from chemistry_tools.Utils import get_cids, get_aids, get_sids
+from chemistry_tools.utils import get_cids, get_aids, get_sids
 
 def test_identifiers_from_name():
     """Use a name input to retrieve lists of identifiers."""

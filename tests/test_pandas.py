@@ -12,10 +12,10 @@ import logging
 
 import pytest
 
-from chemistry_tools.Lookup import get_compounds, get_substances
-from chemistry_tools.Utils import get_properties
-from chemistry_tools.Compound import compounds_to_frame, Compound
-from chemistry_tools.Substance import substances_to_frame, Substance
+from chemistry_tools.lookup import get_compounds, get_substances
+from chemistry_tools.utils import get_properties
+from chemistry_tools.compound import compounds_to_frame, Compound
+from chemistry_tools.substance import substances_to_frame, Substance
 
 
 log = logging.getLogger(__name__)

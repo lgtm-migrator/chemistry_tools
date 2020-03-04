@@ -1,7 +1,6 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
-#  Utils.py
+#  utils.py
 """Various tools"""
 #
 #
@@ -21,23 +20,23 @@
 #  MA 02110-1301, USA.
 #
 
-
-import os
-import json
-import time
+# stdlib
 import functools
-
-from decimal import Decimal
-
-import requests
-
-from .Errors import PubChemHTTPError, NotFoundError
-from .Constants import PROPERTY_MAP, log, text_types, API_BASE
-
-#from urllib.request import urlopen
-#from urllib.error import HTTPError
-from requests.exceptions import HTTPError
+import json
+import os
+import time
+from decimal import Decimal, DecimalException
+# from urllib.request import urlopen
+# from urllib.error import HTTPError
 from urllib.parse import quote, urlencode
+
+# 3rd party
+import requests
+# from requests.exceptions import HTTPError
+
+# this package
+from .constants import API_BASE, log, PROPERTY_MAP, text_types
+from .errors import NotFoundError, PubChemHTTPError
 
 
 def get_full_json(cid):
@@ -46,17 +45,24 @@ def get_full_json(cid):
 
 
 def get_json(identifier, namespace='cid', domain='compound', operation=None, searchtype=None, **kwargs):
-	"""Request wrapper that automatically parses JSON response and supresses NotFoundError."""
+	"""
+	Request wrapper that automatically parses JSON response and suppresses NotFoundError.
+	"""
+	
 	try:
 		return json.loads(get(identifier, namespace, domain, operation, 'JSON', searchtype, **kwargs).decode())
 	except NotFoundError as e:
 		log.info(e)
 		return None
 
+
 def get(identifier, namespace='cid', domain='compound', operation=None, output='JSON', searchtype=None, **kwargs):
-	"""Request wrapper that automatically handles async requests."""
+	"""
+	Request wrapper that automatically handles async requests.
+	"""
+	
 	if (searchtype and searchtype != 'xref') or namespace in ['formula']:
-		#response = request(identifier, namespace, domain, None, 'JSON', searchtype, **kwargs).read()
+		# response = request(identifier, namespace, domain, None, 'JSON', searchtype, **kwargs).read()
 		response = request(identifier, namespace, domain, None, 'JSON', searchtype, **kwargs).content
 		status = json.loads(response.decode())
 		if 'Waiting' in status and 'ListKey' in status['Waiting']:
@@ -64,14 +70,14 @@ def get(identifier, namespace='cid', domain='compound', operation=None, output='
 			namespace = 'listkey'
 			while 'Waiting' in status and 'ListKey' in status['Waiting']:
 				time.sleep(2)
-				#response = request(identifier, namespace, domain, operation, 'JSON', **kwargs).read()
+				# response = request(identifier, namespace, domain, operation, 'JSON', **kwargs).read()
 				response = request(identifier, namespace, domain, operation, 'JSON', **kwargs).content
 				status = json.loads(response.decode())
 			if not output == 'JSON':
-				#response = request(identifier, namespace, domain, operation, output, searchtype, **kwargs).read()
+				# response = request(identifier, namespace, domain, operation, output, searchtype, **kwargs).read()
 				response = request(identifier, namespace, domain, operation, output, searchtype, **kwargs).content
 	else:
-		#response = request(identifier, namespace, domain, operation, output, searchtype, **kwargs).read()
+		# response = request(identifier, namespace, domain, operation, output, searchtype, **kwargs).read()
 		response = request(identifier, namespace, domain, operation, output, searchtype, **kwargs).content
 	return response
 
@@ -82,6 +88,7 @@ def request(identifier, namespace='cid', domain='compound', operation=None, outp
 
 	Full specification at http://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html
 	"""
+	
 	if not identifier:
 		raise ValueError('identifier/cid cannot be None')
 	# If identifier is a list, join with commas into string
@@ -90,7 +97,7 @@ def request(identifier, namespace='cid', domain='compound', operation=None, outp
 	if not isinstance(identifier, text_types):
 		identifier = ','.join(str(x) for x in identifier)
 	# Filter None values from kwargs
-	kwargs = dict((k, v) for k, v in kwargs.items() if v is not None)
+	kwargs = {k: v for k, v in kwargs.items() if v is not None}
 	# Build API URL
 	urlid, postdata = None, None
 	if namespace == 'sourceid':
@@ -106,22 +113,26 @@ def request(identifier, namespace='cid', domain='compound', operation=None, outp
 	if kwargs:
 		apiurl += '?%s' % urlencode(kwargs)
 	# Make request
-	#try:
+	# try:
 	log.debug('Request URL: %s', apiurl)
 	log.debug('Request data: %s', postdata)
-	#response = urlopen(apiurl, postdata)
+	# response = urlopen(apiurl, postdata)
 	response = requests.get(apiurl, postdata)
 	if response.status_code in ERROR_CODES:
 		raise PubChemHTTPError(response)
-#	print(f"#{response}")
+		# print(f"#{response}")
 	return response
-	#except HTTPError as e:
-	#	raise PubChemHTTPError(e)
+	# except HTTPError as e:
+	# 	raise PubChemHTTPError(e)
 
-ERROR_CODES = [400,404,405,504,501,500]
+ERROR_CODES = [400, 404, 405, 504, 501, 500]
+
 
 def get_sdf(identifier, namespace='cid', domain='compound', operation=None, searchtype=None, **kwargs):
-	"""Request wrapper that automatically parses SDF response and supresses NotFoundError."""
+	"""
+	Request wrapper that automatically parses SDF response and suppresses NotFoundError.
+	"""
+	
 	try:
 		return get(identifier, namespace, domain, operation, 'SDF', searchtype, **kwargs).decode()
 	except NotFoundError as e:
@@ -129,16 +140,16 @@ def get_sdf(identifier, namespace='cid', domain='compound', operation=None, sear
 		return None
 
 
-
-
 def get_properties(properties, identifier, namespace='cid', searchtype=None, as_dataframe=False, **kwargs):
-	"""Retrieve the specified properties from PubChem.
+	"""
+	Retrieve the specified properties from PubChem.
 
 	:param identifier: The compound, substance or assay identifier to use as a search query.
 	:param namespace: (optional) The identifier type.
 	:param searchtype: (optional) The advanced search type, one of substructure, superstructure or similarity.
 	:param as_dataframe: (optional) Automatically extract the properties into a pandas :class:`~pandas.DataFrame`.
 	"""
+	
 	if isinstance(properties, text_types):
 		properties = properties.split(',')
 	properties = ','.join([PROPERTY_MAP.get(p, p) for p in properties])
@@ -187,28 +198,37 @@ def get_aids(identifier, namespace='cid', domain='compound', searchtype=None, **
 
 
 def get_all_sources(domain='substance'):
-	"""Return a list of all current depositors of substances or assays."""
+	"""
+	Return a list of all current depositors of substances or assays.
+	"""
+	
 	results = json.loads(get(domain, None, 'sources').decode())
 	return results['InformationList']['SourceName']
 
 
-def download(outformat, path, identifier, namespace='cid', domain='compound', operation=None, searchtype=None,
-			 overwrite=False, **kwargs):
-	"""Format can be  XML, ASNT/B, JSON, SDF, CSV, PNG, TXT."""
+def download(
+		outformat, path, identifier, namespace='cid', domain='compound',
+		operation=None, searchtype=None, overwrite=False, **kwargs):
+	"""
+	Format can be  XML, ASNT/B, JSON, SDF, CSV, PNG, TXT.
+	"""
+	
 	response = get(identifier, namespace, domain, operation, outformat, searchtype, **kwargs)
 	if not overwrite and os.path.isfile(path):
-		raise IOError("%s already exists. Use 'overwrite=True' to overwrite it." % path)
+		raise OSError("%s already exists. Use 'overwrite=True' to overwrite it." % path)
 	with open(path, 'wb') as f:
 		f.write(response)
 
 
 def memoized_property(fget):
-	"""Decorator to create memoized properties.
+	"""
+	Decorator to create memoized properties.
 
 	Used to cache :class:`~pubchempy.Compound` and :class:`~pubchempy.Substance` properties that require an additional
 	request.
 	"""
-	attr_name = '_{0}'.format(fget.__name__)
+	
+	attr_name = '_{}'.format(fget.__name__)
 	
 	@functools.wraps(fget)
 	def fget_memoized(self):
@@ -220,23 +240,30 @@ def memoized_property(fget):
 
 
 def _parse_prop(search, proplist):
-	"""Extract property value from record using the given urn search filter."""
+	"""
+	Extract property value from record using the given urn search filter.
+	"""
+	
 	props = [i for i in proplist if all(item in i['urn'].items() for item in search.items())]
 	if len(props) > 0:
-		if search != {'implementation': 'E_SCREEN'}: # True for "fingerprint", which isn't a number
+		if search != {'implementation': 'E_SCREEN'}:  # True for "fingerprint", which isn't a number
 			try:
 				return Decimal(str(props[0]['value'][list(props[0]['value'].keys())[0]]))
-			except:
+			except DecimalException:
 				return props[0]['value'][list(props[0]['value'].keys())[0]]
 		else:
 			return props[0]['value'][list(props[0]['value'].keys())[0]]
-	
+
+
 def format_string(stringwithmarkup):
-	"""Convert a PubChem formatted string into an HTML formatted string"""
+	"""
+	Convert a PubChem formatted string into an HTML formatted string
+	"""
+	
 	string = list(stringwithmarkup["String"])
 	try:
 		markup_list = stringwithmarkup["Markup"]
-	except:
+	except KeyError:
 		markup_list = []
 	
 	for markup in markup_list:
@@ -247,7 +274,7 @@ def format_string(stringwithmarkup):
 			style = "i"
 		# handle Other formats
 		
-		if style == None:
+		if style is None:
 			print(markup)
 			continue
 		

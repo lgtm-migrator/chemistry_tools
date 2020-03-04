@@ -1,5 +1,4 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
 #  lookup.py
 """
@@ -23,15 +22,15 @@ Uses data from PubChem and toxnet
 #  MA 02110-1301, USA.
 #
 
-
-from chemistry_tools.Compound import Compound, compounds_to_frame
-from chemistry_tools.Assay import Assay
-from chemistry_tools.Substance import Substance, substances_to_frame
-from chemistry_tools.Utils import get_json
+from chemistry_tools.assay import Assay
+from chemistry_tools.compound import Compound, compounds_to_frame
+from chemistry_tools.substance import Substance, substances_to_frame
+from chemistry_tools.utils import get_json
 
 
 def get_compounds(identifier, namespace='cid', searchtype=None, as_dataframe=False, **kwargs):
-	"""Retrieve the specified compound records from PubChem.
+	"""
+	Retrieve the specified compound records from PubChem.
 
 	:param identifier: The compound identifier to use as a search query.
 	:param namespace: (optional) The identifier type, one of cid, name, smiles, sdf, inchi, inchikey or formula.
@@ -39,6 +38,7 @@ def get_compounds(identifier, namespace='cid', searchtype=None, as_dataframe=Fal
 	:param as_dataframe: (optional) Automatically extract the :class:`~pubchempy.Compound` properties into a pandas
 						 :class:`~pandas.DataFrame` and return that.
 	"""
+	
 	results = get_json(identifier, namespace, searchtype=searchtype, **kwargs)
 	compounds = [Compound(r) for r in results['PC_Compounds']] if results else []
 	if as_dataframe:

@@ -9,12 +9,12 @@ Test properties requests.
 
 
 
-from chemistry_tools import Utils
+from chemistry_tools import utils
 
 
 def test_properties():
 	""""""
-	results = Utils.get_properties(['IsomericSMILES', 'InChIKey'], 'tris-(1,10-phenanthroline)ruthenium', 'name')
+	results = utils.get_properties(['IsomericSMILES', 'InChIKey'], 'tris-(1,10-phenanthroline)ruthenium', 'name')
 	assert len(results) > 0
 	for result in results:
 		assert 'CID' in result
@@ -24,7 +24,7 @@ def test_properties():
 
 def test_underscore_properties():
 	"""Properties can also be specified as underscore-separated words, rather than CamelCase."""
-	results = Utils.get_properties(['isomeric_smiles', 'molecular_weight'], 'tris-(1,10-phenanthroline)ruthenium', 'name')
+	results = utils.get_properties(['isomeric_smiles', 'molecular_weight'], 'tris-(1,10-phenanthroline)ruthenium', 'name')
 	assert len(results) > 0
 	for result in results:
 		assert 'CID' in result
@@ -34,7 +34,7 @@ def test_underscore_properties():
 
 def test_comma_string_properties():
 	"""Properties can also be specified as a comma-separated string, rather than a list."""
-	results = Utils.get_properties('isomeric_smiles,InChIKey,molecular_weight', 'tris-(1,10-phenanthroline)ruthenium', 'name')
+	results = utils.get_properties('isomeric_smiles,InChIKey,molecular_weight', 'tris-(1,10-phenanthroline)ruthenium', 'name')
 	assert len(results) > 0
 	for result in results:
 		assert 'CID' in result
@@ -44,7 +44,7 @@ def test_comma_string_properties():
 
 
 def test_synonyms():
-	results = Utils.get_synonyms('C1=CC2=C(C3=C(C=CC=N3)C=C2)N=C1', 'smiles')
+	results = utils.get_synonyms('C1=CC2=C(C3=C(C=CC=N3)C=C2)N=C1', 'smiles')
 	assert len(results) > 0
 	for result in results:
 		assert 'CID' in result
@@ -57,6 +57,6 @@ stringwithmarkup = {'String': 'N-phenylaniline',
 					'Markup': [{'Start': 0, 'Length': 1, 'Type': 'Italics'}]}
 
 def test_format_string():
-	html_string = Utils.format_string(stringwithmarkup)
+	html_string = utils.format_string(stringwithmarkup)
 	assert isinstance(html_string, str)
 	assert html_string == '<i>N</i>-phenylaniline'

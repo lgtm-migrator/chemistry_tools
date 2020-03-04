@@ -5,7 +5,7 @@
 #
 #  Copyright (c) 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
-#  Assay, Atom, Bond, Compound, Constants, Errors, Lookup, Substance and
+#  assay, Atom, Bond, Compound, Constants, Errors, Lookup, Substance and
 #  Utils based on PubChemPy by Matt Swain <m.swain@me.com>
 #  Available under the MIT License
 #
@@ -32,26 +32,44 @@ __license__ = "LGPL"
 __version__ = "0.1.2"
 __email__ = "dominic@davis-foster.co.uk"
 
-__all__ = ["SpectrumSimilarity", "Assay", "Atom", "Bond", "Compound", "Constants", "Errors", "PropertyFormat",
-		   "Substance", "Toxnet", "Utils"]
 
 import requests_cache
 
-requests_cache.install_cache(expire_after=3600)
+# Setup Cache and keep for ~ a month
+requests_cache.install_cache("chemistry_tools_cache", expire_after=2500000)
 
 
-from . import Assay
-from . import Atom
-from . import Bond
-from . import Compound
-from . import Constants
-from . import Errors
-from . import Lookup
-from . import PropertyFormat
-from . import SpectrumSimilarity
-from . import Substance
-from . import Toxnet
-from . import Utils
+from . import assay
+from . import atom
+from . import bond
+from . import compound
+from . import constants
+from . import errors
+from . import lookup
+from . import property_format
+from . import spectrum_similarity
+from . import substance
+from . import toxnet
+from . import utils
+
+
+def clear_cache():
+	requests_cache.clear()
+
+
+__all__ = [
+		"spectrum_similarity",
+		"assay",
+		"atom",
+		"bond",
+		"compound",
+		"constants",
+		"errors",
+		"property_format",
+		"substance",
+		"toxnet",
+		"utils",
+		]
 
 if __name__ == '__main__':
 	print(__version__)

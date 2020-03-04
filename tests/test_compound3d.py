@@ -12,9 +12,9 @@ import pytest
 import warnings
 from decimal import Decimal
 
-from chemistry_tools.Compound import Compound
-from chemistry_tools.Constants import text_types
-from chemistry_tools.Errors import PubChemPyDeprecationWarning
+from chemistry_tools.compound import Compound
+from chemistry_tools.constants import text_types
+from chemistry_tools.errors import PubChemPyDeprecationWarning
 
 
 @pytest.fixture

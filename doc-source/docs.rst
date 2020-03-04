@@ -10,121 +10,121 @@
     :special-members:
 
 ===================================
-:mod:`chemistry_tools.Assay`
+:mod:`chemistry_tools.assay`
 ===================================
 
 
-.. automodule:: chemistry_tools.Assay
+.. automodule:: chemistry_tools.assay
     :members:
     :private-members:
     :special-members:
 
 ===================================
-:mod:`chemistry_tools.Atom`
+:mod:`chemistry_tools.atom`
 ===================================
 
 
-.. automodule:: chemistry_tools.Atom
+.. automodule:: chemistry_tools.atom
     :members:
     :private-members:
     :special-members:
 
 ===================================
-:mod:`chemistry_tools.Bond`
+:mod:`chemistry_tools.bond`
 ===================================
 
 
-.. automodule:: chemistry_tools.Bond
+.. automodule:: chemistry_tools.bond
     :members:
     :private-members:
     :special-members:
 
 ===================================
-:mod:`chemistry_tools.Compound`
+:mod:`chemistry_tools.compound`
 ===================================
 
 
-.. automodule:: chemistry_tools.Compound
+.. automodule:: chemistry_tools.compound
     :members:
     :private-members:
     :special-members:
 
 ===================================
-:mod:`chemistry_tools.Constants`
+:mod:`chemistry_tools.constants`
 ===================================
 
 
-.. automodule:: chemistry_tools.Constants
+.. automodule:: chemistry_tools.constants
     :members:
     :private-members:
     :special-members:
 
 ===================================
-:mod:`chemistry_tools.Errors`
+:mod:`chemistry_tools.errors`
 ===================================
 
 
-.. automodule:: chemistry_tools.Errors
+.. automodule:: chemistry_tools.errors
     :members:
     :private-members:
     :special-members:
 
 ===================================
-:mod:`chemistry_tools.Lookup`
+:mod:`chemistry_tools.lookup`
 ===================================
 
 
-.. automodule:: chemistry_tools.Lookup
+.. automodule:: chemistry_tools.lookup
     :members:
     :private-members:
     :special-members:
 
 ===================================
-:mod:`chemistry_tools.PropertyFormat`
+:mod:`chemistry_tools.property_format`
 ===================================
 
 
-.. automodule:: chemistry_tools.PropertyFormat
+.. automodule:: chemistry_tools.property_format
     :members:
     :private-members:
     :special-members:
 
 ===================================
-:mod:`chemistry_tools.SpectrumSimilarity`
+:mod:`chemistry_tools.spectrum_similarity`
 ===================================
 
 
-.. automodule:: chemistry_tools.SpectrumSimilarity
+.. automodule:: chemistry_tools.spectrum_similarity
     :members:
     :private-members:
     :special-members:
 
 ===================================
-:mod:`chemistry_tools.Substance`
+:mod:`chemistry_tools.substance`
 ===================================
 
 
-.. automodule:: chemistry_tools.Substance
+.. automodule:: chemistry_tools.substance
     :members:
     :private-members:
     :special-members:
 
 ===================================
-:mod:`chemistry_tools.Toxnet`
+:mod:`chemistry_tools.toxnet`
 ===================================
 
 
-.. automodule:: chemistry_tools.Toxnet
+.. automodule:: chemistry_tools.toxnet
     :members:
     :private-members:
     :special-members:
 
 ===================================
-:mod:`chemistry_tools.Utils`
+:mod:`chemistry_tools.utils`
 ===================================
 
 
-.. automodule:: chemistry_tools.Utils
+.. automodule:: chemistry_tools.utils
     :members:
     :private-members:
     :special-members:

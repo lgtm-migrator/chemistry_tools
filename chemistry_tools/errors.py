@@ -1,7 +1,6 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
-#  Errors.py
+#  errors.py
 """Error handling functions"""
 #
 #
@@ -21,24 +20,29 @@
 #  MA 02110-1301, USA.
 #
 
+import functools
 import json
 import warnings
-import functools
-
 
 
 class PubChemPyError(Exception):
-	"""Base class for all PubChemPy exceptions."""
+	"""
+	Base class for all PubChemPy exceptions.
+	"""
 	pass
 
 
 class ResponseParseError(PubChemPyError):
-	"""PubChem response is uninterpretable."""
+	"""
+	PubChem response is uninterpretable.
+	"""
 	pass
 
 
 class PubChemHTTPError(PubChemPyError):
-	"""Generic error class to handle all HTTP error codes."""
+	"""
+	Generic error class to handle all HTTP error codes.
+	"""
 	
 	def __init__(self, e):
 		self.code = e.status_code
@@ -65,28 +69,35 @@ class PubChemHTTPError(PubChemPyError):
 
 
 class BadRequestError(PubChemHTTPError):
-	"""Request is improperly formed (syntax error in the URL, POST body, etc.)."""
+	"""
+	Request is improperly formed (syntax error in the URL, POST body, etc.).
+	"""
 	
 	def __init__(self, msg='Request is improperly formed'):
 		self.msg = msg
 
 
 class NotFoundError(PubChemHTTPError):
-	"""The input record was not found (e.g. invalid CID)."""
+	"""
+	The input record was not found (e.g. invalid CID).
+	"""
 	
 	def __init__(self, msg='The input record was not found'):
 		self.msg = msg
 
 
 class MethodNotAllowedError(PubChemHTTPError):
-	"""Request not allowed (such as invalid MIME type in the HTTP Accept header)."""
+	"""
+	Request not allowed (such as invalid MIME type in the HTTP Accept header).
+	"""
 	
 	def __init__(self, msg='Request not allowed'):
 		self.msg = msg
 
 
 class TimeoutError(PubChemHTTPError):
-	"""The request timed out, from server overload or too broad a request.
+	"""
+	The request timed out, from server overload or too broad a request.
 
 	See :ref:`Avoiding TimeoutError <avoiding_timeouterror>` for more information.
 	"""
@@ -116,10 +127,10 @@ def deprecated(message=None):
 		@functools.wraps(func)
 		def wrapped(*args, **kwargs):
 			warnings.warn(
-				message or 'Call to deprecated function {}'.format(func.__name__),
-				category=PubChemPyDeprecationWarning,
-				stacklevel=2
-			)
+					message or 'Call to deprecated function {}'.format(func.__name__),
+					category=PubChemPyDeprecationWarning,
+					stacklevel=2
+					)
 			return func(*args, **kwargs)
 		
 		return wrapped

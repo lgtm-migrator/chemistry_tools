@@ -10,7 +10,7 @@ Test Bond class
 
 import pytest
 
-from chemistry_tools.Bond import Bond, BondType
+from chemistry_tools.bond import Bond, BondType
 
 @pytest.fixture(scope='module')
 def b1():

@@ -10,7 +10,7 @@ Test property_format
 
 import pytest
 
-from chemistry_tools.SpectrumSimilarity import SpectrumSimilarity, create_array
+from chemistry_tools.spectrum_similarity import SpectrumSimilarity, create_array
 
 def test_SpectrumSimilarity():
 	

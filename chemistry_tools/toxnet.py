@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Toxnet.py
+#  toxnet.py
 """Read data from National Library of Medicine TOXNET"""
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 from bs4 import BeautifulSoup
 import requests
 from decimal import Decimal
-from .PropertyFormat import *
+from .property_format import *
 
 def toxnet(cas):
 	try:

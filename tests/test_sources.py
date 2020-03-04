@@ -8,7 +8,7 @@ Test downloading.
 """
 
 
-from chemistry_tools.Utils import get_all_sources
+from chemistry_tools.utils import get_all_sources
 
 def test_substance_sources():
     """Retrieve a list of all Substance sources."""

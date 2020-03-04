@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
 #
-#  Atom.py
+#  atom.py
 #
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -21,10 +20,11 @@
 #  MA 02110-1301, USA.
 #
 
-from .Errors import deprecated
-from .Constants import ELEMENTS
+from .constants import ELEMENTS
+from .errors import deprecated
 
-class Atom(object):
+
+class Atom:
 	"""Class to represent an atom in a :class:`~pubchempy.Compound`."""
 	
 	def __init__(self, aid, number, x=None, y=None, z=None, charge=0):
@@ -37,25 +37,33 @@ class Atom(object):
 		:param float z: (optional) Z coordinate.
 		:param int charge: (optional) Formal charge on atom.
 		"""
+		
 		self.aid = aid
-		"""The atom ID within the owning Compound."""
+		# The atom ID within the owning Compound.
 		self.number = number
-		"""The atomic number for this atom."""
+		# The atomic number for this atom.
 		self.x = x
-		"""The x coordinate for this atom."""
+		# The x coordinate for this atom.
 		self.y = y
-		"""The y coordinate for this atom."""
+		# The y coordinate for this atom.
 		self.z = z
-		"""The z coordinate for this atom. Will be ``None`` in 2D Compound records."""
+		# The z coordinate for this atom. Will be ``None`` in 2D Compound records.
 		self.charge = charge
-		"""The formal charge on this atom."""
+		# The formal charge on this atom.
 	
 	def __repr__(self):
-		return 'Atom(%s, %s)' % (self.aid, self.element)
+		return 'Atom({}, {})'.format(self.aid, self.element)
 	
 	def __eq__(self, other):
-		return (isinstance(other, type(self)) and self.aid == other.aid and self.element == other.element and
-				self.x == other.x and self.y == other.y and self.z == other.z and self.charge == other.charge)
+		return (
+				isinstance(other, type(self)) and
+				self.aid == other.aid and
+				self.element == other.element and
+				self.x == other.x and
+				self.y == other.y and
+				self.z == other.z and
+				self.charge == other.charge
+				)
 	
 	@deprecated('Dictionary style access to Atom attributes is deprecated')
 	def __getitem__(self, prop):
@@ -87,7 +95,7 @@ class Atom(object):
 		for coord in {'x', 'y', 'z'}:
 			if getattr(self, coord) is not None:
 				data[coord] = getattr(self, coord)
-		if self.charge is not 0:
+		if self.charge != 0:
 			data['charge'] = self.charge
 		return data
 	

@@ -1,7 +1,6 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
-#  Substance.py
+#  substance.py
 #
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -20,13 +19,17 @@
 #  MA 02110-1301, USA.
 #
 
+# stdlib
 import json
-from .Utils import request, memoized_property, get_json
-from .Compound import Compound, CompoundIdType
+
+# this package
+from .compound import Compound, CompoundIdType
+from .utils import get_json, memoized_property, request
 
 
-class Substance(object):
-	"""Corresponds to a single record from the PubChem Substance database.
+class Substance:
+	"""
+	Corresponds to a single record from the PubChem Substance database.
 
 	The PubChem Substance database contains all chemical records deposited in PubChem in their most raw form, before
 	any significant processing is applied. As a result, it contains duplicates, mixtures, and some records that don't
@@ -39,17 +42,23 @@ class Substance(object):
 	
 	@classmethod
 	def from_sid(cls, sid):
-		"""Retrieve the Substance record for the specified SID.
+		"""
+		Retrieve the Substance record for the specified SID.
 
 		:param int sid: The PubChem Substance Identifier (SID).
 		"""
-		#record = json.loads(request(sid, 'sid', 'substance').read().decode())['PC_Substances'][0]
+		
+		# record = json.loads(request(sid, 'sid', 'substance').read().decode())['PC_Substances'][0]
 		record = json.loads(request(sid, 'sid', 'substance').content.decode())['PC_Substances'][0]
 		return cls(record)
 	
 	def __init__(self, record):
+		"""
+		:param record: A dictionary containing the full Substance record that all other properties are obtained from.
+		:type record: dict
+		"""
+
 		self.record = record
-		"""A dictionary containing the full Substance record that all other properties are obtained from."""
 	
 	def __repr__(self):
 		return 'Substance(%s)' % self.sid if self.sid else 'Substance()'
@@ -150,20 +159,20 @@ class Substance(object):
 
 
 def substances_to_frame(substances, properties=None):
-	"""Construct a pandas :class:`~pandas.DataFrame` from a list of :class:`~pubchempy.Substance` objects.
+	"""
+	Construct a pandas :class:`~pandas.DataFrame` from a list of :class:`~pubchempy.Substance` objects.
 
 	Optionally specify a list of the desired :class:`~pubchempy.Substance` properties.
 	"""
+	
 	import pandas as pd
 	if isinstance(substances, Substance):
 		substances = [substances]
-	properties = set(properties) | set(['sid']) if properties else None
+	properties = set(properties) | {'sid'} if properties else None
 	return pd.DataFrame.from_records([s.to_dict(properties) for s in substances], index='sid')
-
 
 # def add_columns_to_frame(dataframe, id_col, id_namespace, add_cols):
 #     """"""
 #     # Existing dataframe with some identifier column
 #     # But consider what to do if the identifier column is an index?
 #     # What about having the Compound/Substance object as a column?
-

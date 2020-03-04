@@ -1,7 +1,6 @@
 #!/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
-#  Bond.py
+#  bond.py
 #
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -20,10 +19,10 @@
 #  MA 02110-1301, USA.
 #
 
-from .Errors import deprecated
+from .errors import deprecated
 
 
-class BondType(object):
+class BondType:
 	SINGLE = 1
 	DOUBLE = 2
 	TRIPLE = 3
@@ -34,8 +33,10 @@ class BondType(object):
 	UNKNOWN = 255
 
 
-class Bond(object):
-	"""Class to represent a bond between two atoms in a :class:`~pubchempy.Compound`."""
+class Bond:
+	"""
+	Class to represent a bond between two atoms in a :class:`~pubchempy.Compound`.
+	"""
 	
 	def __init__(self, aid1, aid2, order=BondType.SINGLE, style=None):
 		"""Initialize with begin and end atom IDs, bond order and bond style.
@@ -45,20 +46,25 @@ class Bond(object):
 		:param int order: Bond order.
 		"""
 		self.aid1 = aid1
-		"""ID of the begin atom of this bond."""
+		# ID of the begin atom of this bond.
 		self.aid2 = aid2
-		"""ID of the end atom of this bond."""
+		# ID of the end atom of this bond.
 		self.order = order
-		"""Bond order."""
+		# Bond order.
 		self.style = style
-		"""Bond style annotation."""
+		# Bond style annotation.
 	
 	def __repr__(self):
-		return 'Bond(%s, %s, %s)' % (self.aid1, self.aid2, self.order)
+		return 'Bond({}, {}, {})'.format(self.aid1, self.aid2, self.order)
 	
 	def __eq__(self, other):
-		return (isinstance(other, type(self)) and self.aid1 == other.aid1 and self.aid2 == other.aid2 and
-				self.order == other.order and self.style == other.style)
+		return (
+				isinstance(other, type(self)) and
+				self.aid1 == other.aid1 and
+				self.aid2 == other.aid2 and
+				self.order == other.order and
+				self.style == other.style
+				)
 	
 	@deprecated('Dictionary style access to Bond attributes is deprecated')
 	def __getitem__(self, prop):
