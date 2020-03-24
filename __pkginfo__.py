@@ -23,7 +23,6 @@
 
 # This script based on https://github.com/rocky/python-uncompyle6/blob/master/__pkginfo__.py
 
-import os.path
 import pathlib
 
 copyright = """
@@ -48,20 +47,8 @@ web = github_url = f"https://github.com/{github_username}/{modname}"
 install_requires = pathlib.Path("requirements.txt").read_text().split("\n")
 
 
-def get_srcdir():
-	filename = os.path.normcase(os.path.dirname(os.path.abspath(__file__)))
-	return os.path.realpath(filename)
-
-
-srcdir = get_srcdir()
-
-
-def read(*rnames):
-	return open(os.path.join(srcdir, *rnames)).read()
-
-
 # Get info from files; set: long_description
-long_description = (pathlib.Path("README.rst").read_text() + '\n')
+long_description = pathlib.Path("README.rst").read_text() + '\n'
 
 classifiers = [
 		# "Development Status :: 1 - Planning",
