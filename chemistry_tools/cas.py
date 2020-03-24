@@ -63,7 +63,7 @@ def check_cas_number(cas_no):
 	:rtype: int
 	"""
 	
-	cas_no = int(cas_no)
+	cas_no = abs(int(cas_no))
 	
 	check_digit = cas_no % 10
 	main_value = (cas_no - check_digit) // 10
