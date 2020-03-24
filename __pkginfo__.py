@@ -29,7 +29,7 @@ copyright = """
 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 """
 
-VERSION = "0.2.2"
+VERSION = "0.2.3"
 
 modname = "chemistry_tools"
 py_modules = None
