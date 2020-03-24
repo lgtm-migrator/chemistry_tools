@@ -33,10 +33,19 @@ __version__ = "0.2.2"
 __email__ = "dominic@davis-foster.co.uk"
 
 
+# stdlib
+import pathlib
+
+# 3rd party
+import appdirs
 import requests_cache
 
+cache_dir = pathlib.Path(appdirs.user_cache_dir("chemistry_tools"))
+if not cache_dir.exists():
+	cache_dir.mkdir()
+
 # Setup Cache and keep for ~ a month
-requests_cache.install_cache("chemistry_tools_cache", expire_after=2500000)
+requests_cache.install_cache(str(cache_dir / "chemistry_tools_cache"), expire_after=2500000)
 
 
 from . import assay
