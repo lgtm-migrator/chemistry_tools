@@ -40,6 +40,16 @@
     :special-members:
 
 ===================================
+:mod:`chemistry_tools.cas`
+===================================
+
+
+.. automodule:: chemistry_tools.cas
+    :members:
+    :private-members:
+    :special-members:
+
+===================================
 :mod:`chemistry_tools.compound`
 ===================================
 

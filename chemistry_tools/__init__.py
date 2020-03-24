@@ -51,6 +51,7 @@ from . import spectrum_similarity
 from . import substance
 from . import toxnet
 from . import utils
+from . import cas
 
 
 def clear_cache():
