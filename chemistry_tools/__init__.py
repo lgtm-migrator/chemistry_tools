@@ -3,7 +3,7 @@
 #
 #  __init__.py
 #
-#  Copyright (c) 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  assay, Atom, Bond, Compound, Constants, Errors, Lookup, Substance and
 #  Utils based on PubChemPy by Matt Swain <m.swain@me.com>
@@ -26,7 +26,7 @@
 #
 
 __author__ = "Dominic Davis-Foster"
-__copyright__ = "2019 Dominic Davis-Foster"
+__copyright__ = "2019-2020 Dominic Davis-Foster"
 
 __license__ = "LGPL"
 __version__ = "0.2.2"
