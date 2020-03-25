@@ -42,7 +42,7 @@ import requests_cache
 
 cache_dir = pathlib.Path(appdirs.user_cache_dir("chemistry_tools"))
 if not cache_dir.exists():
-	cache_dir.mkdir()
+	cache_dir.mkdir(parents=True, exist_ok=True)
 
 # Setup Cache and keep for ~ a month
 requests_cache.install_cache(str(cache_dir / "chemistry_tools_cache"), expire_after=2500000)
