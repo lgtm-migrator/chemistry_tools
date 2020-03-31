@@ -2,8 +2,8 @@
 chemistry_tools
 ****************
 
-.. image:: https://travis-ci.org/domdfcoding/chemistry_tools.svg?branch=master
-    :target: https://travis-ci.org/domdfcoding/chemistry_tools
+.. image:: https://travis-ci.com/domdfcoding/chemistry_tools.svg?branch=master
+    :target: https://travis-ci.com/domdfcoding/chemistry_tools
     :alt: Build Status
 .. image:: https://readthedocs.org/projects/chemistry_tools/badge/?version=latest
     :target: https://chemistry_tools.readthedocs.io/en/latest/?badge=latest
