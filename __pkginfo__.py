@@ -44,11 +44,16 @@ author_email = "dominic@davis-foster.co.uk"
 github_username = "domdfcoding"
 web = github_url = f"https://github.com/{github_username}/{modname}"
 
-install_requires = pathlib.Path("requirements.txt").read_text().split("\n")
-
-
 # Get info from files; set: long_description
-long_description = pathlib.Path("README.rst").read_text() + '\n'
+if pathlib.Path.cwd().name == "doc-source":
+	print(pathlib.Path.cwd().parent / "README.rst")
+	install_requires = (pathlib.Path.cwd().parent / "requirements.txt").read_text().split("\n")
+	long_description = (pathlib.Path.cwd().parent / "README.rst").read_text() + '\n'
+else:
+	print(pathlib.Path("README.rst"))
+	install_requires = pathlib.Path("requirements.txt").read_text().split("\n")
+	long_description = pathlib.Path("README.rst").read_text() + '\n'
+
 
 classifiers = [
 		# "Development Status :: 1 - Planning",

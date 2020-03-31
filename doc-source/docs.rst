@@ -89,9 +89,9 @@
     :private-members:
     :special-members:
 
-===================================
+========================================
 :mod:`chemistry_tools.property_format`
-===================================
+========================================
 
 
 .. automodule:: chemistry_tools.property_format
@@ -99,9 +99,9 @@
     :private-members:
     :special-members:
 
-===================================
+===========================================
 :mod:`chemistry_tools.spectrum_similarity`
-===================================
+===========================================
 
 
 .. automodule:: chemistry_tools.spectrum_similarity
