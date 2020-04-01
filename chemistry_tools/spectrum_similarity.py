@@ -111,7 +111,7 @@ def SpectrumSimilarity(spec_top, spec_bottom, t = 0.25, b = 10, top_label = None
 		fig, ax = plt.subplots()
 		#fig.scatter(top_plot["mz"],top_plot["intensity"], s=0)
 		ax.vlines(top_plot["mz"], 0, top_plot["intensity"], color="blue")
-		ax.vlines(top_plot["mz"], 0, -top_plot["intensity"], color="red")
+		ax.vlines(bottom["mz"], 0, -bottom["intensity"], color="red")
 		ax.set_ylim(-125,125)
 		ax.set_xlim(xlim[0], xlim[1])
 		ax.axhline(color="black", linewidth=0.5)
