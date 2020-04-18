@@ -17,6 +17,9 @@ chemistry_tools
 .. image:: https://coveralls.io/repos/github/domdfcoding/chemistry_tools/badge.svg?branch=master
     :target: https://coveralls.io/github/domdfcoding/chemistry_tools?branch=master
     :alt: Coverage
+.. image:: https://img.shields.io/badge/License-LGPL%20v3-blue.svg
+    :alt: PyPI - License
+    :target: https://github.com/domdfcoding/chemistry_tools/blob/master/LICENSE
 
 
 Python tools for analysis of chemical compounds
