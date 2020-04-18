@@ -5,6 +5,7 @@ python:
 - '3.6'
 - '3.7'
 install:
+- pip install coveralls -r requirements.txt
 - pip install coveralls -r tests/requirements.txt
 script:
 - pytest --cov=chemistry_tools tests/
