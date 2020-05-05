@@ -22,10 +22,10 @@ Uses data from PubChem and toxnet
 #  MA 02110-1301, USA.
 #
 
-from chemistry_tools.assay import Assay
-from chemistry_tools.compound import Compound, compounds_to_frame
-from chemistry_tools.substance import Substance, substances_to_frame
-from chemistry_tools.utils import get_json
+from chemistry_tools.pubchem.assay import Assay
+from chemistry_tools.pubchem.compound import Compound, compounds_to_frame
+from chemistry_tools.pubchem.substance import Substance, substances_to_frame
+from chemistry_tools.pubchem.utils import get_json
 
 
 def get_compounds(identifier, namespace='cid', searchtype=None, as_dataframe=False, **kwargs):
