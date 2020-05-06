@@ -17,4 +17,8 @@ formats: all
 python:
   version: 3.6
   install:
+    - requirements: requirements.txt
+    - requirements: chemistry_tools/elements/requirements.txt
+    - requirements: chemistry_tools/formulae/requirements.txt
+    - requirements: chemistry_tools/pubchem/requirements.txt
     - requirements: doc-source/requirements.txt
