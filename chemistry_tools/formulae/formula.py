@@ -201,7 +201,7 @@ class Formula(defaultdict, Counter):
 			formula = formula.replace(grp, f'({GROUPS[grp]})')
 		
 		comp_and_charge = string_to_composition(formula)
-		print(comp_and_charge)
+		# print(comp_and_charge)
 		
 		if 0 in comp_and_charge:
 			if charge:
