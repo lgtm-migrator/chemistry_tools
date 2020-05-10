@@ -24,6 +24,7 @@ log = logging.getLogger(__name__)
 pd = pytest.importorskip('pandas')
 
 
+@pytest.mark.flaky(reruns=5, reruns_delay=10)
 def test_compounds_dataframe():
     """"""
     df = get_compounds('C20H41Br', 'formula', as_dataframe=True)

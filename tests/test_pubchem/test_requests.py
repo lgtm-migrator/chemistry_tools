@@ -10,6 +10,7 @@ Test basic requests.
 
 from chemistry_tools.pubchem.utils import request, get_json, get_sids
 
+
 def test_requests():
     """Test a variety of basic raw requests and ensure they don't return an error code."""
     assert request('c1ccccc1', 'smiles').status_code == 200
