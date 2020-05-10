@@ -142,7 +142,7 @@ for upper, lowers in element_re_dict.items():
 		invalid_re.append(f"{upper}[{''.join(lowers)}][{''.join(invalid_lowers[upper])}]+")
 		invalid_re.append(f"{upper}[{''.join(invalid_lowers[upper])}]+")
 
-print(invalid_uppers, invalid_lowers)
+# print(invalid_uppers, invalid_lowers)
 
 element_re.sort()
 

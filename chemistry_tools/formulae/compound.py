@@ -74,17 +74,17 @@ Parse formulae into a Python object
 #
 
 
-import quantities
-
 # this package
-from chemistry_tools._base import ChemToolsBase
+import quantities
+from domdf_python_tools.bases import Dictable
+
 from chemistry_tools.formulae.formula import Formula
 from chemistry_tools.formulae.html import string_to_html
 from chemistry_tools.formulae.latex import string_to_latex
 from chemistry_tools.formulae.unicode import string_to_unicode
 
 
-class Compound(ChemToolsBase):
+class Compound(Dictable):
 	"""
 	Class representing a chemical compound.
 	

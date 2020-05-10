@@ -1,3 +1,5 @@
+# This file is managed by `git_helper`. Don't edit it directly
+
 # .readthedocs.yml
 # Read the Docs configuration file
 # See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
@@ -18,7 +20,8 @@ python:
   version: 3.6
   install:
     - requirements: requirements.txt
+    - requirements: doc-source/requirements.txt
+    - requirements: chemistry_tools/pubchem/requirements.txt
     - requirements: chemistry_tools/elements/requirements.txt
     - requirements: chemistry_tools/formulae/requirements.txt
-    - requirements: chemistry_tools/pubchem/requirements.txt
-    - requirements: doc-source/requirements.txt
+

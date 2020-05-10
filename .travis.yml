@@ -1,23 +1,35 @@
+# This file is managed by `git_helper`. Don't edit it directly
+
 language: python
 dist: xenial
 python:
-- '3.8'
-- '3.6'
-- '3.7'
-#- "pypy3"
+  - '3.6'
+  - '3.7'
+  - '3.8'
+  - 'pypy3'
+  
 install:
-  - pip install coveralls tox tox-travis Cython
+  - sudo apt-get update
+  
+  - pip install rst2txt 
+  - pip install coveralls tox tox-travis
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+  - bash miniconda.sh -b -p $HOME/miniconda
+  
 script:
   - tox
 after_success:
   - coveralls
+
 deploy:
   provider: pypi
-  user: DomDF
-  on:
-    tags: true
-    python: '3.6'
-  distributions: sdist bdist_wheel
-  skip_existing: true
+  user: "DomDF"
   password:
     secure: qS+l+TaW6WCEXf5m7NFMO56p3QEaH2PZEmh7QEcTzPPMaGe43EuI1seSfwgyMmpUexG9gzNnakQv9IYXRt54z7XkoKWknCtmf5nfz/CXKuClqR2Skew3O1SEqJVLaFbzr1sV63Ful7lUcMSHEJctgHxkEpzQ1Kie2Swa8cXOepcGgjgMKBMvdFcui6mPE+sF96mcblDh2/Vnd7pVgG7raVolBiDWt/uVmrcETjn5iJ5xeidgDlPN9GZ0f2O9raX4nVJHTkRaQLmi8gMwZNOwkqwPg0tDA9JWjRoqmbXZD2p7bLdIq0ZNTuALzEAZUIJtaQTqo9eeJAUfz+8P1Twwz+bBZGPGvnqW3eOZaxMJCyXPZQbNlxwnAJ8+yQCtGybjwFLhWPhp3Y4qm8zcfOM5x7X/EbHlt4WE4vGzNrswh6iHGY9hdD1j0cELSSsFjqinq2MGHQQTCdUrpjcZhhkXYhy4pdXtKiQq5TqIZWR2OYZnn9zYJa+cogVwjzFvxGp7sKlEPeoNM7b/4vphTeYFHSVY7psoV20reHYXyOEZKj1OW93UYPF1M8ti15HLWJPLm05gmG0a7+NFeYOp1DTdzTU+zIA6Br5fJg9hZqyYRtZuz4U1/lRAoXYlKvlUtZVrIZFsdXl8tFOKC4myBQG9y6AQQoRpiBdUewDekHKK5oM=
+  on:
+    tags: true
+    python: "3.6"
+  distributions: "sdist bdist_wheel"
+  skip_existing: true
+after_deploy:
+  - .ci/travis_build_conda.sh || travis_terminate 1;

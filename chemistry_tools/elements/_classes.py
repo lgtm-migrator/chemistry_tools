@@ -58,14 +58,14 @@ from functools import lru_cache
 
 # 3rd party
 from domdf_python_tools import doctools
+from domdf_python_tools.bases import Dictable
 from memoized_property import memoized_property
 
 # this package
-from chemistry_tools._base import ChemToolsBase
 from . import _table
 
 
-class Element(ChemToolsBase):
+class Element(Dictable):
 	"""Chemical element.
 
 	Attributes
@@ -440,7 +440,7 @@ class Element(ChemToolsBase):
 					)
 
 
-class Isotope(ChemToolsBase):
+class Isotope(Dictable):
 	"""Isotope massnumber, relative atomic mass, and abundance."""
 	
 	def __init__(self, mass=0.0, abundance=1.0, massnumber=0):
