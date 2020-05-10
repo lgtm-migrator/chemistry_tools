@@ -22,7 +22,7 @@ python_versions:
   - '3.6'
   - '3.7'
   - "3.8"
-  - "pypy3"
+#  - "pypy3"
 
 # Additional python requirements for travis
 #travis_additional_requirements:
