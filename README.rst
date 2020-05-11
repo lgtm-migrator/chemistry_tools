@@ -122,18 +122,3 @@ Copyright (c) 2011-2015, Anton Goloborodko & Lev Levitsky
 
 Licensed under the Apache License
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
