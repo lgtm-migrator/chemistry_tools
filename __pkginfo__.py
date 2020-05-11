@@ -49,9 +49,12 @@ long_description = (repo_root / "README.rst").read_text() + '\n'
 conda_description = """Python tools for analysis of chemical compounds
 
 
-Before installing please ensure you have added the "conda-forge" channel. """
+Before installing please ensure you have added the "conda-forge" channel. 
+
+
+Before installing please ensure you have added the following channels: domdfcoding, conda-forge"""
 install_requires = (repo_root / "requirements.txt").read_text().split('\n')
-extras_require = {'pubchem': ['pandas>=1.0.1', 'beautifulsoup4>=4.7.0'], 'elements': ['domdf_python_tools>=0.2.6', 'memoized_property>=1.0.3'], 'formulae': ['mathematical>=0.1.7', 'pandas>=1.0.1', 'pyparsing>=2.2.0', 'tabulate>=0.8.3', 'cawdrey>=0.1.2', 'quantities>=0.12.4'], 'plotting': ['matplotlib>=3.0.0'], 'all': ['beautifulsoup4>=4.7.0', 'cawdrey>=0.1.2', 'domdf_python_tools>=0.2.6', 'mathematical>=0.1.7', 'matplotlib>=3.0.0', 'memoized_property>=1.0.3', 'pandas>=1.0.1', 'pyparsing>=2.2.0', 'quantities>=0.12.4', 'tabulate>=0.8.3']}
+extras_require = {'pubchem': ['pandas>=1.0.1', 'beautifulsoup4>=4.7.0'], 'elements': ['domdf_python_tools>=0.2.6', 'memoized_property>=1.0.3'], 'formulae': ['mathematical>=0.1.7', 'pandas>=1.0.1', 'pyparsing>=2.2.0', 'tabulate>=0.8.3', 'cawdrey>=0.1.2', 'quantities>=0.12.4'], 'plotting': ['matplotlib>=3.0.0'], 'all': ['pandas>=1.0.1', 'beautifulsoup4>=4.7.0', 'domdf_python_tools>=0.2.6', 'memoized_property>=1.0.3', 'mathematical>=0.1.7', 'pandas>=1.0.1', 'pyparsing>=2.2.0', 'tabulate>=0.8.3', 'cawdrey>=0.1.2', 'quantities>=0.12.4', 'matplotlib>=3.0.0']}
 
 classifiers = [
 		'Development Status :: 4 - Beta',

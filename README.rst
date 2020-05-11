@@ -16,17 +16,37 @@ chemistry_tools
 .. image:: https://img.shields.io/pypi/pyversions/chemistry_tools.svg
     :target: https://pypi.org/project/chemistry_tools/
     :alt: PyPI - Python Version
+.. image:: https://img.shields.io/pypi/wheel/chemistry_tools
+    :target: https://pypi.org/project/chemistry_tools/
+    :alt: PyPI - Wheel
+.. image:: https://img.shields.io/pypi/implementation/chemistry_tools
+    :target: https://pypi.org/project/chemistry_tools/
+    :alt: PyPI - Implementation
 .. image:: https://img.shields.io/conda/v/domdfcoding/chemistry_tools
     :alt: Conda
+    :target: https://anaconda.org/domdfcoding/chemistry_tools
+.. image:: https://img.shields.io/conda/pn/domdfcoding/chemistry_tools?label=conda%7Cplatform
+    :alt: Conda Platform
     :target: https://anaconda.org/domdfcoding/chemistry_tools
 .. image:: https://coveralls.io/repos/github/domdfcoding/chemistry_tools/badge.svg?branch=master
     :target: https://coveralls.io/github/domdfcoding/chemistry_tools?branch=master
     :alt: Coverage
-.. image:: https://img.shields.io/badge/License-LGPL%20v3-blue.svg
+.. image:: https://img.shields.io/github/license/domdfcoding/chemistry_tools
     :alt: License
     :target: https://github.com/domdfcoding/chemistry_tools/blob/master/LICENSE
 .. image:: https://img.shields.io/github/languages/top/domdfcoding/chemistry_tools
     :alt: GitHub top language
+.. image:: https://img.shields.io/github/commits-since/domdfcoding/chemistry_tools/v0.2.9
+    :target: https://github.com/domdfcoding/chemistry_tools/pulse
+    :alt: GitHub commits since tagged version
+.. image:: https://img.shields.io/github/last-commit/domdfcoding/chemistry_tools
+    :target: https://github.com/domdfcoding/chemistry_tools/commit/master
+    :alt: GitHub last commit
+.. image:: https://img.shields.io/maintenance/yes/2020
+    :alt: Maintenance
+.. image:: https://img.shields.io/codefactor/grade/github/domdfcoding/chemistry_tools
+    :target: https://www.codefactor.io/repository/github/domdfcoding/chemistry_tools
+    :alt: CodeFactor Grade
 
 .. end shields
 
