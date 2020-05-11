@@ -49,7 +49,7 @@ long_description = (repo_root / "README.rst").read_text() + '\n'
 conda_description = """Python tools for analysis of chemical compounds
 
 
-Before installing please ensure you have added the "conda-forge" channel. 
+Before installing please ensure you have added the "conda-forge" channel.
 
 
 Before installing please ensure you have added the following channels: domdfcoding, conda-forge"""
@@ -73,7 +73,7 @@ classifiers = [
 		'Topic :: Database :: Front-Ends',
 		'Topic :: Scientific/Engineering :: Bio-Informatics',
 		'Topic :: Scientific/Engineering :: Chemistry',
-		
+
 		]
 
 keywords = ""
