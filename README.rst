@@ -2,9 +2,11 @@
 chemistry_tools
 ****************
 
-.. image:: https://travis-ci.com/domdfcoding/chemistry_tools.svg?branch=master
+.. start shields
+
+.. image:: https://img.shields.io/travis/com/domdfcoding/chemistry_tools/master?logo=travis
     :target: https://travis-ci.com/domdfcoding/chemistry_tools
-    :alt: Build Status
+    :alt: Travis Build Status
 .. image:: https://readthedocs.org/projects/chemistry_tools/badge/?version=latest
     :target: https://chemistry_tools.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
@@ -14,12 +16,19 @@ chemistry_tools
 .. image:: https://img.shields.io/pypi/pyversions/chemistry_tools.svg
     :target: https://pypi.org/project/chemistry_tools/
     :alt: PyPI - Python Version
+.. image:: https://img.shields.io/conda/v/domdfcoding/chemistry_tools
+    :alt: Conda
+    :target: https://anaconda.org/domdfcoding/chemistry_tools
 .. image:: https://coveralls.io/repos/github/domdfcoding/chemistry_tools/badge.svg?branch=master
     :target: https://coveralls.io/github/domdfcoding/chemistry_tools?branch=master
     :alt: Coverage
 .. image:: https://img.shields.io/badge/License-LGPL%20v3-blue.svg
-    :alt: PyPI - License
+    :alt: License
     :target: https://github.com/domdfcoding/chemistry_tools/blob/master/LICENSE
+.. image:: https://img.shields.io/github/languages/top/domdfcoding/chemistry_tools
+    :alt: GitHub top language
+
+.. end shields
 
 
 Python tools for analysis of chemical compounds
