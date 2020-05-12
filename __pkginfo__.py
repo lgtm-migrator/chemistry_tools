@@ -44,7 +44,7 @@ __copyright__ = """
 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 """
 
-__version__ = "0.2.9"
+__version__ = "0.2.10"
 
 modname = "chemistry_tools"
 py_modules = []
