@@ -75,7 +75,7 @@ Before installing please ensure you have added the following channels: domdfcodi
 __all__.append("conda_description")
 
 install_requires = (repo_root / "requirements.txt").read_text().split('\n')
-extras_require = {'pubchem': ['pandas>=1.0.1', 'beautifulsoup4>=4.7.0'], 'elements': ['domdf_python_tools>=0.2.6', 'memoized_property>=1.0.3'], 'formulae': ['mathematical>=0.1.7', 'pandas>=1.0.1', 'pyparsing>=2.2.0', 'tabulate>=0.8.3', 'cawdrey>=0.1.2', 'quantities>=0.12.4'], 'plotting': ['matplotlib>=3.0.0'], 'all': ['pandas>=1.0.1', 'beautifulsoup4>=4.7.0', 'domdf_python_tools>=0.2.6', 'memoized_property>=1.0.3', 'mathematical>=0.1.7', 'pandas>=1.0.1', 'pyparsing>=2.2.0', 'tabulate>=0.8.3', 'cawdrey>=0.1.2', 'quantities>=0.12.4', 'matplotlib>=3.0.0']}
+extras_require = {'pubchem': ['pandas>=1.0.1', 'beautifulsoup4>=4.7.0'], 'elements': ['domdf_python_tools>=0.2.6', 'memoized-property>=1.0.3'], 'formulae': ['mathematical>=0.1.7', 'pandas>=1.0.1', 'pyparsing>=2.2.0', 'tabulate>=0.8.3', 'cawdrey>=0.1.2', 'quantities>=0.12.4'], 'plotting': ['matplotlib>=3.0.0'], 'all': ['pandas>=1.0.1', 'beautifulsoup4>=4.7.0', 'domdf_python_tools>=0.2.6', 'memoized-property>=1.0.3', 'mathematical>=0.1.7', 'pandas>=1.0.1', 'pyparsing>=2.2.0', 'tabulate>=0.8.3', 'cawdrey>=0.1.2', 'quantities>=0.12.4', 'matplotlib>=3.0.0']}
 
 classifiers = [
 		'Development Status :: 4 - Beta',
