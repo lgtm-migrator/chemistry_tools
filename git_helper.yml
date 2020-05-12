@@ -22,11 +22,6 @@ python_versions:
   - '3.6'
   - '3.7'
   - "3.8"
-#  - "pypy3"
-
-# Additional python requirements for travis
-#travis_additional_requirements:
-#  -
 
 # travis secure password for PyPI
 travis_pypi_secure: "qS+l+TaW6WCEXf5m7NFMO56p3QEaH2PZEmh7QEcTzPPMaGe43EuI1seSfwgyMmpUexG9gzNnakQv9IYXRt54z7XkoKWknCtmf5nfz/CXKuClqR2Skew3O1SEqJVLaFbzr1sV63Ful7lUcMSHEJctgHxkEpzQ1Kie2Swa8cXOepcGgjgMKBMvdFcui6mPE+sF96mcblDh2/Vnd7pVgG7raVolBiDWt/uVmrcETjn5iJ5xeidgDlPN9GZ0f2O9raX4nVJHTkRaQLmi8gMwZNOwkqwPg0tDA9JWjRoqmbXZD2p7bLdIq0ZNTuALzEAZUIJtaQTqo9eeJAUfz+8P1Twwz+bBZGPGvnqW3eOZaxMJCyXPZQbNlxwnAJ8+yQCtGybjwFLhWPhp3Y4qm8zcfOM5x7X/EbHlt4WE4vGzNrswh6iHGY9hdD1j0cELSSsFjqinq2MGHQQTCdUrpjcZhhkXYhy4pdXtKiQq5TqIZWR2OYZnn9zYJa+cogVwjzFvxGp7sKlEPeoNM7b/4vphTeYFHSVY7psoV20reHYXyOEZKj1OW93UYPF1M8ti15HLWJPLm05gmG0a7+NFeYOp1DTdzTU+zIA6Br5fJg9hZqyYRtZuz4U1/lRAoXYlKvlUtZVrIZFsdXl8tFOKC4myBQG9y6AQQoRpiBdUewDekHKK5oM="
@@ -35,14 +30,6 @@ travis_pypi_secure: "qS+l+TaW6WCEXf5m7NFMO56p3QEaH2PZEmh7QEcTzPPMaGe43EuI1seSfwg
 manifest_additional:
   - recursive-include chemistry_tools/ requirements.txt
 
-# additional requirements for tox
-#tox_requirements:
-#  -
-
-# additional build requirements for tox
-#tox_build_requirements:
-#  -
-
 # directory that contains tests
 tests_dir: "tests"
 
@@ -50,12 +37,7 @@ tests_dir: "tests"
 #additional_setup_args:
 #  foo: bar
 
-conda_description: "Python tools for analysis of chemical compounds
-
-
-
-Before installing please ensure you have added the \"conda-forge\" channel.
-"
+conda_description: "Python tools for analysis of chemical compounds"
 
 classifiers:
   - 'Development Status :: 4 - Beta'
@@ -65,7 +47,6 @@ classifiers:
   - 'Intended Audience :: Developers'
   - "Intended Audience :: Education"
   - "Intended Audience :: Science/Research"
-  - "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)"
   - 'Operating System :: OS Independent'
   - 'Programming Language :: Python'
   - 'Topic :: Software Development :: Libraries :: Python Modules'
@@ -75,11 +56,6 @@ classifiers:
 #  - "Topic :: Scientific/Engineering :: Visualization"
 
 
-#travis_extra_install_pre:
-#  -
-
-#travis_extra_install_post:
-#  -
 
 #keywords:
 #  -

@@ -18,17 +18,39 @@
 
 import pathlib
 
-copyright = """
+__all__ = [
+		"__copyright__",
+		"__version__",
+		"modname",
+		"py_modules",
+		"entry_points",
+		"__license__",
+		"short_desc",
+		"author",
+		"author_email",
+		"github_username",
+		"web",
+		"github_url",
+		"project_urls",
+		"repo_root",
+		"long_description",
+		"install_requires",
+		"extras_require",
+		"classifiers",
+		"keywords",
+		]
+
+__copyright__ = """
 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 """
 
-VERSION = "0.2.9"
+__version__ = "0.2.9"
 
 modname = "chemistry_tools"
 py_modules = []
 entry_points = None
 
-license = "LGPLv3+"
+__license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 
 short_desc = "Python tools for analysis of chemical compounds"
 
@@ -49,10 +71,9 @@ long_description = (repo_root / "README.rst").read_text() + '\n'
 conda_description = """Python tools for analysis of chemical compounds
 
 
-Before installing please ensure you have added the "conda-forge" channel.
-
-
 Before installing please ensure you have added the following channels: domdfcoding, conda-forge"""
+__all__.append("conda_description")
+
 install_requires = (repo_root / "requirements.txt").read_text().split('\n')
 extras_require = {'pubchem': ['pandas>=1.0.1', 'beautifulsoup4>=4.7.0'], 'elements': ['domdf_python_tools>=0.2.6', 'memoized_property>=1.0.3'], 'formulae': ['mathematical>=0.1.7', 'pandas>=1.0.1', 'pyparsing>=2.2.0', 'tabulate>=0.8.3', 'cawdrey>=0.1.2', 'quantities>=0.12.4'], 'plotting': ['matplotlib>=3.0.0'], 'all': ['pandas>=1.0.1', 'beautifulsoup4>=4.7.0', 'domdf_python_tools>=0.2.6', 'memoized_property>=1.0.3', 'mathematical>=0.1.7', 'pandas>=1.0.1', 'pyparsing>=2.2.0', 'tabulate>=0.8.3', 'cawdrey>=0.1.2', 'quantities>=0.12.4', 'matplotlib>=3.0.0']}
 
@@ -61,18 +82,18 @@ classifiers = [
 		'Intended Audience :: Developers',
 		'Intended Audience :: Education',
 		'Intended Audience :: Science/Research',
-		'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
 		'Operating System :: OS Independent',
 		'Programming Language :: Python',
 		'Topic :: Software Development :: Libraries :: Python Modules',
 		'Topic :: Database :: Front-Ends',
 		'Topic :: Scientific/Engineering :: Bio-Informatics',
 		'Topic :: Scientific/Engineering :: Chemistry',
-		'Programming Language :: Python :: Implementation :: CPython',
 		'Programming Language :: Python :: 3.6',
+		'Programming Language :: Python :: Implementation :: CPython',
 		'Programming Language :: Python :: 3.7',
 		'Programming Language :: Python :: 3.8',
 		'Programming Language :: Python :: 3 :: Only',
+		'License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)',
 
 		]
 
