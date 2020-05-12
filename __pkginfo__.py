@@ -67,7 +67,7 @@ project_urls = {
 repo_root = pathlib.Path(__file__).parent
 
 # Get info from files; set: long_description
-long_description = (repo_root / "README.rst").read_text() + '\n'
+long_description = (repo_root / "README.rst").read_text().replace("0.2.10", __version__) + '\n'
 conda_description = """Python tools for analysis of chemical compounds
 
 
@@ -88,8 +88,8 @@ classifiers = [
 		'Topic :: Database :: Front-Ends',
 		'Topic :: Scientific/Engineering :: Bio-Informatics',
 		'Topic :: Scientific/Engineering :: Chemistry',
-		'Programming Language :: Python :: 3.6',
 		'Programming Language :: Python :: Implementation :: CPython',
+		'Programming Language :: Python :: 3.6',
 		'Programming Language :: Python :: 3.7',
 		'Programming Language :: Python :: 3.8',
 		'Programming Language :: Python :: 3 :: Only',

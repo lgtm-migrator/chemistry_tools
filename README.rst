@@ -36,7 +36,7 @@ chemistry_tools
     :target: https://github.com/domdfcoding/chemistry_tools/blob/master/LICENSE
 .. image:: https://img.shields.io/github/languages/top/domdfcoding/chemistry_tools
     :alt: GitHub top language
-.. image:: https://img.shields.io/github/commits-since/domdfcoding/chemistry_tools/v0.2.9
+.. image:: https://img.shields.io/github/commits-since/domdfcoding/chemistry_tools/v0.2.10
     :target: https://github.com/domdfcoding/chemistry_tools/pulse
     :alt: GitHub commits since tagged version
 .. image:: https://img.shields.io/github/last-commit/domdfcoding/chemistry_tools
