@@ -24,4 +24,3 @@ python:
     - requirements: chemistry_tools/pubchem/requirements.txt
     - requirements: chemistry_tools/elements/requirements.txt
     - requirements: chemistry_tools/formulae/requirements.txt
-

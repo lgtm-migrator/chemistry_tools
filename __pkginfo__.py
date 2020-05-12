@@ -28,9 +28,9 @@ modname = "chemistry_tools"
 py_modules = []
 entry_points = None
 
-license = 'LGPLv3+'
+license = "LGPLv3+"
 
-short_desc = 'Python tools for analysis of chemical compounds'
+short_desc = "Python tools for analysis of chemical compounds"
 
 author = "Dominic Davis-Foster"
 author_email = "dominic@davis-foster.co.uk"
@@ -64,15 +64,15 @@ classifiers = [
 		'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
 		'Operating System :: OS Independent',
 		'Programming Language :: Python',
-		'Programming Language :: Python :: 3.6',
-		'Programming Language :: Python :: 3.7',
-		'Programming Language :: Python :: 3.8',
-		'Programming Language :: Python :: 3 :: Only',
-		'Programming Language :: Python :: Implementation :: CPython',
 		'Topic :: Software Development :: Libraries :: Python Modules',
 		'Topic :: Database :: Front-Ends',
 		'Topic :: Scientific/Engineering :: Bio-Informatics',
 		'Topic :: Scientific/Engineering :: Chemistry',
+		'Programming Language :: Python :: Implementation :: CPython',
+		'Programming Language :: Python :: 3.6',
+		'Programming Language :: Python :: 3.7',
+		'Programming Language :: Python :: 3.8',
+		'Programming Language :: Python :: 3 :: Only',
 
 		]
 
