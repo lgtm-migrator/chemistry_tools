@@ -22,6 +22,7 @@ __all__ = [
 		"__copyright__",
 		"__version__",
 		"modname",
+		"pypi_name",
 		"py_modules",
 		"entry_points",
 		"__license__",
@@ -38,6 +39,7 @@ __all__ = [
 		"extras_require",
 		"classifiers",
 		"keywords",
+		"import_name",
 		]
 
 __copyright__ = """
@@ -47,14 +49,18 @@ __copyright__ = """
 __version__ = "0.2.10"
 
 modname = "chemistry_tools"
+pypi_name = "chemistry_tools"
+import_name = "chemistry_tools"
 py_modules = []
-entry_points = None
+entry_points = {
+		"console_scripts": []
+		}
 
 __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 
 short_desc = "Python tools for analysis of chemical compounds"
 
-author = "Dominic Davis-Foster"
+__author__ = author = "Dominic Davis-Foster"
 author_email = "dominic@davis-foster.co.uk"
 github_username = "domdfcoding"
 web = github_url = f"https://github.com/domdfcoding/chemistry_tools"
@@ -88,8 +94,8 @@ classifiers = [
 		'Topic :: Database :: Front-Ends',
 		'Topic :: Scientific/Engineering :: Bio-Informatics',
 		'Topic :: Scientific/Engineering :: Chemistry',
-		'Programming Language :: Python :: Implementation :: CPython',
 		'Programming Language :: Python :: 3.6',
+		'Programming Language :: Python :: Implementation :: CPython',
 		'Programming Language :: Python :: 3.7',
 		'Programming Language :: Python :: 3.8',
 		'Programming Language :: Python :: 3 :: Only',
