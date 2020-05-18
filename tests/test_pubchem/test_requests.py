@@ -37,7 +37,7 @@ def test_listkey_requests():
 
 def test_xref_request():
     """Test requests with xref inputs."""
-    response = request('US6187568B1', 'PatentID', 'substance',  operation='sids', searchtype='xref')
+    response = request('US6187568B1', 'PatentID', 'substance', operation='sids', searchtype='xref')
     assert response.status_code == 200
     response2 = get_json('US6187568B1', 'PatentID', 'substance', operation='sids', searchtype='xref')
     assert 'IdentifierList' in response2

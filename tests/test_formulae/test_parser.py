@@ -70,27 +70,27 @@ def test_formula_to_composition():
 	assert string_to_composition('Fe(SCN)2+1') == {
 			0: 1, "C": 2, "N": 2, "S": 2, "Fe": 1}
 	assert string_to_composition('((H2O)2OH)12') == {"H": 60, "O": 36}
-	
+
 	# Special case: solvated electron:
 	assert string_to_composition('e-') == {0: -1}
 	assert string_to_composition('e-1') == {0: -1}
 	assert string_to_composition('e-(aq)') == {0: -1}
 	assert string_to_composition('SO4-2(aq)') == {0: -2, "O": 4, "S": 1}
-	
+
 	# prefixes and suffixes
 	assert string_to_composition('.NO2(g)') == {"N": 1, "O": 2}
 	assert string_to_composition('.NH2') == {"H": 2, "N": 1}
 	assert string_to_composition('ONOOH') == {"H": 1, "N": 1, "O": 3}
 	assert string_to_composition('.ONOO') == {"N": 1, "O": 3}
 	assert string_to_composition('.NO3-2') == {0: -2, "N": 1, "O": 3}
-	
+
 	with pytest.raises(ValueError):
 		string_to_composition('F-F')
-	
+
 	# TODO: parse greek prefixes
 	# assert string_to_composition('alpha-FeOOH(s)') == {"H": 1, "O": 2, "Fe": 1}
 	# assert string_to_composition('epsilon-Zn(OH)2(s)') == {"H": 2, "O": 2, "Zn": 1}
-	
+
 	assert string_to_composition('Na2CO3.7H2O(s)') == {"Na": 2, "C": 1, "O": 10, "H": 14}
 
 
@@ -163,7 +163,7 @@ def test_formula_to_html():
 def test_mass_from_composition():
 	mass1 = mass_from_composition({11: 1, 9: 1})
 	assert rounders(mass1, "0.000000") == decimal.Decimal("41.988172")
-	
+
 	mass2 = mass_from_composition({"Na": 1, "F": 1})
 	assert mass1 == mass2
 	assert rounders(mass2, "0.000000") == decimal.Decimal("41.988172")
@@ -176,6 +176,6 @@ def test_relative_atomic_masses():
 def test_mass_from_composition__formula():
 	mass = mass_from_composition(string_to_composition('NaF'))
 	assert rounders(mass, "0.000000") == decimal.Decimal("41.988172")
-	
+
 	Fminus = mass_from_composition(string_to_composition('F/-'))
 	assert abs(Fminus - 18.998403163 - 5.489e-4) < 1e-7

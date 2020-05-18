@@ -143,7 +143,7 @@ def test_properties_types(c1):
     # assert isinstance(c1.melting_point, Decimal)
     assert c1.melting_point == '5.5°C (NTP, 1992)'
     # TODO: melting point now returns string
-    
+
     assert isinstance(c1.partition_coeff, str)
     assert isinstance(c1.odor, str)
     assert isinstance(c1.other_props, str)
@@ -187,7 +187,7 @@ def test_properties_values(c1):
     assert c1.density == '0.879 at 20°C'
     assert c1.specific_gravity == '0.879 at 20°C'
     # TODO: What happened to the units (g/cu cm) for density and specific gravity?
-    #assert c1.dissociation_constant ==
+    # assert c1.dissociation_constant ==
     # TODO
     assert c1.heat_combustion == '-3267.6 kJ/mol (liquid)'
     # assert c1.melting_point == Decimal('5.558')
@@ -216,12 +216,11 @@ def test_get_property(c1):
     # assert c1.get_property_description("Melting Point") is None
     # assert isinstance(c1.get_property_unit("Melting Point"), str)
     assert c1.get_property_unit("Melting Point") is None
-    
-    
+
     assert isinstance(c1.get_property("Boiling Point"), dict)
     assert isinstance(c1.get_property("Heat Combustion"), dict)
     assert isinstance(c1.get_property("Exact Mass"), dict)
-    
+
 
 def test_coordinate_type(c1):
     assert c1.coordinate_type == '2d'

@@ -88,14 +88,14 @@ def test_compound():
 			latex_name=r'\mathrm{H_{2}O}',
 			data={'pKa': 14},
 			)
-	
+
 	OH_m = Compound(
 			name='OH-', formula=Formula.from_string("OH-", charge=-1),
 			latex_name=r'\mathrm{OH^{-}}',
 			)
-	
+
 	assert sorted([OH_m, H2O], key=attrgetter('name')) == [H2O, OH_m]
-	
+
 	H2O = Compound(name='H2O', formula=Formula.from_string("H2O"))
 	assert H2O.formula == {"H": 2, "O": 1}
 	assert H2O.latex_name == 'H_{2}O'

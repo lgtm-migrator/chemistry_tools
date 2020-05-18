@@ -32,6 +32,6 @@ def test_atom(a1):
 def test_coordinates(a1):
 	a1.set_coordinates(7, 8, 9)
 	assert a1.coordinate_type == "3d"
-	
+
 	a1.set_coordinates(7, 8)
 	assert a1.coordinate_type == "2d"

@@ -118,28 +118,28 @@ def test_formula():
 	f1 = Formula.from_string("(C6H5)2NH")
 	f2 = Formula.from_string("C12H11N")
 	assert f1 == f2
-	
+
 	# from dict
 	f3 = Formula({"C": 12, "H": 11, "N": 1})
 	assert f1 == f3
 	assert f2 == f3
-	
+
 	# from kwargs
 	f4 = Formula.from_kwargs(C=12, H=11, N=1)
 	assert f1 == f4
 	assert f2 == f4
 	assert f3 == f4
-	
+
 	# from composition
 	f5 = Formula(f1)
 	assert f5 == f1
 	assert f5 == f2
-	
+
 	s = Formula.from_string('H+')
 	assert s.charge == 1
 	assert s.mass == 1.007941
-	
-	
+
+
 def test_charged_formula():
 	# From string
 	f1 = Formula.from_string("(C6H5)2NH+")
@@ -162,21 +162,21 @@ def test_charged_formula():
 	f5 = Formula(f1)
 	assert f5 == f1
 	assert f5 == f2
-	
+
 	for charge in [1, 2, 3]:
 		with pytest.raises(ValueError):
 			Formula.from_string(f'BCHFKOH+{charge:d}', charge + 1)
 
-	
+
 def test_isotope_formula():
 	# from dict
 	f3 = Formula({"C[12]": 10, "C[13]": 2, "H": 11, "N": 1})
 	assert dict(f3) == {"[12C]": 10, "[13C]": 2, "H": 11, "N": 1}
-	
+
 	# from composition
 	f5 = Formula(f3)
 	assert f5 == f3
-	
+
 
 def test_formula_sum():
 	# Test sum of Formula objects.
@@ -186,8 +186,8 @@ def test_formula_sum():
 def test_Composition_sub():
 	# Test subtraction of Composition objects
 	assert {} - Formula.from_string('C6H12O6') == {"C": -6, "H": -12, "O": -6}
-	
-	
+
+
 def test_Composition_mul():
 	# Test multiplication of Composition by integers
 	f1 = Formula.from_string("H2O2")
@@ -204,7 +204,7 @@ def test_calculate_mass():
 	assert rounders(Formula.from_string('(C6H5)2NH').average_mass, "0.00") == decimal.Decimal("169.22")
 	assert rounders(Formula.from_string('(C6H5)2NH').average_mass, "0.00") == decimal.Decimal("169.22")
 	assert Formula.from_string('(C6H5)2NH').average_mass == Formula.from_string('(C6H5)2NH').average_mass
-	
+
 	# mz
 	assert Formula.from_string('C12H13N+').get_mz() == Formula.from_string('C12H13N', charge=1).average_mass
 
@@ -217,7 +217,7 @@ def test_calculate_mz(charge):
 	# assert Formula.from_string('C12H13N+').mass == Formula.from_string('C12H13N', charge=1).exact_mass
 	# assert Formula.from_string('C12H13N+').exact_mass == Formula.from_string('C12H13N', charge=1).mass
 	# assert Formula.from_string('C12H13N+').mass == Formula.from_string('C12H13N', charge=1).mass
-	
+
 	assert Formula.from_string('C12H13N+').get_mz() == Formula.from_string('C12H13N', charge=1).get_mz()
 	assert Formula.from_string('C12H13N+').mz == Formula.from_string('C12H13N', charge=1).get_mz()
 	assert Formula.from_string('C12H13N+').get_mz() == Formula.from_string('C12H13N', charge=1).mz
@@ -226,17 +226,17 @@ def test_calculate_mz(charge):
 def test_most_probable_isotopic_composition():
 	assert Formula.from_string('F').most_probable_isotopic_composition() == \
 		   (Formula({'F[19]': 1, 'F[18]': 0}), 1.0)
-	
+
 	Br2 = Formula.from_string('Br2')
 	assert Br2.most_probable_isotopic_composition()[0] == Formula({'Br[79]': 1, 'Br[81]': 1})
 	assert rounders(Br2.most_probable_isotopic_composition()[1], "0.000") == decimal.Decimal("0.5")
-	
+
 	C6Br6 = Formula.from_string('C6Br6')
 	assert C6Br6.most_probable_isotopic_composition()[0] == Formula({'C[12]': 6, 'C[13]': 0, 'Br[79]': 3, 'Br[81]': 3})
 	assert rounders(C6Br6.most_probable_isotopic_composition()[1], "0.000") == decimal.Decimal("0.293")
 
 	assert Formula.from_string('F10').most_probable_isotopic_composition() == \
-		   (Formula({'F[19]': 10,}), 1.0)
+		   (Formula({'F[19]': 10, }), 1.0)
 
 	assert Formula.from_string('CF4').most_probable_isotopic_composition(
 			elements_with_isotopes=['F']) == (Formula({'C': 1, 'F[19]': 4}), 1.0)
@@ -254,7 +254,7 @@ def test_iter_isotopologues():
 
 	iter_isotopologues = Formula.from_string("C6Br6").iter_isotopologues()
 	assert len(list(iter_isotopologues)) == 49
-	
+
 	iter_isotopologues = Formula.from_string("C6Br6").iter_isotopologues(
 			elements_with_isotopes='Br')
 	assert len(list(iter_isotopologues)) == 7
@@ -282,14 +282,14 @@ def C6Br6():
 def test___str__(Br2, C6Br6):
 	assert str(Br2) == "Formula({'Br': 2})"
 	assert str(C6Br6) == "Formula({'C': 6, 'Br': 6})"
-	
-	
+
+
 def test___repr__(Br2, C6Br6):
 	assert repr(Br2) == "Formula({'Br': 2})"
 	assert repr(C6Br6) == "Formula({'C': 6, 'Br': 6})"
 
 
-@pytest.mark.parametrize("other", ["Br2", "abc", 123, 12,34, [1, 2, 3]])
+@pytest.mark.parametrize("other", ["Br2", "abc", 123, 12, 34, [1, 2, 3]])
 def test_unsupported_equals(Br2, other):
 	assert Br2 != other
 
@@ -308,8 +308,8 @@ def test_properties():
 	assert f.hill_formula == "C6H12O6"
 	assert f.empirical_formula == "CH2O"
 	assert f.n_atoms == 24
-	assert f.n_elements ==3
-	
+	assert f.n_elements == 3
+
 	f = Formula.from_string('D2O')  # heavy water
 	assert f.hill_formula == "D2O"
 	assert f.empirical_formula == "D2O"

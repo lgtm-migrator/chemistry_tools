@@ -90,39 +90,39 @@ from chemistry_tools.elements import groups
 		])
 def test_isotopes(symbol, massnumber):
 	element = ELEMENTS[symbol]
-	
+
 	max_abundance_massnumber = 0
 	max_isotope_abundance = 0
-	
+
 	for isotope in element.isotopes.values():
 		if isotope.abundance > max_isotope_abundance:
 			max_isotope_abundance = isotope.abundance
 			max_abundance_massnumber = isotope.massnumber
-	
+
 	assert max_abundance_massnumber == massnumber
 
 
 def test_hydrogen():
 	assert str(ELEMENTS[1]) == "Hydrogen"
 	repr(ELEMENTS[1])
-	
+
 	assert (ELEMENTS["H"] == ELEMENTS["Hydrogen"])
 	assert (ELEMENTS["H"] == ELEMENTS["hydrogen"])
 	assert (ELEMENTS["H"] == ELEMENTS["hydrOgen"])
 	assert (ELEMENTS["H"] != ELEMENTS[2])
-	
+
 	assert ELEMENTS["H"].number == 1
 	assert ELEMENTS["H"].symbol == "H"
 	assert ELEMENTS["H"].name == "Hydrogen"
-	
+
 	assert ELEMENTS["H"].electrons == ELEMENTS["H"].number
 	assert ELEMENTS["H"].protons == ELEMENTS["H"].number
-	
+
 	assert ELEMENTS["H"].group == 1
 	assert ELEMENTS["H"].period == 1
 	assert ELEMENTS["H"].block == "s"
 	assert ELEMENTS["H"].series == 1
-	
+
 	assert ELEMENTS["H"].mass == 1.007941
 	assert ELEMENTS["H"].eleneg == 2.2
 	assert ELEMENTS["H"].eleaffin == 0.75420375
@@ -136,7 +136,7 @@ def test_hydrogen():
 	assert ELEMENTS["H"].eleconfig == '1s'
 	assert ELEMENTS["H"].oxistates == '1*, -1'
 	assert ELEMENTS["H"].ionenergy == (13.5984,)
-	
+
 	assert ELEMENTS["H"].isotopes == {
 			1: Isotope(1.00782503207, 0.999885, 1),
 			2: Isotope(2.0141017778, 0.000115, 2),
@@ -146,15 +146,15 @@ def test_hydrogen():
 			6: Isotope(6.04494, 0.0, 6),
 			7: Isotope(7.05275, 0.0, 7),
 			}
-	
+
 	repr(ELEMENTS[1:10:2])
-	
+
 	assert ELEMENTS["Hydrogen"] == ELEMENTS["H"]
 	assert ELEMENTS["Hydrogen"] == ELEMENTS["hydrogen"]
 	assert ELEMENTS["Hydrogen"] == ELEMENTS["hydrOgen"]
 	assert ELEMENTS["Hydrogen"] == ELEMENTS["HydrOgen"]
 	assert ELEMENTS["Hydrogen"] == H
-	
+
 	assert ELEMENTS["H"].description == (
 			"Colourless, odourless gaseous chemical element. Lightest and most "
 			"abundant element in the universe. Present in water and in all "
@@ -171,7 +171,7 @@ def test_groups():
 	assert groups[16] == (8, 16, 34, 52, 84, 116)
 	assert groups[17] == (9, 17, 35, 53, 85, 117)
 	assert groups[18] == (2, 10, 18, 36, 54, 86, 118)
-	
+
 
 def test_atomic_number():
 	assert ELEMENTS['U'].number == 92
@@ -179,5 +179,3 @@ def test_atomic_number():
 	assert ELEMENTS['moscovium'].number == 115
 	with pytest.raises(KeyError):
 		ELEMENTS['unobtainium']
-
-
