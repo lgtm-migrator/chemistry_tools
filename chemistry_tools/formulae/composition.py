@@ -51,7 +51,7 @@ class CompositionSort(Enum):
 	Mass_fraction = "mass_fraction"
 	Rel_Mass = "rel_mass"
 	Mass_Fraction = "mass_fraction"
-	
+
 	def __str__(self):
 		return str(self.value)
 
@@ -76,7 +76,7 @@ class Composition(DataArray):
 			element = ELEMENTS[symbol]
 			mass = element.mass * count
 			mass_fraction = mass / formula.mass
-			
+
 			data[isymbol] = dict(element=element, isotope=isotope, count=count, rel_mass=mass, mass_fraction=mass_fraction)
 
 		super().__init__(formula=formula.hill_formula, data=data)
@@ -90,9 +90,9 @@ class Composition(DataArray):
 	@property
 	def n_elements(self):
 		return len(self)
-	
+
 	_as_array_kwargs = {"sort_by", "reverse"}
-	
+
 	def as_array(self, sort_by=CompositionSort.symbol, reverse=False):
 		"""
 		Returns the elemental composition as a list of lists
@@ -107,28 +107,28 @@ class Composition(DataArray):
 
 		output = []
 		sorted_data = []
-		
+
 		if sort_by not in CompositionSort:
 			raise ValueError(f"Unrecognised value for 'sort_by': {sort_by}")
 		elif sort_by == CompositionSort.symbol:
 			iterable = sorted(self.keys(), reverse=reverse)
 		else:
 			iterable = sorted(self.keys(), key=lambda key: self[key][sort_by.value], reverse=reverse)
-				
+
 		for symbol in iterable:
 			sorted_data.append(self[symbol])
-				
+
 		for data in sorted_data:
 			symbol = _make_isotope_string(data["element"].symbol, data["isotope"])
 			rel_mass = f"{data['rel_mass']:0.4f}"
 			mass_fraction = f"{data['mass_fraction']:0.4f}"
-			
+
 			output.append([symbol, data["count"], rel_mass, mass_fraction])
 
 		output.insert(0, ["Element", "Count", "Relative Mass", "Mass Fraction"])
 
 		return output
-	
+
 	_as_table_alignment = ["left", "right", "right", "right"]
 	_as_table_float_format = [None, None, ".4f", ".4f"]
 

@@ -202,7 +202,7 @@ K = Element(
 			"behavior and compounds. Discovered by Sir Humphry Davy in 1807."
 			)
 		)
-		
+
 Rb = Element(
 		37, 'Rb', 'Rubidium',
 		group=1, period=5, block='s', series=3,
@@ -257,7 +257,7 @@ Rb = Element(
 			"spectroscopically in 1861 by W. Bunsen and G.R. Kirchoff."
 			)
 		)
-		
+
 Cs = Element(
 		55, 'Cs', 'Caesium',
 		group=1, period=6, block='s', series=3,
@@ -327,7 +327,7 @@ Cs = Element(
 			"radioisotopes are even more toxic."
 			)
 		)
-		
+
 Fr = Element(
 		87, 'Fr', 'Francium',
 		group=1, period=7, block='s', series=3,

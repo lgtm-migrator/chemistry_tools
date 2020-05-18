@@ -130,7 +130,7 @@ class Element(Dictable):
 		values: Isotope(relative atomic mass, abundance)
 
 	"""
-	
+
 	def __init__(
 			self, number, symbol, name,
 			group=0, period=0, block='', series=0, mass=0.0, eleneg=0.0,
@@ -138,9 +138,9 @@ class Element(Dictable):
 			tmelt=0.0, density=0.0, eleconfig='', oxistates='',
 			ionenergy=None, isotopes=None, description='',
 			):
-		
+
 		super().__init__()
-		
+
 		self._number = number
 		self._symbol = symbol
 		self._name = name
@@ -162,21 +162,21 @@ class Element(Dictable):
 		self._eleconfig = eleconfig
 		self._oxistates = oxistates
 		self._description = description
-		
+
 		if ionenergy is None:
 			self._ionenergy = tuple()
 		else:
 			self._ionenergy = ionenergy
-		
+
 		self._isotopes = {}
-		
+
 		if isotopes is not None:
 			for massnumber, isotope in isotopes.items():
 				if isinstance(isotope, Isotope):
 					self._isotopes[int(massnumber)] = isotope
 				elif isinstance(isotope, (list, tuple)):
 					self._isotopes[int(massnumber)] = Isotope(*isotope, massnumber)
-	
+
 	def __dict__(self):
 		return dict(
 				number=self._number,
@@ -201,106 +201,106 @@ class Element(Dictable):
 				isotopes=self._isotopes,
 				description=self._description
 				)
-	
+
 	@memoized_property
 	def number(self):
 		return self._number
-	
+
 	@memoized_property
 	def symbol(self):
 		return self._symbol
-	
+
 	@memoized_property
 	def name(self):
 		return self._name
-	
+
 	@memoized_property
 	def electrons(self):
 		return self._electrons
-	
+
 	@memoized_property
 	def protons(self):
 		return self._protons
-	
+
 	@memoized_property
 	def group(self):
 		return self._group
-	
+
 	@memoized_property
 	def period(self):
 		return self._period
-	
+
 	@memoized_property
 	def block(self):
 		return self._block
-	
+
 	@memoized_property
 	def series(self):
 		return self._series
-	
+
 	@memoized_property
 	def mass(self):
 		return self._mass
-		
+
 	@memoized_property
 	def molecular_weight(self):
 		return self._mass
-	
+
 	@memoized_property
 	def eleneg(self):
 		return self._eleneg
-	
+
 	@memoized_property
 	def eleaffin(self):
 		return self._eleaffin
-	
+
 	@memoized_property
 	def covrad(self):
 		return self._covrad
-	
+
 	@memoized_property
 	def atmrad(self):
 		return self._atmrad
-	
+
 	@memoized_property
 	def vdwrad(self):
 		return self._vdwrad
-	
+
 	@memoized_property
 	def tboil(self):
 		return self._tboil
-	
+
 	@memoized_property
 	def tmelt(self):
 		return self._tmelt
-	
+
 	@memoized_property
 	def density(self):
 		return self._density
-	
+
 	@memoized_property
 	def eleconfig(self):
 		return self._eleconfig
-	
+
 	@memoized_property
 	def oxistates(self):
 		return self._oxistates
-	
+
 	@memoized_property
 	def ionenergy(self):
 		return self._ionenergy
-	
+
 	@memoized_property
 	def isotopes(self):
 		return self._isotopes
-		
+
 	@memoized_property
 	def description(self):
 		return self._description
-	
+
 	def __str__(self):
 		return self.name
-	
+
 	def __repr__(self):
 		ionenergy = []
 		for i, j in enumerate(self.ionenergy):
@@ -315,7 +315,7 @@ class Element(Dictable):
 			ionenergy = f'({ionenergy},)'
 		else:
 			ionenergy = f'({ionenergy})'
-		
+
 		isotopes = []
 		for massnum in sorted(self.isotopes):
 			iso = self.isotopes[massnum]
@@ -329,7 +329,7 @@ class Element(Dictable):
 			isotopes = f'{{\n        {isotopes},\n    }},'
 		else:
 			isotopes = f'{{{isotopes}}},'
-		
+
 		return ',\n    '.join((
 				f"Element(\n    {self.number}, '{self.symbol}', '{self.name}'",
 				f"group={self.group}, period={self.period},"
@@ -344,13 +344,13 @@ class Element(Dictable):
 				f"ionenergy={ionenergy}",
 				f"isotopes={isotopes}\n)"
 				))
-	
+
 	@memoized_property
 	def nominalmass(self):
 		"""
 		Return mass number of most abundant natural stable isotope.
 		"""
-		
+
 		nominalmass = 0
 		maxabundance = 0
 		for massnum, iso in self.isotopes.items():
@@ -358,29 +358,29 @@ class Element(Dictable):
 				maxabundance = iso.abundance
 				nominalmass = massnum
 		return nominalmass
-	
+
 	@memoized_property
 	def neutrons(self):
 		"""
 		Return number neutrons in most abundant natural stable isotope.
 		"""
-		
+
 		return self.nominalmass - self.protons
-	
+
 	@memoized_property
 	def exactmass(self):
 		"""
 		Return relative atomic mass calculated from isotopic composition.
 		"""
-		
+
 		return sum(iso.mass * iso.abundance for iso in self.isotopes.values())
-	
+
 	@memoized_property
 	def eleconfig_dict(self):
 		"""
 		Return electron configuration as dict.
 		"""
-		
+
 		adict = {}
 		if self.eleconfig.startswith('['):
 			base = self.eleconfig.split(' ', 1)[0][1:-1]
@@ -388,25 +388,25 @@ class Element(Dictable):
 		for e in self.eleconfig.split()[bool(adict):]:
 			adict[(int(e[0]), e[1])] = int(e[2:]) if len(e) > 2 else 1
 		return adict
-	
+
 	@memoized_property
 	def eleshells(self):
 		"""
 		Return number of electrons in shell as tuple.
 		"""
-		
+
 		eleshells = [0, 0, 0, 0, 0, 0, 0]
 		for key, val in self.eleconfig_dict.items():
 			eleshells[key[0] - 1] += val
 		return tuple(ele for ele in eleshells if ele)
-	
+
 	def validate(self):
 		"""Check consistency of data. Raise Error on failure."""
 		assert self.period in _table.PERIODS
 		assert self.group in _table.GROUPS
 		assert self.block in _table.BLOCKS
 		assert self.series in _table.SERIES
-		
+
 		if self.number != self.protons:
 			raise ValueError(
 					f'{self.symbol} - atomic number must equal proton number'
@@ -423,7 +423,7 @@ class Element(Dictable):
 							f'{self.symbol} - ionenergy not increasing'
 							)
 				ionev_ = ionev
-		
+
 		mass = 0.0
 		frac = 0.0
 		for iso in self.isotopes.values():
@@ -442,40 +442,40 @@ class Element(Dictable):
 
 class Isotope(Dictable):
 	"""Isotope massnumber, relative atomic mass, and abundance."""
-	
+
 	def __init__(self, mass=0.0, abundance=1.0, massnumber=0):
 		super().__init__()
-		
+
 		self._mass = mass
 		self._abundance = abundance
 		self._massnumber = massnumber
-	
+
 	@memoized_property
 	def mass(self):
 		return self._mass
-	
+
 	@memoized_property
 	def abundance(self):
 		return self._abundance
-	
+
 	@memoized_property
 	def massnumber(self):
 		return self._massnumber
-	
+
 	def __str__(self):
 		return '{}, {:.4f}, {:.6f}%'.format(
 				self.massnumber, self.mass, self.abundance * 100
 				)
-	
+
 	def __repr__(self):
 		return 'Isotope({}, {}, {})'.format(
 				repr(self.mass), repr(self.abundance), repr(self.massnumber)
 				)
-	
+
 	def __eq__(self, other):
 		if isinstance(other, self.__class__):
 			return self.__dict__() == other.__dict__()
-	
+
 	def __dict__(self):
 		return dict(
 				mass=self.mass,
@@ -493,7 +493,7 @@ class Elements:
 	"""
 	Ordered dict of Elements with lookup by number, symbol, and name.
 	"""
-	
+
 	def __init__(self, *elements):
 		self._list = []
 		self._dict = {}
@@ -507,10 +507,10 @@ class Elements:
 			self._dict[element.number] = element
 			self._dict[element.symbol] = element
 			self.add_alternate_spelling(element, element.name)
-	
+
 	def __str__(self):
 		return f'[{", ".join(ele.symbol for ele in self._list)}]'
-	
+
 	def __repr__(self):
 		elements = ',\n    '.join(
 				'\n    '.join(line for line in repr(element).splitlines())
@@ -518,16 +518,16 @@ class Elements:
 				)
 		elements = f'Elements(\n    {elements},\n)'
 		return elements
-	
+
 	def __contains__(self, item):
 		return item in self._dict
-	
+
 	def __iter__(self):
 		return iter(self._list)
-	
+
 	def __len__(self):
 		return len(self._list)
-	
+
 	def __getitem__(self, key):
 		if isinstance(key, str):
 			try:
@@ -547,21 +547,21 @@ class Elements:
 				return self._dict[symbol.capitalize()]
 			except:
 				raise KeyError(f"Unknown key: '{key}'")
-	
+
 	@lru_cache()
 	def split_isotope(self, string):
 		from chemistry_tools.formulae.formula import _split_isotope
 		return _split_isotope(string)
-	
+
 	def add_alternate_spelling(self, element, spelling):
 		self._dict[spelling] = element
 		self._dict[spelling.lower()] = element
 		self._dict[spelling.casefold()] = element
-	
+
 	@memoized_property
 	def symbols(self):
 		return [element.symbol for element in sorted(self._list, key=lambda e: e.number)]
-	
+
 	@memoized_property
 	def names(self):
 		return [str(element) for element in sorted(self._list, key=lambda e: e.number)]
@@ -576,30 +576,30 @@ class HeavyHydrogen(Element):
 	"""
 	Subclass of Element to handle the Heavy Hydrogen isotopes Deuterium and Tritium
 	"""
-	
+
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		
+
 		if self.symbol not in {"D", "T"}:
 			raise ValueError("'HeavyHydrogen' can only be used for Deuterium and Tritium")
-	
+
 	@memoized_property
 	def nominalmass(self):
 		"""
 		Return mass number of most abundant natural stable isotope.
 		"""
-		
+
 		if self.symbol == "D":
 			return 2
 		elif self.symbol == "T":
 			return 3
-	
+
 	@memoized_property
 	def as_isotope(self):
 		"""
 		Return the isotope in H[X] format
-		
+
 		:rtype: str
 		"""
-		
+
 		return f'H[{self.nominalmass}]'

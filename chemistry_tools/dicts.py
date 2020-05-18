@@ -54,7 +54,7 @@ class AttrDict(dict):
 	"""
 	Subclass of dict with attribute access to keys
 	"""
-	
+
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.__dict__ = self
@@ -74,7 +74,7 @@ class defaultkeydict(defaultdict):
 	>>> d['c']
 	'[c]'
 	"""
-	
+
 	def __missing__(self, key):
 		if self.default_factory is None:
 			raise KeyError(f"Missing key: {key}")
@@ -83,11 +83,10 @@ class defaultkeydict(defaultdict):
 		return self[key]
 
 
-
 def _imul(d1, d2):
 	if hasattr(d2, 'keys'):
 		for k in set(chain(d1.keys(), d2.keys())):
-			d1[k] = d1[k]*d2[k]
+			d1[k] = d1[k] * d2[k]
 	else:
 		for k in d1:
 			d1[k] *= d2
@@ -96,7 +95,7 @@ def _imul(d1, d2):
 def _itruediv(d1, d2):
 	if hasattr(d2, 'keys'):
 		for k in set(chain(d1.keys(), d2.keys())):
-			d1[k] = d1[k]/d2[k]
+			d1[k] = d1[k] / d2[k]
 	else:
 		for k in d1:
 			d1[k] /= d2
@@ -134,10 +133,10 @@ class ArithmeticDict(defaultdict):
 	True
 
 	"""
-	
+
 	def copy(self):
 		return self.__class__(self.default_factory, self.items())
-	
+
 	def __iadd__(self, other):
 		try:
 			for k, v in other.items():
@@ -146,7 +145,7 @@ class ArithmeticDict(defaultdict):
 			for k in self:
 				self[k] += other
 		return self
-	
+
 	def __isub__(self, other):
 		try:
 			for k, v in other.items():
@@ -155,78 +154,78 @@ class ArithmeticDict(defaultdict):
 			for k in self:
 				self[k] -= other
 		return self
-	
+
 	def __add__(self, other):
 		a = self.copy()
 		a += other
 		return a
-	
+
 	def __sub__(self, other):
 		a = self.copy()
 		a -= other
 		return a
-	
+
 	def __radd__(self, other):
 		return self + other
-	
+
 	def __rsub__(self, other):
-		return -1*self + other
-	
+		return -1 * self + other
+
 	def __imul__(self, other):
 		_imul(self, other)
 		return self
-	
+
 	def __mul__(self, other):
 		a = self.copy()
 		a *= other
 		return a
-	
+
 	def __rmul__(self, other):
 		return self * other
-	
+
 	def __itruediv__(self, other):
 		_itruediv(self, other)
 		return self
-	
+
 	def __truediv__(self, other):
 		a = self.copy()
 		a /= other
 		return a
-	
+
 	def __rtruediv__(self, other):
 		"""
 		other / self """
 		return self.__class__(
 				self.default_factory,
-				{k: other/v for k, v in self.items()})
-	
+				{k: other / v for k, v in self.items()})
+
 	def __ifloordiv__(self, other):
 		if hasattr(other, 'keys'):
 			for k in set(chain(self.keys(), other.keys())):
-				self[k] = self[k]//other[k]
+				self[k] = self[k] // other[k]
 		else:
 			for k in self:
 				self[k] //= other
 		return self
-	
+
 	def __floordiv__(self, other):
 		a = self.copy()
 		a //= other
 		return a
-	
+
 	def __rfloordiv__(self, other):
 		"""
 		other // self """
 		return self.__class__(
 				self.default_factory,
-				{k: other//v for k, v in self.items()})
-	
+				{k: other // v for k, v in self.items()})
+
 	def __repr__(self):
 		return f"{self.__class__.__name__}({repr(self.default_factory)}, {dict(self)})"
-	
+
 	def _element_eq(self, a, b):
 		return a == b
-	
+
 	def _discrepancy(self, other, cb):
 		default = self.default_factory()
 		_self = self.copy()  # getitem is not idempotent on defaultdict
@@ -238,20 +237,20 @@ class ArithmeticDict(defaultdict):
 			return True
 		except TypeError:
 			return False
-	
+
 	def __eq__(self, other):
 		return self._discrepancy(other, self._element_eq)
-	
+
 	def isclose(self, other, rtol=1e-12, atol=None):
 		def _isclose(a, b):
-			lim = abs(rtol*b)
+			lim = abs(rtol * b)
 			if atol is not None:
 				lim += atol
-			return abs(a-b) <= lim
+			return abs(a - b) <= lim
 		return self._discrepancy(other, _isclose)
-	
+
 	def all_non_negative(self):
 		for v in self.values():
-			if v < v*0:
+			if v < v * 0:
 				return False
 		return True

@@ -53,7 +53,7 @@ def get_json(identifier, namespace='cid', domain='compound', operation=None, sea
 	"""
 	Request wrapper that automatically parses JSON response and suppresses NotFoundError.
 	"""
-	
+
 	try:
 		return json.loads(get(identifier, namespace, domain, operation, 'JSON', searchtype, **kwargs).decode())
 	except NotFoundError as e:
@@ -65,7 +65,7 @@ def get(identifier, namespace='cid', domain='compound', operation=None, output='
 	"""
 	Request wrapper that automatically handles async requests.
 	"""
-	
+
 	if (searchtype and searchtype != 'xref') or namespace in ['formula']:
 		# response = request(identifier, namespace, domain, None, 'JSON', searchtype, **kwargs).read()
 		response = request(identifier, namespace, domain, None, 'JSON', searchtype, **kwargs).content
@@ -93,7 +93,7 @@ def request(identifier, namespace='cid', domain='compound', operation=None, outp
 
 	Full specification at http://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html
 	"""
-	
+
 	if not identifier:
 		raise ValueError('identifier/cid cannot be None')
 	# If identifier is a list, join with commas into string
@@ -130,6 +130,7 @@ def request(identifier, namespace='cid', domain='compound', operation=None, outp
 	# except HTTPError as e:
 	# 	raise PubChemHTTPError(e)
 
+
 ERROR_CODES = [400, 404, 405, 504, 501, 500]
 
 
@@ -137,7 +138,7 @@ def get_sdf(identifier, namespace='cid', domain='compound', operation=None, sear
 	"""
 	Request wrapper that automatically parses SDF response and suppresses NotFoundError.
 	"""
-	
+
 	try:
 		return get(identifier, namespace, domain, operation, 'SDF', searchtype, **kwargs).decode()
 	except NotFoundError as e:
@@ -154,7 +155,7 @@ def get_properties(properties, identifier, namespace='cid', searchtype=None, as_
 	:param searchtype: (optional) The advanced search type, one of substructure, superstructure or similarity.
 	:param as_dataframe: (optional) Automatically extract the properties into a pandas :class:`~pandas.DataFrame`.
 	"""
-	
+
 	if isinstance(properties, text_types):
 		properties = properties.split(',')
 	properties = ','.join([PROPERTY_MAP.get(p, p) for p in properties])
@@ -206,7 +207,7 @@ def get_all_sources(domain='substance'):
 	"""
 	Return a list of all current depositors of substances or assays.
 	"""
-	
+
 	results = json.loads(get(domain, None, 'sources').decode())
 	return results['InformationList']['SourceName']
 
@@ -217,7 +218,7 @@ def download(
 	"""
 	Format can be  XML, ASNT/B, JSON, SDF, CSV, PNG, TXT.
 	"""
-	
+
 	response = get(identifier, namespace, domain, operation, outformat, searchtype, **kwargs)
 	if not overwrite and os.path.isfile(path):
 		raise OSError("%s already exists. Use 'overwrite=True' to overwrite it." % path)
@@ -232,15 +233,15 @@ def memoized_property(fget):
 	Used to cache :class:`~pubchempy.Compound` and :class:`~pubchempy.Substance` properties that require an additional
 	request.
 	"""
-	
+
 	attr_name = '_{}'.format(fget.__name__)
-	
+
 	@functools.wraps(fget)
 	def fget_memoized(self):
 		if not hasattr(self, attr_name):
 			setattr(self, attr_name, fget(self))
 		return getattr(self, attr_name)
-	
+
 	return property(fget_memoized)
 
 
@@ -248,7 +249,7 @@ def _parse_prop(search, proplist):
 	"""
 	Extract property value from record using the given urn search filter.
 	"""
-	
+
 	props = [i for i in proplist if all(item in i['urn'].items() for item in search.items())]
 	if len(props) > 0:
 		if search != {'implementation': 'E_SCREEN'}:  # True for "fingerprint", which isn't a number
@@ -264,13 +265,13 @@ def format_string(stringwithmarkup):
 	"""
 	Convert a PubChem formatted string into an HTML formatted string
 	"""
-	
+
 	string = list(stringwithmarkup["String"])
 	try:
 		markup_list = stringwithmarkup["Markup"]
 	except KeyError:
 		markup_list = []
-	
+
 	for markup in markup_list:
 		style = None
 		start = markup["Start"]
@@ -278,14 +279,14 @@ def format_string(stringwithmarkup):
 		if markup["Type"] == "Italics":
 			style = "i"
 		# handle Other formats
-		
+
 		if style is None:
 			print(markup)
 			continue
-		
+
 		string[start] = f"<{style}>{string[start]}"
 		string[end] = f"{string[end]}</{style}>"
-	
+
 	string = ''.join(string)
-	
+
 	return string

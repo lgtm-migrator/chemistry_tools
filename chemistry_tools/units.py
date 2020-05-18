@@ -111,7 +111,7 @@ def get_derived_unit(registry, key):
 	"""
 	if registry is None:
 		return 1.0
-	
+
 	derived = {
 			'diffusivity': registry['length'] ** 2 / registry['time'],
 			'electrical_mobility': (registry['current'] * registry['time'] ** 2 /
@@ -127,7 +127,7 @@ def get_derived_unit(registry, key):
 	derived['radiolytic_yield'] = registry['amount'] / derived['energy']
 	derived['doserate'] = derived['energy'] / registry['mass'] / registry['time']
 	derived['linear_energy_transfer'] = derived['energy'] / registry['length']
-	
+
 	try:
 		return derived[key]
 	except KeyError:
@@ -138,10 +138,10 @@ def unit_registry_to_human_readable(unit_registry):
 	"""
 	Serialization of a unit registry.
 	"""
-	
+
 	if unit_registry is None:
 		return None
-	
+
 	new_registry = {}
 	integer_one = 1
 	for k in SI_base_registry:
@@ -172,7 +172,7 @@ def latex_of_unit(quant):
 	>>> print(latex_of_unit(1/quantities.kelvin))
 	\\mathrm{\\frac{1}{K}}
 	"""
-	
+
 	return _latex_from_dimensionality(quant.dimensionality).strip('$')
 
 
@@ -185,7 +185,7 @@ def unicode_of_unit(quant):
 	>>> print(unicode_of_unit(1/quantities.kelvin))
 	1/K
 	"""
-	
+
 	return quant.dimensionality.unicode
 
 
@@ -198,7 +198,7 @@ def html_of_unit(quant):
 	>>> print(html_of_unit(2*quantities.m**2))
 	m<sup>2</sup>
 	"""
-	
+
 	return quant.dimensionality.html
 
 
@@ -206,10 +206,10 @@ def unit_registry_from_human_readable(unit_registry):
 	"""
 	Deserialization of unit_registry.
 	"""
-	
+
 	if unit_registry is None:
 		return None
-	
+
 	new_registry = {}
 	for k in SI_base_registry:
 		factor, u_symbol = unit_registry[k]
@@ -217,7 +217,7 @@ def unit_registry_from_human_readable(unit_registry):
 			unit_quants = [1]
 		else:
 			unit_quants = list(quantities.Quantity(0, u_symbol).dimensionality.keys())
-		
+
 		if len(unit_quants) != 1:
 			raise TypeError("Unknown UnitQuantity: {}".format(unit_registry[k]))
 		else:
@@ -267,7 +267,7 @@ def unit_of(expr, simplified=False):
 		return unit_of(uniform(expr)[0], simplified)
 	elif isinstance(expr, dict):
 		return unit_of(list(uniform(expr).values())[0], simplified)
-	
+
 	try:
 		if simplified:
 			return expr.units.simplified
@@ -307,7 +307,7 @@ def to_unitless(value, new_unit=None):
 	integer_one = 1
 	if new_unit is None:
 		new_unit = quantities.dimensionless
-	
+
 	if isinstance(value, (list, tuple)):
 		return np.array([to_unitless(elem, new_unit) for elem in value])
 	elif isinstance(value, np.ndarray) and not hasattr(value, 'rescale'):
@@ -456,7 +456,7 @@ def allclose(a, b, rtol=1e-8, atol=None):
 	lim = abs(a) * rtol
 	if atol is not None:
 		lim += atol
-	
+
 	try:
 		len(d)
 	except TypeError:
@@ -536,7 +536,7 @@ class Backend:
 	array([2., 7.])
 
 	"""
-	
+
 	def __init__(self, underlying_backend=('numpy', 'math')):
 		if isinstance(underlying_backend, tuple):
 			for name in underlying_backend:
@@ -553,7 +553,7 @@ class Backend:
 			self.be = __import__(underlying_backend)
 		else:
 			self.be = underlying_backend
-	
+
 	def __getattr__(self, attr):
 		be_attr = getattr(self.be, attr)
 		if callable(be_attr):
@@ -625,7 +625,7 @@ def _sanity_check_quantities(pq):
 	# See https://github.com/python-quantities/python-quantities/pull/116
 	a = pq.UncertainQuantity([1, 2], pq.m, [.1, .2])
 	assert (-a).uncertainty[0] == (a * -1).uncertainty[0]
-	
+
 	# See https://github.com/python-quantities/python-quantities/pull/126
 	assert (3 * pq.m) ** 0 == 1 * pq.dimensionless
 
@@ -669,13 +669,13 @@ dimension_codes = OrderedDict(zip(
 
 
 class DimensionalitySI(defaultnamedtuple('DimensionalitySIBase', dimension_codes.keys(), (0,) * len(dimension_codes))):
-	
+
 	def __mul__(self, other):
 		return self.__class__(*(x + y for x, y in zip(self, other)))
-	
+
 	def __truediv__(self, other):
 		return self.__class__(*(x - y for x, y in zip(self, other)))
-	
+
 	def __pow__(self, exp):
 		return self.__class__(*(x * exp for x in self))
 

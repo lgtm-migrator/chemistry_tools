@@ -120,7 +120,7 @@ invalid_re = []
 element_re = []
 for upper, lowers in element_re_dict.items():
 	lowers = sorted(lowers)
-	
+
 	if lowers == ["?"]:
 		element_re.append(upper)
 		invalid_uppers.remove(upper)
@@ -180,33 +180,33 @@ def _get_formula_parser():
 	Copyright 2013 Paul McGuire (http://stackoverflow.com/users/165216/paul-mcguire)
 	Licensed under CC-BY-SA 3.0.
 	"""
-	
+
 	Forward, Group, OneOrMore = pyparsing.Forward, pyparsing.Group, pyparsing.OneOrMore
 	Optional, ParseResults = pyparsing.Optional, pyparsing.ParseResults
 	Suppress, Word, nums = pyparsing.Suppress, pyparsing.Word, pyparsing.nums
-	
+
 	LPAR, RPAR = map(Suppress, "()")
 	integer = Word(nums)
-	
+
 	# add parse action to convert integers to ints, to support doing addition
 	# and multiplication at parse time
 	integer.setParseAction(lambda t: int(t[0]))
-	
-	element = pyparsing.Regex('|'.join(isotopes_re + element_re)+"$")
-	
+
+	element = pyparsing.Regex('|'.join(isotopes_re + element_re) + "$")
+
 	# element = pyparsing.Regex(
 	# 		r"A[cglmrstu]|B[aehikr]?|C[adeflmorsu]?|D[bsy]|E[rsu]|F[emr]?|G[ade]"
 	# 		r"|H[efgos]?|I[nr]?|Kr?|L[airu]|M[dgnot]|N[abdeiop]?|Os?|P[abdmortu]?"
 	# 		r"|R[abefghnu]|S[bcegimnr]?|T[abcehilm]|Uu[bhopqst]|U|V|W|Xe|Yb?|Z[nr]")
-	
+
 	# forward declare 'formula' so it can be used in definition of 'term'
 	formula = Forward()
-	
+
 	term = Group((element | Group(LPAR + formula + RPAR)("subgroup")) +
 				 Optional(integer, default=1)("mult"))
-	
+
 	# add parse actions for parse-time processing
-	
+
 	# parse action to multiply out subgroups
 	def multiplyContents(tokens):
 		t = tokens[0]
@@ -217,16 +217,16 @@ def _get_formula_parser():
 			for term in t.subgroup:
 				term[1] *= mult
 			return t.subgroup
-	
+
 	term.setParseAction(multiplyContents)
-	
+
 	# add parse action to sum up multiple references to the same element
 	def sum_by_element(tokens):
 		elementsList = [t[0] for t in tokens]
-		
+
 		# construct set to see if there are duplicates
 		duplicates = len(elementsList) > len(set(elementsList))
-		
+
 		# if there are duplicate element names, sum up by element and
 		# return a new nested ParseResults
 		if duplicates:
@@ -234,23 +234,23 @@ def _get_formula_parser():
 			for t in tokens:
 				ctr[t[0]] += t[1]
 			return ParseResults([ParseResults([k, v]) for k, v in ctr.items()])
-	
+
 	# define contents of a formula as one or more terms
 	formula << OneOrMore(term)
 	formula.setParseAction(sum_by_element)
-	
+
 	return formula
 
 
 def _parse_stoich(stoich):
 	if stoich == 'e':  # special case, the electron is not an element
 		return {}
-	
+
 	symbols = ELEMENTS.symbols + ["D", "T"]
-	
+
 	if re.findall('|'.join(invalid_re), stoich):
 		raise ValueError(f"Unrecognised formula: {stoich}")
-	
+
 	return {symbols.index(k) + 1: n for k, n
 			in _get_formula_parser().parseString(stoich)}
 
@@ -293,7 +293,7 @@ def string_to_composition(
 			m = 1
 		else:
 			m, stoich = _get_leading_integer(stoich)
-		
+
 		# comp = _parse_stoich(stoich)
 		if stoich == 'e':  # special case, the electron is not an element
 			comp = {}
@@ -301,11 +301,11 @@ def string_to_composition(
 			try:
 				if re.findall('|'.join(invalid_re), stoich):
 					raise ValueError(f"Unrecognised formula: {formula}")
-				
+
 				comp = _get_formula_parser().parseString(stoich)
 			except pyparsing.ParseException:
 				raise ValueError(f"Unrecognised formula: {formula}")
-	
+
 		# for k, v in comp.items():
 		for k, v in comp:
 			if k not in tot_comp:
@@ -346,7 +346,7 @@ def to_reaction(line, substance_keys, token, cls, globals_=None, **kwargs):
 	with running this on untrusted data.
 
 	"""
-	
+
 	parts = line.rstrip('\n').split(';')
 	stoich = parts[0].strip()
 	if len(parts) > 2:
@@ -355,15 +355,15 @@ def to_reaction(line, substance_keys, token, cls, globals_=None, **kwargs):
 		param = parts[1].strip()
 	else:
 		param = kwargs.pop('param', 'None')
-	
+
 	if isinstance(param, str):
 		param = None if globals_ is False else eval(param, globals_)
-	
+
 	if token not in stoich:
 		raise ValueError("Missing token: %s" % token)
-	
+
 	reac_prod = [[y.strip() for y in x.split(' + ')] for x in stoich.split(token)]
-	
+
 	act, inact = [], []
 	for elements in reac_prod:
 		act.append(_parse_multiplicity([x for x in elements if not x.startswith('(')], substance_keys))
@@ -371,7 +371,7 @@ def to_reaction(line, substance_keys, token, cls, globals_=None, **kwargs):
 				[x[1:-1] for x in elements if x.startswith('(') and x.endswith(')')],
 				substance_keys
 				))
-	
+
 	# stoich coeff -> dict
 	return cls(act[0], act[1], param, inact_reac=inact[0], inact_prod=inact[1], **kwargs)
 
@@ -402,13 +402,13 @@ def mass_from_composition(composition, charge=0):
 	>>> f'{mass_from_composition({0: -1, "H": 1, 8: 1}):.2f}'
 	'17.01'
 	"""
-	
+
 	if charge and 0 in composition:
 		if charge != composition[0]:
 			raise ValueError(
 					"'charge' can only be specified once, "
 					"either as a keyword argument or as the '0' key of 'composition'")
-	
+
 	mass = 0.0
 	for k, v in composition.items():
 		if k == 0:  # electron

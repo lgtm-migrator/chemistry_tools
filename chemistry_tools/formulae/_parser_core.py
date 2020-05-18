@@ -88,7 +88,6 @@ _greek_letters = (
 _greek_u = 'αβγδεζηθικλμνξοπρστυφχψω'
 
 
-
 def _formula_to_format(
 		sub, sup, formula, prefixes=None,
 		infixes=None, suffixes=('(s)', '(l)', '(g)', '(aq)')):
@@ -96,7 +95,7 @@ def _formula_to_format(
 	parts = _formula_to_parts(formula, prefixes.keys(), suffixes)
 	stoichs = parts[0].split('.')
 	string = ''
-	
+
 	for idx, stoich in enumerate(stoichs):
 		if idx == 0:
 			m = 1
@@ -107,7 +106,7 @@ def _formula_to_format(
 			string += str(m)
 
 		string += re.sub(r'([0-9]+)(?![^\[]*\])', lambda m: sub(m.group(1)), stoich)
-	
+
 	if parts[1] is not None:
 		chg = _get_charge(parts[1])
 		if chg < 0:
@@ -132,7 +131,7 @@ def _formula_to_parts(formula, prefixes, suffixes):
 		if formula.endswith(ign):
 			drop_suff.append(ign)
 			formula = formula[:-len(ign)]
-	
+
 	# Extract charge
 	for token in '+-':
 		if token in formula:
@@ -169,7 +168,7 @@ def _get_charge(charge_str):
 		return 1
 	elif charge_str == '-':
 		return -1
-	
+
 	for token, anti, sign in zip('+-', '-+', (1, -1)):
 		if token in charge_str:
 			if anti in charge_str:
@@ -190,7 +189,7 @@ def _make_isotope_string(element_name, isotope_num):
 	"""
 	Form a string label for an isotope.
 	"""
-	
+
 	if isotope_num == 0:
 		return element_name
 	else:
@@ -211,7 +210,7 @@ def _parse_isotope_string(label):
 	>>> _parse_isotope_string('C[12]')
 	('C', 12)
 	"""
-	
+
 	element_name, num = re.match(_isotope_string, label).groups()
 	isotope_num = int(num) if num else 0
 	return element_name, isotope_num
@@ -251,4 +250,3 @@ def _parse_multiplicity(strings, substance_keys=None):
 			if k not in substance_keys:
 				raise ValueError("Unkown substance_key: %s" % k)
 	return result
-

@@ -43,7 +43,7 @@ class PubChemHTTPError(PubChemPyError):
 	"""
 	Generic error class to handle all HTTP error codes.
 	"""
-	
+
 	def __init__(self, e):
 		self.code = e.status_code
 		self.msg = e.reason
@@ -63,7 +63,7 @@ class PubChemHTTPError(PubChemPyError):
 			raise UnimplementedError(self.msg)
 		elif self.code == 500:
 			raise ServerError(self.msg)
-	
+
 	def __str__(self):
 		return repr(self.msg)
 
@@ -72,7 +72,7 @@ class BadRequestError(PubChemHTTPError):
 	"""
 	Request is improperly formed (syntax error in the URL, POST body, etc.).
 	"""
-	
+
 	def __init__(self, msg='Request is improperly formed'):
 		self.msg = msg
 
@@ -81,7 +81,7 @@ class NotFoundError(PubChemHTTPError):
 	"""
 	The input record was not found (e.g. invalid CID).
 	"""
-	
+
 	def __init__(self, msg='The input record was not found'):
 		self.msg = msg
 
@@ -90,7 +90,7 @@ class MethodNotAllowedError(PubChemHTTPError):
 	"""
 	Request not allowed (such as invalid MIME type in the HTTP Accept header).
 	"""
-	
+
 	def __init__(self, msg='Request not allowed'):
 		self.msg = msg
 
@@ -101,28 +101,28 @@ class TimeoutError(PubChemHTTPError):
 
 	See :ref:`Avoiding TimeoutError <avoiding_timeouterror>` for more information.
 	"""
-	
+
 	def __init__(self, msg='The request timed out'):
 		self.msg = msg
 
 
 class UnimplementedError(PubChemHTTPError):
 	"""The requested operation has not (yet) been implemented by the server."""
-	
+
 	def __init__(self, msg='The requested operation has not been implemented'):
 		self.msg = msg
 
 
 class ServerError(PubChemHTTPError):
 	"""Some problem on the server side (such as a database server down, etc.)."""
-	
+
 	def __init__(self, msg='Some problem on the server side'):
 		self.msg = msg
 
 
 def deprecated(message=None):
 	"""Decorator to mark functions as deprecated. A warning will be emitted when the function is used."""
-	
+
 	def deco(func):
 		@functools.wraps(func)
 		def wrapped(*args, **kwargs):
@@ -132,9 +132,9 @@ def deprecated(message=None):
 					stacklevel=2
 					)
 			return func(*args, **kwargs)
-		
+
 		return wrapped
-	
+
 	return deco
 
 

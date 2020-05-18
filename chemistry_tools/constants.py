@@ -199,23 +199,23 @@ class ProjectCategory:
 
 class Constant(namedtuple('__BaseConstant', 'name value unit symbol')):
 	# TODO: docstring
-	
+
 	# make symbol and unit optional
 	def __new__(cls, name: str, value: float, unit: quantities.quantity.Quantity = None, symbol: str = None):
 		return super().__new__(cls, name, value, unit, symbol)
-	
+
 	def as_quantity(self):
 		"""
 		Returns the constant as a :class:`quantities.quantity.Quantity` object.
 
 		:rtype: :class:`quantities.quantity.Quantity`
 		"""
-		
+
 		return self.value * self.unit
-	
+
 	def __float__(self):
 		return float(self.value)
-	
+
 	def __int__(self):
 		return int(self.value)
 

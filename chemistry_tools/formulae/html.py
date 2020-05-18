@@ -112,7 +112,7 @@ def string_to_html(formula, prefixes=None, infixes=None, **kwargs):
 	>>> string_to_html('alpha-FeOOH(s)')
 	'&alpha;-FeOOH(s)'
 	"""
-	
+
 	if prefixes is None:
 		prefixes = _html_mapping
 	if infixes is None:
@@ -121,4 +121,3 @@ def string_to_html(formula, prefixes=None, infixes=None, **kwargs):
 			lambda x: f'<sub>{x}</sub>',
 			lambda x: f'<sup>{x}</sup>',
 			formula, prefixes, infixes, **kwargs)
-

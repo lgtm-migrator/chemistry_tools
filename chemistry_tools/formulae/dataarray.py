@@ -34,7 +34,7 @@ class DataArray(FrozenOrderedDict):
 	A class that can output data as an array, to CSV, as a pandas DataFrame,
 	or as a pretty-printed table in a variety of formats.
 	"""
-	
+
 	def __init__(self, formula, data):
 		"""
 
@@ -44,30 +44,30 @@ class DataArray(FrozenOrderedDict):
 			:class:`~cawdrey.frozenordereddict.FrozenOrderedDict`
 		:type data: dict
 		"""
-		
+
 		super().__init__(**data)
 		self.formula = formula
-	
+
 	def as_csv(self, *args, sep=",", **kwargs):
 		"""
 		Returns the data as a CSV formatted string
 
 		:param sep: The separator for the CSV data. Default ``,``
 		:type sep: str, optional
-		
+
 		Any additional arguments taken by ``as_array`` can also be used here.
 
 		:rtype: str
 		"""
-		
+
 		return "\n".join(sep.join(x) for x in self.as_array(*args, **kwargs))
-	
+
 	_as_array_kwargs = set()
-	
+
 	@abstractmethod
 	def as_array(self, *args, **kwargs):
 		pass
-	
+
 	def as_dataframe(self, *args, **kwargs):
 		"""
 		Returns the isotope distribution data as a pandas DataFrame
@@ -76,14 +76,14 @@ class DataArray(FrozenOrderedDict):
 
 		:rtype: :class:`pandas.DataFrame`
 		"""
-		
+
 		array = self.as_array(*args, **kwargs)
 		return pandas.DataFrame.from_records(array[1:], columns=array[0])
-	
+
 	_as_table_alignment = []
 	_as_table_float_format = []
-	
-	def as_table(self,  *args, **kwargs):
+
+	def as_table(self, *args, **kwargs):
 		"""
 		Returns the isotope distribution data as a table using
 		`tabulate <https://github.com/astanin/python-tabulate>`_
@@ -102,18 +102,17 @@ class DataArray(FrozenOrderedDict):
 				array_kwargs[arg] = val
 			else:
 				tabulate_kwargs[arg] = val
-		
+
 		if "colalign" not in tabulate_kwargs:
 			tabulate_kwargs["colalign"] = self._as_table_alignment
 		if "floatfmt" not in tabulate_kwargs:
 			tabulate_kwargs["floatfmt"] = self._as_table_float_format
-		
+
 		array = self.as_array(*args, **array_kwargs)
 		return tabulate.tabulate(array[1:], array[0], **tabulate_kwargs)
-	
+
 	def __str__(self):
 		return self.__repr__()
-	
+
 	def __repr__(self):
 		return f"<{self.__class__.__name__}({self.formula})>"
-

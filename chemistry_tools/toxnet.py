@@ -48,26 +48,26 @@ def toxnet(cas):
 		data_soup = BeautifulSoup(data_page.text, "html.parser")
 	except AttributeError:
 		raise ValueError(f"No Record was found for {cas}")
-	
+
 	physical_properties = {}
-	
+
 	for prop in data_soup.findAll("h3"):
 		prop_name = str(prop).replace("<h3>", '').replace(":</h3>", '')
 		prop_value_and_unit = prop.nextSibling.replace("\n", '')
-		
+
 		if prop_name in ["Molecular Formula", "Molecular Weight"]:
 			continue
-		
+
 		if prop_name == "Solubilities":
 			prop_name = "Solubility"
-		
+
 		# elif prop_name == "Vapor Density":
 		# 	physical_properties[prop_name] = prop_value_and_unit.replace(" (Air= 1)",'')
 		# else:
 		# 	physical_properties[prop_name] = property_format(prop_value_and_unit)
-		
+
 		physical_properties[prop_name] = {}
-		
+
 		# Parse values
 		# Temperatures
 		if prop_name in ["Boiling Point", "Melting Point"]:
@@ -78,7 +78,7 @@ def toxnet(cas):
 				physical_properties[prop_name]["Value"] = property_format(prop_value)
 			physical_properties[prop_name]["Unit"] = "°C"
 			physical_properties[prop_name]["Description"] = None
-		
+
 		# Strings
 		elif prop_name in [
 				"Color/Form", "Odor", "Other Chemical/Physical Properties",
@@ -86,7 +86,7 @@ def toxnet(cas):
 			physical_properties[prop_name]["Value"] = property_format(prop_value_and_unit)
 			physical_properties[prop_name]["Unit"] = None
 			physical_properties[prop_name]["Description"] = None
-		
+
 		# Custom Units &c.
 		elif prop_name == "Density/Specific Gravity":
 			try:
@@ -101,7 +101,7 @@ def toxnet(cas):
 				prop_value_and_unit.replace(" (Air= 1)", ''))
 			physical_properties[prop_name]["Unit"] = "None"
 			physical_properties[prop_name]["Description"] = "Air=1"
-		
+
 		# TODO
 		elif prop_name == "Dissociation Constants":
 			# prop_value_list = prop_value_and_unit.split(" ")
@@ -145,7 +145,7 @@ def toxnet(cas):
 			physical_properties[prop_name]["Description"] = None
 	# else:
 	# 	physical_properties[prop_name] = prop_value_and_unit
-	
+
 	return physical_properties
 
 
@@ -154,7 +154,7 @@ def toxnet(cas):
 
 if __name__ == "__main__":
 	import pprint
-	
+
 	pprint.pprint(toxnet("122-39-4"))
 # pprint.pprint(toxnet("85-98-3")) # No Record
 # pprint.pprint(toxnet("71-43-2"))

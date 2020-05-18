@@ -87,7 +87,7 @@ from chemistry_tools.formulae.unicode import string_to_unicode
 class Compound(Dictable):
 	"""
 	Class representing a chemical compound.
-	
+
 	Parameters
 	----------
 	name : str
@@ -110,39 +110,39 @@ class Compound(Dictable):
 	data
 		Free form dictionary of additional properties.
 	"""
-	
+
 	def __init__(
 			self, name, formula=None, data=None,
 			latex_name=None, unicode_name=None, html_name=None,
 			):
-		
+
 		super().__init__()
-		
+
 		self.name = name
-		
+
 		if formula is None:
 			formula = name
 			self.formula = Formula.from_string(formula)
 		else:
 			self.formula = formula
-		
+
 		if latex_name:
 			self.latex_name = latex_name
 		else:
 			self.latex_name = string_to_latex(self.formula.hill_formula)
-			
+
 		if unicode_name:
 			self.unicode_name = unicode_name
 		else:
 			self.unicode_name = string_to_unicode(self.formula.hill_formula)
-			
+
 		if html_name:
 			self.html_name = html_name
 		else:
 			self.html_name = string_to_html(self.formula.hill_formula)
-		
+
 		self.data = data or {}
-	
+
 	def __dict__(self):
 		return dict(
 				name=self.name,
@@ -152,29 +152,29 @@ class Compound(Dictable):
 				formula=self.formula,
 				data=self.data,
 				)
-	
+
 	def __eq__(self, other):
 		if isinstance(other, str):
 			return self.name == other
 		else:
 			super().__eq__(other)
-	
+
 	@property
 	def charge(self):
 		"""
 		Convenience property for accessing charge of the formula
 		"""
-		
+
 		return self.formula.charge
-	
+
 	@property
 	def mass(self):
 		"""
 		Convenience property for accessing the mass of the formula
 		"""
-		
+
 		return self.formula.mass
-	
+
 	def molar_mass(self):
 		"""
 		Returns the molar mass (with units) of the substance
@@ -187,14 +187,14 @@ class Compound(Dictable):
 		array(18.0384511...) * g/mol
 
 		"""
-		
+
 		return self.mass * quantities.g / quantities.mol
-	
+
 	def __repr__(self):
 		return f"<{self.__class__.__name__}({self.name}, {self.formula})>"
-	
+
 	def __str__(self):
 		return str(self.name)
-	
+
 	def _repr_html_(self):
 		return self.html_name

@@ -30,6 +30,7 @@
 import re
 from decimal import Decimal
 
+
 def degC(string):
 	return string.replace(" deg C", "°C").replace("deg C", "°C").replace(" DEG C", "°C").replace("DEG C", "°C")
 
@@ -66,7 +67,7 @@ def f2c(string):
 		temperature = re.findall(r"\d*\.?\d+ *° *F", string)[0].replace("F", '').replace("°", '').replace(" ", '')
 	except IndexError:
 		return string
-	
+
 	# Convert to Censius and strip trailing 0s and decimal points
 	temperature = str((Decimal(temperature) - 32) * (Decimal(5) / Decimal(9)))
 	if "." in temperature:

@@ -37,7 +37,7 @@ class Bond:
 	"""
 	Class to represent a bond between two atoms in a :class:`~pubchempy.Compound`.
 	"""
-	
+
 	def __init__(self, aid1, aid2, order=BondType.SINGLE, style=None):
 		"""Initialize with begin and end atom IDs, bond order and bond style.
 
@@ -53,10 +53,10 @@ class Bond:
 		# Bond order.
 		self.style = style
 		# Bond style annotation.
-	
+
 	def __repr__(self):
 		return 'Bond({}, {}, {})'.format(self.aid1, self.aid2, self.order)
-	
+
 	def __eq__(self, other):
 		return (
 				isinstance(other, type(self)) and
@@ -65,37 +65,36 @@ class Bond:
 				self.order == other.order and
 				self.style == other.style
 				)
-	
+
 	@deprecated('Dictionary style access to Bond attributes is deprecated')
 	def __getitem__(self, prop):
 		"""Allow dict-style access to attributes to ease transition from when bonds were dicts."""
 		if prop in {'order', 'style'}:
 			return getattr(self, prop)
 		raise KeyError(prop)
-	
+
 	@deprecated('Dictionary style access to Bond attributes is deprecated')
 	def __setitem__(self, prop, val):
 		"""Allow dict-style setting of attributes to ease transition from when bonds were dicts."""
 		setattr(self, prop, val)
-	
+
 	@deprecated('Dictionary style access to Atom attributes is deprecated')
 	def __contains__(self, prop):
 		"""Allow dict-style checking of attributes to ease transition from when bonds were dicts."""
 		if prop in {'order', 'style'}:
 			return getattr(self, prop) is not None
 		return False
-	
+
 	@deprecated('Dictionary style access to Atom attributes is deprecated')
 	def __delitem__(self, prop):
 		"""Delete the property prop from the wrapped object."""
 		if not hasattr(self.__wrapped, prop):
 			raise KeyError(prop)
 		delattr(self.__wrapped, prop)
-	
+
 	def to_dict(self):
 		"""Return a dictionary containing Bond data."""
 		data = {'aid1': self.aid1, 'aid2': self.aid2, 'order': self.order}
 		if self.style is not None:
 			data['style'] = self.style
 		return data
-

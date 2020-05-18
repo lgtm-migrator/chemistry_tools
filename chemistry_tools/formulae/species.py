@@ -107,6 +107,7 @@ from cawdrey import frozendict
 # this package
 from .formula import Formula
 
+
 class Species(Formula):
 	"""
 	Formula with phase information (e.g. solid, liquid, gas, or aqueous)
@@ -119,7 +120,7 @@ class Species(Formula):
 	"""
 
 	_phases = frozendict(s="Solid", l="Liquid", g="Gas", aq="Aqueous")
-	
+
 	def __init__(self, composition=None, charge=0, phase=None):
 		"""
 		:param composition: A :py:class:`Formula` or :py:class:`Species` object with the elemental composition of a substance,
@@ -132,11 +133,11 @@ class Species(Formula):
 		:type phase: str or None
 
 		"""
-		
+
 		super().__init__(composition, charge)
-		
+
 		self.phase = phase
-	
+
 	@classmethod
 	def from_kwargs(cls, *, charge=0, phase=None, **kwargs):
 		"""
@@ -147,9 +148,9 @@ class Species(Formula):
 
 		:rtype: :class:`Formula`
 		"""
-		
+
 		return cls(kwargs, charge=charge, phase=phase)
-	
+
 	@classmethod
 	def from_string(
 			cls, formula, phase=None, charge=0):
@@ -164,7 +165,7 @@ class Species(Formula):
 		formula: str
 			e.g. 'H2O', 'NaCl(s)', 'CO2(aq)', 'CO2(g)'
 		phase: Either "s", "l", "g", or "aq". ``None`` represents an unknown phase.
-		
+
 		Examples
 		--------
 		>>> water = Species.from_string('H2O')
@@ -183,35 +184,35 @@ class Species(Formula):
 		>>> CO2aq.phase
 		aq
 		"""
-		
+
 		if phase is None:
 			for p in cls._phases:
 				if formula.endswith(f"({p})"):
 					phase = p
 					break
-		
+
 		f = super().from_string(formula, charge)
 		f.phase = phase
 		return f
 
 	def copy(self):
 		return self.__class__(self, charge=self.charge, phase=self.phase)
-	
+
 	def __eq__(self, other):
 		if isinstance(other, Species):
 			if super().__eq__(other):
 				return self.phase == other.phase
 		else:
 			return super().__eq__(other)
-		
+
 	def _repr_elements(self):
 		elements = super()._repr_elements()
-		
+
 		if self.phase:
 			elements.append(f"phase={self.phase}")
-		
+
 		return elements
-	
+
 	@property
 	def hill_formula(self):
 		"""
@@ -219,14 +220,14 @@ class Species(Formula):
 		:return:
 		:rtype: str
 		"""
-		
+
 		hill = super().hill_formula
-		
+
 		if self.phase:
 			return f"{hill}({self.phase})"
 		else:
 			return hill
-		
+
 	@property
 	def empirical_formula(self):
 		"""
@@ -234,9 +235,9 @@ class Species(Formula):
 		:return:
 		:rtype: str
 		"""
-		
+
 		hill = super().empirical_formula
-		
+
 		if self.phase:
 			return f"{hill}({self.phase})"
 		else:

@@ -170,6 +170,6 @@ groups[18] = accum_period_lengths  # noble gases
 
 if __name__ == '__main__':
 	import doctest
-	
+
 	print(f'ELEMENTS = {repr(ELEMENTS)}')
 	doctest.testmod(verbose=False)

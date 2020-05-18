@@ -124,7 +124,7 @@ def string_to_unicode(formula, prefixes=None, infixes=None, **kwargs):
 	>>> string_to_unicode('alpha-FeOOH(s)') == u'α-FeOOH(s)'
 	True
 	"""
-	
+
 	if prefixes is None:
 		prefixes = _unicode_mapping
 	if infixes is None:
@@ -133,4 +133,3 @@ def string_to_unicode(formula, prefixes=None, infixes=None, **kwargs):
 			lambda x: ''.join(_unicode_sub[str(_)] for _ in x),
 			lambda x: ''.join(_unicode_sup[str(_)] for _ in x),
 			formula, prefixes, infixes, **kwargs)
-

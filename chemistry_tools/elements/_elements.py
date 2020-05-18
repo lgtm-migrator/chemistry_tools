@@ -161,4 +161,3 @@ for element in [D, T]:
 	ELEMENTS.add_alternate_spelling(element, element.name)
 	ELEMENTS._dict[element.symbol] = element
 	# ELEMENTS._list.append(element)
-

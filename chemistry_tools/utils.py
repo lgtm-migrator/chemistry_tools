@@ -86,7 +86,7 @@ def defaultnamedtuple(typename, field_names, defaults=()):
 	-------
 	A new tuple subclass named ``typename``
 	"""
-	
+
 	Tuple = namedtuple(typename, field_names)
 	Tuple.__new__.__defaults__ = (None,) * len(Tuple._fields)
 	if isinstance(defaults, Mapping):

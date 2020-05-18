@@ -1563,7 +1563,7 @@ Pt = Element(
 				"unreactivity, however platinum compounds should be considered "
 				"highly toxic."
 		)
-		
+
 		)
 
 Au = Element(
@@ -1626,7 +1626,7 @@ Au = Element(
 				"is not particularly toxic, however it is known to cause damage to "
 				"the liver and kidneys in some."
 		)
-		
+
 		)
 
 Hg = Element(

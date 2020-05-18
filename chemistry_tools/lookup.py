@@ -38,7 +38,7 @@ def get_compounds(identifier, namespace='cid', searchtype=None, as_dataframe=Fal
 	:param as_dataframe: (optional) Automatically extract the :class:`~pubchempy.Compound` properties into a pandas
 						 :class:`~pandas.DataFrame` and return that.
 	"""
-	
+
 	results = get_json(identifier, namespace, searchtype=searchtype, **kwargs)
 	compounds = [Compound(r) for r in results['PC_Compounds']] if results else []
 	if as_dataframe:
@@ -69,5 +69,3 @@ def get_substances(identifier, namespace='sid', as_dataframe=False, **kwargs):
 	if as_dataframe:
 		return substances_to_frame(substances)
 	return substances
-
-

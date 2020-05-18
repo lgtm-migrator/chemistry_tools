@@ -238,22 +238,22 @@ _iso_bracket_regex = re.compile(r"^(\[)(\d+)(\])$")
 def _split_isotope(string):
 	"""
 	Returns the symbol and massnumber for the isotope represented by ``string``.
-	
+
 	Valid isotopes include [C12], C[12] and [12C]
-	
+
 	:param string:
 	:type string: str
-	
+
 	:return:
 	:rtype: (str, int)
 	"""
-	
+
 	isotope = 0
-	
+
 	iso_re_1 = _isotope_regex_1.findall(string)
 	iso_re_2 = _isotope_regex_2.findall(string)
 	iso_re_3 = _isotope_regex_3.findall(string)
-	
+
 	if iso_re_1:
 		elem, isotope = iso_re_1[0]
 		isotope = _iso_bracket_regex.findall(isotope)[0][1]
@@ -267,10 +267,10 @@ def _split_isotope(string):
 		elem = elem.rstrip("]")
 	else:
 		elem = string
-	
+
 	if elem not in ELEMENTS:
 		raise ValueError(f'Unknown chemical element with symbol {elem}')
-	
+
 	return ELEMENTS[elem].symbol, int(isotope)
 
 
@@ -284,31 +284,29 @@ def _hill_order(*symbols):
 	CHO
 
 	"""
-	
+
 	if len(symbols) == 0:
 		raise TypeError("'_hill_order' requires at least 1 argument (0 given)")
 	elif len(symbols) == 1:
 		if isinstance(symbols[0], (list, tuple, set)):
 			symbols = symbols[0]
-			
+
 	symbols = list(set(symbols))
-	
+
 	isotope_re = r"^(%s)(\[[0-9]*\])?$"
 	carbon_re = re.compile(isotope_re % "C")
 	hydrogen_re = re.compile(isotope_re % "H")
 
 	carbon_isotopes = list(filter(carbon_re.findall, symbols))
-	
+
 	if carbon_isotopes:
 		for isotope in sorted(carbon_isotopes):
 			symbols.remove(isotope)
 			yield isotope
-			
+
 		hydrogen_isotopes = list(filter(hydrogen_re.findall, symbols))
 		for isotope in sorted(hydrogen_isotopes):
 			symbols.remove(isotope)
 			yield isotope
-			
+
 	yield from sorted(symbols)
-
-

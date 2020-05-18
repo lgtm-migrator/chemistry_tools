@@ -26,7 +26,7 @@ def SpectrumSimilarity(
 		print_graphic=True, output_list=False,
 		):
 	"""
-	
+
 	:param spec_top: Array containing the experimental spectrum's peak list with the m/z values in the
 		first column and corresponding intensities in the second
 	:type spec_top: numpy.array
@@ -57,7 +57,7 @@ def SpectrumSimilarity(
 
 	if print_graphic:
 		import matplotlib.pyplot as plt
-	
+
 	# format spectra and normalize intensitites
 	top_tmp = pd.DataFrame(data=spec_top, columns=["mz", "intensity"])
 	top_tmp["normalized"] = top_tmp.apply(normalize, args=(max(top_tmp["intensity"]),), axis=1)
@@ -65,16 +65,16 @@ def SpectrumSimilarity(
 	top_plot = top_tmp[["mz", "normalized"]].copy()  # data frame for plotting spectrum
 	top_plot.columns = ["mz", "intensity"]
 	top = top_plot[top_plot["intensity"] >= b]  # data frame for similarity score calculation
-	
+
 	bottom_tmp = pd.DataFrame(data=spec_bottom, columns=["mz", "intensity"])
 	bottom_tmp["normalized"] = bottom_tmp.apply(normalize, args=(max(bottom_tmp["intensity"]),), axis=1)
 	bottom_tmp = bottom_tmp[bottom_tmp["mz"].between(xlim[0], xlim[1])]
 	bottom_plot = bottom_tmp[["mz", "normalized"]].copy()  # data frame for plotting spectrum
 	bottom_plot.columns = ["mz", "intensity"]
 	bottom = bottom_plot[bottom_plot["intensity"] >= b]  # data frame for similarity score calculation
-	
+
 	# align the m/z axis of the two spectra, the bottom spectrum is used as the reference
-	
+
 	# Unimplemented R code
 	#   for(i in 1:nrow(bottom))
 	# 	top["mz"][bottom["mz"][i] >= top["mz"] - t & bottom["mz"][i] <= top["mz"] + t] = bottom["mz"][i]
@@ -90,32 +90,32 @@ def SpectrumSimilarity(
 	if print_alignment:
 		with pd.option_context('display.max_rows', None, 'display.max_columns', None):
 			print(alignment)
-	
+
 	# similarity score calculation
-	
+
 	if x_threshold < 0:
 		print("Error: x_threshold argument must be zero or a positive number")
 		return 1
-	
+
 	# Unimplemented R code
 	# alignment <- alignment[alignment[,1] >= x.threshold, ]
-	
+
 	u = np.array(alignment.iloc[:, 1])
 	v = np.array(alignment.iloc[:, 2])
-	
+
 	similarity_score = np.dot(u, v) / (np.sqrt(np.sum(np.square(u))) * np.sqrt(np.sum(np.square(v))))
-	
+
 	# Reverse Match
 	reverse_alignment = pd.merge(top, bottom, on="mz", how="right")
 	reverse_alignment = reverse_alignment.dropna()  # Remove rows containing NaN
 	reverse_alignment.columns = ["mz", "intensity_top", "intensity_bottom"]
 	u = np.array(reverse_alignment.iloc[:, 1])
 	v = np.array(reverse_alignment.iloc[:, 2])
-	
+
 	reverse_similarity_score = np.dot(u, v) / (np.sqrt(np.sum(np.square(u))) * np.sqrt(np.sum(np.square(v))))
-	
+
 	# generate plot
-	
+
 	if print_graphic:
 		fig, ax = plt.subplots()
 		# fig.scatter(top_plot["mz"],top_plot["intensity"], s=0)
@@ -126,13 +126,13 @@ def SpectrumSimilarity(
 		ax.axhline(color="black", linewidth=0.5)
 		ax.set_ylabel("Intensity (%)")
 		ax.set_xlabel("m/z", style="italic", family="serif")
-		
+
 		h_centre = xlim[0] + (xlim[1] - xlim[0]) // 2
-		
+
 		ax.text(h_centre, 110, top_label, horizontalalignment="center", verticalalignment="center")
 		ax.text(h_centre, -110, bottom_label, horizontalalignment="center", verticalalignment="center")
 		plt.show()
-	
+
 	# Unimplemented R code
 	# 	ticks <- c(-100, -50, 0, 50, 100)
 	# 	plot.window(xlim = c(0, 20), ylim = c(-10, 10))
@@ -187,10 +187,10 @@ def SpectrumSimilarity(
 	#
 	#
 	#
-	
+
 	#	with pd.option_context('display.max_rows', None, 'display.max_columns', None):
 	#		print(similarity_score)
-	
+
 	if output_list:
 		return similarity_score, reverse_similarity_score, alignment
 	# Unimplemented R code

@@ -26,7 +26,7 @@ from .errors import deprecated
 
 class Atom:
 	"""Class to represent an atom in a :class:`~pubchempy.Compound`."""
-	
+
 	def __init__(self, aid, number, x=None, y=None, z=None, charge=0):
 		"""Initialize with an atom ID, atomic number, coordinates and optional change.
 
@@ -37,7 +37,7 @@ class Atom:
 		:param float z: (optional) Z coordinate.
 		:param int charge: (optional) Formal charge on atom.
 		"""
-		
+
 		self.aid = aid
 		# The atom ID within the owning Compound.
 		self.number = number
@@ -50,10 +50,10 @@ class Atom:
 		# The z coordinate for this atom. Will be ``None`` in 2D Compound records.
 		self.charge = charge
 		# The formal charge on this atom.
-	
+
 	def __repr__(self):
 		return 'Atom({}, {})'.format(self.aid, self.element)
-	
+
 	def __eq__(self, other):
 		return (
 				isinstance(other, type(self)) and
@@ -64,31 +64,31 @@ class Atom:
 				self.z == other.z and
 				self.charge == other.charge
 				)
-	
+
 	@deprecated('Dictionary style access to Atom attributes is deprecated')
 	def __getitem__(self, prop):
 		"""Allow dict-style access to attributes to ease transition from when atoms were dicts."""
 		if prop in {'element', 'x', 'y', 'z', 'charge'}:
 			return getattr(self, prop)
 		raise KeyError(prop)
-	
+
 	@deprecated('Dictionary style access to Atom attributes is deprecated')
 	def __setitem__(self, prop, val):
 		"""Allow dict-style setting of attributes to ease transition from when atoms were dicts."""
 		setattr(self, prop, val)
-	
+
 	@deprecated('Dictionary style access to Atom attributes is deprecated')
 	def __contains__(self, prop):
 		"""Allow dict-style checking of attributes to ease transition from when atoms were dicts."""
 		if prop in {'element', 'x', 'y', 'z', 'charge'}:
 			return getattr(self, prop) is not None
 		return False
-	
+
 	@property
 	def element(self):
 		"""The element symbol for this atom."""
 		return ELEMENTS[self.number].symbol
-	
+
 	def to_dict(self):
 		"""Return a dictionary containing Atom data."""
 		data = {'aid': self.aid, 'number': self.number, 'element': self.element}
@@ -98,13 +98,13 @@ class Atom:
 		if self.charge != 0:
 			data['charge'] = self.charge
 		return data
-	
+
 	def set_coordinates(self, x, y, z=None):
 		"""Set all coordinate dimensions at once."""
 		self.x = x
 		self.y = y
 		self.z = z
-	
+
 	@property
 	def coordinate_type(self):
 		"""Whether this atom has 2D or 3D coordinates."""
