@@ -5,9 +5,6 @@
 """
 Actinides (or actinoids) in the Periodid Table
 
-Elements
----------
-
 .. data:: Ac
 
 	chemistry_tools.elements.actinides.Ac

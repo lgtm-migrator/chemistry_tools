@@ -1,5 +1,5 @@
 *********************************
-:mod:`~chemistry_tools.pubchem`
+:mod:`chemistry_tools.pubchem`
 *********************************
 
 .. contents:: Table of Contents
