@@ -21,7 +21,6 @@
 #
 
 from chemistry_tools.elements import ELEMENTS
-from .errors import deprecated
 
 
 class Atom:
@@ -64,26 +63,6 @@ class Atom:
 				and self.z == other.z
 				and self.charge == other.charge
 				)
-
-	@deprecated('Dictionary style access to Atom attributes is deprecated')
-	def __getitem__(self, prop):
-		"""Allow dict-style access to attributes to ease transition from when atoms were dicts."""
-		if prop in {'element', 'x', 'y', 'z', 'charge'}:
-			return getattr(self, prop)
-		raise KeyError(prop)
-
-	@deprecated('Dictionary style access to Atom attributes is deprecated')
-	def __setitem__(self, prop, val):
-		"""Allow dict-style setting of attributes to ease transition from when atoms were dicts."""
-		setattr(self, prop, val)
-
-	@deprecated('Dictionary style access to Atom attributes is deprecated')
-	def __contains__(self, prop):
-		"""Allow dict-style checking of attributes to ease transition from when atoms were dicts."""
-		if prop in {'element', 'x', 'y', 'z', 'charge'}:
-			return getattr(self, prop) is not None
-		return False
-
 	@property
 	def element(self):
 		"""The element symbol for this atom."""

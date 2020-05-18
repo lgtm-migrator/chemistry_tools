@@ -8,18 +8,16 @@ Test compound object.
 """
 
 
-import pytest
-
 import re
-import warnings
 from decimal import Decimal
 
-from chemistry_tools.pubchem.compound import Compound
-from chemistry_tools.pubchem.atom import Atom
-from chemistry_tools.pubchem.bond import BondType
-from chemistry_tools.pubchem.errors import PubChemPyDeprecationWarning
+import pytest
+
 from chemistry_tools.constants import text_types
 from chemistry_tools.lookup import get_compounds
+from chemistry_tools.pubchem.atom import Atom
+from chemistry_tools.pubchem.bond import BondType
+from chemistry_tools.pubchem.compound import Compound
 
 
 @pytest.fixture(scope='module')
@@ -47,14 +45,6 @@ def test_atoms(c1):
 	assert set(c1.elements) == {'C', 'H'}
 
 
-def test_atoms_deprecated(c1):
-	with warnings.catch_warnings(record=True) as w:
-		assert set(a['element'] for a in c1.atoms) == {'C', 'H'}
-		assert len(w) == 1
-		assert w[0].category == PubChemPyDeprecationWarning
-		assert str(w[0].message) == 'Dictionary style access to Atom attributes is deprecated'
-
-
 def test_single_atom():
 	"""Test Compound when there is a single atom and no bonds."""
 	c = Compound.from_cid(259)
@@ -67,14 +57,6 @@ def test_bonds(c1):
 	assert set(b.order for b in c1.bonds) == {BondType.SINGLE, BondType.DOUBLE}
 
 
-def test_bonds_deprecated(c1):
-	with warnings.catch_warnings(record=True) as w:
-		assert set(b['order'] for b in c1.bonds) == {BondType.SINGLE, BondType.DOUBLE}
-		assert len(w) == 1
-		assert w[0].category == PubChemPyDeprecationWarning
-		assert str(w[0].message) == 'Dictionary style access to Bond attributes is deprecated'
-
-
 def test_charge(c1):
 	assert c1.charge == 0
 
@@ -84,16 +66,6 @@ def test_coordinates(c1):
 		assert isinstance(a.x, (float, int))
 		assert isinstance(a.y, (float, int))
 		assert a.z is None
-
-
-def test_coordinates_deprecated(c1):
-	with warnings.catch_warnings(record=True) as w:
-		assert isinstance(c1.atoms[0]['x'], (float, int))
-		assert isinstance(c1.atoms[0]['y'], (float, int))
-		assert 'z' not in c1.atoms[0]
-		assert len(w) == 3
-		assert w[0].category == PubChemPyDeprecationWarning
-		assert str(w[0].message) == 'Dictionary style access to Atom attributes is deprecated'
 
 
 def test_identifiers(c1):
@@ -252,14 +224,6 @@ def test_compound_dict(c1):
 def test_charged_compound(c2):
 	assert len(c2.atoms) == 7
 	assert c2.atoms[0].charge == -1
-
-
-def test_charged_compound_deprecated(c2):
-	with warnings.catch_warnings(record=True) as w:
-		assert c2.atoms[0]['charge'] == -1
-		assert len(w) == 1
-		assert w[0].category == PubChemPyDeprecationWarning
-		assert str(w[0].message) == 'Dictionary style access to Atom attributes is deprecated'
 
 
 def test_fingerprint(c1):

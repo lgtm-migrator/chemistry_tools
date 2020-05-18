@@ -19,8 +19,6 @@
 #  MA 02110-1301, USA.
 #
 
-from .errors import deprecated
-
 
 class BondType:
 	SINGLE = 1
@@ -65,32 +63,6 @@ class Bond:
 				and self.order == other.order
 				and self.style == other.style
 				)
-
-	@deprecated('Dictionary style access to Bond attributes is deprecated')
-	def __getitem__(self, prop):
-		"""Allow dict-style access to attributes to ease transition from when bonds were dicts."""
-		if prop in {'order', 'style'}:
-			return getattr(self, prop)
-		raise KeyError(prop)
-
-	@deprecated('Dictionary style access to Bond attributes is deprecated')
-	def __setitem__(self, prop, val):
-		"""Allow dict-style setting of attributes to ease transition from when bonds were dicts."""
-		setattr(self, prop, val)
-
-	@deprecated('Dictionary style access to Atom attributes is deprecated')
-	def __contains__(self, prop):
-		"""Allow dict-style checking of attributes to ease transition from when bonds were dicts."""
-		if prop in {'order', 'style'}:
-			return getattr(self, prop) is not None
-		return False
-
-	@deprecated('Dictionary style access to Atom attributes is deprecated')
-	def __delitem__(self, prop):
-		"""Delete the prop ``prop`` from the wrapped object."""
-		if not hasattr(self.__wrapped, prop):
-			raise KeyError(prop)
-		delattr(self.__wrapped, prop)
 
 	def to_dict(self):
 		"""Return a dictionary containing Bond data."""

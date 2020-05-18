@@ -8,13 +8,12 @@ Test compound object with 3D record.
 """
 
 
-import pytest
-import warnings
 from decimal import Decimal
 
-from chemistry_tools.pubchem.compound import Compound
+import pytest
+
 from chemistry_tools.constants import text_types
-from chemistry_tools.pubchem.errors import PubChemPyDeprecationWarning
+from chemistry_tools.pubchem.compound import Compound
 
 
 @pytest.fixture
@@ -61,26 +60,9 @@ def test_atoms(c3d):
 	assert set(c3d.elements) == {'C', 'H', 'O', 'N'}
 
 
-def test_atoms_deprecated(c3d):
-	with warnings.catch_warnings(record=True) as w:
-		assert set(a['element'] for a in c3d.atoms) == {'C', 'H', 'O', 'N'}
-		assert len(w) == 1
-		assert w[0].category == PubChemPyDeprecationWarning
-		assert str(w[0].message) == 'Dictionary style access to Atom attributes is deprecated'
-
-
 def test_coordinates(c3d):
 	for a in c3d.atoms:
 		assert isinstance(a.x, (float, int))
 		assert isinstance(a.y, (float, int))
 		assert isinstance(a.z, (float, int))
 
-
-def test_coordinates_deprecated(c3d):
-	with warnings.catch_warnings(record=True) as w:
-		assert isinstance(c3d.atoms[0]['x'], (float, int))
-		assert isinstance(c3d.atoms[0]['y'], (float, int))
-		assert isinstance(c3d.atoms[0]['z'], (float, int))
-		assert len(w) == 3
-		assert w[0].category == PubChemPyDeprecationWarning
-		assert str(w[0].message) == 'Dictionary style access to Atom attributes is deprecated'
