@@ -56,13 +56,13 @@ class Atom:
 
 	def __eq__(self, other):
 		return (
-				isinstance(other, type(self)) and
-				self.aid == other.aid and
-				self.element == other.element and
-				self.x == other.x and
-				self.y == other.y and
-				self.z == other.z and
-				self.charge == other.charge
+				isinstance(other, type(self))
+				and self.aid == other.aid
+				and self.element == other.element
+				and self.x == other.x
+				and self.y == other.y
+				and self.z == other.z
+				and self.charge == other.charge
 				)
 
 	@deprecated('Dictionary style access to Atom attributes is deprecated')

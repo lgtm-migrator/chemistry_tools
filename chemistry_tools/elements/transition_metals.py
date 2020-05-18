@@ -2,6 +2,163 @@
 # -*- coding: utf-8 -*-
 #
 #  transition_metals.py
+"""
+Transition Metals block in the Periodic Table
+
+.. data:: Sc
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Scandium
+
+.. data:: Ti
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Titanium
+
+.. data:: V
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Vanadium
+
+.. data:: Cr
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Chromium
+
+.. data:: Mn
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Manganese
+
+.. data:: Fe
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Iron
+
+.. data:: Co
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Cobalt
+
+.. data:: Ni
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Nickel
+
+.. data:: Cu
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Copper
+
+.. data:: Zn
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Zinc
+
+.. data:: Y
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Yttrium
+
+.. data:: Zr
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Zirconium
+
+.. data:: Nb
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Niobium
+
+.. data:: Mo
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Molybdenum
+
+.. data:: Tc
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Technetium
+
+.. data:: Ru
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Ruthenium
+
+.. data:: Rh
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Rhodium
+
+.. data:: Pd
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Palladium
+
+.. data:: Ag
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Silver
+
+.. data:: Cd
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Cadmium
+
+.. data:: Hf
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Hafnium
+
+.. data:: Ta
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Tantalum
+
+.. data:: W
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Tungsten
+
+.. data:: Re
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Rhenium
+
+.. data:: Os
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Osmium
+
+.. data:: Ir
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Iridium
+
+.. data:: Pt
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Platinum
+
+.. data:: Au
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Gold
+
+.. data:: Hg
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Mercury
+
+.. data:: Rf
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Rutherfordium
+
+.. data:: Db
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Dubnium
+
+.. data:: Sg
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Seaborgium
+
+.. data:: Bh
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Bohrium
+
+.. data:: Hs
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Hassium
+
+.. data:: Mt
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Meitnerium
+
+.. data:: Ds
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Darmstadtium
+
+.. data:: Rg
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Roentgenium
+
+.. data:: Cn
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Roentgenium
+
+
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

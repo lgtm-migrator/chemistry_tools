@@ -2,6 +2,35 @@
 # -*- coding: utf-8 -*-
 #
 #  triels.py
+"""
+Group 13: Triels (or boron group) in the Periodic Table
+
+.. data:: B
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Boron
+
+.. data:: Al
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Aluminium
+
+.. data:: Ga
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Gallium
+
+.. data:: In
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Indium
+
+.. data:: Tl
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Thallium
+
+.. data:: Nh
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Nihonium
+
+
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

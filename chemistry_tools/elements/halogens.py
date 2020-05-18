@@ -2,6 +2,34 @@
 # -*- coding: utf-8 -*-
 #
 #  halogens.py
+"""
+Group 17: Halogens in the Periodic Table
+
+.. data:: F
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Fluorine
+
+.. data:: Cl
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Chlorine
+
+.. data:: Br
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Bromine
+
+.. data:: I
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Iodine
+
+.. data:: At
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Astatine
+
+.. data:: Ts
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Tennessine
+
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

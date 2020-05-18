@@ -79,6 +79,7 @@ Functions and constants for parsing formulae
 import re
 from collections import defaultdict
 from functools import lru_cache
+from string import ascii_lowercase, ascii_uppercase
 
 # 3rd party
 import pyparsing
@@ -91,11 +92,8 @@ from .latex import _latex_mapping
 
 _atom = r'([A-Z][a-z+]*)(?:\[(\d+)\])?([+-]?\d+)?'
 _formula = fr'^({_atom})*$'
-
-
 relative_atomic_masses = [element.mass for element in ELEMENTS]
 
-from string import ascii_lowercase, ascii_uppercase
 
 # Construct regular expression to match all elements, plus D and T
 element_re_dict = {}
@@ -202,8 +200,10 @@ def _get_formula_parser():
 	# forward declare 'formula' so it can be used in definition of 'term'
 	formula = Forward()
 
-	term = Group((element | Group(LPAR + formula + RPAR)("subgroup")) +
-				 Optional(integer, default=1)("mult"))
+	term = Group(
+			(element | Group(LPAR + formula + RPAR)("subgroup"))
+			+ Optional(integer, default=1)("mult")
+			)
 
 	# add parse actions for parse-time processing
 
@@ -251,8 +251,10 @@ def _parse_stoich(stoich):
 	if re.findall('|'.join(invalid_re), stoich):
 		raise ValueError(f"Unrecognised formula: {stoich}")
 
-	return {symbols.index(k) + 1: n for k, n
-			in _get_formula_parser().parseString(stoich)}
+	return {
+			symbols.index(k) + 1: n for k, n
+			in _get_formula_parser().parseString(stoich)
+			}
 
 
 def string_to_composition(

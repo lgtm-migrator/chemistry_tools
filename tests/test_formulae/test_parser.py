@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-#  __init__.py
+#  test_parser.py
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

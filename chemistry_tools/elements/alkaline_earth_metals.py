@@ -2,6 +2,35 @@
 # -*- coding: utf-8 -*-
 #
 #  alkaline_earth_metals.py
+"""
+Group 2: Alkaline Earth Metals in the Periodic Table
+
+.. data:: Be
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Beryllium
+
+.. data:: Mg
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Magnesium
+
+.. data:: Ca
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Calcium
+
+.. data:: Sr
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Strontium
+
+.. data:: Ba
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Barium
+
+.. data:: Ra
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Radium
+
+
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

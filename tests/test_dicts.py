@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-#  test_arithmeticdict.py
+#  test_dicts.py
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

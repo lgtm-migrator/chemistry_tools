@@ -3,12 +3,67 @@
 #
 #  actinides.py
 """
-Actinides (or actinoids) in the Periodid Table
+Actinides (or actinoids) in the Periodic Table
 
 .. data:: Ac
 
-	chemistry_tools.elements.actinides.Ac
+	:class:`~chemistry_tools.elements.classes.Element` representing Actinium
 
+.. data:: Th
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Thorium
+
+.. data:: Pa
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Protactinium
+
+.. data:: U
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Uranium
+
+.. data:: Np
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Neptunium
+
+.. data:: Pu
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Plutonium
+
+.. data:: Am
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Americium
+
+.. data:: Cm
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Curium
+
+.. data:: Bk
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Berkelium
+
+.. data:: Cf
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Californium
+
+.. data:: Es
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Einsteinium
+
+.. data:: Fm
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Fermium
+
+.. data:: Md
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Mendelevium
+
+.. data:: No
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Nobelium
+
+.. data:: Lr
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Lawrencium
 
 """
 #
@@ -237,7 +292,7 @@ Pa = Element(
 				239: (239.05726, 0.0),
 				240: (240.06098, 0.0),
 				},
-		description = (
+		description=(
 			"Radioactive metallic element, belongs to the actinoids. The most "
 			"stable isotope, Pa-231 has a half-life of 2.43*10^4 years. At least "
 			"10 other radioactive isotopes are known. No practical applications "
@@ -281,7 +336,7 @@ U = Element(
 				241: (241.06033, 0.0),
 				242: (242.06293, 0.0),
 				},
-		description = (
+		description=(
 			"White radioactive metallic element belonging to the actinoids. "
 			"Three natural isotopes, U-238, U-235 and U-234. Uranium-235 is used "
 			"as the fuel for nuclear reactors and weapons. Discovered by Martin "
@@ -320,7 +375,7 @@ Np = Element(
 				243: (243.06428, 0.0),
 				244: (244.06785, 0.0),
 				},
-		description = (
+		description=(
 			"Radioactive metallic transuranic element, belongs to the "
 			"actinoids. Np-237, the most stable isotope, has a half-life of "
 			"2.2*10^6 years and is a by product of nuclear reactors. The other "
@@ -361,7 +416,7 @@ Pu = Element(
 				246: (246.070205, 0.0),
 				247: (247.07407, 0.0),
 				},
-		description = (
+		description=(
 			"Dense silvery radioactive metallic transuranic element, belongs to "
 			"the actinoids. Pu-244 is the most stable isotope with a half-life "
 			"of 7.6*10^7 years. Thirteen isotopes are known. Pu-239 is the most "
@@ -403,7 +458,7 @@ Am = Element(
 				248: (248.07575, 0.0),
 				249: (249.07848, 0.0),
 				},
-		description = (
+		description=(
 			"Radioactive metallic transuranic element, belongs to the "
 			"actinoids. Ten known isotopes. Am-243 is the most stable isotope, "
 			"with a half-life of 7.95*10^3 years. Discovered by Glenn T. Seaborg "
@@ -443,7 +498,7 @@ Cm = Element(
 				251: (251.082285, 0.0),
 				252: (252.08487, 0.0),
 				},
-		description = (
+		description=(
 			"Radioactive metallic transuranic element. Belongs to actinoid "
 			"series. Nine known isotopes, Cm-247 has a half-life of 1.64*10^7 "
 			"years. First identified by Glenn T. Seaborg and associates in 1944, "
@@ -483,7 +538,7 @@ Bk = Element(
 				253: (253.08688, 0.0),
 				254: (254.0906, 0.0),
 				},
-		description = (
+		description=(
 			"Radioactive metallic transuranic element. Belongs to actinoid "
 			"series. Eight known isotopes, the most common Bk-247, has a "
 			"half-life of 1.4*10^3 years. First produced by Glenn T. Seaborg and "
@@ -523,7 +578,7 @@ Cf = Element(
 				255: (255.09105, 0.0),
 				256: (256.09344, 0.0),
 				},
-		description = (
+		description=(
 			"Radioactive metallic transuranic element. Belongs to actinoid "
 			"series. Cf-251 has a half life of about 700 years. Nine isotopes "
 			"are known. Cf-252 is an intense Neutron source, which makes it an "
@@ -563,7 +618,7 @@ Es = Element(
 				257: (257.09598, 0.0),
 				258: (258.09952, 0.0),
 				},
-		description = (
+		description=(
 			"Appearance is unknown, however it is most probably metallic and "
 			"silver or gray in color. Radioactive metallic transuranic element "
 			"belonging to the actinoids. Es-254 has the longest half-life of the "
@@ -605,7 +660,7 @@ Fm = Element(
 				259: (259.1006, 0.0),
 				260: (260.10268, 0.0),
 				},
-		description = (
+		description=(
 			"Radioactive metallic transuranic element, belongs to the "
 			"actinoids. Ten known isotopes, most stable is Fm-257 with a "
 			"half-life of 10 days. First identified by Albert Ghiorso and "
@@ -643,7 +698,7 @@ Md = Element(
 				261: (261.10572, 0.0),
 				262: (262.10887, 0.0),
 				},
-		description = (
+		description=(
 			"Radioactive metallic transuranic element. Belongs to the actinoid "
 			"series. Only known isotope, Md-256 has a half-life of 1.3 hours. "
 			"First identified by Glenn T. Seaborg, Albert Ghiorso and associates "
@@ -680,7 +735,7 @@ No = Element(
 				263: (263.11055, 0.0),
 				264: (264.11235, 0.0),
 				},
-		description = (
+		description=(
 			"Radioactive metallic transuranic element, belongs to the "
 			"actinoids. Seven known isotopes exist, the most stable being No-254 "
 			"with a half-life of 255 seconds. First identified with certainty by "
@@ -716,7 +771,7 @@ Lr = Element(
 				265: (265.11584, 0.0),
 				266: (266.11931, 0.0),
 				},
-		description = (
+		description=(
 			"Appearance unknown, however it is most likely silvery-white or "
 			"grey and metallic. Lawrencium is a synthetic rare-earth metal. "
 			"There are eight known radioisotopes, the most stable being Lr-262 "

@@ -1,7 +1,35 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  elements_list.py
+#  alkali_metals.py
+"""
+Group 1: Alkali Metals in the Periodic Table
+
+.. data:: Li
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Lithium
+
+.. data:: Na
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Sodium
+
+.. data:: K
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Potassium
+
+.. data:: Rb
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Rubidium
+
+.. data:: Cs
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Caesium
+
+.. data:: Fr
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Francium
+
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

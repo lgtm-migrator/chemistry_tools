@@ -23,7 +23,7 @@ def test_equals():
 
 
 # def test_scientific():
-#	assert PropertyFormat.scientific("123x108")
+# 	assert PropertyFormat.scientific("123x108")
 
 def test_uscg1999():
 	assert property_format.uscg1999("1234(USCG, 1999)") == '1234'

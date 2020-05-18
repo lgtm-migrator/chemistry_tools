@@ -2,6 +2,34 @@
 # -*- coding: utf-8 -*-
 #
 #  chalcogens.py
+"""
+Group 16: Chalcogens in the Periodic Table
+
+.. data:: O
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Oxygen
+
+.. data:: S
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Sulfur
+
+.. data:: Se
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Selenium
+
+.. data:: Te
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Tellurium
+
+.. data:: Po
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Polonium
+
+.. data:: Lv
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Livermorium
+
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

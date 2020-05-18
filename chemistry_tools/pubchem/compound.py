@@ -160,8 +160,8 @@ class Compound:
 										physical_property["Information"][0]["Value"]["Unit"]
 								except KeyError:
 									self._physical_properties[name]["Unit"] = None
-							# import pprint
-							# pprint.pprint(self._physical_properties)
+						# import pprint
+						# pprint.pprint(self._physical_properties)
 
 				elif record["TOCHeading"] == "Names and Identifiers":
 					for section in record["Section"]:
@@ -196,8 +196,9 @@ class Compound:
 							for subsection in section["Section"]:
 								if subsection["TOCHeading"] == "Depositor-Supplied Synonyms":
 									self.synonyms = []
-									existing_names = [x.lower().replace("-", '') for x in
-													  [self.CAS, self.IUPAC["String"]]]
+									existing_names = [
+											x.lower().replace("-", '')
+											for x in [self.CAS, self.IUPAC["String"]]]
 									for synonym in subsection["Information"][0]["Value"]["StringWithMarkup"]:
 										if synonym["String"].lower().replace("-", '') not in existing_names:
 											self.synonyms.append(synonym["String"])
@@ -281,8 +282,18 @@ class Compound:
 		if not properties:
 			skip = {'aids', 'sids', 'synonyms'}
 			properties = [p for p in dir(Compound) if isinstance(getattr(Compound, p), property) and p not in skip]
-		return {p: [i.to_dict() for i in getattr(self, p)] if p in {'atoms', 'bonds'} else getattr(self, p) for p in
-				properties}
+
+		class_dict = {}
+		for p in properties:
+			if p in {'atoms', 'bonds'}:
+				class_dict[p] = [i.to_dict() for i in getattr(self, p)]
+			else:
+				class_dict[p] = getattr(self, p)
+
+		return class_dict
+
+		# return {p: [i.to_dict() for i in getattr(self, p)] if p in {'atoms', 'bonds'} else getattr(self, p) for p in
+		# 		properties}
 
 	def to_series(self, properties=None):
 		"""Return a pandas :class:`~pandas.Series` containing Compound data. Optionally specify a list of the desired
@@ -625,7 +636,7 @@ class Compound:
 		return self.get_property_value("Heavy Atom Count")
 
 	# if 'count' in self.record and 'heavy_atom' in self.record['count']:
-	#	return self.record['count']['heavy_atom']
+	# 	return self.record['count']['heavy_atom']
 
 	@property
 	def charge(self):
@@ -647,7 +658,7 @@ class Compound:
 		return self.get_property_value("Isotope Atom Count")
 
 	# if 'count' in self.record and 'isotope_atom' in self.record['count']:
-	#	return self.record['count']['isotope_atom']
+	# 	return self.record['count']['isotope_atom']
 
 	@property
 	def defined_atom_stereo_count(self):
@@ -655,7 +666,7 @@ class Compound:
 		return self.get_property_value("Defined Atom Stereocenter Count")
 
 	# if 'count' in self.record and 'atom_chiral_def' in self.record['count']:
-	#	return self.record['count']['atom_chiral_def']
+	# 	return self.record['count']['atom_chiral_def']
 
 	@property
 	def undefined_atom_stereo_count(self):
@@ -663,7 +674,7 @@ class Compound:
 		return self.get_property_value("Undefined Atom Stereocenter Count")
 
 	# if 'count' in self.record and 'atom_chiral_undef' in self.record['count']:
-	#	return self.record['count']['atom_chiral_undef']
+	# 	return self.record['count']['atom_chiral_undef']
 
 	@property
 	def defined_bond_stereo_count(self):
@@ -671,7 +682,7 @@ class Compound:
 		return self.get_property_value("Defined Bond Stereocenter Count")
 
 	# if 'count' in self.record and 'bond_chiral_def' in self.record['count']:
-	#	return self.record['count']['bond_chiral_def']
+	# 	return self.record['count']['bond_chiral_def']
 
 	@property
 	def undefined_bond_stereo_count(self):
@@ -679,7 +690,7 @@ class Compound:
 		return self.get_property_value("Undefined Bond Stereocenter Count")
 
 	# if 'count' in self.record and 'bond_chiral_undef' in self.record['count']:
-	#	return self.record['count']['bond_chiral_undef']
+	# 	return self.record['count']['bond_chiral_undef']
 
 	@property
 	def covalent_unit_count(self):
@@ -687,7 +698,7 @@ class Compound:
 		return self.get_property_value("Covalently-Bonded Unit Count")
 
 	# if 'count' in self.record and 'covalent_unit' in self.record['count']:
-	#	return self.record['count']['covalent_unit']
+	# 	return self.record['count']['covalent_unit']
 
 	@property
 	def is_canonicalized(self):

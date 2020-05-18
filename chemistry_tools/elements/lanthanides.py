@@ -2,6 +2,70 @@
 # -*- coding: utf-8 -*-
 #
 #  lanthanides.py
+"""
+Lanthanides (or lanthanoids) in the Periodic Table
+
+.. data:: La
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Lanthanum
+
+.. data:: Ce
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Cerium
+
+.. data:: Pr
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Praseodymium
+
+.. data:: Nd
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Neodymium
+
+.. data:: Pm
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Promethium
+
+.. data:: Sm
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Samarium
+
+.. data:: Eu
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Europium
+
+.. data:: Gd
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Gadolinium
+
+.. data:: Tb
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Terbium
+
+.. data:: Dy
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Dysprosium
+
+.. data:: Ho
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Holmium
+
+.. data:: Er
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Erbium
+
+.. data:: Tm
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Thulium
+
+.. data:: Yb
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Ytterbium
+
+.. data:: Lu
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Lutetium
+
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

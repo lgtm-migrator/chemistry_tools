@@ -14,9 +14,9 @@ Licensed under the BSD 3-Clause license
 
 References
 ----------
-1. https://www.nist.gov/pml/
-   atomic-weights-and-isotopic-compositions-relative-atomic-masses
+1. https://www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses
 2. https://en.wikipedia.org/wiki/{element.name}
+
 
 Examples
 --------
@@ -41,8 +41,8 @@ Examples
 >>> sum(ele.mass for ele in ELEMENTS)
 14693.181589001004
 >>> for ele in ELEMENTS:
-...     ele.validate()
-...     ele = eval(repr(ele))
+... 	ele.validate()
+... 	ele = eval(repr(ele))
 
 """
 #
@@ -120,12 +120,13 @@ Examples
 #  |  DOI: `10.1021/acs.jproteome.8b00717 <http://dx.doi.org/10.1021/acs.jproteome.8b00717>`_
 #
 #  Isotope data from http://www.nist.gov/pml/data/comp.cfm
+#
 
 __all__ = (
 		'Element', 'Isotope',
 		"PERIODS", "BLOCKS", "GROUPS", "SERIES", 'ELEMENTS',
 		"period_lengths", "accum_period_lengths",  # "groups",
-		"H", "D", "T"
+		"H", "D", "T",
 		'Li', 'Na', 'K', 'Rb', 'Cs', 'Fr',  # Alkali Metals
 		"Be", "Mg", "Ca", "Sr", "Ba", "Ra",  # Alkaline Earth Metals
 		"B", "Al", "Ga", "In", "Tl", "Nh",  # Triels
@@ -144,7 +145,7 @@ __all__ = (
 
 from .classes import Element, Elements, Isotope
 from ._elements import *
-from ._isotope_data import isotope_data #, undefined_isotopes
+from ._isotope_data import isotope_data  # , undefined_isotopes
 from ._table import *
 from .actinides import *
 from .alkali_metals import *
@@ -166,7 +167,6 @@ groups = {g: tuple(x - 18 + g for x in accum_period_lengths[1:]) for g in range(
 groups[1] = (1,) + tuple(x + 1 for x in accum_period_lengths[:-1])  # alkali metals
 groups[2] = tuple(x + 2 for x in accum_period_lengths[:-1])  # alkaline earth metals
 groups[18] = accum_period_lengths  # noble gases
-
 
 if __name__ == '__main__':
 	import doctest

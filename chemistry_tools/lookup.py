@@ -36,7 +36,7 @@ def get_compounds(identifier, namespace='cid', searchtype=None, as_dataframe=Fal
 	:param namespace: (optional) The identifier type, one of cid, name, smiles, sdf, inchi, inchikey or formula.
 	:param searchtype: (optional) The advanced search type, one of substructure, superstructure or similarity.
 	:param as_dataframe: (optional) Automatically extract the :class:`~pubchempy.Compound` properties into a pandas
-						 :class:`~pandas.DataFrame` and return that.
+		:class:`~pandas.DataFrame` and return that.
 	"""
 
 	results = get_json(identifier, namespace, searchtype=searchtype, **kwargs)
@@ -62,7 +62,7 @@ def get_substances(identifier, namespace='sid', as_dataframe=False, **kwargs):
 	:param identifier: The substance identifier to use as a search query.
 	:param namespace: (optional) The identifier type, one of sid, name or sourceid/<source name>.
 	:param as_dataframe: (optional) Automatically extract the :class:`~pubchempy.Substance` properties into a pandas
-						 :class:`~pandas.DataFrame` and return that.
+		:class:`~pandas.DataFrame` and return that.
 	"""
 	results = get_json(identifier, namespace, 'substance', **kwargs)
 	substances = [Substance(r) for r in results['PC_Substances']] if results else []

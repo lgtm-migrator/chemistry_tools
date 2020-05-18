@@ -2,6 +2,38 @@
 # -*- coding: utf-8 -*-
 #
 #  noble_gases.py
+"""
+Group 18: Noble Gases in the Periodic Table
+
+.. data:: He
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Helium
+
+.. data:: Ne
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Neon
+
+.. data:: Ar
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Argon
+
+.. data:: Kr
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Krypton
+
+.. data:: Xe
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Xenon
+
+.. data:: Rn
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Radon
+
+.. data:: Og
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Oganesson
+
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

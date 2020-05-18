@@ -224,8 +224,10 @@ def test_calculate_mz(charge):
 
 
 def test_most_probable_isotopic_composition():
-	assert Formula.from_string('F').most_probable_isotopic_composition() == \
-		   (Formula({'F[19]': 1, 'F[18]': 0}), 1.0)
+	assert (
+			Formula.from_string('F').most_probable_isotopic_composition()
+			== (Formula({'F[19]': 1, 'F[18]': 0}), 1.0)
+			)
 
 	Br2 = Formula.from_string('Br2')
 	assert Br2.most_probable_isotopic_composition()[0] == Formula({'Br[79]': 1, 'Br[81]': 1})
@@ -235,8 +237,10 @@ def test_most_probable_isotopic_composition():
 	assert C6Br6.most_probable_isotopic_composition()[0] == Formula({'C[12]': 6, 'C[13]': 0, 'Br[79]': 3, 'Br[81]': 3})
 	assert rounders(C6Br6.most_probable_isotopic_composition()[1], "0.000") == decimal.Decimal("0.293")
 
-	assert Formula.from_string('F10').most_probable_isotopic_composition() == \
-		   (Formula({'F[19]': 10, }), 1.0)
+	assert (
+			Formula.from_string('F10').most_probable_isotopic_composition()
+			== (Formula({'F[19]': 10, }), 1.0)
+			)
 
 	assert Formula.from_string('CF4').most_probable_isotopic_composition(
 			elements_with_isotopes=['F']) == (Formula({'C': 1, 'F[19]': 4}), 1.0)
@@ -374,8 +378,7 @@ def test_masses(formula, mass, exact_mass):
 		('Ph(CO)C(CH3)3', 'C11H14O'),
 		('HGlyGluTyrOH', 'C16H21N3O7'),
 		('HCysTyrIleGlnAsnCysProLeuNH2', 'C41H65N11O11S2'),
-		('HCysp(Trt)Tyrp(Tbu)IleGlnp(Trt)Asnp(Trt)ProLeuGlyNH2',
-		 'C101H113N11O11S'),
+		('HCysp(Trt)Tyrp(Tbu)IleGlnp(Trt)Asnp(Trt)ProLeuGlyNH2', 'C101H113N11O11S'),
 		# TODO: ('CDCl3', 'C[2H]Cl3'), needs special case
 		('[13C]Cl4', '[13C]Cl4'),
 		('C5(PhBu(EtCHBr)2)3', 'C53H78Br6'),

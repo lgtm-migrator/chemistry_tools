@@ -1,6 +1,6 @@
-from chemistry_tools.elements import ELEMENTS, Isotope, H
 import pytest
-from chemistry_tools.elements import groups
+
+from chemistry_tools.elements import ELEMENTS, groups, H, Isotope
 
 
 @pytest.mark.parametrize("massnumber, symbol", [

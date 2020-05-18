@@ -2,6 +2,35 @@
 # -*- coding: utf-8 -*-
 #
 #  tetrels.py
+"""
+Group 14: Tetrels, carbon group, crystallogens or adamantogens in the Periodic Table
+
+.. data:: C
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Carbon
+
+.. data:: Si
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Silicon
+
+.. data:: Ge
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Germanium
+
+.. data:: Sn
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Tin
+
+.. data:: Pb
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Lead
+
+.. data:: Fl
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Flerovium
+
+
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

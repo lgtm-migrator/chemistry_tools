@@ -2,6 +2,35 @@
 # -*- coding: utf-8 -*-
 #
 #  pnictogens.py
+"""
+Group 15: Pnictogens in the Periodic Table
+
+.. data:: N
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Nitrogen
+
+.. data:: P
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Phosphorus
+
+.. data:: As
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Arsenic
+
+.. data:: Sb
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Antimony
+
+.. data:: Bi
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Bismuth
+
+.. data:: Mc
+
+	:class:`~chemistry_tools.elements.classes.Element` representing Moscovium
+
+
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

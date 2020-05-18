@@ -12,7 +12,6 @@ from chemistry_tools.pubchem import utils
 
 
 def test_properties():
-	""""""
 	results = utils.get_properties(['IsomericSMILES', 'InChIKey'], 'tris-(1,10-phenanthroline)ruthenium', 'name')
 	assert len(results) > 0
 	for result in results:
@@ -22,7 +21,10 @@ def test_properties():
 
 
 def test_underscore_properties():
-	"""Properties can also be specified as underscore-separated words, rather than CamelCase."""
+	"""
+	Properties can also be specified as underscore-separated words, rather than CamelCase.
+	"""
+
 	results = utils.get_properties(['isomeric_smiles', 'molecular_weight'], 'tris-(1,10-phenanthroline)ruthenium', 'name')
 	assert len(results) > 0
 	for result in results:
@@ -52,8 +54,11 @@ def test_synonyms():
 		assert len(result['Synonym']) > 0
 
 
-stringwithmarkup = {'String': 'N-phenylaniline',
-					'Markup': [{'Start': 0, 'Length': 1, 'Type': 'Italics'}]}
+stringwithmarkup = {
+		'String': 'N-phenylaniline',
+		'Markup': [{'Start': 0, 'Length': 1, 'Type': 'Italics'}]
+		}
+
 
 def test_format_string():
 	html_string = utils.format_string(stringwithmarkup)

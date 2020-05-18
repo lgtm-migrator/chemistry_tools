@@ -107,6 +107,7 @@ def get_IUPAC_sort_order(iupac_names):
 
 	Useful when sorting arrays containing data in addition to the name.
 	e.g.
+	>>> sort_order = get_IUPAC_sort_order([row[0] for row in data])
 	>>> sorted_data = sorted(data, key=lambda row: sort_order[row[0]])
 
 	where row[0] would be the name of the compound
@@ -159,3 +160,22 @@ def _get_split_and_sorted_lists(iupac_names):
 	sorted_names = sorted(split_names)
 
 	return split_names, sorted_names
+
+
+def sort_array_by_name(array, name_col=0):
+	"""
+	Sort a list of lists by the IUPAC name in each row.
+
+	:param array:
+	:type array: List[List]
+	:param name_col: The index of the column containing the IUPAC names
+	:type name_col: int
+
+	:return:
+	:rtype:
+	"""
+
+	names = [row[name_col] for row in array]
+	sort_order = get_IUPAC_sort_order(names)
+	sorted_array = sorted(array, key=lambda row: sort_order[row[0]])
+	return sorted_array

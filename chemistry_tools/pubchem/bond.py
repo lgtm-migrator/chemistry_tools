@@ -59,11 +59,11 @@ class Bond:
 
 	def __eq__(self, other):
 		return (
-				isinstance(other, type(self)) and
-				self.aid1 == other.aid1 and
-				self.aid2 == other.aid2 and
-				self.order == other.order and
-				self.style == other.style
+				isinstance(other, type(self))
+				and self.aid1 == other.aid1
+				and self.aid2 == other.aid2
+				and self.order == other.order
+				and self.style == other.style
 				)
 
 	@deprecated('Dictionary style access to Bond attributes is deprecated')

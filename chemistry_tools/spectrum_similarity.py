@@ -188,8 +188,8 @@ def SpectrumSimilarity(
 	#
 	#
 
-	#	with pd.option_context('display.max_rows', None, 'display.max_columns', None):
-	#		print(similarity_score)
+		# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+		# 	print(similarity_score)
 
 	if output_list:
 		return similarity_score, reverse_similarity_score, alignment

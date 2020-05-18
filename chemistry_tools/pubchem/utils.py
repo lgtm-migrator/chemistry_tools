@@ -107,9 +107,12 @@ def request(identifier, namespace='cid', domain='compound', operation=None, outp
 	urlid, postdata = None, None
 	if namespace == 'sourceid':
 		identifier = identifier.replace('/', '.')
-	if namespace in ['listkey', 'formula', 'sourceid'] \
-			or searchtype == 'xref' \
-			or (searchtype and namespace == 'cid') or domain == 'sources':
+	if (
+			namespace in ['listkey', 'formula', 'sourceid']
+			or searchtype == 'xref'
+			or (searchtype and namespace == 'cid')
+			or domain == 'sources'
+		):
 		urlid = quote(identifier.encode('utf8'))
 	else:
 		postdata = urlencode([(namespace, identifier)]).encode('utf8')

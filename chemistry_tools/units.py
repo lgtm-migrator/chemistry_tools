@@ -114,10 +114,10 @@ def get_derived_unit(registry, key):
 
 	derived = {
 			'diffusivity': registry['length'] ** 2 / registry['time'],
-			'electrical_mobility': (registry['current'] * registry['time'] ** 2 /
-									registry['mass']),
-			'permittivity': (registry['current'] ** 2 * registry['time'] ** 4 /
-							 (registry['length'] ** 3 * registry['mass'])),
+			'electrical_mobility': registry['current'] * registry['time'] ** 2 / registry['mass'],
+			'permittivity': (
+					registry['current'] ** 2 * registry['time'] ** 4
+					/ (registry['length'] ** 3 * registry['mass'])),
 			'charge': registry['current'] * registry['time'],
 			'energy': registry['mass'] * registry['length'] ** 2 / registry['time'] ** 2,
 			'concentration': registry['amount'] / registry['length'] ** 3,
@@ -369,6 +369,7 @@ def uniform(container):
 def get_physical_dimensionality(value):
 	if is_unitless(value):
 		return {}
+
 	_quantities_mapping = {
 			quantities.UnitLength: 'length',
 			quantities.UnitMass: 'mass',
@@ -378,8 +379,11 @@ def get_physical_dimensionality(value):
 			quantities.UnitLuminousIntensity: 'luminous_intensity',
 			quantities.UnitSubstance: 'amount'
 			}
-	return {_quantities_mapping[k.__class__]: v for k, v
-			in uniform(value).simplified.dimensionality.items()}
+
+	return {
+			_quantities_mapping[k.__class__]: v for k, v
+			in uniform(value).simplified.dimensionality.items()
+			}
 
 
 def _get_unit_from_registry(dimensionality, registry):
@@ -388,8 +392,10 @@ def _get_unit_from_registry(dimensionality, registry):
 
 def default_unit_in_registry(value, registry):
 	_dimensionality = get_physical_dimensionality(value)
+
 	if _dimensionality == {}:
 		return 1
+
 	return _get_unit_from_registry(_dimensionality, registry)
 
 
@@ -547,8 +553,7 @@ class Backend:
 				else:
 					break
 			else:
-				raise ValueError("Could not import any of %s" %
-								 str(underlying_backend))
+				raise ValueError(f"Could not import any of {str(underlying_backend)}")
 		elif isinstance(underlying_backend, str):
 			self.be = __import__(underlying_backend)
 		else:
@@ -567,12 +572,15 @@ def format_string(value, precision='%.5g', tex=False):
 	"""
 	Formats a scalar with unit as two strings
 
-	Parameters
-	----------
-	value: float with unit
-	precision: str
-	tex: bool
-	   LaTeX formatted or not? (no '$' signs)
+	:param value: Value with unit
+	:type value: float
+	:param precision:
+	:type precision: str, optional
+	:param tex: Whether the string should be formatted for LaTex. Default :const:`False`
+	:type tex: bool, optional
+
+	:return:
+	:rtype:
 
 	Examples
 	--------
@@ -580,8 +588,8 @@ def format_string(value, precision='%.5g', tex=False):
 	0.42 mol/decimetre**3
 	>>> print(' '.join(format_string(2/quantities.s, tex=True)))
 	2 \\mathrm{\\frac{1}{s}}
-
 	"""
+
 	if tex:
 		unit_str = latex_of_unit(value)
 	else:
@@ -593,7 +601,7 @@ def format_string(value, precision='%.5g', tex=False):
 
 def concatenate(arrays, **kwargs):
 	"""
-		Patched version of numpy.concatenate
+	Patched version of numpy.concatenate
 
 	Examples
 	--------
