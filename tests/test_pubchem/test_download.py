@@ -19,9 +19,9 @@ from chemistry_tools.pubchem.utils import download
 
 @pytest.fixture(scope='module')
 def tmp_dir():
-	dir = tempfile.mkdtemp()
-	yield dir
-	shutil.rmtree(dir)
+	tmpdir = tempfile.mkdtemp()
+	yield tmpdir
+	shutil.rmtree(tmpdir)
 
 
 def test_image_download(tmp_dir):

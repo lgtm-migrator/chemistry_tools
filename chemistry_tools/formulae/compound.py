@@ -162,7 +162,7 @@ class Compound(Dictable):
 	@property
 	def charge(self):
 		"""
-		Convenience property for accessing charge of the formula
+		Convenience prop for accessing charge of the formula
 		"""
 
 		return self.formula.charge
@@ -170,7 +170,7 @@ class Compound(Dictable):
 	@property
 	def mass(self):
 		"""
-		Convenience property for accessing the mass of the formula
+		Convenience prop for accessing the mass of the formula
 		"""
 
 		return self.formula.mass

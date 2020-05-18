@@ -332,7 +332,7 @@ class Compound:
 
 		return string
 
-	"""Structure"""
+	# Structure
 
 	@property
 	def elements(self):
@@ -375,7 +375,7 @@ class Compound:
 		"""Molecular formula."""
 		return _parse_prop({'label': 'Molecular Formula'}, self.record['props'])
 
-	"""Identifiers"""
+	# Identifiers
 
 	@property
 	def cid(self):
@@ -385,7 +385,7 @@ class Compound:
 
 			When searching using a SMILES or InChI query that is not present in the PubChem Compound database, an
 			automatically generated record may be returned that contains properties that have been calculated on the
-			fly. These records will not have a CID property.
+			fly. These records will not have a CID prop.
 		"""
 		if 'id' in self.record and 'id' in self.record['id'] and 'cid' in self.record['id']['id']:
 			return self.record['id']['id']['cid']
@@ -482,7 +482,7 @@ class Compound:
 		# Skip first 4 bytes (contain length of fingerprint) and last 7 bits (padding) then re-pad to 881 bits
 		return '{:020b}'.format(int(self.fingerprint[8:], 16))[:-7].zfill(881)
 
-	"""Other"""
+	# Other
 
 	@property
 	def volume_3d(self):
@@ -544,32 +544,32 @@ class Compound:
 		if 'data' in conf:
 			return _parse_prop({'label': 'Fingerprint', 'name': 'Shape'}, conf['data'])
 
-	def get_property_description(self, property):
+	def get_property_description(self, prop):
 		try:
-			return self.get_property(property)["Description"]
+			return self.get_property(prop)["Description"]
 		except KeyError:
 			return
 
-	def get_property_value(self, property):
+	def get_property_value(self, prop):
 		try:
-			return self.get_property(property)["Value"]
+			return self.get_property(prop)["Value"]
 		except KeyError:
 			return "NotFound"
 
-	def get_property_unit(self, property):
+	def get_property_unit(self, prop):
 		try:
-			return self.get_property(property)["Unit"]
+			return self.get_property(prop)["Unit"]
 		except KeyError:
 			return
 
-	def get_property(self, property):
+	def get_property(self, prop):
 		# TODO Error handling
 		try:
-			return self._physical_properties[property]
+			return self._physical_properties[prop]
 		except KeyError:
 			return {"Value": "NotFound", "Unit": None, "Description": None}
 
-	"""PubChem Computed Properties"""
+	# PubChem Computed Properties
 
 	@property
 	def molecular_mass(self):
@@ -717,7 +717,7 @@ class Compound:
 		if 'count' in self.record and 'bond_chiral' in self.record['count']:
 			return self.record['count']['bond_chiral']
 
-	"""TOXNET / Experimental Properties"""
+	# TOXNET / Experimental Properties
 
 	@property
 	def boiling_point(self):

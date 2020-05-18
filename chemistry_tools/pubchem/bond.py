@@ -87,7 +87,7 @@ class Bond:
 
 	@deprecated('Dictionary style access to Atom attributes is deprecated')
 	def __delitem__(self, prop):
-		"""Delete the property prop from the wrapped object."""
+		"""Delete the prop ``prop`` from the wrapped object."""
 		if not hasattr(self.__wrapped, prop):
 			raise KeyError(prop)
 		delattr(self.__wrapped, prop)

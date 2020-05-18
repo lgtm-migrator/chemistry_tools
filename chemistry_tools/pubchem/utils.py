@@ -250,7 +250,7 @@ def memoized_property(fget):
 
 def _parse_prop(search, proplist):
 	"""
-	Extract property value from record using the given urn search filter.
+	Extract prop value from record using the given urn search filter.
 	"""
 
 	props = [i for i in proplist if all(item in i['urn'].items() for item in search.items())]

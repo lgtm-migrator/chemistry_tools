@@ -76,10 +76,8 @@ from chemistry_tools.utils import defaultnamedtuple
 
 
 def is_quantity(arg):
-	if arg.__class__.__name__ == 'Quantity':
-		return True  # this checks works even if quantities is not installed.
-	else:
-		return False
+	# this check works even if quantities is not installed.
+	return bool(arg.__class__.__name__ == 'Quantity')
 
 
 energy = ArithmeticDict(int, {'mass': 1, 'length': 2, 'time': -2})

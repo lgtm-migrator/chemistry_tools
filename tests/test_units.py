@@ -66,28 +66,28 @@ UncertainQuantity = quantities.UncertainQuantity
 
 
 def test_default_units():
-	quantities.ampere
-	quantities.candela
-	quantities.centimetre
-	quantities.eV
-	quantities.gram
-	quantities.gray
-	quantities.hour
-	quantities.joule
-	quantities.kelvin
-	quantities.kilogram
-	quantities.metre
-	quantities.MeV
-	quantities.micrometre
-	quantities.molar
-	quantities.mole
-	quantities.nanometre
-	quantities.second
-	quantities.umol
-	units.umol_per_J
-	units.decimetre
-	units.per100eV
-	units.perMolar_perSecond
+	assert quantities.ampere
+	assert quantities.candela
+	assert quantities.centimetre
+	assert quantities.eV
+	assert quantities.gram
+	assert quantities.gray
+	assert quantities.hour
+	assert quantities.joule
+	assert quantities.kelvin
+	assert quantities.kilogram
+	assert quantities.metre
+	assert quantities.MeV
+	assert quantities.micrometre
+	assert quantities.molar
+	assert quantities.mole
+	assert quantities.nanometre
+	assert quantities.second
+	assert quantities.umol
+	assert units.umol_per_J
+	assert units.decimetre
+	assert units.per100eV
+	assert units.perMolar_perSecond
 
 
 def test_allclose():
@@ -384,9 +384,8 @@ def test_Backend():
 
 
 def test_Backend__numpy():
-	import numpy as np
 	b = Backend(np)
-	b.sum([1000 * quantities.metre / quantities.kilometre, 1], axis=0) == 2.0
+	assert b.sum([1000 * quantities.metre / quantities.kilometre, 1], axis=0) == 2.0
 
 	with pytest.raises(AttributeError):
 		b.Piecewise
@@ -395,7 +394,7 @@ def test_Backend__numpy():
 def test_Backend__sympy():
 	sympy = pytest.importorskip("sympy")
 	b = Backend('sympy')
-	b.sin(b.pi) == 0
+	assert b.sin(b.pi) == 0
 
 	with pytest.raises(AttributeError):
 		b.min
