@@ -79,7 +79,7 @@
 
 __all__ = ("Be", "Mg", "Ca", "Sr", "Ba", "Ra")
 
-from ._classes import Element
+from .classes import Element
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.

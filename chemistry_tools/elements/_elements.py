@@ -65,13 +65,13 @@ from .pnictogens import *
 from .tetrels import *
 from .transition_metals import *
 from .triels import *
-from . import _classes
+from . import classes
 import re
 
 # TODO: nominal mass (massnumber) and monoisotopic mass
 
 
-H = _classes.Element(
+H = classes.Element(
 		1, 'H', 'Hydrogen',
 		group=1, period=1, block='s', series=1,
 		mass=1.007941, eleneg=2.2, eleaffin=0.75420375,
@@ -97,7 +97,7 @@ H = _classes.Element(
 			)
 		)
 
-D = _classes.HeavyHydrogen(
+D = classes.HeavyHydrogen(
 		1, 'D', 'Deuterium',
 		mass=2.0141017778,
 		isotopes={
@@ -111,7 +111,7 @@ D = _classes.HeavyHydrogen(
 				},
 		)
 
-T = _classes.HeavyHydrogen(
+T = classes.HeavyHydrogen(
 		1, 'T', 'Tritium',
 		mass=3.0160492777,
 		isotopes={
@@ -125,7 +125,7 @@ T = _classes.HeavyHydrogen(
 				},
 		)
 
-ELEMENTS = _classes.Elements(
+ELEMENTS = classes.Elements(
 		H, He,
 		Li, Be, B, C, N, O, F, Ne,
 		Na, Mg, Al, Si, P, S, Cl, Ar,

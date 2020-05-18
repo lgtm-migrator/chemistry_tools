@@ -142,7 +142,7 @@ __all__ = (
 		"Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn",  # transition_metals
 		)
 
-from ._classes import Element, Elements, Isotope
+from .classes import Element, Elements, Isotope
 from ._elements import *
 from ._isotope_data import isotope_data #, undefined_isotopes
 from ._table import *

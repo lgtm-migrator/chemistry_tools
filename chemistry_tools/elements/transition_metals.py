@@ -84,7 +84,7 @@ __all__ = (
 		"Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn",
 		)
 
-from ._classes import Element
+from .classes import Element
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.

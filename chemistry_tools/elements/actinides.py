@@ -2,6 +2,18 @@
 # -*- coding: utf-8 -*-
 #
 #  actinides.py
+"""
+Actinides (or actinoids) in the Periodid Table
+
+Elements
+---------
+
+.. data:: Ac
+
+	chemistry_tools.elements.actinides.Ac
+
+
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -79,12 +91,12 @@
 
 __all__ = ("Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr")
 
-from . import _classes
+from . import classes
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.
 
-Element = _classes.Element
+Element = classes.Element
 
 Ac = Element(
 		89, 'Ac', 'Actinium',
