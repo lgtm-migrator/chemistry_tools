@@ -29,14 +29,12 @@ class PubChemPyError(Exception):
 	"""
 	Base class for all PubChemPy exceptions.
 	"""
-	pass
 
 
 class ResponseParseError(PubChemPyError):
 	"""
 	PubChem response is uninterpretable.
 	"""
-	pass
 
 
 class PubChemHTTPError(PubChemPyError):
@@ -140,4 +138,3 @@ def deprecated(message=None):
 
 class PubChemPyDeprecationWarning(Warning):
 	"""Warning category for deprecated features."""
-	pass

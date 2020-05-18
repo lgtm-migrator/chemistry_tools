@@ -78,7 +78,7 @@ def get(identifier, namespace='cid', domain='compound', operation=None, output='
 				# response = request(identifier, namespace, domain, operation, 'JSON', **kwargs).read()
 				response = request(identifier, namespace, domain, operation, 'JSON', **kwargs).content
 				status = json.loads(response.decode())
-			if not output == 'JSON':
+			if output != 'JSON':
 				# response = request(identifier, namespace, domain, operation, output, searchtype, **kwargs).read()
 				response = request(identifier, namespace, domain, operation, output, searchtype, **kwargs).content
 	else:
