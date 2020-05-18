@@ -137,7 +137,7 @@ def test_properties_types(c1):
     assert isinstance(c1.color, str)
     assert isinstance(c1.density, str)
     assert isinstance(c1.specific_gravity, str)
-    #assert isinstance(c1.dissociation_constant, )
+    # assert isinstance(c1.dissociation_constant, )
     # TODO
     assert isinstance(c1.heat_combustion, str)
     # assert isinstance(c1.melting_point, Decimal)

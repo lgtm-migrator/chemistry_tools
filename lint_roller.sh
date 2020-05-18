@@ -16,12 +16,12 @@ if [ -z "$(git status --porcelain --untracked-files=no)" ] || [ "$1" == "-f" ]; 
   echo "Running autopep8"
 
   autopep8 --in-place --select "$errors" -a --recursive chemistry_tools/
-  autopep8 --in-place --select "$belligerent" -a -a --recursive chemistry_tools/
+  autopep8 --in-place --select "$belligerent" -a -a -a -a -a --recursive chemistry_tools/
   >&2 flake8 --select "$errors$belligerent" chemistry_tools/
 
 
   autopep8 --in-place --select "$errors" -a --recursive tests/
-  autopep8 --in-place --select "$belligerent" -a -a --recursive tests/
+  autopep8 --in-place --select "$belligerent" -a -a -a -a -a --recursive tests/
   >&2 flake8 --select "$warnings" tests/
 
 
