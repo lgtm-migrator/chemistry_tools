@@ -15,8 +15,16 @@
 
 .. toctree::
     :maxdepth: 3
+    :caption: API Reference
+
+    api/chemistry_tools
+    api/elements
+    api/formulae
+    api/pubchem
+
+.. toctree::
+    :maxdepth: 3
     :caption: Documentation
 
-    docs
     Source
     Building
