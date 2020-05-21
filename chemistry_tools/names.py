@@ -142,7 +142,7 @@ def get_sorted_parts(iupac_names):
 
 	split_names, sorted_names = _get_split_and_sorted_lists(iupac_names)
 
-	return [split_names.index(name) for name in sorted_names]
+	return [split_names[split_names.index(name)] for name in sorted_names]
 
 
 def _get_split_and_sorted_lists(iupac_names):
