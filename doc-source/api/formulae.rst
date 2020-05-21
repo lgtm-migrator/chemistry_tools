@@ -2,19 +2,11 @@
 :mod:`chemistry_tools.formulae`
 *********************************
 
+.. extras-require::
+	:file: formulae/requirements.txt
+	:extra: formulae
+
 .. contents:: Table of Contents
-
-.. note:: This module has the following additional requirements:
-
-	.. include:: ../../chemistry_tools/formulae/requirements.txt
-		:literal:
-
-	These can be installed as follows:
-
-	.. code-block:: bash
-
-		$ python -m pip install chemistry_tools[formulae]
-
 
 .. automodule:: chemistry_tools.formulae
 	:members:

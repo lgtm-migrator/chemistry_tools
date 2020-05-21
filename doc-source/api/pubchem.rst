@@ -2,23 +2,18 @@
 :mod:`chemistry_tools.pubchem`
 *********************************
 
+.. extras-require::
+	:file: pubchem/requirements.txt
+	:extra: pubchem
+
 .. contents:: Table of Contents
-
-.. note:: This module has the following additional requirements:
-
-	.. include:: ../../chemistry_tools/pubchem/requirements.txt
-		:literal:
-
-	These can be installed as follows:
-
-	.. code-block:: bash
-
-		$ python -m pip install chemistry_tools[pubchem]
 
 
 .. automodule:: chemistry_tools.pubchem
 	:members:
 	:undoc-members:
+
+.. todo:: Testing
 
 ===========================================
 :mod:`~chemistry_tools.pubchem.assay`

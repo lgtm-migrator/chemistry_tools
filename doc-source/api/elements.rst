@@ -2,21 +2,13 @@
 :mod:`chemistry_tools.elements`
 *********************************
 
+.. extras-require::
+	:file: elements/requirements.txt
+	:extra: elements
+
 .. contents:: Table of Contents
 
 .. todo: description
-
-
-.. note:: This module has the following additional requirements:
-
-	.. include:: ../../chemistry_tools/elements/requirements.txt
-		:literal:
-
-	These can be installed as follows:
-
-	.. code-block:: bash
-
-		$ python -m pip install chemistry_tools[elements]
 
 
 .. automodule:: chemistry_tools.elements
