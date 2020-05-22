@@ -143,6 +143,7 @@ class Compound(Dictable):
 
 		self.data = data or {}
 
+	@property
 	def __dict__(self):
 		return dict(
 				name=self.name,

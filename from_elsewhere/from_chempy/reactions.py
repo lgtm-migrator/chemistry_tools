@@ -186,7 +186,7 @@ class Reaction:
 		globals_ : dict (optional)
 			Dictionary for eval for (default: None -> {'chempy': chempy})
 			If ``False``: no eval will be called (useful for web-apps).
-		\\*\\*kwargs :
+		**kwargs :
 			Passed on to constructor.
 
 		Examples

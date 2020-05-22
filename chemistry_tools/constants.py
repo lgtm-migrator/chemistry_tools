@@ -46,17 +46,11 @@
 #  |  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+# stdlib
 from collections import namedtuple
+
+# 3rd party
 import quantities
-import logging
-
-API_BASE = 'https://pubchem.ncbi.nlm.nih.gov/rest/pug'
-
-log = logging.getLogger('pubchempy')
-log.addHandler(logging.NullHandler())
-
-text_types = str, bytes
-
 
 _anions = {  # Incomplete
 		'F-': 'fluoride',
@@ -119,82 +113,6 @@ _cation_oxidation_states = {  # This needs to be reviewed, just from the top of 
 		'Bi': (3,),
 		'Sb': (3,),
 		}
-
-# Allows properties to optionally be specified as underscore_separated, consistent with Compound attributes
-PROPERTY_MAP = {
-		'molecular_formula': 'MolecularFormula',
-		'molecular_weight': 'MolecularWeight',
-		'canonical_smiles': 'CanonicalSMILES',
-		'isomeric_smiles': 'IsomericSMILES',
-		'inchi': 'InChI',
-		'inchikey': 'InChIKey',
-		'iupac_name': 'IUPACName',
-		'xlogp': 'XLogP',
-		'exact_mass': 'ExactMass',
-		'monoisotopic_mass': 'MonoisotopicMass',
-		'tpsa': 'TPSA',
-		'complexity': 'Complexity',
-		'charge': 'Charge',
-		'h_bond_donor_count': 'HBondDonorCount',
-		'h_bond_acceptor_count': 'HBondAcceptorCount',
-		'rotatable_bond_count': 'RotatableBondCount',
-		'heavy_atom_count': 'HeavyAtomCount',
-		'isotope_atom_count': 'IsotopeAtomCount',
-		'atom_stereo_count': 'AtomStereoCount',
-		'defined_atom_stereo_count': 'DefinedAtomStereoCount',
-		'undefined_atom_stereo_count': 'UndefinedAtomStereoCount',
-		'bond_stereo_count': 'BondStereoCount',
-		'defined_bond_stereo_count': 'DefinedBondStereoCount',
-		'undefined_bond_stereo_count': 'UndefinedBondStereoCount',
-		'covalent_unit_count': 'CovalentUnitCount',
-		'volume_3d': 'Volume3D',
-		'conformer_rmsd_3d': 'ConformerModelRMSD3D',
-		'conformer_model_rmsd_3d': 'ConformerModelRMSD3D',
-		'x_steric_quadrupole_3d': 'XStericQuadrupole3D',
-		'y_steric_quadrupole_3d': 'YStericQuadrupole3D',
-		'z_steric_quadrupole_3d': 'ZStericQuadrupole3D',
-		'feature_count_3d': 'FeatureCount3D',
-		'feature_acceptor_count_3d': 'FeatureAcceptorCount3D',
-		'feature_donor_count_3d': 'FeatureDonorCount3D',
-		'feature_anion_count_3d': 'FeatureAnionCount3D',
-		'feature_cation_count_3d': 'FeatureCationCount3D',
-		'feature_ring_count_3d': 'FeatureRingCount3D',
-		'feature_hydrophobe_count_3d': 'FeatureHydrophobeCount3D',
-		'effective_rotor_count_3d': 'EffectiveRotorCount3D',
-		'conformer_count_3d': 'ConformerCount3D',
-		}
-
-
-class CoordinateType:
-	TWO_D = 1
-	THREE_D = 2
-	SUBMITTED = 3
-	EXPERIMENTAL = 4
-	COMPUTED = 5
-	STANDARDIZED = 6
-	AUGMENTED = 7
-	ALIGNED = 8
-	COMPACT = 9
-	UNITS_ANGSTROMS = 10
-	UNITS_NANOMETERS = 11
-	UNITS_PIXEL = 12
-	UNITS_POINTS = 13
-	UNITS_STDBONDS = 14
-	UNITS_UNKNOWN = 255
-
-
-class ProjectCategory:
-	MLSCN = 1
-	MPLCN = 2
-	MLSCN_AP = 3
-	MPLCN_AP = 4
-	JOURNAL_ARTICLE = 5
-	ASSAY_VENDOR = 6
-	LITERATURE_EXTRACTED = 7
-	LITERATURE_AUTHOR = 8
-	LITERATURE_PUBLISHER = 9
-	RNAIGI = 10
-	OTHER = 255
 
 
 class Constant(namedtuple('__BaseConstant', 'name value unit symbol')):

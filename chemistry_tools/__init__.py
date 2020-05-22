@@ -5,7 +5,7 @@
 #
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
-#  assay, Atom, Bond, Compound, Constants, Errors, Lookup, Substance and
+#  Atom, Bond, Compound, Constants, Errors, Lookup and
 #  Utils based on PubChemPy by Matt Swain <m.swain@me.com>
 #  Available under the MIT License
 #
@@ -90,18 +90,20 @@ import pathlib
 
 # 3rd party
 import appdirs
-import requests_cache
+import requests
+from cachecontrol import CacheControl
+from cachecontrol.caches.file_cache import FileCache
 
 cache_dir = pathlib.Path(appdirs.user_cache_dir("chemistry_tools"))
 if not cache_dir.exists():
 	cache_dir.mkdir(parents=True, exist_ok=True)
 
-# Setup Cache and keep for ~ a month
-requests_cache.install_cache(str(cache_dir / "chemistry_tools_cache"), expire_after=2500000)
+session = requests.session()
+cached_requests = CacheControl(requests.Session(), cache=FileCache(cache_dir))
 
 
 def clear_cache():
-	requests_cache.clear()
+	cache_dir.rmdir()
 
 
 __all__ = [
@@ -112,6 +114,7 @@ __all__ = [
 		"formulae",
 		"pubchem",
 		"units",
+		"cached_requests",
 		]
 
 if __name__ == '__main__':

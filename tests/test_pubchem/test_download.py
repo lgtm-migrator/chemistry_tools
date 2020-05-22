@@ -14,7 +14,8 @@ import tempfile
 
 import pytest
 
-from chemistry_tools.pubchem.utils import download
+from chemistry_tools.pubchem.images import get_structure_image
+from chemistry_tools.pubchem.properties import rest_get_properties
 
 
 @pytest.fixture(scope='module')
@@ -25,14 +26,15 @@ def tmp_dir():
 
 
 def test_image_download(tmp_dir):
-	download('PNG', os.path.join(tmp_dir, 'aspirin.png'), 'Aspirin', 'name')
-	with pytest.raises(IOError):
-		download('PNG', os.path.join(tmp_dir, 'aspirin.png'), 'Aspirin', 'name')
-	download('PNG', os.path.join(tmp_dir, 'aspirin.png'), 'Aspirin', 'name', overwrite=True)
+	img = get_structure_image("Asprin")
+	img.save(os.path.join(tmp_dir, 'aspirin.png'))
 
 
 def test_csv_download(tmp_dir):
-	download('CSV', os.path.join(tmp_dir, 's.csv'), [1, 2, 3], operation='property/CanonicalSMILES,IsomericSMILES')
+	csv_content = rest_get_properties([1, 2, 3], namespace="cid", properties="CanonicalSMILES,IsomericSMILES", format_="csv")
+	with open(os.path.join(tmp_dir, 's.csv'), "w") as fp:
+		fp.write(csv_content)
+
 	with open(os.path.join(tmp_dir, 's.csv')) as f:
 		rows = list(csv.reader(f))
 		assert rows[0] == ['CID', 'CanonicalSMILES', 'IsomericSMILES']

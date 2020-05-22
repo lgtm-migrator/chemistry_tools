@@ -207,7 +207,7 @@ class ReactionSystem:
 
 		Parameters
 		----------
-		\\*\\*kwargs:
+		**kwargs:
 			 Keyword arguments passed on to :class:`ReactionSystem`.
 
 		Returns
@@ -402,7 +402,7 @@ class ReactionSystem:
 			Tokens which causes lines to be ignored when prefixed by any of them.
 		substance_factory : callable
 			Defaults to ``cls._BaseSubstance.from_formula``. Can be set to e.g. ``Substance``.
-		\\*\\*kwargs:
+		**kwargs:
 			Keyword arguments passed to the constructor of the class
 
 		Examples

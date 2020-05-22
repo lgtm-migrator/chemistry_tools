@@ -177,6 +177,7 @@ class Element(Dictable):
 				elif isinstance(isotope, (list, tuple)):
 					self._isotopes[int(massnumber)] = Isotope(*isotope, massnumber)
 
+	@property
 	def __dict__(self):
 		return dict(
 				number=self._number,
@@ -472,10 +473,7 @@ class Isotope(Dictable):
 				repr(self.mass), repr(self.abundance), repr(self.massnumber)
 				)
 
-	def __eq__(self, other):
-		if isinstance(other, self.__class__):
-			return self.__dict__() == other.__dict__()
-
+	@property
 	def __dict__(self):
 		return dict(
 				mass=self.mass,

@@ -66,6 +66,8 @@ extras_require:
   formulae: "chemistry_tools/formulae/requirements.txt"
   plotting:
     - matplotlib>=3.0.0
+  toxnet:
+    - beautifulsoup4>=4.7.0
 
 
 # Paths to additional requirements.txt files, relative to repo root

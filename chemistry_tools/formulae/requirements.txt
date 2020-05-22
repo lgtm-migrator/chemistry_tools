@@ -1,6 +1,8 @@
-mathematical>=0.1.7
-pandas>=1.0.1
-pyparsing>=2.2.0
-tabulate>=0.8.3
-cawdrey>=0.1.2
 quantities>=0.12.4
+domdf_python_tools>=0.3.3
+tabulate>=0.8.3
+pyparsing>=2.2.0
+pandas>=1.0.1
+mathematical>=0.1.7
+cawdrey>=0.1.2
+memoized-property>=1.0.3

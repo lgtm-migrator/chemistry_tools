@@ -18,6 +18,6 @@ def b1():
 
 
 def test_bond(b1):
-	assert b1.__repr__() == "Bond(1, 2, 4)"
+	assert b1.__repr__() == "Bond(1, 2, BondType.QUADRUPLE)"
 	assert isinstance(b1.to_dict(), dict)
-	assert b1.to_dict()["order"] == 4
+	assert b1.to_dict()["order"] == BondType.QUADRUPLE

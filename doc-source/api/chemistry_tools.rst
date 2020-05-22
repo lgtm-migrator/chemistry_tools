@@ -25,10 +25,10 @@
 
 
 ===================================
-:mod:`chemistry_tools.lookup`
+:mod:`chemistry_tools.dicts`
 ===================================
 
-.. automodule:: chemistry_tools.lookup
+.. automodule:: chemistry_tools.dicts
     :members:
 
 
@@ -61,6 +61,14 @@
 ===================================
 
 .. automodule:: chemistry_tools.toxnet
+    :members:
+
+
+===================================
+:mod:`chemistry_tools.units`
+===================================
+
+.. automodule:: chemistry_tools.units
     :members:
 
 
