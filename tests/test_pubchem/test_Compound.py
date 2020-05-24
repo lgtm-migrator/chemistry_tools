@@ -70,6 +70,9 @@ def test_coordinates(c1):
 
 
 def test_identifiers(c1):
+	# precache properties
+	c1.precache()
+
 	assert len(c1.canonical_smiles) > 10
 	assert len(c1.get_property("IsomericSMILES")) > 10
 	assert c1.smiles == "C1=CC=CC=C1"
@@ -83,6 +86,9 @@ def test_identifiers(c1):
 
 
 def test_properties_types(c1):
+	# precache properties
+	c1.precache()
+
 	assert isinstance(c1.molecular_mass, float)
 	assert isinstance(c1.molecular_weight, float)
 	assert isinstance(c1.get_property("MolecularWeight"), float)
@@ -111,6 +117,9 @@ def test_properties_types(c1):
 
 
 def test_properties_values(c1):
+	# precache properties
+	c1.precache()
+
 	assert c1.molecular_mass == 78.11
 	assert c1.molecular_weight == 78.11
 	assert c1.molecular_mass == c1.molecular_weight

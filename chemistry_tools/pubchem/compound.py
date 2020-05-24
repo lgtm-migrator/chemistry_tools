@@ -272,7 +272,7 @@ class Compound(Dictable):
 				output[prop] = new_properties[prop]
 
 		for prop in cached_properties:
-			output[prop] = cached_properties[prop]
+			output[prop] = self._properties[prop]
 
 		return output
 
