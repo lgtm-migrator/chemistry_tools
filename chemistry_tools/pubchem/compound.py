@@ -256,7 +256,7 @@ class Compound(Dictable):
 		properties_to_get = []
 
 		for prop in properties:
-			if self._properties[prop]:
+			if self._properties[prop] is not None:
 				cached_properties.append(prop)
 			else:
 				properties_to_get.append(prop)
