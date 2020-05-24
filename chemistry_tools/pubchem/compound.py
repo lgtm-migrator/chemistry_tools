@@ -264,6 +264,7 @@ class Compound(Dictable):
 		output = {}
 
 		if properties_to_get:
+			print("Getting from API")
 			data = rest_get_properties_json(self.CID, "cid", properties)
 			new_properties = parse_properties(data)[0]
 
@@ -272,6 +273,7 @@ class Compound(Dictable):
 				output[prop] = new_properties[prop]
 
 		for prop in cached_properties:
+			print("Getting from cache")
 			output[prop] = self._properties[prop]
 
 		return output
@@ -296,10 +298,11 @@ class Compound(Dictable):
 		if prop not in self._properties:
 			raise ValueError(f"Unknown property '{prop}'")
 
-		if self._properties[prop]:
+		if self._properties[prop] is not None:
+			print("Getting from cache")
 			return self._properties[prop]
 		else:
-
+			print("Getting from API")
 			data = rest_get_properties_json(self.CID, "cid", prop)
 			new_properties = parse_properties(data)[0]
 
