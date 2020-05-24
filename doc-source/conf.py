@@ -27,7 +27,7 @@ author = "Dominic Davis-Foster"
 project = "chemistry_tools"
 slug = re.sub(r'\W+', '-', project.lower())
 release = version = __version__
-copyright = "Copyright 2019-2020 Dominic Davis-Foster"
+copyright = "2019-2020 Dominic Davis-Foster"
 language = 'en'
 package_root = "chemistry_tools"
 
@@ -40,6 +40,7 @@ extensions = [
 		"sphinxcontrib.extras_require",
 		"sphinx.ext.todo",
 		"sphinxemoji.sphinxemoji",
+		"sphinx_autodoc_typehints",
 
 		]
 
@@ -57,7 +58,7 @@ pygments_style = 'default'
 
 intersphinx_mapping = {
 		'rtd': ('https://docs.readthedocs.io/en/latest/', None),
-		'sphinx': ('http://www.sphinx-doc.org/en/stable/', None),
+		'sphinx': ('https://www.sphinx-doc.org/en/stable/', None),
 		'python': ('https://docs.python.org/3/', None),
 		"NumPy": ('https://numpy.org/doc/stable/', None),
 		"SciPy": ('https://docs.scipy.org/doc/scipy/reference', None),
