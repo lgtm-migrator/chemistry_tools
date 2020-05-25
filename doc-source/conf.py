@@ -71,14 +71,14 @@ intersphinx_mapping = {
 
 html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
-		'logo_only': 'False',
+		'logo_only': False,
 		}
 html_theme_path = ["../.."]
 # html_logo = "logo/pyms.png"
 html_show_sourcelink = False  # True will show link to source
 
 html_context = {
-		'display_github': 'True',
+		'display_github': True,
 		'github_user': 'domdfcoding',
 		'github_repo': 'chemistry_tools',
 		'github_version': 'master',

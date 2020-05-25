@@ -61,7 +61,6 @@ requirements:
   run:
     - python
 {requirements_block}
-    - requests-cache
 
 test:
   imports:
