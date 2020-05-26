@@ -70,7 +70,7 @@ chemistry_tools
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/chemistry_tools
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/chemistry_tools/v0.2.11
+.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/chemistry_tools/v0.3.0
 	:target: https://github.com/domdfcoding/chemistry_tools/pulse
 	:alt: GitHub commits since tagged version
 
