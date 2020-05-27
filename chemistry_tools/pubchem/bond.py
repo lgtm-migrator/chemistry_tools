@@ -42,7 +42,6 @@
 #  |  THE SOFTWARE.
 #
 
-
 # 3rd party
 from domdf_python_tools.enums import IntEnum
 
@@ -90,11 +89,8 @@ class Bond:
 
 	def __eq__(self, other):
 		return (
-				isinstance(other, type(self))
-				and self.aid1 == other.aid1
-				and self.aid2 == other.aid2
-				and self.order == other.order
-				and self.style == other.style
+				isinstance(other, type(self)) and self.aid1 == other.aid1 and self.aid2 == other.aid2
+				and self.order == other.order and self.style == other.style
 				)
 
 	def to_dict(self):
@@ -108,7 +104,6 @@ class Bond:
 			data['style'] = self.style
 
 		return data
-
 
 
 def parse_bonds(bonds_dict, coords_dict=None):

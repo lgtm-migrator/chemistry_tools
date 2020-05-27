@@ -74,23 +74,40 @@ Core functions and constants for parsing formulae
 #  |  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 # stdlib
 import re
 import warnings
 
-
 _greek_letters = (
-		'alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta', 'eta', 'theta',
-		'iota', 'kappa', 'lambda', 'mu', 'nu', 'xi', 'omicron', 'pi', 'rho',
-		'sigma', 'tau', 'upsilon', 'phi', 'chi', 'psi', 'omega'
+		'alpha',
+		'beta',
+		'gamma',
+		'delta',
+		'epsilon',
+		'zeta',
+		'eta',
+		'theta',
+		'iota',
+		'kappa',
+		'lambda',
+		'mu',
+		'nu',
+		'xi',
+		'omicron',
+		'pi',
+		'rho',
+		'sigma',
+		'tau',
+		'upsilon',
+		'phi',
+		'chi',
+		'psi',
+		'omega',
 		)
 _greek_u = 'αβγδεζηθικλμνξοπρστυφχψω'
 
 
-def _formula_to_format(
-		sub, sup, formula, prefixes=None,
-		infixes=None, suffixes=('(s)', '(l)', '(g)', '(aq)')):
+def _formula_to_format(sub, sup, formula, prefixes=None, infixes=None, suffixes=('(s)', '(l)', '(g)', '(aq)')):
 	# TODO: make isootope square brackets be superscript
 	parts = _formula_to_parts(formula, prefixes.keys(), suffixes)
 	stoichs = parts[0].split('.')
@@ -196,7 +213,7 @@ def _make_isotope_string(element_name, isotope_num):
 		return f'[{isotope_num}{element_name}]'
 
 
-_isotope_string = r'^([A-Z][a-z+]*)(?:\[(\d+)\])?$'
+_isotope_string = re.compile(r'^([A-Z][a-z+]*)(?:\[(\d+)\])?$')
 
 
 # TODO: merge with _split_isotope
@@ -211,7 +228,7 @@ def _parse_isotope_string(label):
 	('C', 12)
 	"""
 
-	element_name, num = re.match(_isotope_string, label).groups()
+	element_name, num = _isotope_string.match(label).groups()
 	isotope_num = int(num) if num else 0
 	return element_name, isotope_num
 
@@ -248,5 +265,5 @@ def _parse_multiplicity(strings, substance_keys=None):
 	if substance_keys is not None:
 		for k in result:
 			if k not in substance_keys:
-				raise ValueError("Unkown substance_key: %s" % k)
+				raise ValueError(f"Unkown substance_key: {k}")
 	return result

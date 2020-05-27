@@ -21,10 +21,9 @@ Lookup properties for compound by name or CAS number
 #  MA 02110-1301, USA.
 #
 
-
+# this package
 from chemistry_tools.pubchem.compound import Compound
 from chemistry_tools.pubchem.description import parse_description, rest_get_description
-
 
 # TODO: xrefs
 # TODO: formula search with listkey and pagination 	https://pubchemdocs.ncbi.nlm.nih.gov/pug-rest$_Toc494865589
@@ -54,4 +53,3 @@ def get_compounds(identifier, namespace="name"):
 		compounds.append(Compound(record["Title"], record["CID"], record["Description"]))
 
 	return compounds
-

@@ -54,7 +54,6 @@
 
 __all__ = ("PERIODS", "BLOCKS", "GROUPS", "SERIES")
 
-
 PERIODS = {1: 'K', 2: 'L', 3: 'M', 4: 'N', 5: 'O', 6: 'P', 7: 'Q'}
 
 BLOCKS = {'s': '', 'g': '', 'f': '', 'd': '', 'p': ''}

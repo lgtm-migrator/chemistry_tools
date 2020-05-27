@@ -52,7 +52,6 @@
 #  |
 #
 
-
 # stdlib
 from functools import lru_cache
 
@@ -132,11 +131,28 @@ class Element(Dictable):
 	"""
 
 	def __init__(
-			self, number, symbol, name,
-			group=0, period=0, block='', series=0, mass=0.0, eleneg=0.0,
-			eleaffin=0.0, covrad=0.0, atmrad=0.0, vdwrad=0.0, tboil=0.0,
-			tmelt=0.0, density=0.0, eleconfig='', oxistates='',
-			ionenergy=None, isotopes=None, description='',
+			self,
+			number,
+			symbol,
+			name,
+			group=0,
+			period=0,
+			block='',
+			series=0,
+			mass=0.0,
+			eleneg=0.0,
+			eleaffin=0.0,
+			covrad=0.0,
+			atmrad=0.0,
+			vdwrad=0.0,
+			tboil=0.0,
+			tmelt=0.0,
+			density=0.0,
+			eleconfig='',
+			oxistates='',
+			ionenergy=None,
+			isotopes=None,
+			description='',
 			):
 
 		super().__init__()
@@ -320,11 +336,7 @@ class Element(Dictable):
 		isotopes = []
 		for massnum in sorted(self.isotopes):
 			iso = self.isotopes[massnum]
-			isotopes.append(
-					'{0}: Isotope({1}, {2}, {0})'.format(
-							massnum, iso.mass, iso.abundance
-							)
-					)
+			isotopes.append(f'{massnum}: Isotope({iso.mass}, {iso.abundance}, {massnum})')
 		isotopes = ',\n        '.join(isotopes)
 		if len(self.isotopes) > 1:
 			isotopes = f'{{\n        {isotopes},\n    }},'
@@ -409,20 +421,14 @@ class Element(Dictable):
 		assert self.series in _table.SERIES
 
 		if self.number != self.protons:
-			raise ValueError(
-					f'{self.symbol} - atomic number must equal proton number'
-					)
+			raise ValueError(f'{self.symbol} - atomic number must equal proton number')
 		if self.protons != sum(self.eleshells):
-			raise ValueError(
-					f'{self.symbol} - number of protons must equal electrons'
-					)
+			raise ValueError(f'{self.symbol} - number of protons must equal electrons')
 		if len(self.ionenergy) > 1:
 			ionev_ = self.ionenergy[0]
 			for ionev in self.ionenergy[1:]:
 				if ionev <= ionev_:
-					raise ValueError(
-							f'{self.symbol} - ionenergy not increasing'
-							)
+					raise ValueError(f'{self.symbol} - ionenergy not increasing')
 				ionev_ = ionev
 
 		mass = 0.0
@@ -436,9 +442,7 @@ class Element(Dictable):
 					f'({mass:.4f}) != mass ({self.mass:.4f})'
 					)
 		if abs(frac - 1.0) > 1e-9:
-			raise ValueError(
-					f'{self.symbol} - sum of isotope abundances != 1.0'
-					)
+			raise ValueError(f'{self.symbol} - sum of isotope abundances != 1.0')
 
 
 class Isotope(Dictable):
@@ -464,14 +468,10 @@ class Isotope(Dictable):
 		return self._massnumber
 
 	def __str__(self):
-		return '{}, {:.4f}, {:.6f}%'.format(
-				self.massnumber, self.mass, self.abundance * 100
-				)
+		return f'{self.massnumber}, {self.mass:.4f}, {self.abundance * 100:.6f}%'
 
 	def __repr__(self):
-		return 'Isotope({}, {}, {})'.format(
-				repr(self.mass), repr(self.abundance), repr(self.massnumber)
-				)
+		return f'Isotope({repr(self.mass)}, {repr(self.abundance)}, {repr(self.massnumber)})'
 
 	@property
 	def __dict__(self):
@@ -511,8 +511,7 @@ class Elements:
 
 	def __repr__(self):
 		elements = ',\n    '.join(
-				'\n    '.join(line for line in repr(element).splitlines())
-				for element in self._list
+				'\n    '.join(line for line in repr(element).splitlines()) for element in self._list
 				)
 		elements = f'Elements(\n    {elements},\n)'
 		return elements

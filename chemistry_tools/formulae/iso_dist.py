@@ -23,7 +23,6 @@ Isotope Distributions
 #  MA 02110-1301, USA.
 #
 
-
 # stdlib
 from collections import OrderedDict
 from enum import Enum
@@ -58,6 +57,8 @@ class IsotopeDistribution(DataArray):
 	Each composition can be accessed with their hill formulae like a dictionary
 	(e.g. iso_dict["H[1]2O[16]"]
 	"""
+
+	# TODO: as_mass_spec
 
 	def __init__(self, formula):
 		"""
@@ -131,5 +132,3 @@ class IsotopeDistribution(DataArray):
 	def __str__(self):
 		table = self.as_table(sort_by=IsoDistSort.relative_abundance, reverse=True, tablefmt="fancy_grid")
 		return f"\n Isotope Distribution for {string_to_unicode(self.formula)}\n{table}"
-
-# TODO: as_mass_spec

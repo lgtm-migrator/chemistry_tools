@@ -21,13 +21,13 @@
 #  MA 02110-1301, USA.
 #
 
-
 # this package
 from chemistry_tools.pubchem.enums import PubChemNamespace
 from chemistry_tools.pubchem.pug_rest import _do_rest_get
 
 
 class Synonyms(list):
+
 	def __init__(self, initlist):
 		super().__init__()
 

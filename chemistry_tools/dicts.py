@@ -195,9 +195,7 @@ class ArithmeticDict(defaultdict):
 	def __rtruediv__(self, other):
 		"""
 		other / self """
-		return self.__class__(
-				self.default_factory,
-				{k: other / v for k, v in self.items()})
+		return self.__class__(self.default_factory, {k: other / v for k, v in self.items()})
 
 	def __ifloordiv__(self, other):
 		if hasattr(other, 'keys'):
@@ -216,9 +214,7 @@ class ArithmeticDict(defaultdict):
 	def __rfloordiv__(self, other):
 		"""
 		other // self """
-		return self.__class__(
-				self.default_factory,
-				{k: other // v for k, v in self.items()})
+		return self.__class__(self.default_factory, {k: other // v for k, v in self.items()})
 
 	def __repr__(self):
 		return f"{self.__class__.__name__}({repr(self.default_factory)}, {dict(self)})"
@@ -242,11 +238,13 @@ class ArithmeticDict(defaultdict):
 		return self._discrepancy(other, self._element_eq)
 
 	def isclose(self, other, rtol=1e-12, atol=None):
+
 		def _isclose(a, b):
 			lim = abs(rtol * b)
 			if atol is not None:
 				lim += atol
 			return abs(a - b) <= lim
+
 		return self._discrepancy(other, _isclose)
 
 	def all_non_negative(self):

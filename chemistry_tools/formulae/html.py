@@ -74,10 +74,8 @@ Functions and constants for converting formulae to html
 #  |  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 # this package
 from ._parser_core import _formula_to_format, _greek_letters
-
 
 _html_mapping = {k + '-': '&' + k + ';-' for k in _greek_letters}
 _html_mapping['.'] = '&sdot;'
@@ -117,7 +115,12 @@ def string_to_html(formula, prefixes=None, infixes=None, **kwargs):
 		prefixes = _html_mapping
 	if infixes is None:
 		infixes = _html_infix_mapping
-	return _formula_to_format(
-			lambda x: f'<sub>{x}</sub>',
-			lambda x: f'<sup>{x}</sup>',
-			formula, prefixes, infixes, **kwargs)
+	return _formula_to_format(html_subscript, html_superscript, formula, prefixes, infixes, **kwargs)
+
+
+def html_subscript(val):
+	return f'<sub>{val}</sub>'
+
+
+def html_superscript(val):
+	return f'<sup>{val}</sup>'

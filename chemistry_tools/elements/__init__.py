@@ -123,24 +123,135 @@ Examples
 #
 
 __all__ = (
-		'Element', 'Isotope',
-		"PERIODS", "BLOCKS", "GROUPS", "SERIES", 'ELEMENTS',
-		"period_lengths", "accum_period_lengths",  # "groups",
-		"H", "D", "T",
-		'Li', 'Na', 'K', 'Rb', 'Cs', 'Fr',  # Alkali Metals
-		"Be", "Mg", "Ca", "Sr", "Ba", "Ra",  # Alkaline Earth Metals
-		"B", "Al", "Ga", "In", "Tl", "Nh",  # Triels
-		"C", "Si", "Ge", "Sn", "Pb", "Fl",  # Tetrels
-		"N", "P", "As", "Sb", "Bi", "Mc",  # pnictogens
-		"O", "S", "Se", "Te", "Po", "Lv",  # chalcogens
-		"F", "Cl", "Br", "I", "At", "Ts",  # halogens
-		"He", "Ne", "Ar", "Kr", "Xe", "Rn", "Og",  # noble_gases
-		"La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu",  # lanthanides
-		"Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr",  # actinides
-		"Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn",
-		"Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd",
-		"Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg",
-		"Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn",  # transition_metals
+		'Element',
+		'Isotope',
+		"PERIODS",
+		"BLOCKS",
+		"GROUPS",
+		"SERIES",
+		'ELEMENTS',
+		"period_lengths",
+		"accum_period_lengths",  # "groups",
+		"H",
+		"D",
+		"T",
+		'Li',  # Alkali Metals
+		'Na',
+		'K',
+		'Rb',
+		'Cs',
+		'Fr',
+		"Be",  # Alkaline Earth Metals
+		"Mg",
+		"Ca",
+		"Sr",
+		"Ba",
+		"Ra",
+		"B",  # Triels
+		"Al",
+		"Ga",
+		"In",
+		"Tl",
+		"Nh",
+		"C",  # Tetrels
+		"Si",
+		"Ge",
+		"Sn",
+		"Pb",
+		"Fl",
+		"N",  # pnictogens
+		"P",
+		"As",
+		"Sb",
+		"Bi",
+		"Mc",
+		"O",  # chalcogens
+		"S",
+		"Se",
+		"Te",
+		"Po",
+		"Lv",
+		"F",  # halogens
+		"Cl",
+		"Br",
+		"I",
+		"At",
+		"Ts",
+		"He",  # noble_gases
+		"Ne",
+		"Ar",
+		"Kr",
+		"Xe",
+		"Rn",
+		"Og",
+		"La",  # lanthanides
+		"Ce",
+		"Pr",
+		"Nd",
+		"Pm",
+		"Sm",
+		"Eu",
+		"Gd",
+		"Tb",
+		"Dy",
+		"Ho",
+		"Er",
+		"Tm",
+		"Yb",
+		"Lu",
+		"Ac",  # actinides
+		"Th",
+		"Pa",
+		"U",
+		"Np",
+		"Pu",
+		"Am",
+		"Cm",
+		"Bk",
+		"Cf",
+		"Es",
+		"Fm",
+		"Md",
+		"No",
+		"Lr",
+		"Sc",  # transition_metals
+		"Ti",
+		"V",
+		"Cr",
+		"Mn",
+		"Fe",
+		"Co",
+		"Ni",
+		"Cu",
+		"Zn",
+		"Y",
+		"Zr",
+		"Nb",
+		"Mo",
+		"Tc",
+		"Ru",
+		"Rh",
+		"Pd",
+		"Ag",
+		"Cd",
+		"Hf",
+		"Ta",
+		"W",
+		"Re",
+		"Os",
+		"Ir",
+		"Pt",
+		"Au",
+		"Hg",
+		"Rf",
+		"Db",
+		"Sg",
+		"Bh",
+		"Hs",
+		"Mt",
+		"Ds",
+		"Rg",
+		"Cn",
 		)
 
 from .classes import Element, Elements, Isotope
@@ -164,7 +275,7 @@ accum_period_lengths = (2, 10, 18, 36, 54, 86, 118)
 
 # icosagens, crystallogens, pnictogens, chalcogens, halogens
 groups = {g: tuple(x - 18 + g for x in accum_period_lengths[1:]) for g in range(13, 18)}
-groups[1] = (1,) + tuple(x + 1 for x in accum_period_lengths[:-1])  # alkali metals
+groups[1] = (1, ) + tuple(x + 1 for x in accum_period_lengths[:-1])  # alkali metals
 groups[2] = tuple(x + 2 for x in accum_period_lengths[:-1])  # alkaline earth metals
 groups[18] = accum_period_lengths  # noble gases
 

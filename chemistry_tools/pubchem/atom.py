@@ -51,44 +51,42 @@ from chemistry_tools.pubchem.errors import ResponseParseError
 
 
 class Atom:
-	"""Class to represent an atom in a :class:`~pubchempy.Compound`."""
+	"""
+	Class to represent an atom in a :class:`~pubchempy.Compound`.
+	"""
 
 	def __init__(self, aid, number, x=None, y=None, z=None, charge=0):
-		"""Initialize with an atom ID, atomic number, coordinates and optional change.
+		"""
+		Initialize with an atom ID, atomic number, coordinates and optional change.
 
-		:param int aid: Atom ID
-		:param int number: Atomic number
-		:param float x: X coordinate.
-		:param float y: Y coordinate.
-		:param float z: (optional) Z coordinate.
-		:param int charge: (optional) Formal charge on atom.
+		:param aid: The Atom ID within the owning Compound.
+		:type aid: int
+		:param number: The Atomic number for this atom.
+		:type number: int
+		:param x: The x coordinate for this atom.
+		:type x: float
+		:param y: The y coordinate for this atom.
+		:type y: float
+		:param z: The z coordinate for this atom. Will be ``None`` in 2D Compound records.
+		:type z: float, optional
+		:param charge: Formal charge on atom.
+		:type charge: int, optional
 		"""
 
 		self.aid = aid
-		# The atom ID within the owning Compound.
 		self.number = number
-		# The atomic number for this atom.
 		self.x = x
-		# The x coordinate for this atom.
 		self.y = y
-		# The y coordinate for this atom.
 		self.z = z
-		# The z coordinate for this atom. Will be ``None`` in 2D Compound records.
 		self.charge = charge
-		# The formal charge on this atom.
 
 	def __repr__(self):
 		return f'Atom({self.aid}, {self.element})'
 
 	def __eq__(self, other):
 		return (
-				isinstance(other, type(self))
-				and self.aid == other.aid
-				and self.element == other.element
-				and self.x == other.x
-				and self.y == other.y
-				and self.z == other.z
-				and self.charge == other.charge
+				isinstance(other, type(self)) and self.aid == other.aid and self.element == other.element
+				and self.x == other.x and self.y == other.y and self.z == other.z and self.charge == other.charge
 				)
 
 	@property

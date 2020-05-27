@@ -52,9 +52,12 @@ from chemistry_tools.pubchem.bond import parse_bonds
 from chemistry_tools.pubchem.enums import CoordinateType
 from chemistry_tools.pubchem.full_record import parse_full_record, rest_get_full_record
 from chemistry_tools.pubchem.properties import (
-	_force_valid_properties, insert_valid_properties_table, parse_properties,
-	rest_get_properties_json, valid_properties,
-	)
+		_force_valid_properties,
+		insert_valid_properties_table,
+		parse_properties,
+		rest_get_properties_json,
+		valid_properties,
+		)
 from chemistry_tools.pubchem.synonyms import get_synonyms
 
 
@@ -163,10 +166,10 @@ class Compound(Dictable):
 					self._properties["MolecularWeight"] = prop.value
 
 			# TODO: label='Weight', name='MonoIsotopic',
-				#label='Molecular Formula', name=None,
-				#label='Mass', name='Exact',
-				# label='Log P', name='XLogP3'
-				#
+			# label='Molecular Formula', name=None,
+			# label='Mass', name='Exact',
+			# label='Log P', name='XLogP3'
+			#
 		return record
 
 	@memoized_property
@@ -187,7 +190,6 @@ class Compound(Dictable):
 		"""
 		Derive Bond objects from the record.
 		"""
-
 
 		if 'bonds' not in self._record:
 			return
@@ -372,7 +374,6 @@ class Compound(Dictable):
 	def charge(self):
 		return self.get_property("Charge")
 
-
 	@property
 	def molecular_weight(self):
 		"""
@@ -460,13 +461,14 @@ class Compound(Dictable):
 	#
 	# 	return ''.join(hill)
 
+
 # TODO from record:
-	# charge
-	# properties
-		# label='Compound', name='Canonicalized'
-		# label='Compound Complexity', name=None
-	# cid
-	# counts
+# charge
+# properties
+# label='Compound', name='Canonicalized'
+# label='Compound Complexity', name=None
+# cid
+# counts
 
 
 # TODO:
@@ -476,6 +478,8 @@ def compounds_to_frame(compounds):
 	"""
 
 	import pandas as pd
+
 	if isinstance(compounds, Compound):
 		compounds = [compounds]
+
 	return pd.DataFrame.from_records([dict(c) for c in compounds], index='CID')

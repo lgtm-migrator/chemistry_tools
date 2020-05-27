@@ -20,11 +20,10 @@
 #  MA 02110-1301, USA.
 #
 
-
 # this package
 from chemistry_tools.pubchem.enums import PubChemNamespace
-from chemistry_tools.pubchem.pug_rest import _do_rest_get
 from chemistry_tools.pubchem.properties import _parse_record_property
+from chemistry_tools.pubchem.pug_rest import _do_rest_get
 
 
 def parse_full_record(record):
@@ -52,15 +51,17 @@ def parse_full_record(record):
 		else:
 			charge = 0
 
-		parsed_records.append(dict(
-				atoms=compound["atoms"],
-				bonds=bonds,
-				charge=charge,
-				coords=compound["coords"],
-				properties=properties,
-				cid=cid,
-				counts=counts
-				))
+		parsed_records.append(
+				dict(
+						atoms=compound["atoms"],
+						bonds=bonds,
+						charge=charge,
+						coords=compound["coords"],
+						properties=properties,
+						cid=cid,
+						counts=counts
+						)
+				)
 
 	return parsed_records
 
@@ -73,7 +74,8 @@ def rest_get_full_record(identifier, namespace=PubChemNamespace.name, record_typ
 	:type identifier: str, Sequence[str]
 	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`
 	:type namespace: PubChemNamespace, optional
-	:type namespace: str, optional
+	:param record_type:
+	:type record_type:
 	:param **kwargs: Optional arguments that ``json.loads`` takes.
 	:raises ValueError: If the response body does not contain valid json.
 
@@ -82,4 +84,3 @@ def rest_get_full_record(identifier, namespace=PubChemNamespace.name, record_typ
 	"""
 
 	return _do_rest_get(namespace, identifier, record_type=record_type).json(**kwargs)
-

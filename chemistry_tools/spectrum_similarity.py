@@ -8,7 +8,6 @@
 # Copyright 2011-2017 Nathan Dodder <nathand@sccwrp.org>
 # Available under the BSD 2-Clause License
 
-
 __author__ = "Dominic Davis-Foster"
 __copyright__ = "Copyright 2019 Dominic Davis-Foster"
 
@@ -21,9 +20,17 @@ import pandas as pd
 
 
 def SpectrumSimilarity(
-		spec_top, spec_bottom, t=0.25, b=10, top_label=None,
-		bottom_label=None, xlim=(50, 1200), x_threshold=0, print_alignment=False,
-		print_graphic=True, output_list=False,
+		spec_top,
+		spec_bottom,
+		t=0.25,
+		b=10,
+		top_label=None,
+		bottom_label=None,
+		xlim=(50, 1200),
+		x_threshold=0,
+		print_alignment=False,
+		print_graphic=True,
+		output_list=False,
 		):
 	"""
 
@@ -60,14 +67,14 @@ def SpectrumSimilarity(
 
 	# format spectra and normalize intensitites
 	top_tmp = pd.DataFrame(data=spec_top, columns=["mz", "intensity"])
-	top_tmp["normalized"] = top_tmp.apply(normalize, args=(max(top_tmp["intensity"]),), axis=1)
+	top_tmp["normalized"] = top_tmp.apply(normalize, args=(max(top_tmp["intensity"]), ), axis=1)
 	top_tmp = top_tmp[top_tmp["mz"].between(xlim[0], xlim[1])]
 	top_plot = top_tmp[["mz", "normalized"]].copy()  # data frame for plotting spectrum
 	top_plot.columns = ["mz", "intensity"]
 	top = top_plot[top_plot["intensity"] >= b]  # data frame for similarity score calculation
 
 	bottom_tmp = pd.DataFrame(data=spec_bottom, columns=["mz", "intensity"])
-	bottom_tmp["normalized"] = bottom_tmp.apply(normalize, args=(max(bottom_tmp["intensity"]),), axis=1)
+	bottom_tmp["normalized"] = bottom_tmp.apply(normalize, args=(max(bottom_tmp["intensity"]), ), axis=1)
 	bottom_tmp = bottom_tmp[bottom_tmp["mz"].between(xlim[0], xlim[1])]
 	bottom_plot = bottom_tmp[["mz", "normalized"]].copy()  # data frame for plotting spectrum
 	bottom_plot.columns = ["mz", "intensity"]
@@ -188,8 +195,8 @@ def SpectrumSimilarity(
 	#
 	#
 
-		# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
-		# 	print(similarity_score)
+	# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+	# 	print(similarity_score)
 
 	if output_list:
 		return similarity_score, reverse_similarity_score, alignment

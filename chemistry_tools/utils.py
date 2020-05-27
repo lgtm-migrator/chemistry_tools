@@ -48,12 +48,9 @@ General utilities.
 #  |  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 # stdlib
-import types
-from collections import namedtuple, OrderedDict
-from collections.abc import ItemsView, Mapping
-from itertools import product
+from collections import namedtuple
+from collections.abc import Mapping
 
 
 def identity(x):
@@ -64,15 +61,6 @@ def defaultnamedtuple(typename, field_names, defaults=()):
 	"""
 	Generates a new subclass of tuple with default values.
 
-	Parameters
-	----------
-	typename : string
-		The name of the class.
-	field_names : str or iterable
-		An iterable of splitable string.
-	defaults : iterable
-		Default values for ``field_names``, counting ``[-len(defaults):]``.
-
 	Examples
 	--------
 	>>> Body = defaultnamedtuple('Body', 'x y z density', (1.0,))
@@ -82,17 +70,25 @@ def defaultnamedtuple(typename, field_names, defaults=()):
 	>>> b._asdict() == dict(x=10, y=5, z=3, density=1.0)
 	True
 
-	Returns
-	-------
-	A new tuple subclass named ``typename``
+	:param typename: The name of the class.
+	:type typename: str
+	:param field_names: An iterable of splitable string.
+	:type field_names: str or iterable
+	:param defaults: Default values for ``field_names``, counting ``[-len(defaults):]``.
+	:type defaults: iterable
+
+	:return: A new tuple subclass named ``typename``
+	:rtype: tuple
 	"""
 
 	Tuple = namedtuple(typename, field_names)
-	Tuple.__new__.__defaults__ = (None,) * len(Tuple._fields)
+	Tuple.__new__.__defaults__ = (None, ) * len(Tuple._fields)
+
 	if isinstance(defaults, Mapping):
 		Tuple.__new__.__defaults__ = tuple(Tuple(**defaults))
 	else:
 		nmissing = len(Tuple._fields) - len(defaults)
-		defaults = (None,) * nmissing + tuple(defaults)
+		defaults = (None, ) * nmissing + tuple(defaults)
 		Tuple.__new__.__defaults__ = tuple(Tuple(*defaults))
+
 	return Tuple

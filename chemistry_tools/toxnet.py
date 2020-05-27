@@ -24,7 +24,6 @@ Read data from National Library of Medicine TOXNET
 #  MA 02110-1301, USA.
 #
 
-
 # 3rd party
 import requests
 from bs4 import BeautifulSoup
@@ -81,8 +80,12 @@ def toxnet(cas):
 
 		# Strings
 		elif prop_name in [
-				"Color/Form", "Odor", "Other Chemical/Physical Properties",
-				"Solubility", "Spectral Properties"]:
+				"Color/Form",
+				"Odor",
+				"Other Chemical/Physical Properties",
+				"Solubility",
+				"Spectral Properties",
+				]:
 			physical_properties[prop_name]["Value"] = property_format(prop_value_and_unit)
 			physical_properties[prop_name]["Unit"] = None
 			physical_properties[prop_name]["Description"] = None
@@ -97,8 +100,7 @@ def toxnet(cas):
 			physical_properties[prop_name]["Description"] = None
 		elif prop_name == "Vapor Density":
 			# prop_value = prop_value_and_unit.split(" ")[0]
-			physical_properties[prop_name]["Value"] = property_format(
-				prop_value_and_unit.replace(" (Air= 1)", ''))
+			physical_properties[prop_name]["Value"] = property_format(prop_value_and_unit.replace(" (Air= 1)", ''))
 			physical_properties[prop_name]["Unit"] = "None"
 			physical_properties[prop_name]["Description"] = "Air=1"
 
@@ -150,7 +152,6 @@ def toxnet(cas):
 
 
 # Soup CAMEO Link from PubChem page if necessary
-
 
 if __name__ == "__main__":
 	import pprint

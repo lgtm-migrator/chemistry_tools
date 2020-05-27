@@ -58,9 +58,14 @@ from chemistry_tools.pubchem.utils import _force_sequence_or_csv, _make_base_url
 
 
 def _do_rest_get(
-		namespace, identifier, format_=PubChemFormats.JSON, domain=None,
+		namespace,
+		identifier,
+		format_=PubChemFormats.JSON,
+		domain=None,
 		record_type="2d",
-		png_width=300, png_height=300):
+		png_width=300,
+		png_height=300
+		):
 	"""
 	:param identifier: Identifiers (e.g. name, CID) for the compounds to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
@@ -150,8 +155,8 @@ def request(identifier, namespace='cid', operation=None, output='JSON', searchty
 	urlid, params = None, {}
 
 	# use this function when:
-		# namespace in ['listkey', 'formula']
-		# searchtype == 'xref'
+	# namespace in ['listkey', 'formula']
+	# searchtype == 'xref'
 
 	urlid = quote(identifier.encode('utf8'))
 

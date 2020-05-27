@@ -29,25 +29,25 @@ import re
 # this package
 from chemistry_tools.constants import prefixes
 
-multiplier_regex = "*".join([f"({prefix})" for prefix in prefixes.values()])
+multiplier_regex = re.compile("*".join([f"({prefix})" for prefix in prefixes.values()]) + "*")
 
 re_strings = [
-		r"((\d+),?)+(\d+)-",
-		fr"{multiplier_regex}*",
-		r"nitro",
-		r"phenyl",
-		r"aniline",
-		r"anisole",
-		r"benzene",
-		r"centralite",
-		r"formamide",
-		r"glycerine",
-		r"nitrate",
-		r"glycol",
-		r"phthalate",
-		r"picrate",
-		r"toluene",
-		r" ",
+		re.compile(r"((\d+),?)+(\d+)-"),
+		multiplier_regex,
+		re.compile(r"nitro"),
+		re.compile(r"phenyl"),
+		re.compile(r"aniline"),
+		re.compile(r"anisole"),
+		re.compile(r"benzene"),
+		re.compile(r"centralite"),
+		re.compile(r"formamide"),
+		re.compile(r"glycerine"),
+		re.compile(r"nitrate"),
+		re.compile(r"glycol"),
+		re.compile(r"phthalate"),
+		re.compile(r"picrate"),
+		re.compile(r"toluene"),
+		re.compile(r" "),
 		]
 
 
@@ -55,7 +55,7 @@ def get_IUPAC_parts(string):
 	split_points = set()
 
 	for regex in re_strings:
-		for match in list(re.finditer(regex, string.lower())):
+		for match in list(regex.finditer(string.lower())):
 			start, end = match.span()
 			if start != end:
 				split_points.add(start)

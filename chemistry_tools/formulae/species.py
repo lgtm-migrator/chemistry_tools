@@ -100,7 +100,6 @@
 #  |  POSSIBILITY OF SUCH DAMAGE.
 #  |
 
-
 #  3rd party
 from cawdrey import frozendict
 
@@ -152,8 +151,7 @@ class Species(Formula):
 		return cls(kwargs, charge=charge, phase=phase)
 
 	@classmethod
-	def from_string(
-			cls, formula, phase=None, charge=0):
+	def from_string(cls, formula, phase=None, charge=0):
 		"""
 		Create a new :class:`Species` object by parsing a string
 

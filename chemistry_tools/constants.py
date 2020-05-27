@@ -142,57 +142,48 @@ class Constant(namedtuple('__BaseConstant', 'name value unit symbol')):
 # public domain data
 # Author: Paul Kienzle
 avogadro_number = avogadro_constant = Constant(
-		name="Avogadro constant",
-		value=6.02214179e23,
-		unit=1 / quantities.mol,
-		symbol="N<sub>A</sub>")  # (30)
+		name="Avogadro constant", value=6.02214179e23, unit=1 / quantities.mol, symbol="N<sub>A</sub>"
+		)  # (30)
 plancks_constant = planck_constant = Constant(
 		name="Planck's constant",
-		value=4.13566733e-15 * (10 ** 34),
+		value=4.13566733e-15 * (10**34),
 		unit=quantities.electron_volt / quantities.second,
-		symbol="h")  # (10)
+		symbol="h"
+		)  # (10)
 speed_of_light = Constant(
-		name="Speed of Light",
-		value=299792458,
-		unit=quantities.m / quantities.second,
-		symbol="c")  # (exact)
-electron_radius = Constant(
-		name="Electron Radius",
-		value=2.8179402894e-15,
-		unit=quantities.m,
-		symbol="rₑ")  # (58)
+		name="Speed of Light", value=299792458, unit=quantities.m / quantities.second, symbol="c"
+		)  # (exact)
+electron_radius = Constant(name="Electron Radius", value=2.8179402894e-15, unit=quantities.m, symbol="rₑ")  # (58)
 
 # From NIST Reference on Constants, Units, and Uncertainty
 #   http://physics.nist.gov/cuu/index.html
 # neutron mass = 1.008 664 915 97(43) u
 # atomic mass constant m_u = 1.660 538 782(83) x 10-27 kg
 neutron_mass = Constant(
-		name="Neutron mass",
-		value=1.00866491597,
-		unit=quantities.atomic_mass_unit,
-		symbol="n<sup>o</sup>")  # (43)
+		name="Neutron mass", value=1.00866491597, unit=quantities.atomic_mass_unit, symbol="n<sup>o</sup>"
+		)  # (43)
 atomic_mass_constant = float(quantities.atomic_mass_unit.rescale(quantities.kg))
 faraday_constant = Constant(
 		name="Faraday constant",
 		value=96485.3321233100184,
 		unit=quantities.coulomb * (1 / quantities.mol),
-		symbol="F")
+		symbol="F"
+		)
 vacuum_permittivity = Constant(
-		"Vacuum permittivity",
-		value=8.8541878128e-12,
-		unit=quantities.farad / quantities.metre,
-		symbol="ε₀")
+		"Vacuum permittivity", value=8.8541878128e-12, unit=quantities.farad / quantities.metre, symbol="ε₀"
+		)
 boltzmann_constant = Constant(
 		name="Boltzmann constant",
 		value=1.380649e-23,
 		unit=quantities.joule / quantities.kelvin,
-		symbol="k<sub>B</sub>")
+		symbol="k<sub>B</sub>"
+		)
 molar_gas_constant = Constant(
 		name="Molar gas constant",
 		value=8.31446261815324,
 		unit=quantities.joule / quantities.kelvin / quantities.mol,
-		symbol="R")
-
+		symbol="R"
+		)
 
 # IUPAC prefixes
 prefixes = {

@@ -100,16 +100,12 @@
 #  |  POSSIBILITY OF SUCH DAMAGE.
 #  |
 
-
 # stdlib
 import re
 from functools import lru_cache
 
 # this package
 from chemistry_tools.elements import ELEMENTS
-
-#  3rd party
-
 
 # Common chemical groups
 GROUPS = {
@@ -226,7 +222,6 @@ GROUPS = {
 		'Valohp': 'C5H8NO2',
 		'Xan': 'C13H9O',
 		}
-
 
 _isotope_regex_1 = re.compile(r"^([A-z]+)(\[\d*\])$")
 _isotope_regex_2 = re.compile(r"^(\[[A-z]+)(\d*\])$")

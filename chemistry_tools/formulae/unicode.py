@@ -74,10 +74,8 @@ Functions and constants for convert formulae to unicode
 #  |  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 # this package
 from ._parser_core import _formula_to_format, _greek_letters, _greek_u
-
 
 _unicode_mapping = {k + '-': v + '-' for k, v in zip(_greek_letters, _greek_u)}
 _unicode_mapping['.'] = '⋅'
@@ -100,36 +98,44 @@ def string_to_unicode(formula, prefixes=None, infixes=None, **kwargs):
 	"""
 	Convert formula string to unicode string representation
 
-	Parameters
-	----------
-	formula : str
-		Chemical formula, e.g. 'H2O', 'Fe+3', 'Cl-'
-	prefixes : dict
-		Prefix transofmrations, default: greek letters and .
-	infixes : dict
-		Infix transofmrations, default: .
-	suffixes : tuple of strings
-		Suffixes to keep, e.g. ('(g)', '(s)')
-
 	Examples
 	--------
-	>>> string_to_unicode('NH4+') == u'NH₄⁺'
+	>>> string_to_unicode('NH4+') == 'NH₄⁺'
 	True
-	>>> string_to_unicode('Fe(CN)6+2') == u'Fe(CN)₆²⁺'
+	>>> string_to_unicode('Fe(CN)6+2') == 'Fe(CN)₆²⁺'
 	True
-	>>> string_to_unicode('Fe(CN)6+2(aq)') == u'Fe(CN)₆²⁺(aq)'
+	>>> string_to_unicode('Fe(CN)6+2(aq)') == 'Fe(CN)₆²⁺(aq)'
 	True
-	>>> string_to_unicode('.NHO-(aq)') == u'⋅NHO⁻(aq)'
+	>>> string_to_unicode('.NHO-(aq)') == '⋅NHO⁻(aq)'
 	True
-	>>> string_to_unicode('alpha-FeOOH(s)') == u'α-FeOOH(s)'
+	>>> string_to_unicode('alpha-FeOOH(s)') == 'α-FeOOH(s)'
 	True
+
+	:param formula: Chemical formula, e.g. 'H2O', 'Fe+3', 'Cl-'
+	:type formula: str
+	:param prefixes: Prefix transofmrations. Default: greek letters and ``.``
+	:type prefixes: dict
+	:param infixes: Infix transofmrations. Default: ``.``
+	:type infixes: dict
+	:param kwargs:
+	:type kwargs:
+	:return:
+	:rtype:
 	"""
+
+	# TODO: 	suffixes : tuple of strings
+	# 		Suffixes to keep, e.g. ('(g)', '(s)')
 
 	if prefixes is None:
 		prefixes = _unicode_mapping
 	if infixes is None:
 		infixes = _unicode_infix_mapping
-	return _formula_to_format(
-			lambda x: ''.join(_unicode_sub[str(_)] for _ in x),
-			lambda x: ''.join(_unicode_sup[str(_)] for _ in x),
-			formula, prefixes, infixes, **kwargs)
+	return _formula_to_format(unicode_subscript, unicode_superscript, formula, prefixes, infixes, **kwargs)
+
+
+def unicode_subscript(val):
+	return ''.join(_unicode_sub[str(_)] for _ in val)
+
+
+def unicode_superscript(val):
+	return ''.join(_unicode_sup[str(_)] for _ in val)

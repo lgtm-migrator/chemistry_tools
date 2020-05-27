@@ -27,16 +27,27 @@
 #
 #
 
+# stdlib
 import re
 from decimal import Decimal
 
 
 def degC(string):
-	return string.replace(" deg C", "°C").replace("deg C", "°C").replace(" DEG C", "°C").replace("DEG C", "°C")
+	string = string.replace(" deg C", "°C")
+	string = string.replace("deg C", "°C")
+	string = string.replace(" DEG C", "°C")
+	string = string.replace("DEG C", "°C")
+	return string
 
 
 def equals(string):
-	return string.replace("= ", " = ").replace("  = ", " = ")
+	string = string.replace("= ", " = ")
+	string = string.replace("  = ", " = ")
+	return string
+
+
+scientific_regex = re.compile("X10.[0-9]+")
+f2c_regex = re.compile(r"\d*\.?\d+ *° *F")
 
 
 def scientific(string):
@@ -48,11 +59,13 @@ def scientific(string):
 	"""
 
 	try:
-		magnitude = re.findall("X10.[0-9]+", string)[0].replace("X10", '').replace("-", "−")
+		magnitude = scientific_regex.findall(string)[0].replace("X10", '').replace("-", "−")
 	except IndexError:  # no scientific notation to format
 		return string
+
 	# print(magnitude)
-	return re.sub("X10.[0-9]+", f"×10<sup>{magnitude}</sup>", string)
+
+	return scientific_regex.sub(f"×10<sup>{magnitude}</sup>", string)
 
 
 def uscg1999(string):
@@ -65,15 +78,15 @@ def trailspace(string):
 
 def f2c(string):
 	try:
-		temperature = re.findall(r"\d*\.?\d+ *° *F", string)[0].replace("F", '').replace("°", '').replace(" ", '')
+		temperature = f2c_regex.findall(string)[0].replace("F", '').replace("°", '').replace(" ", '')
 	except IndexError:
 		return string
 
-	# Convert to Censius and strip trailing 0s and decimal points
+	# Convert to Celsius and strip trailing 0s and decimal points
 	temperature = str((Decimal(temperature) - 32) * (Decimal(5) / Decimal(9)))
 	if "." in temperature:
 		temperature = temperature.rstrip("0").rstrip(".")
-	return re.sub(r"\d*\.?\d+ *° *F", f"{temperature}°C", string)
+	return f2c_regex.sub(f"{temperature}°C", string)
 
 
 def property_format(string):

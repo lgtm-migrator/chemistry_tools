@@ -84,8 +84,14 @@ def format_string(stringwithmarkup):
 
 
 def _force_sequence_or_csv(value, name):
+	err_msg = f"Please supply one or more {name}, either as a comma-separated string or a Sequence of strings."
+
 	if not value:
-		raise ValueError(f"Please supply one or more {name}, either as a comma-separated string or a list of strings.")
+		raise ValueError(err_msg)
+
+	# --
+
+	err_msg = f"'{name}' must be either a comma-separated string or a Sequence of strings"
 
 	if isinstance(value, str):
 		value = value.split(",")
@@ -103,12 +109,12 @@ def _force_sequence_or_csv(value, name):
 			elif isinstance(val, int):
 				output.append(str(val))
 			else:
-				raise ValueError(f"'{name}' must be either a comma-separated string or a Sequence of strings")
+				raise ValueError(err_msg)
 
 		value = output
 
 	else:
-		raise ValueError(f"'{name}' must be either a comma-separated string or a Sequence of strings")
+		raise ValueError(err_msg)
 
 	return value
 

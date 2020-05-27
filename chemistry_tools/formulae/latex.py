@@ -74,10 +74,8 @@ Functions and constants for converting formulae to LaTeX
 #  |  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 # this package
 from ._parser_core import _formula_to_format, _greek_letters
-
 
 _latex_mapping = {k + '-': '\\' + k + '-' for k in _greek_letters}
 _latex_mapping['epsilon-'] = '\\varepsilon-'
@@ -87,19 +85,8 @@ _latex_infix_mapping = {'.': '\\cdot '}
 
 
 def string_to_latex(formula, prefixes=None, infixes=None, **kwargs):
-	r"""
+	"""
 	Convert formula string to latex representation
-
-	Parameters
-	----------
-	formula: str
-		Chemical formula, e.g. 'H2O', 'Fe+3', 'Cl-'
-	prefixes: dict
-		Prefix transofmrations, default: greek letters and .
-	infixes: dict
-		Infix transformations, default: .
-	suffixes: iterable of str
-		What suffixes not to interpret, default: (s), (l), (g), (aq)
 
 	Examples
 	--------
@@ -114,11 +101,32 @@ def string_to_latex(formula, prefixes=None, infixes=None, **kwargs):
 	>>> string_to_latex('alpha-FeOOH(s)')
 	'\\alpha-FeOOH(s)'
 
+	:param formula: Chemical formula, e.g. 'H2O', 'Fe+3', 'Cl-'
+	:type formula: str
+	:param prefixes: Prefix transofmrations. Default: greek letters and ``.``
+	:type prefixes: dict
+	:param infixes: Infix transformations. Default ``.``
+	:type infixes: dict
+	:param kwargs:
+	:type kwargs:
+
+	:return:
+	:rtype:
 	"""
+
+	# TODO: suffixes: iterable of str
+	# 	What suffixes not to interpret, default: (s), (l), (g), (aq)
+
 	if prefixes is None:
 		prefixes = _latex_mapping
 	if infixes is None:
 		infixes = _latex_infix_mapping
-	return _formula_to_format(
-			lambda x: '_{%s}' % x, lambda x: f'^{{{x}}}',
-			formula, prefixes, infixes, **kwargs)
+	return _formula_to_format(latex_subscript, latex_superscript, formula, prefixes, infixes, **kwargs)
+
+
+def latex_subscript(val):
+	return f'_{{{val}}}'
+
+
+def latex_superscript(val):
+	return f'^{{{val}}}'

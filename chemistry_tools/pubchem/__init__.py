@@ -2,6 +2,11 @@
 #   -*- coding: utf-8 -*-
 #
 #  __init__.py
+"""
+This module provides a wrapper around the PubChem PUG_REST API.
+
+Data for compounds can be accessed using the :fun:`chemistry_tools.lookup.get_compounds` function.
+"""
 #
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -43,22 +48,12 @@
 #  |  THE SOFTWARE.
 #
 
-"""
-This module provides a wrapper around the PubChem PUG_REST API.
-
-Data for compounds can be accessed using the :fun:`chemistry_tools.pubchem.getters.get_compounds` function.
-"""
-
-from . import atom
-from . import bond
-from . import errors
-from . import enums
-
+from . import atom, bond, enums, errors
 
 API_BASE = 'https://pubchem.ncbi.nlm.nih.gov/rest/pug'
 
-
 __all__ = [
+		"API_BASE",
 		"atom",
 		"bond",
 		"compound",
@@ -71,5 +66,4 @@ __all__ = [
 		"pug_rest",
 		"synonyms",
 		"utils",
-		"API_BASE"
 		]

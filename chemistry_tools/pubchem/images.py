@@ -55,6 +55,10 @@ def rest_get_structure_image(identifier, namespace=PubChemNamespace.name, width=
 	:type identifier: str, Sequence[str]
 	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`
 	:type namespace: PubChemNamespace, optional
+	:param width:
+	:type width:
+	:param height:
+	:type height:
 
 	:return: Pillow Image data
 	:rtype: :py:class:`PIL.Image.Image`

@@ -76,14 +76,12 @@
 #  |  DOI: `10.1021/acs.jproteome.8b00717 <http://dx.doi.org/10.1021/acs.jproteome.8b00717>`_
 #
 
-
 __author__ = "Dominic Davis-Foster"
 __copyright__ = "2019-2020 Dominic Davis-Foster"
 
 __license__ = "LGPL"
 __version__ = "0.3.0"
 __email__ = "dominic@davis-foster.co.uk"
-
 
 # stdlib
 import pathlib

@@ -23,7 +23,6 @@ Elemental composition of a Formula
 #  MA 02110-1301, USA.
 #
 
-
 # stdlib
 from enum import Enum
 
@@ -31,8 +30,6 @@ from enum import Enum
 from chemistry_tools.elements import ELEMENTS
 from ._parser_core import _make_isotope_string
 from .dataarray import DataArray
-
-# this package
 from .unicode import string_to_unicode
 from .utils import _split_isotope
 
@@ -77,7 +74,13 @@ class Composition(DataArray):
 			mass = element.mass * count
 			mass_fraction = mass / formula.mass
 
-			data[isymbol] = dict(element=element, isotope=isotope, count=count, rel_mass=mass, mass_fraction=mass_fraction)
+			data[isymbol] = dict(
+					element=element,
+					isotope=isotope,
+					count=count,
+					rel_mass=mass,
+					mass_fraction=mass_fraction,
+					)
 
 		super().__init__(formula=formula.hill_formula, data=data)
 

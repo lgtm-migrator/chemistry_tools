@@ -70,7 +70,6 @@ import re
 
 # TODO: nominal mass (massnumber) and monoisotopic mass
 
-
 H = classes.Element(
 		1, 'H', 'Hydrogen',
 		group=1, period=1, block='s', series=1,

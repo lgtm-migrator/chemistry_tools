@@ -73,11 +73,11 @@ Parse formulae into a Python object
 #  |  DOI: `10.1021/acs.jproteome.8b00717 <http://dx.doi.org/10.1021/acs.jproteome.8b00717>`_
 #
 
-
-# this package
+# 3rd party
 import quantities
 from domdf_python_tools.bases import Dictable
 
+# this package
 from chemistry_tools.formulae.formula import Formula
 from chemistry_tools.formulae.html import string_to_html
 from chemistry_tools.formulae.latex import string_to_latex
@@ -112,8 +112,13 @@ class Compound(Dictable):
 	"""
 
 	def __init__(
-			self, name, formula=None, data=None,
-			latex_name=None, unicode_name=None, html_name=None,
+			self,
+			name,
+			formula=None,
+			data=None,
+			latex_name=None,
+			unicode_name=None,
+			html_name=None,
 			):
 
 		super().__init__()

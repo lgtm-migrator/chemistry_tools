@@ -38,8 +38,11 @@ def cas_int_to_string(cas_no):
 	check_digit = cas_no % 10
 
 	if check_cas_number(cas_no):
-		raise ValueError(
-				f"Invalid CAS Number. Check digit mismatch: expected {check_digit}, computed {check_cas_number(cas_no) + check_digit}.")
+		err_msg = (
+				f"Invalid CAS Number. Check digit mismatch: expected {check_digit}, "
+				f"computed {check_cas_number(cas_no) + check_digit}."
+				)
+		raise ValueError(err_msg)
 
 	main_value = (cas_no - check_digit) // 10
 	block_2 = main_value % 100
@@ -107,6 +110,7 @@ def cas_string_to_int(cas_no):
 
 	if check_cas_number(cas_no):
 		raise ValueError(
-				f"Invalid CAS Number. Check digit mismatch: expected {check_digit}, computed {check_cas_number(cas_no) + check_digit}.")
+				f"Invalid CAS Number. Check digit mismatch: expected {check_digit}, computed {check_cas_number(cas_no) + check_digit}."
+				)
 
 	return cas_no

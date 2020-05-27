@@ -1,0 +1,16 @@
+chemistry_tools/elements/_elements.py
+chemistry_tools/elements/actinides.py
+chemistry_tools/elements/alkali_metals.py
+chemistry_tools/elements/alkaline_earth_metals.py
+chemistry_tools/elements/chalcogens.py
+chemistry_tools/elements/halogens.py
+chemistry_tools/elements/classes.py
+chemistry_tools/elements/halogens.py
+chemistry_tools/elements/lanthanides.py
+chemistry_tools/elements/noble_gases.py
+chemistry_tools/elements/pnictogens.py
+chemistry_tools/elements/tetrels.py
+chemistry_tools/elements/transition_metals.py
+chemistry_tools/elements/triels.py
+chemistry_tools/formulae/parser.py
+chemistry_tools/names.py

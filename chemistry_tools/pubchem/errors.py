@@ -46,7 +46,6 @@ Error handling functions
 
 import json
 
-
 HTTP_ERROR_CODES = [400, 404, 405, 504, 501, 500]
 
 
@@ -141,4 +140,3 @@ class ServerError(PubChemHTTPError):
 
 	def __init__(self, msg='Some problem on the server side'):
 		self.msg = msg
-

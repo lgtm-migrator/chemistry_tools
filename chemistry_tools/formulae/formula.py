@@ -103,7 +103,6 @@ Parse formulae into a Python object
 #  |  POSSIBILITY OF SUCH DAMAGE.
 #  |
 
-
 # stdlib
 import math
 from collections import Counter, defaultdict
@@ -113,12 +112,12 @@ from itertools import combinations_with_replacement, product
 from mathematical.utils import gcd_array
 
 # this package
-from chemistry_tools.elements import ELEMENTS, isotope_data, D, T
+from chemistry_tools.elements import D, ELEMENTS, isotope_data, T
 from chemistry_tools.formulae.parser import string_to_composition
-from ._parser_core import _make_isotope_string, _parse_isotope_string
+from ._parser_core import _make_isotope_string
+from .composition import Composition
 from .iso_dist import IsotopeDistribution
 from .utils import _hill_order, _split_isotope, GROUPS
-from .composition import Composition
 
 
 class Formula(defaultdict, Counter):
@@ -128,6 +127,7 @@ class Formula(defaultdict, Counter):
 	as keys and the values equal to the number of atoms of the corresponding
 	element in the compound.
 	"""
+
 	# TODO: option to convert D and T to H[2] and H[3] ("heavy hydrogen")
 
 	def __init__(self, composition=None, charge=0):
@@ -158,7 +158,8 @@ class Formula(defaultdict, Counter):
 							# No point raising error if the charges are the same
 							raise ValueError(
 									'Charge is specified in both the composition and with the '
-									f'`charge` keyword argument. {charge}, {self.charge}')
+									f'`charge` keyword argument. {charge}, {self.charge}'
+									)
 
 					charge = composition.charge
 
@@ -171,7 +172,8 @@ class Formula(defaultdict, Counter):
 				# No point raising error if the charges are the same
 				raise ValueError(
 						'Charge is specified in both the formula and with the '
-						f'`charge` keyword argument. {charge}, {self.charge}')
+						f'`charge` keyword argument. {charge}, {self.charge}'
+						)
 		elif charge:
 			self.charge = charge
 
@@ -460,9 +462,9 @@ class Formula(defaultdict, Counter):
 			if not elements_with_isotopes or (element_name in elements_with_isotopes):
 				# Take the two most abundant isotopes.
 				first_iso, second_iso = sorted(
-						[(i[0], i[1][1]) for i in isotope_data[element_name].items() if i[0]],
-						key=lambda x: -x[1]
-						)[:2]
+					[(i[0], i[1][1]) for i in isotope_data[element_name].items() if i[0]],
+					key=lambda x: -x[1]
+					)[:2]
 
 				# Write the number of isotopes of the most abundant type.
 				first_iso_str = _make_isotope_string(element_name, first_iso[0])
@@ -496,17 +498,14 @@ class Formula(defaultdict, Counter):
 			# If there is already an entry for this element and either it
 			# contains a default isotope or newly added isotope is default
 			# then raise an exception.
-			if (
-					(element_name in isotopic_composition)
-					and (isotope_num == 0 or 0 in isotopic_composition[element_name])
-					):
+			if ((element_name in isotopic_composition)
+				and (isotope_num == 0 or 0 in isotopic_composition[element_name])):
 				raise ValueError(
 						'Please specify the isotopic states of all atoms of '
 						f'{element_name} or do not specify them at all.'
 						)
 			else:
-				isotopic_composition[element_name][isotope_num] = (
-						self[element])
+				isotopic_composition[element_name][isotope_num] = (self[element])
 
 		# Calculate relative abundance.
 		num1, num2, denom = 1, 1, 1
@@ -516,13 +515,17 @@ class Formula(defaultdict, Counter):
 			for isotope_num, isotope_content in isotope_dict.items():
 				denom *= math.factorial(isotope_content)
 				if isotope_num:
-					num2 *= (isotope_data[element_name][isotope_num][1] ** isotope_content)
+					num2 *= (isotope_data[element_name][isotope_num][1]**isotope_content)
 
 		return num2 * (num1 / denom)
 
 	def iter_isotopologues(
-			self, report_abundance=False, elements_with_isotopes=None,
-			isotope_threshold=5e-4, overall_threshold=0):
+			self,
+			report_abundance=False,
+			elements_with_isotopes=None,
+			isotope_threshold=5e-4,
+			overall_threshold=0
+			):
 		"""
 		Iterate over possible isotopic states of the molecule.
 
@@ -550,7 +553,10 @@ class Formula(defaultdict, Counter):
 		for element in self:
 			if elements_with_isotopes is None or element in elements_with_isotopes:
 				element_name, isotope_num = _split_isotope(element)
-				isotopes = {k: v for k, v in isotope_data[element_name].items() if k != 0 and v[1] >= isotope_threshold}
+				isotopes = {
+					k: v
+					for k, v in isotope_data[element_name].items()
+					if k != 0 and v[1] >= isotope_threshold}  # yapf: disable
 				list_isotopes = [_make_isotope_string(element_name, k) for k in isotopes]
 				dict_elem_isotopes[element] = list_isotopes
 			else:
@@ -591,8 +597,7 @@ class Formula(defaultdict, Counter):
 		return self.__class__(self, charge=self.charge)
 
 	def __reduce__(self):
-		class_, args, state, list_iterator, dict_iterator = super(
-				defaultdict, self).__reduce__()
+		class_, args, state, list_iterator, dict_iterator = super(defaultdict, self).__reduce__()
 		# Override the reduce of defaultdict so we do not provide the
 		# `int` type as the first argument
 		# which prevents from correctly unpickling the object

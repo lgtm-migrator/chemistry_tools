@@ -82,7 +82,12 @@ from .species import Species
 from .unicode import string_to_unicode
 
 __all__ = [
-		"Compound", "Formula", "Species",
-		"IsoDistSort", "IsotopeDistribution",
-		"string_to_html", "string_to_latex", "string_to_unicode",
+		"Compound",
+		"Formula",
+		"IsoDistSort",
+		"IsotopeDistribution",
+		"Species",
+		"string_to_html",
+		"string_to_latex",
+		"string_to_unicode",
 		]
