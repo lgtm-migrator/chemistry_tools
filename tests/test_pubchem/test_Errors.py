@@ -7,16 +7,20 @@ Test Errors.
 
 """
 
-
+# 3rd party
 import pytest
 
+# this package
 from chemistry_tools.pubchem.compound import Compound
 from chemistry_tools.pubchem.lookup import get_compounds
 from chemistry_tools.pubchem.errors import BadRequestError, NotFoundError
 
 
 def test_invalid_identifier():
-	"""BadRequestError should be raised if identifier is not a positive integer."""
+	"""
+	BadRequestError should be raised if identifier is not a positive integer.
+	"""
+
 	with pytest.raises(BadRequestError):
 		Compound.from_cid('aergaerhg')
 	with pytest.raises(NotFoundError):

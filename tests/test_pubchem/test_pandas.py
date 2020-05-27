@@ -7,7 +7,6 @@ Test optional pandas functionality.
 
 """
 
-
 # 3rd party
 import pytest
 pandas = pytest.importorskip('pandas')

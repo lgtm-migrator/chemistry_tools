@@ -7,13 +7,16 @@ Test downloading.
 
 """
 
-import os
+# stdlib
 import csv
+import os
 import shutil
 import tempfile
 
+# 3rd party
 import pytest
 
+# this package
 from chemistry_tools.pubchem.images import get_structure_image
 from chemistry_tools.pubchem.properties import rest_get_properties
 
@@ -31,7 +34,12 @@ def test_image_download(tmp_dir):
 
 
 def test_csv_download(tmp_dir):
-	csv_content = rest_get_properties([1, 2, 3], namespace="cid", properties="CanonicalSMILES,IsomericSMILES", format_="csv")
+	csv_content = rest_get_properties(
+			[1, 2, 3],
+			namespace="cid",
+			properties="CanonicalSMILES,IsomericSMILES",
+			format_="csv",
+			)
 	with open(os.path.join(tmp_dir, 's.csv'), "w") as fp:
 		fp.write(csv_content)
 

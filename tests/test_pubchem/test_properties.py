@@ -7,7 +7,7 @@ Test properties requests.
 
 """
 
-
+# this package
 from chemistry_tools.pubchem.properties import get_properties
 from chemistry_tools.pubchem.synonyms import get_synonyms
 from chemistry_tools.pubchem.utils import format_string
@@ -40,7 +40,11 @@ def test_comma_string_properties():
 	Properties can also be specified as a comma-separated string, rather than a list.
 	"""
 
-	results = get_properties('tris-(1,10-phenanthroline)ruthenium', 'IsomericSMILES,InChIKey,MolecularWeight', 'name')
+	results = get_properties(
+			'tris-(1,10-phenanthroline)ruthenium',
+			'IsomericSMILES,InChIKey,MolecularWeight',
+			'name',
+			)
 	assert len(results) > 0
 	for result in results:
 		assert 'CID' in result
@@ -59,10 +63,7 @@ def test_synonyms():
 		assert len(result['synonyms']) > 0
 
 
-stringwithmarkup = {
-		'String': 'N-phenylaniline',
-		'Markup': [{'Start': 0, 'Length': 1, 'Type': 'Italics'}]
-		}
+stringwithmarkup = {'String': 'N-phenylaniline', 'Markup': [{'Start': 0, 'Length': 1, 'Type': 'Italics'}]}
 
 
 def test_format_string():

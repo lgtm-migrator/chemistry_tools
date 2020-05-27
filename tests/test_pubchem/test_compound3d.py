@@ -36,4 +36,3 @@ def test_coordinates(c3d):
 		assert isinstance(a.y, (float, int))
 		print(a.z)
 		assert isinstance(a.z, (float, int))
-

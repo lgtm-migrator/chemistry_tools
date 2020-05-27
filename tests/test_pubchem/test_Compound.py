@@ -15,10 +15,10 @@ from decimal import Decimal
 import pytest
 
 # this package
-from chemistry_tools.pubchem.lookup import get_compounds
 from chemistry_tools.pubchem.atom import Atom
 from chemistry_tools.pubchem.bond import BondType
 from chemistry_tools.pubchem.compound import Compound
+from chemistry_tools.pubchem.lookup import get_compounds
 
 
 @pytest.fixture(scope='module')
@@ -113,7 +113,7 @@ def test_properties_types(c1):
 	assert isinstance(c1.get_property("CovalentUnitCount"), int)
 	assert isinstance(c1.fingerprint, str)
 	# TODO:assert isinstance(c1.hill_formula, text_types)
-	assert isinstance(c1.canonicalized, bool) # TODO
+	assert isinstance(c1.canonicalized, bool)  # TODO
 
 
 def test_properties_values(c1):
@@ -178,5 +178,6 @@ def test_fingerprint(c1):
 	assert len(c1.cactvs_fingerprint) == 881
 	# Raw fingerprint has 4 byte prefix, 7 bit suffix, and is hex encoded (/4) = 230
 	assert len(c1.fingerprint) == (881 + (4 * 8) + 7) / 4
+
 
 # TODO: Compound.to_series, compounds_to_frame()

@@ -70,7 +70,6 @@
 #  |  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 # stdlib
 from operator import attrgetter
 
@@ -84,13 +83,15 @@ from chemistry_tools.formulae.formula import Formula
 
 def test_compound():
 	H2O = Compound(
-			name='H2O', formula=Formula.from_string("H2O", charge=0),
+			name='H2O',
+			formula=Formula.from_string("H2O", charge=0),
 			latex_name=r'\mathrm{H_{2}O}',
 			data={'pKa': 14},
 			)
 
 	OH_m = Compound(
-			name='OH-', formula=Formula.from_string("OH-", charge=-1),
+			name='OH-',
+			formula=Formula.from_string("OH-", charge=-1),
 			latex_name=r'\mathrm{OH^{-}}',
 			)
 

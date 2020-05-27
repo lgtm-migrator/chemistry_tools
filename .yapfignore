@@ -14,3 +14,4 @@ chemistry_tools/elements/transition_metals.py
 chemistry_tools/elements/triels.py
 chemistry_tools/formulae/parser.py
 chemistry_tools/names.py
+tests/test_SpectrumSimilarity.py

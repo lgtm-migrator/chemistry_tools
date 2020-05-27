@@ -7,6 +7,7 @@ Test property_format
 
 """
 
+# this package
 from chemistry_tools import property_format
 
 
@@ -25,6 +26,7 @@ def test_equals():
 # def test_scientific():
 # 	assert PropertyFormat.scientific("123x108")
 
+
 def test_uscg1999():
 	assert property_format.uscg1999("1234(USCG, 1999)") == '1234'
 
@@ -35,4 +37,6 @@ def test_trailspace():
 
 def test_f2c():
 	assert property_format.f2c("32°F") == "0E-28°C"
+
+
 # TODO: Fix

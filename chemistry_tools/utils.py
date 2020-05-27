@@ -56,39 +56,39 @@ from collections.abc import Mapping
 def identity(x):
 	return x
 
-
-def defaultnamedtuple(typename, field_names, defaults=()):
-	"""
-	Generates a new subclass of tuple with default values.
-
-	Examples
-	--------
-	>>> Body = defaultnamedtuple('Body', 'x y z density', (1.0,))
-	>>> Body.__doc__
-	'Body(x, y, z, density)'
-	>>> b = Body(10, z=3, y=5)
-	>>> b._asdict() == dict(x=10, y=5, z=3, density=1.0)
-	True
-
-	:param typename: The name of the class.
-	:type typename: str
-	:param field_names: An iterable of splitable string.
-	:type field_names: str or iterable
-	:param defaults: Default values for ``field_names``, counting ``[-len(defaults):]``.
-	:type defaults: iterable
-
-	:return: A new tuple subclass named ``typename``
-	:rtype: tuple
-	"""
-
-	Tuple = namedtuple(typename, field_names)
-	Tuple.__new__.__defaults__ = (None, ) * len(Tuple._fields)
-
-	if isinstance(defaults, Mapping):
-		Tuple.__new__.__defaults__ = tuple(Tuple(**defaults))
-	else:
-		nmissing = len(Tuple._fields) - len(defaults)
-		defaults = (None, ) * nmissing + tuple(defaults)
-		Tuple.__new__.__defaults__ = tuple(Tuple(*defaults))
-
-	return Tuple
+#
+# def defaultnamedtuple(typename, field_names, defaults=()):
+# 	"""
+# 	Generates a new subclass of tuple with default values.
+#
+# 	Examples
+# 	--------
+# 	>>> Body = defaultnamedtuple('Body', 'x y z density', (1.0,))
+# 	>>> Body.__doc__
+# 	'Body(x, y, z, density)'
+# 	>>> b = Body(10, z=3, y=5)
+# 	>>> b._asdict() == dict(x=10, y=5, z=3, density=1.0)
+# 	True
+#
+# 	:param typename: The name of the class.
+# 	:type typename: str
+# 	:param field_names: An iterable of splitable string.
+# 	:type field_names: str or iterable
+# 	:param defaults: Default values for ``field_names``, counting ``[-len(defaults):]``.
+# 	:type defaults: iterable
+#
+# 	:return: A new tuple subclass named ``typename``
+# 	:rtype: tuple
+# 	"""
+#
+# 	Tuple = namedtuple(typename, field_names)
+# 	Tuple.__new__.__defaults__ = (None, ) * len(Tuple._fields)
+#
+# 	if isinstance(defaults, Mapping):
+# 		Tuple.__new__.__defaults__ = tuple(Tuple(**defaults))
+# 	else:
+# 		nmissing = len(Tuple._fields) - len(defaults)
+# 		defaults = (None, ) * nmissing + tuple(defaults)
+# 		Tuple.__new__.__defaults__ = tuple(Tuple(*defaults))
+#
+# 	return Tuple
