@@ -356,7 +356,7 @@ def test_unitless_in_registry():
 	mag = unitless_in_registry(3 * units.per100eV, SI_base_registry)
 	ref = 3 * 1.0364268834527753e-07
 	assert abs(mag - ref) < 1e-14
-	ul = unitless_in_registry([3 *units.per100eV, 5 * quantities.mol / quantities.J], SI_base_registry)
+	ul = unitless_in_registry([3 * units.per100eV, 5 * quantities.mol / quantities.J], SI_base_registry)
 	assert np.allclose(ul, [ref, 5], rtol=1e-6)
 
 

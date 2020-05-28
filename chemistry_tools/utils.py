@@ -56,6 +56,7 @@ from collections.abc import Mapping
 def identity(x):
 	return x
 
+
 #
 # def defaultnamedtuple(typename, field_names, defaults=()):
 # 	"""

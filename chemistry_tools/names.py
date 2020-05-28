@@ -179,7 +179,3 @@ def sort_array_by_name(array, name_col=0):
 	sort_order = get_IUPAC_sort_order(names)
 	sorted_array = sorted(array, key=lambda row: sort_order[row[0]])
 	return sorted_array
-
-
-
-
