@@ -8,11 +8,11 @@ Test optional pandas functionality.
 """
 
 # 3rd party
+import pandas
 import pytest
-pandas = pytest.importorskip('pandas')
 
 # this package
-from chemistry_tools.pubchem.compound import compounds_to_frame, Compound
+from chemistry_tools.pubchem.compound import Compound, compounds_to_frame
 from chemistry_tools.pubchem.lookup import get_compounds
 from chemistry_tools.pubchem.properties import get_properties
 
