@@ -49,8 +49,8 @@
 from itertools import chain
 
 import numpy as np
-import pytest
-import quantities
+import pytest  # type: ignore
+import quantities  # type: ignore
 from chempy.reactionsystem import decompose_yields, get_coeff_mtx
 
 from chemistry_tools.units import _sum, allclose

@@ -46,7 +46,7 @@
 #
 
 
-import quantities
+import quantities  # type: ignore
 
 from chempy.printing import (
 	_float_str_w_uncert, number_to_scientific_html, number_to_scientific_latex,

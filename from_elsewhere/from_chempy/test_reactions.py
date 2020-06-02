@@ -25,14 +25,14 @@ from functools import reduce
 from operator import add, attrgetter
 
 # 3rd party
-import pytest
+import pytest  # type: ignore
 
 # this package
 from chempy.chemistry import (balance_stoichiometry, Equilibrium, equilibrium_quotient, Reaction, Species, Substance)
 from chemistry_tools.units import allclose, to_unitless
 from chemistry_tools import units
 from chemistry_tools.dicts import ArithmeticDict
-import quantities
+import quantities  # type: ignore
 
 
 def test_equilibrium_quotient():

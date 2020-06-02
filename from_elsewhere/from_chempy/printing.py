@@ -53,7 +53,7 @@ from itertools import chain
 from math import floor, log10
 from operator import itemgetter
 
-from domdf_python_tools.doctools import append_docstring_from
+from domdf_python_tools.doctools import append_docstring_from  # type: ignore # TODO
 
 # this package
 from chemistry_tools.units import (
@@ -75,8 +75,7 @@ def number_to_scientific_html(number, uncertainty=None, unit=None, fmt=None):
 	unit : unit
 	fmt : int or callable
 
-	Examples
-	--------
+	**Examples**
 	>>> number_to_scientific_html(3.14) == '3.14'
 	True
 	>>> number_to_scientific_html(3.14159265e-7)
@@ -227,8 +226,7 @@ def number_to_scientific_unicode(number, uncertainty=None, unit=None, fmt=None):
 	unit : unit
 	fmt : int or callable
 
-	Examples
-	--------
+	**Examples**
 	>>> number_to_scientific_unicode(3.14) == u'3.14'
 	True
 	>>> number_to_scientific_unicode(3.14159265e-7) == u'3.1416·10⁻⁷'
@@ -344,8 +342,7 @@ def number_to_scientific_latex(number, uncertainty=None, unit=None, fmt=None):
 	unit : unit
 	fmt : int or callable
 
-	Examples
-	--------
+	**Examples**
 	>>> number_to_scientific_latex(3.14) == '3.14'
 	True
 	>>> number_to_scientific_latex(3.14159265e-7)
@@ -542,8 +539,7 @@ def _float_str_w_uncert(x, xe, precision=2):
 	xe : uncertainty
 	precision : number of significant digits in uncertainty
 
-	Examples
-	--------
+	**Examples**
 	>>> _float_str_w_uncert(-9.99752e5, 349, 3)
 	'-999752(349)'
 	>>> _float_str_w_uncert(-9.99752e15, 349e10, 2)

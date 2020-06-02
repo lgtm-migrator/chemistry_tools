@@ -3,7 +3,7 @@ import re
 from decimal import Decimal
 
 # 3rd party
-import pytest
+import pytest  # type: ignore
 
 # this package
 from chemistry_tools.constants import text_types

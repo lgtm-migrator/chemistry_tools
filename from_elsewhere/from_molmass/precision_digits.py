@@ -61,8 +61,7 @@ def precision_digits(f, width):
 	"""
 	Return number of digits after decimal point to print f in width chars.
 
-	Examples
-	--------
+	**Examples**
 	>>> precision_digits(-0.12345678, 5)
 	2
 	>>> precision_digits(1.23456789, 5)

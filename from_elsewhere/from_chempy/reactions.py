@@ -53,8 +53,8 @@ from functools import reduce
 from itertools import chain, product
 from operator import add, mul
 
-import quantities
-from mathematical.utils import intdiv
+import quantities  # type: ignore
+from mathematical.utils import intdiv  # type: ignore # TODO
 
 from chemistry_tools.dicts import ArithmeticDict
 from chemistry_tools.units import is_quantity, to_unitless, unit_of
@@ -122,8 +122,7 @@ class Reaction:
 	ref : str
 	data : dict
 
-	Examples
-	--------
+	**Examples**
 	>>> r = Reaction({'H2': 2, 'O2': 1}, {'H2O': 2})
 	>>> r.keys() == {'H2', 'O2', 'H2O'}
 	True
@@ -189,8 +188,7 @@ class Reaction:
 		**kwargs :
 			Passed on to constructor.
 
-		Examples
-		--------
+		**Examples**
 		>>> r = Reaction.from_string("H2O -> H+ + OH-; 1e-4", 'H2O H+ OH-')
 		>>> r.reac == {'H2O': 1} and r.prod == {'H+': 1, 'OH-': 1}
 		True
@@ -390,8 +388,7 @@ class Reaction:
 		with_name: bool
 			whether to print the name (default: False)
 
-		Examples
-		--------
+		**Examples**
 		>>> r = Reaction({'H+': 1, 'Cl-': 1}, {'HCl': 1}, 1e10)
 		>>> r.string(with_param=False)
 		'Cl- + H+ -> HCl'
@@ -416,8 +413,7 @@ class Reaction:
 		with_name: bool
 			whether to print the name (default: False)
 
-		Examples
-		--------
+		**Examples**
 		>>> keys = 'H2O H+ OH-'.split()
 		>>> subst = {k: Substance.from_formula(k) for k in keys}
 		>>> r = Reaction.from_string("H2O -> H+ + OH-; 1e-4", subst)
@@ -436,8 +432,7 @@ class Reaction:
 		"""
 		Returns a unicode string representation of the reaction
 
-		Examples
-		--------
+		**Examples**
 		>>> keys = 'H2O H+ OH-'.split()
 		>>> subst = {k: Substance.from_formula(k) for k in keys}
 		>>> r = Reaction.from_string("H2O -> H+ + OH-; 1e-4", subst)
@@ -455,8 +450,7 @@ class Reaction:
 	def html(self, substances, with_param=False, with_name=False, **kwargs):
 		""" Returns a HTML representation of the reaction
 
-		Examples
-		--------
+		**Examples**
 		>>> keys = 'H2O H+ OH-'.split()
 		>>> subst = {k: Substance.from_formula(k) for k in keys}
 		>>> r = Reaction.from_string("H2O -> H+ + OH-; 1e-4", subst)
@@ -556,19 +550,18 @@ def equilibrium_quotient(concs, stoich):
 	stoich: iterable of integers
 		per substance stoichiometric coefficient
 
-	Examples
-	--------
+	**Examples**
 	>>> '%.12g' % equilibrium_quotient([1.0, 1e-7, 1e-7], [-1, 1, 1])
 	'1e-14'
 
 	"""
 	
-	import numpy as np
+	import numpy  # type: ignore
 	
 	if not hasattr(concs, 'ndim') or concs.ndim == 1:
 		tot = 1
 	else:
-		tot = np.ones(concs.shape[0])
+		tot = numpy.ones(concs.shape[0])
 		concs = concs.T
 	
 	for nr, conc in zip(stoich, concs):
@@ -652,8 +645,7 @@ class Equilibrium(Reaction):
 		"""
 		Turns self.param into a :class:`EqExpr` instance (if not already)
 
-		Examples
-		--------
+		**Examples**
 		>>> r = Equilibrium.from_string('2 A + B = 3 C; 7')
 		>>> eqex = r.equilibrium_expr()
 		>>> eqex.args[0] == 7
@@ -780,8 +772,7 @@ class Equilibrium(Reaction):
 		rxns : iterable of Equilibrium instances
 		wrt : str (substance key)
 
-		Examples
-		--------
+		**Examples**
 		>>> e1 = Equilibrium({'Cd+2': 4, 'H2O': 4}, {'Cd4(OH)4+4': 1, 'H+': 4}, 10**-32.5)
 		>>> e2 = Equilibrium({'Cd(OH)2(s)': 1}, {'Cd+2': 1, 'OH-': 2}, 10**-14.4)
 		>>> Equilibrium.eliminate([e1, e2], 'Cd+2')
@@ -808,8 +799,7 @@ class Equilibrium(Reaction):
 		----------
 		rxn : Equilibrium
 
-		Examples
-		--------
+		**Examples**
 		>>> e1 = Equilibrium({'Cd(OH)2(s)': 4, 'H2O': 4},
 		...                  {'Cd4(OH)4+4': 1, 'H+': 4, 'OH-': 8}, 7.94e-91)
 		>>> e2 = Equilibrium({'H2O': 1}, {'H+': 1, 'OH-': 1}, 10**-14)
@@ -865,8 +855,7 @@ def balance_stoichiometry(reactants, products, substances=None,
 	allow_duplicates : bool
 		If False: raises an excpetion if keys appear in both ``reactants`` and ``products``.
 
-	Examples
-	--------
+	**Examples**
 	>>> ref = {'C2H2': 2, 'O2': 3}, {'CO': 4, 'H2O': 2}
 	>>> balance_stoichiometry({'C2H2', 'O2'}, {'CO', 'H2O'}) == ref
 	True
@@ -1076,8 +1065,7 @@ def mass_fractions(stoichiometries, substances=None, substance_factory=Substance
 		If a ``set``: all entries are assumed to correspond to unit multiplicity.
 	substances: dict or None
 
-	Examples
-	--------
+	**Examples**
 	>>> r = mass_fractions({'H2': 1, 'O2': 1})
 	>>> mH2, mO2 = 1.008*2, 15.999*2
 	>>> abs(r['H2'] - mH2/(mH2+mO2)) < 1e-4
