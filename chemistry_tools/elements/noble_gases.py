@@ -111,6 +111,7 @@ Group 18: Noble Gases in the Periodic Table
 
 __all__ = ("He", "Ne", "Ar", "Kr", "Xe", "Rn", "Og")
 
+# this package
 from .classes import Element
 
 # Isotope 0 Key:

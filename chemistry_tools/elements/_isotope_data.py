@@ -46,6 +46,7 @@
 #  |  DOI: `10.1021/acs.jproteome.8b00717 <http://dx.doi.org/10.1021/acs.jproteome.8b00717>`_
 #
 
+# this package
 from chemistry_tools.elements import ELEMENTS
 
 h_plus = {0: (1.00727646677, 1.0), 1: (1.00727646677, 1.0)}

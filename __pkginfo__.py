@@ -41,7 +41,7 @@ __copyright__ = """
 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 """
 
-__version__ = "0.3.0"
+__version__ = "0.3.0.b1"
 
 modname = "chemistry_tools"
 pypi_name = "chemistry_tools"
@@ -60,7 +60,7 @@ author_email = "dominic@davis-foster.co.uk"
 github_username = "domdfcoding"
 web = github_url = f"https://github.com/domdfcoding/chemistry_tools"
 project_urls = {
-		"Documentation": f"https://chemistry_tools.readthedocs.io",  # TODO: Make this link match the package version
+		"Documentation": f"https://chemistry_tools.readthedocs.io",
 		"Issue Tracker": f"{github_url}/issues",
 		"Source Code": github_url,
 		}
@@ -68,7 +68,7 @@ project_urls = {
 repo_root = pathlib.Path(__file__).parent
 
 # Get info from files; set: long_description
-long_description = (repo_root / "README.rst").read_text().replace("0.3.0", __version__) + '\n'
+long_description = (repo_root / "README.rst").read_text().replace("0.3.0.b1", __version__) + '\n'
 conda_description = """Python tools for analysis of chemical compounds
 
 
@@ -76,7 +76,7 @@ Before installing please ensure you have added the following channels: domdfcodi
 __all__.append("conda_description")
 
 install_requires = (repo_root / "requirements.txt").read_text().split('\n')
-extras_require = {'pubchem': ['tabulate>=0.8.3', 'pandas>=1.0.1', 'memoized-property>=1.0.3', 'domdf_python_tools>=0.3.3', 'Pillow>=7.0.0'], 'elements': ['domdf_python_tools>=0.3.3', 'memoized-property>=1.0.3'], 'formulae': ['quantities>=0.12.4', 'domdf_python_tools>=0.3.3', 'tabulate>=0.8.3', 'pyparsing>=2.2.0', 'pandas>=1.0.1', 'mathematical>=0.1.7', 'cawdrey>=0.1.2', 'memoized-property>=1.0.3'], 'plotting': ['matplotlib>=3.0.0'], 'toxnet': ['beautifulsoup4>=4.7.0'], 'all': ['Pillow>=7.0.0', 'beautifulsoup4>=4.7.0', 'cawdrey>=0.1.2', 'domdf_python_tools>=0.3.3', 'mathematical>=0.1.7', 'matplotlib>=3.0.0', 'memoized-property>=1.0.3', 'pandas>=1.0.1', 'pyparsing>=2.2.0', 'quantities>=0.12.4', 'tabulate>=0.8.3']}
+extras_require = {'pubchem': ['tabulate>=0.8.3', 'pandas>=1.0.1', 'memoized-property>=1.0.3', 'domdf_python_tools>=0.3.3', 'Pillow>=7.0.0', 'quantities>=0.12.4', 'pyparsing>=2.2.0', 'pandas>=1.0.1', 'mathematical>=0.1.7', 'cawdrey>=0.1.2'], 'elements': ['domdf_python_tools>=0.3.3', 'memoized-property>=1.0.3'], 'formulae': ['quantities>=0.12.4', 'domdf_python_tools>=0.3.3', 'tabulate>=0.8.3', 'pyparsing>=2.2.0', 'pandas>=1.0.1', 'mathematical>=0.1.7', 'cawdrey>=0.1.2', 'memoized-property>=1.0.3'], 'plotting': ['matplotlib>=3.0.0'], 'toxnet': ['beautifulsoup4>=4.7.0'], 'all': ['Pillow>=7.0.0', 'beautifulsoup4>=4.7.0', 'cawdrey>=0.1.2', 'domdf_python_tools>=0.3.3', 'mathematical>=0.1.7', 'matplotlib>=3.0.0', 'memoized-property>=1.0.3', 'pandas>=1.0.1', 'pyparsing>=2.2.0', 'quantities>=0.12.4', 'tabulate>=0.8.3']}
 
 classifiers = [
 		'Development Status :: 4 - Beta',

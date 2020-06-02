@@ -8,12 +8,12 @@ Test Errors.
 """
 
 # 3rd party
-import pytest
+import pytest  # type: ignore
 
 # this package
 from chemistry_tools.pubchem.compound import Compound
-from chemistry_tools.pubchem.lookup import get_compounds
 from chemistry_tools.pubchem.errors import BadRequestError, NotFoundError
+from chemistry_tools.pubchem.lookup import get_compounds
 
 
 def test_invalid_identifier():

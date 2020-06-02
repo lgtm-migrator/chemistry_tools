@@ -8,8 +8,8 @@ Test optional pandas functionality.
 """
 
 # 3rd party
-import pandas
-import pytest
+import pandas  # type: ignore
+import pytest  # type: ignore
 
 # this package
 from chemistry_tools.pubchem.compound import Compound, compounds_to_frame

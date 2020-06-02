@@ -46,7 +46,7 @@
 #
 
 # this package
-from chemistry_tools.dicts import defaultkeydict, ArithmeticDict
+from chemistry_tools.dicts import ArithmeticDict, defaultkeydict
 
 
 def test_ArithmeticDict():

@@ -1,5 +1,5 @@
 quantities>=0.12.4
-domdf_python_tools>=0.3.3
+domdf_python_tools>=0.3.4
 tabulate>=0.8.3
 pyparsing>=2.2.0
 pandas>=1.0.1

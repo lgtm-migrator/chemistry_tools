@@ -2,7 +2,7 @@
 #
 #  composition.py
 """
-Elemental composition of a Formula
+Elemental composition of a :class:`~chemistry_tools.formulae.formula.Formula`
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -25,9 +25,13 @@ Elemental composition of a Formula
 
 # stdlib
 from enum import Enum
+from typing import Any, List, Optional
 
 # this package
+import chemistry_tools
 from chemistry_tools.elements import ELEMENTS
+
+# this package
 from ._parser_core import _make_isotope_string
 from .dataarray import DataArray
 from .unicode import string_to_unicode
@@ -38,6 +42,7 @@ class CompositionSort(Enum):
 	"""
 	Lookup for sorting elemental composition output
 	"""
+
 	symbol = "symbol"
 	count = "count"
 	rel_mass = "rel_mass"
@@ -55,17 +60,13 @@ class CompositionSort(Enum):
 
 class Composition(DataArray):
 	"""
-	Class to represent the elemental composition of the formula
+	Class to represent the elemental composition of a :class:`~chemistry_tools.formulae.formula.Formula`.
+
+	:param formula: A :class:`~chemistry_tools.formulae.formula.Formula` object to create the composition for
+	:type formula: ~chemistry_tools.formulae.formula.Formula
 	"""
 
-	def __init__(self, formula):
-		"""
-
-
-		:param formula: A :class:`Formula` object to create the composition for
-		:type formula: :class:`Formula`
-		"""
-
+	def __init__(self, formula: "chemistry_tools.formulae.formula.Formula"):
 		data = {}
 
 		for isymbol, count in formula.items():
@@ -87,25 +88,37 @@ class Composition(DataArray):
 		self._total_mass = formula.mass
 
 	@property
-	def total_mass(self):
+	def total_mass(self) -> float:
+		"""
+		Returns the total mass of the composition.
+
+		:rtype: float
+		"""
+
 		return self._total_mass
 
 	@property
-	def n_elements(self):
+	def n_elements(self) -> int:
+		"""
+		Returns the number of elements in the composition
+
+		:rtype: int
+		"""
+
 		return len(self)
 
 	_as_array_kwargs = {"sort_by", "reverse"}
 
-	def as_array(self, sort_by=CompositionSort.symbol, reverse=False):
+	def as_array(self,
+					sort_by: CompositionSort = CompositionSort.symbol,
+					reverse: bool = False) -> List[List[Any]]:
 		"""
-		Returns the elemental composition as a list of lists
+		Returns the elemental composition as a list of lists.
 
 		:param sort_by: The column to sort by.
 		:type sort_by: CompositionSort
 		:param: Whether the isotopologues should be sorted in reverse order. Default ``False``.
 		:type reverse: bool, optional
-
-		:rtype: list[list]
 		"""
 
 		output = []
@@ -135,6 +148,6 @@ class Composition(DataArray):
 	_as_table_alignment = ["left", "right", "right", "right"]
 	_as_table_float_format = [None, None, ".4f", ".4f"]
 
-	def __str__(self):
+	def __str__(self) -> str:
 		table = self.as_table(sort_by=CompositionSort.symbol, reverse=True, tablefmt="fancy_grid")
 		return f"\n Elemental Composition for {string_to_unicode(self.formula)}\n{table}"

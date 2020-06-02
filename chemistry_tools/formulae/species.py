@@ -100,39 +100,33 @@
 #  |  POSSIBILITY OF SUCH DAMAGE.
 #  |
 
-#  3rd party
-from cawdrey import frozendict
+# stdlib
+from typing import Dict, Optional
 
 # this package
 from .formula import Formula
+#  3rd party
+from cawdrey import frozendict  # type: ignore # TODO
 
 
 class Species(Formula):
 	"""
 	Formula with phase information (e.g. solid, liquid, gas, or aqueous)
 
-	Species extends :class:`Formula` with the new attribute :attr:`phase`
+	Species extends :class:`~chemistry_tools.formulae.formula.Formula` with the new attribute :attr:`phase`
 
-	Attributes
-	----------
-	phase: Either "s", "l", "g", or "aq". ``None`` represents an unknown phase.
+	:param composition: A :class:`~chemistry_tools.formulae.formula.Formula` object with the elemental
+		composition of a substance, or a :class:`python:dict` representing the same.
+		If ``None`` an empty object is created
+	:param charge:
+	:type charge: int, optional
+	:param phase: Either "s", "l", "g", or "aq". ``None`` represents an unknown phase.
+	:type phase: str
 	"""
 
 	_phases = frozendict(s="Solid", l="Liquid", g="Gas", aq="Aqueous")
 
-	def __init__(self, composition=None, charge=0, phase=None):
-		"""
-		:param composition: A :py:class:`Formula` or :py:class:`Species` object with the elemental composition of a substance,
-			or a :class:`python:dict` representing the same.
-			If ``None`` an empty object is created
-		:type composition: :py:class:`Formula`, optional
-		:param charge:
-		:type charge: int, optional
-		:param phase: Either "s", "l", "g", or "aq". ``None`` represents an unknown phase.
-		:type phase: str or None
-
-		"""
-
+	def __init__(self, composition: Optional[Dict[str, int]] = None, charge: int = 0, phase=None):
 		super().__init__(composition, charge)
 
 		self.phase = phase
@@ -145,27 +139,27 @@ class Species(Formula):
 		:param charge:
 		:type charge: int, optional
 
-		:rtype: :class:`Formula`
+		:rtype: :class:`~chemistry_tools.formulae.formula.Formula`
 		"""
 
 		return cls(kwargs, charge=charge, phase=phase)
 
 	@classmethod
-	def from_string(cls, formula, phase=None, charge=0):
+	def from_string(cls, formula: str, charge: int = 0, phase: str = None):
 		"""
-		Create a new :class:`Species` object by parsing a string
 
-		Analogous to :meth:`Formula.from_string` but with the addition that
-		the phase is determined from the formula.
+		Create a new :class:`~chemistry_tools.formulae.species.Species` object by parsing a string
 
-		Parameters
-		----------
-		formula: str
-			e.g. 'H2O', 'NaCl(s)', 'CO2(aq)', 'CO2(g)'
-		phase: Either "s", "l", "g", or "aq". ``None`` represents an unknown phase.
+		.. note:: Isotopes cannot (currently) be parsed using this method
 
-		Examples
-		--------
+		:param formula: A string with a chemical formula
+		:type formula: str
+		:param phase: Either "s", "l", "g", or "aq". ``None`` represents an unknown phase.
+		:type phase: str
+		:param charge:
+		:type charge: int, optional
+
+		**Examples**
 		>>> water = Species.from_string('H2O')
 		>>> water.phase
 		None

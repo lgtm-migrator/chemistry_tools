@@ -21,6 +21,9 @@
 #  MA 02110-1301, USA.
 #
 
+# stdlib
+from typing import Sequence, Union
+
 # this package
 from chemistry_tools.pubchem.enums import PubChemNamespace
 from chemistry_tools.pubchem.pug_rest import _do_rest_get
@@ -85,17 +88,21 @@ def get_synonyms(identifier, namespace="name"):
 	return results
 
 
-def rest_get_synonyms(identifier, namespace=PubChemNamespace.name, **kwargs):
+def rest_get_synonyms(
+		identifier: Union[str, Sequence[str]],
+		namespace: Union[PubChemNamespace, str] = PubChemNamespace.name,
+		**kwargs
+		):
 	"""
 	Get the list of synonyms for the given compound
 
 	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
-	:type identifier: str, Sequence[str]
 	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`
 	:type namespace: PubChemNamespace, optional
-	:param **kwargs: Optional arguments that ``json.loads`` takes.
+	:param kwargs: Optional arguments that ``json.loads`` takes.
+
 	:raises ValueError: If the response body does not contain valid json.
 
 	:return: Parsed json data

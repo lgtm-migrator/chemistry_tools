@@ -105,11 +105,14 @@
 import decimal
 
 # 3rd party
-import pytest
-from mathematical.utils import rounders
+import pytest  # type: ignore
 
-from chemistry_tools.elements import D, isotope_data, O
+# this package
+from chemistry_tools.elements import D, O, isotope_data
 from chemistry_tools.formulae import Formula, Species
+
+# this package
+from mathematical.utils import rounders  # type: ignore # TODO
 
 
 def test_formula():

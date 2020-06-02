@@ -54,6 +54,8 @@
 
 __all__ = ("ELEMENTS", "H", "D", "T")
 
+# this package
+from . import classes
 from .actinides import *
 from .alkali_metals import *
 from .alkaline_earth_metals import *
@@ -65,8 +67,6 @@ from .pnictogens import *
 from .tetrels import *
 from .transition_metals import *
 from .triels import *
-from . import classes
-import re
 
 # TODO: nominal mass (massnumber) and monoisotopic mass
 

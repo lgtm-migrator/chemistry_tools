@@ -116,7 +116,7 @@ def _force_sequence_or_csv(value, name):
 	else:
 		raise ValueError(err_msg)
 
-	return value
+	return [val.strip() for val in value]
 
 
 def _make_base_url(namespace, identifier):

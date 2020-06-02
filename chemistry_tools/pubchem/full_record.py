@@ -76,7 +76,7 @@ def rest_get_full_record(identifier, namespace=PubChemNamespace.name, record_typ
 	:type namespace: PubChemNamespace, optional
 	:param record_type:
 	:type record_type:
-	:param **kwargs: Optional arguments that ``json.loads`` takes.
+	:param kwargs: Optional arguments that ``json.loads`` takes.
 	:raises ValueError: If the response body does not contain valid json.
 
 	:return: Parsed json data

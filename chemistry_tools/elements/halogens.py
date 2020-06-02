@@ -107,6 +107,7 @@ Group 17: Halogens in the Periodic Table
 
 __all__ = ("F", "Cl", "Br", "I", "At", "Ts")
 
+# this package
 from .classes import Element
 
 # Isotope 0 Key:

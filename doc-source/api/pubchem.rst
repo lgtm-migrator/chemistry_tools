@@ -2,9 +2,8 @@
 :mod:`chemistry_tools.pubchem`
 *********************************
 
-.. extras-require::
+.. extras-require:: pubchem
 	:file: pubchem/requirements.txt
-	:extra: pubchem
 
 .. contents:: Table of Contents
 

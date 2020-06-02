@@ -49,13 +49,15 @@
 from collections import OrderedDict
 from functools import reduce
 from operator import mul
+from typing import Dict, List, Tuple, Union
 
 # 3rd party
-import numpy as np
-import quantities
+import numpy  # type: ignore
+import quantities  # type: ignore
 
 # this package
 from chemistry_tools.dicts import ArithmeticDict
+
 # from chemistry_tools.utils import defaultnamedtuple
 
 
@@ -73,8 +75,7 @@ def get_derived_unit(registry, key):
 	"""
 	Get the unit of a physcial quantity in a provided unit system.
 
-	Examples
-	--------
+	**Examples**
 	>>> m, s = quantities.meter, quantities.second
 	>>> get_derived_unit(SI_base_registry, 'diffusivity') == m**2/s
 	True
@@ -142,7 +143,7 @@ def unit_registry_to_human_readable(unit_registry):
 
 def _latex_from_dimensionality(dim):
 	# see https://github.com/python-quantities/python-quantities/issues/148
-	from quantities.markup import format_units_latex
+	from quantities.markup import format_units_latex  # type: ignore
 	return format_units_latex(dim, mult=r'\\cdot')
 
 
@@ -150,8 +151,7 @@ def latex_of_unit(quant):
 	r"""
 	Returns LaTeX reperesentation of the unit of a quantity
 
-	Examples
-	--------
+	**Examples**
 	>>> print(latex_of_unit(1/quantities.kelvin))
 	\mathrm{\frac{1}{K}}
 	"""
@@ -163,8 +163,7 @@ def unicode_of_unit(quant):
 	"""
 	Returns unicode reperesentation of the unit of a quantity
 
-	Examples
-	--------
+	**Examples**
 	>>> print(unicode_of_unit(1/quantities.kelvin))
 	1/K
 	"""
@@ -176,8 +175,7 @@ def html_of_unit(quant):
 	"""
 	Returns HTML reperesentation of the unit of a quantity
 
-	Examples
-	--------
+	**Examples**
 	>>> print(html_of_unit(2*quantities.m**2))
 	m<sup>2</sup>
 	"""
@@ -217,8 +215,7 @@ def is_unitless(expr):
 	"""
 	Returns ``True`` if ``expr`` is unitless, otherwise ``False``
 
-	Examples
-	--------
+	**Examples**
 	>>> is_unitless(42)
 	True
 	>>> is_unitless(42*quantities.kilogram)
@@ -244,8 +241,7 @@ def unit_of(expr, simplified=False):
 	"""
 	Returns the unit of a quantity
 
-	Examples
-	--------
+	**Examples**
 	>>> unit_of(42 * pq.second) == unit_of(12 * pq.second)
 	True
 	>>> unit_of(42)
@@ -279,13 +275,12 @@ def to_unitless(value, new_unit=None):
 	"""
 	Nondimensionalization of a quantity.
 
-	Parameters
-	----------
-	value: quantity
-	new_unit: unit
+	:param value:
+	:type value: quantity
+	:param new_unit:
+	:type new_unit: unit
 
-	Examples
-	--------
+	**Examples**
 	>>> f'{to_unitless(1*quantities.metre, quantities.nm):.1g}'
 	'1e+09'
 	>>> '%.1g %.1g' % tuple(to_unitless([1*quantities.m, 1*quantities.mm], quantities.nm))
@@ -297,12 +292,12 @@ def to_unitless(value, new_unit=None):
 		new_unit = quantities.dimensionless
 
 	if isinstance(value, (list, tuple)):
-		return np.array([to_unitless(elem, new_unit) for elem in value])
+		return numpy.array([to_unitless(elem, new_unit) for elem in value])
 
-	elif isinstance(value, np.ndarray) and not hasattr(value, 'rescale'):
+	elif isinstance(value, numpy.ndarray) and not hasattr(value, 'rescale'):
 		if is_unitless(new_unit) and new_unit == 1 and value.dtype != object:
 			return value
-		return np.array([to_unitless(elem, new_unit) for elem in value])
+		return numpy.array([to_unitless(elem, new_unit) for elem in value])
 
 	elif isinstance(value, dict):
 		new_value = dict(value.items())  # value.copy()
@@ -329,25 +324,22 @@ def to_unitless(value, new_unit=None):
 				if result.ndim == 0:
 					return float(result)
 				else:
-					return np.asarray(result)
+					return numpy.asarray(result)
 
 		except TypeError:
-			return np.array([to_unitless(elem, new_unit) for elem in value])
+			return numpy.array([to_unitless(elem, new_unit) for elem in value])
 
 
-def uniform(container):
+def uniform(container: Union[Tuple, List, Dict]):
 	"""
 	Turns a list, tuple or dict with mixed units into one with uniform units.
 
-	Parameters
-	----------
-	container : tuple, list or dict
+	:param container:
 
-	Examples
-	--------
+	**Examples**
 	>>> km, m = quantities.kilometre, quantities.metre
 	>>> uniform(dict(a=3*km, b=200*m))  # doctest: +SKIP
-	{'b': array(200.0) * m, 'a': array(3000.0) * m}
+	{'b': df(200.0) * m, 'a': df(3000.0) * m}
 	"""
 
 	if isinstance(container, (tuple, list)):
@@ -401,26 +393,24 @@ def unitless_in_registry(value, registry):
 # NumPy like functions for compatibility:
 
 
-def compare_equality(a, b):
+def compare_equality(a, b) -> bool:
 	"""
-	Returns True if two arguments are equal.
-
+	Returns ``True`` if two arguments are equal.
 	Both arguments need to have the same dimensionality.
 
-	Parameters
-	----------
-	a : quantity
-	b : quantity
-
-	Examples
-	--------
+	**Examples**
 	>>> km, m = quantities.kilometre, quantities.metre
 	>>> compare_equality(3*km, 3)
 	False
 	>>> compare_equality(3*km, 3000*m)
 	True
 
+	:param a:
+	:type a: quantity
+	:param b:
+	:type b: quantity
 	"""
+
 	# Work around for https://github.com/python-quantities/python-quantities/issues/146
 	try:
 		a + b
@@ -468,25 +458,25 @@ def allclose(a, b, rtol=1e-8, atol=None):
 		try:
 			len(lim)
 		except TypeError:
-			return np.all([_d <= lim for _d in d])
+			return numpy.all([_d <= lim for _d in d])
 		else:
-			return np.all([_d <= _lim for _d, _lim in zip(d, lim)])
+			return numpy.all([_d <= _lim for _d, _lim in zip(d, lim)])
 
 
 def logspace_from_lin(start, stop, num=50):
 	"""
 	Logarithmically spaced data points
 
-	Example
-	--------
+	**Example**
+
 	>>> abs(logspace_from_lin(2, 8, num=3)[1] - 4) < 1e-15
 	True
 	"""
 
 	unit = unit_of(start)
-	start_ = np.log2(to_unitless(start, unit))
-	stop_ = np.log2(to_unitless(stop, unit))
-	return np.exp2(np.linspace(start_, stop_, num)) * unit
+	start_ = numpy.log2(to_unitless(start, unit))
+	stop_ = numpy.log2(to_unitless(stop, unit))
+	return numpy.exp2(numpy.linspace(start_, stop_, num)) * unit
 
 
 def _sum(iterable):
@@ -507,60 +497,6 @@ def _sum(iterable):
 			raise ValueError("Not sure how this point was reached")
 
 
-class Backend:
-	"""
-	Wrapper around modules such as numpy and math
-
-	Instances of Backend wraps a module, e.g. `numpy` and ensures that
-	arguments passed on are unitless, i.e. it raises an error if a
-	transcendental function is used with quantities with units.
-
-	:param: underlying_backend: e.g. 'numpy' or ('sympy', 'math')
-	:type underlying_backend: module, str or tuple of str
-
-	Examples
-	--------
-	>>> import math
-	>>> km, m = quantities.kilometre, quantities.metre
-	>>> math.exp(3*km) == math.exp(3*m)
-	True
-	>>> be = Backend('math')
-	>>> be.exp(3*km)
-	Traceback (most recent call last):
-		...
-	ValueError: Unable to convert between units of "km" and "dimensionless"
-	>>> import numpy as np
-	>>> np.sum([1000*pq.metre/pq.kilometre, 1])
-	1001.0
-	>>> be_np = Backend(np)
-	>>> be_np.sum([[1000*pq.metre/pq.kilometre, 1], [3, 4]], axis=1)
-	array([2., 7.])
-	"""
-
-	def __init__(self, underlying_backend=('numpy', 'math')):
-		if isinstance(underlying_backend, tuple):
-			for name in underlying_backend:
-				try:
-					self.be = __import__(name)
-				except ImportError:
-					continue
-				else:
-					break
-			else:
-				raise ValueError(f"Could not import any of {str(underlying_backend)}")
-		elif isinstance(underlying_backend, str):
-			self.be = __import__(underlying_backend)
-		else:
-			self.be = underlying_backend
-
-	def __getattr__(self, attr):
-		be_attr = getattr(self.be, attr)
-		if callable(be_attr):
-			return lambda *args, **kwargs: be_attr(*map(to_unitless, args), **kwargs)
-		else:
-			return be_attr
-
-
 # TODO: decide whether to deprecate in favor of "number_to_scientific_latex"?
 def format_string(value, precision='%.5g', tex=False):
 	"""
@@ -576,8 +512,7 @@ def format_string(value, precision='%.5g', tex=False):
 	:return:
 	:rtype:
 
-	Examples
-	--------
+	**Examples**
 	>>> print(' '.join(format_string(0.42*quantities.mol/quantities.decimetre**3)))
 	0.42 mol/decimetre**3
 	>>> print(' '.join(format_string(2/quantities.s, tex=True)))
@@ -587,7 +522,7 @@ def format_string(value, precision='%.5g', tex=False):
 	if tex:
 		unit_str = latex_of_unit(value)
 	else:
-		from quantities.markup import config
+		from quantities.markup import config  # type: ignore
 		attr = 'unicode' if config.use_unicode else 'string'
 		unit_str = getattr(value.dimensionality, attr)
 	return precision % float(value.magnitude), unit_str
@@ -597,14 +532,13 @@ def concatenate(arrays, **kwargs):
 	"""
 	Patched version of numpy.concatenate
 
-	Examples
-	--------
+	**Examples**
 	>>> from chemistry_tools.units import quantities
 	>>> all(concatenate(([2, 3]*quantities.s, [4, 5]*quantities.s)) == [2, 3, 4, 5]*quantities.s)
 	True
 	"""
 	unit = unit_of(arrays[0])
-	result = np.concatenate([to_unitless(arr, unit) for arr in arrays], **kwargs)
+	result = numpy.concatenate([to_unitless(arr, unit) for arr in arrays], **kwargs)
 	return result * unit
 
 

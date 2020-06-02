@@ -15,8 +15,9 @@ __license__ = "LGPL"
 __version__ = "0.1.0"
 __email__ = "dominic@davis-foster.co.uk"
 
-import numpy as np
-import pandas as pd
+# 3rd party
+import numpy  # type: ignore
+import pandas as pd  # type: ignore
 
 
 def SpectrumSimilarity(
@@ -36,10 +37,10 @@ def SpectrumSimilarity(
 
 	:param spec_top: Array containing the experimental spectrum's peak list with the m/z values in the
 		first column and corresponding intensities in the second
-	:type spec_top: numpy.array
+	:type spec_top: numpy.df
 	:param spec_bottom: Array containing the reference spectrum's peak list with the m/z values in the
 		first column and corresponding intensities in the second
-	:type spec_bottom: numpy.array
+	:type spec_bottom: numpy.df
 	:param t: numeric value specifying the tolerance used to align the m/z values of the two spectra.
 	:type t: float
 	:param b: numeric value specifying the baseline threshold for peak identification. Expressed as a percent of the maximum intensity.
@@ -63,7 +64,7 @@ def SpectrumSimilarity(
 	"""
 
 	if print_graphic:
-		import matplotlib.pyplot as plt
+		import matplotlib.pyplot as plt  # type: ignore
 
 	# format spectra and normalize intensitites
 	top_tmp = pd.DataFrame(data=spec_top, columns=["mz", "intensity"])
@@ -107,19 +108,23 @@ def SpectrumSimilarity(
 	# Unimplemented R code
 	# alignment <- alignment[alignment[,1] >= x.threshold, ]
 
-	u = np.array(alignment.iloc[:, 1])
-	v = np.array(alignment.iloc[:, 2])
+	u = numpy.array(alignment.iloc[:, 1])
+	v = numpy.array(alignment.iloc[:, 2])
 
-	similarity_score = np.dot(u, v) / (np.sqrt(np.sum(np.square(u))) * np.sqrt(np.sum(np.square(v))))
+	similarity_score = numpy.dot(u, v) / (
+			numpy.sqrt(numpy.sum(numpy.square(u))) * numpy.sqrt(numpy.sum(numpy.square(v)))
+			)
 
 	# Reverse Match
 	reverse_alignment = pd.merge(top, bottom, on="mz", how="right")
 	reverse_alignment = reverse_alignment.dropna()  # Remove rows containing NaN
 	reverse_alignment.columns = ["mz", "intensity_top", "intensity_bottom"]
-	u = np.array(reverse_alignment.iloc[:, 1])
-	v = np.array(reverse_alignment.iloc[:, 2])
+	u = numpy.array(reverse_alignment.iloc[:, 1])
+	v = numpy.array(reverse_alignment.iloc[:, 2])
 
-	reverse_similarity_score = np.dot(u, v) / (np.sqrt(np.sum(np.square(u))) * np.sqrt(np.sum(np.square(v))))
+	reverse_similarity_score = numpy.dot(u, v) / (
+			numpy.sqrt(numpy.sum(numpy.square(u))) * numpy.sqrt(numpy.sum(numpy.square(v)))
+			)
 
 	# generate plot
 
@@ -219,4 +224,4 @@ def normalize(row, max_val):
 
 
 def create_array(intensities, mz):
-	return np.column_stack((mz, intensities))
+	return numpy.column_stack((mz, intensities))

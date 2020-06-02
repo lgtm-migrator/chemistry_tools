@@ -80,15 +80,15 @@ import re
 from collections import defaultdict
 from functools import lru_cache
 from string import ascii_lowercase, ascii_uppercase
-
-# 3rd party
-import pyparsing
+from typing import Dict, Iterable, List, Sequence, Union
 
 # this package
 from chemistry_tools.elements import ELEMENTS
+
+# this package
+import pyparsing  # type: ignore
 from ._parser_core import _formula_to_parts, _get_charge, _get_leading_integer, _parse_multiplicity
 from .latex import _latex_mapping
-
 
 _atom = r'([A-Z][a-z+]*)(?:\[(\d+)\])?([+-]?\d+)?'
 _formula = fr'^({_atom})*$'
@@ -96,7 +96,7 @@ relative_atomic_masses = [element.mass for element in ELEMENTS]
 
 
 # Construct regular expression to match all elements, plus D and T
-element_re_dict = {}
+element_re_dict: Dict[str, List[str]] = {}
 
 for element in (ELEMENTS.symbols + ["D", "T"]):
 	if len(element) == 1:
@@ -258,25 +258,12 @@ def _parse_stoich(stoich):
 
 
 def string_to_composition(
-		formula, prefixes=None,
-		suffixes=('(s)', '(l)', '(g)', '(aq)')):
+		formula: str, prefixes: Iterable[str] = None,
+		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),) -> Dict[int, int]:
 	"""
 	Parse composition of formula representing a chemical formula
 
-	Composition is represented as a dict mapping int -> int (atomic
-	number -> multiplicity). "Atomic number" 0 represents net charge.
-
-	Parameters
-	----------
-	formula: str
-		Chemical formula, e.g. 'H2O', 'Fe+3', 'Cl-'
-	prefixes: iterable strings
-		Prefixes to ignore, e.g. ('.', 'alpha-')
-	suffixes: tuple of strings
-		Suffixes to ignore, e.g. ('(g)', '(s)')
-
-	Examples
-	--------
+	**Examples**
 	>>> string_to_composition('NH4+') == {0: 1, "H": 4, "N": 1}
 	True
 	>>> string_to_composition('.NHO-(aq)') == {0: -1, "H": 1, "N": 1, "O": 1}
@@ -284,7 +271,15 @@ def string_to_composition(
 	>>> string_to_composition('Na2CO3.7H2O') == {"Na": 2, "C": 1, "O": 10, "H": 14}
 	True
 
+	:param formula: Chemical formula, e.g. 'H2O', 'Fe+3', 'Cl-'
+	:type formula: str
+	:param prefixes: Prefixes to ignore, e.g. ('.', 'alpha-')
+	:param suffixes: Suffixes to ignore, e.g. ('(g)', '(s)')
+
+	:return: The composition, as a dictionary mapping atomic number -> multiplicity.
+		"Atomic number" 0 represents net charge.
 	"""
+
 	if prefixes is None:
 		prefixes = _latex_mapping.keys()
 	stoich_tok, chg_tok = _formula_to_parts(formula, prefixes, suffixes)[:2]
@@ -319,88 +314,83 @@ def string_to_composition(
 
 	return tot_comp
 
+#
+# def to_reaction(line, substance_keys, token, cls, globals_=None, **kwargs):
+# 	"""
+# 	Parses a string into a Reaction object and substances
+#
+# 	Reac1 + 2 Reac2 + (2 Reac1) -> Prod1 + Prod2; 10**3.7; ref='doi:12/ab'
+# 	Reac1 = Prod1; 2.1;
+#
+# 	Parameters
+# 	----------
+# 	line: str
+# 		string representation to be parsed
+# 	substance_keys: iterable of strings
+# 		Allowed names, e.g. ('H2O', 'H+', 'OH-')
+# 	token : str
+# 		delimiter token between reactant and product side
+# 	cls : class
+# 		e.g. subclass of Reaction
+# 	globals_: dict (optional)
+# 		Globals passed on to :func:`eval`, when ``None``:
+# 		`chempy.units` is used with 'chempy'
+# 		and 'default_units' extra entries.
+#
+# 	Notes
+# 	-----
+# 	This function calls :func:`eval`, hence there are severe security concerns
+# 	with running this on untrusted data.
+#
+# 	"""
+#
+# 	parts = line.rstrip('\n').split(';')
+# 	stoich = parts[0].strip()
+# 	if len(parts) > 2:
+# 		kwargs.update(eval('dict(' + ';'.join(parts[2:]) + '\n)', globals_ or {}))
+# 	if len(parts) > 1:
+# 		param = parts[1].strip()
+# 	else:
+# 		param = kwargs.pop('param', 'None')
+#
+# 	if isinstance(param, str):
+# 		param = None if globals_ is False else eval(param, globals_)
+#
+# 	if token not in stoich:
+# 		raise ValueError("Missing token: %s" % token)
+#
+# 	reac_prod = [[y.strip() for y in x.split(' + ')] for x in stoich.split(token)]
+#
+# 	act, inact = [], []
+# 	for elements in reac_prod:
+# 		act.append(_parse_multiplicity([x for x in elements if not x.startswith('(')], substance_keys))
+# 		inact.append(_parse_multiplicity(
+# 				[x[1:-1] for x in elements if x.startswith('(') and x.endswith(')')],
+# 				substance_keys
+# 				))
+#
+# 	# stoich coeff -> dict
+# 	return cls(act[0], act[1], param, inact_reac=inact[0], inact_prod=inact[1], **kwargs)
 
-def to_reaction(line, substance_keys, token, cls, globals_=None, **kwargs):
+
+def mass_from_composition(composition: Dict[Union[str, int], int], charge: int = 0) -> float:
 	"""
-	Parses a string into a Reaction object and substances
+	Calculates molecular mass from atomic weights.
 
-	Reac1 + 2 Reac2 + (2 Reac1) -> Prod1 + Prod2; 10**3.7; ref='doi:12/ab'
-	Reac1 = Prod1; 2.1;
+	.. note::
 
-	Parameters
-	----------
-	line: str
-		string representation to be parsed
-	substance_keys: iterable of strings
-		Allowed names, e.g. ('H2O', 'H+', 'OH-')
-	token : str
-		delimiter token between reactant and product side
-	cls : class
-		e.g. subclass of Reaction
-	globals_: dict (optional)
-		Globals passed on to :func:`eval`, when ``None``:
-		`chempy.units` is used with 'chempy'
-		and 'default_units' extra entries.
-
-	Notes
-	-----
-	This function calls :func:`eval`, hence there are severe security concerns
-	with running this on untrusted data.
-
-	"""
-
-	parts = line.rstrip('\n').split(';')
-	stoich = parts[0].strip()
-	if len(parts) > 2:
-		kwargs.update(eval('dict(' + ';'.join(parts[2:]) + '\n)', globals_ or {}))
-	if len(parts) > 1:
-		param = parts[1].strip()
-	else:
-		param = kwargs.pop('param', 'None')
-
-	if isinstance(param, str):
-		param = None if globals_ is False else eval(param, globals_)
-
-	if token not in stoich:
-		raise ValueError("Missing token: %s" % token)
-
-	reac_prod = [[y.strip() for y in x.split(' + ')] for x in stoich.split(token)]
-
-	act, inact = [], []
-	for elements in reac_prod:
-		act.append(_parse_multiplicity([x for x in elements if not x.startswith('(')], substance_keys))
-		inact.append(_parse_multiplicity(
-				[x[1:-1] for x in elements if x.startswith('(') and x.endswith(')')],
-				substance_keys
-				))
-
-	# stoich coeff -> dict
-	return cls(act[0], act[1], param, inact_reac=inact[0], inact_prod=inact[1], **kwargs)
+		Atomic number 0 denotes charge or "net electron defficiency"
 
 
-def mass_from_composition(composition, charge=0):
-	"""
-	Calculates molecular mass from atomic weights
+	:param composition: Dictionary mapping str or int (element symbol or atomic number) to int (coefficient)
+	:param charge: The charge of the composition.
+	:type charge: int
 
-	Parameters
-	----------
-	composition: dict
-		Dictionary mapping str or int (element symbol or atomic number) to int (coefficient)
-	charge:
-		The charge of the composition. Can also be given as the "0" key of ``composition``
+	:return: Molecular weight in atomic mass units
+	:rtype: float
 
-	Returns
-	-------
-	float
-		molecular weight in atomic mass units
+	**Example**
 
-
-	Notes
-	-----
-	Atomic number 0 denotes charge or "net electron defficiency"
-
-	Examples
-	--------
 	>>> f'{mass_from_composition({0: -1, "H": 1, 8: 1}):.2f}'
 	'17.01'
 	"""

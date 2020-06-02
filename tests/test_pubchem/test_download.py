@@ -14,7 +14,7 @@ import shutil
 import tempfile
 
 # 3rd party
-import pytest
+import pytest  # type: ignore
 
 # this package
 from chemistry_tools.pubchem.images import get_structure_image

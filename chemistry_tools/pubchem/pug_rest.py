@@ -49,14 +49,19 @@ Functions for interacting with PubChem PUG_REST API
 import time
 from urllib.parse import quote
 
+# 3rd party
+import requests
+
 # this package
 from chemistry_tools import cached_requests
 from chemistry_tools.pubchem import API_BASE
 from chemistry_tools.pubchem.enums import PubChemFormats, PubChemNamespace
 from chemistry_tools.pubchem.errors import HTTP_ERROR_CODES, PubChemHTTPError
 from chemistry_tools.pubchem.utils import _force_sequence_or_csv, _make_base_url
+from chemistry_tools.rate_limiter import rate_limit
 
 
+@rate_limit
 def _do_rest_get(
 		namespace,
 		identifier,
@@ -89,19 +94,33 @@ def _do_rest_get(
 	if not PubChemFormats.is_valid_value(format_):
 		raise ValueError(f"'{format_}' is not a valid value for 'format_'")
 
+	if namespace == PubChemNamespace.cid:
+		identifier = _force_sequence_or_csv(identifier, "identifier")
+	else:
+		identifier = [identifier]
+
 	query_params = {}
 
 	if str(format_).upper() == str(PubChemFormats.PNG):
 		query_params["image_size"] = f"{png_width}x{png_height}"
 
+	try:
+		r = _do_cached_request(namespace, identifier, format_, domain, record_type, query_params)
+	except requests.exceptions.ConnectionError:
+		r = _do_cached_request(namespace, identifier, format_, domain, record_type, query_params)
+
+	if r.status_code in HTTP_ERROR_CODES:
+		raise PubChemHTTPError(r)
+
+	return r
+
+
+def _do_cached_request(namespace, identifier, format_, domain, record_type, query_params):
 	if domain:
 		r = cached_requests.get(f"{_make_base_url(namespace, identifier)}/{domain}/{format_}", params=query_params)
 	else:
 		query_params["record_type"] = record_type
 		r = cached_requests.get(f"{_make_base_url(namespace, identifier)}/{format_}", params=query_params)
-
-	if r.status_code in HTTP_ERROR_CODES:
-		raise PubChemHTTPError(r)
 
 	return r
 

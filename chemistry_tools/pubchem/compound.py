@@ -42,10 +42,6 @@
 #  |  THE SOFTWARE.
 #
 
-# 3rd party
-from domdf_python_tools.bases import Dictable
-from memoized_property import memoized_property
-
 # this package
 from chemistry_tools.pubchem.atom import parse_atoms
 from chemistry_tools.pubchem.bond import parse_bonds
@@ -56,9 +52,13 @@ from chemistry_tools.pubchem.properties import (
 		insert_valid_properties_table,
 		parse_properties,
 		rest_get_properties_json,
-		valid_properties,
+		valid_properties
 		)
 from chemistry_tools.pubchem.synonyms import get_synonyms
+
+# this package
+from domdf_python_tools.bases import Dictable  # type: ignore # TODO
+from memoized_property import memoized_property  # type: ignore
 
 
 class Compound(Dictable):
@@ -110,8 +110,8 @@ class Compound(Dictable):
 		Return a pandas :class:`~pandas.Series` containing Compound data.
 		"""
 
-		import pandas as pd
-		return pd.Series(dict(self))
+		import pandas  # type: ignore
+		return pandas.Series(dict(self))
 
 	@property
 	def cid(self):
@@ -477,9 +477,9 @@ def compounds_to_frame(compounds):
 	Construct a pandas :class:`~pandas.DataFrame` from a list of :class:`~pubchempy.Compound` objects.
 	"""
 
-	import pandas as pd
+	import pandas  # type: ignore
 
 	if isinstance(compounds, Compound):
 		compounds = [compounds]
 
-	return pd.DataFrame.from_records([dict(c) for c in compounds], index='CID')
+	return pandas.DataFrame.from_records([dict(c) for c in compounds], index='CID')

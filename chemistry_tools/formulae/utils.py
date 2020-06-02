@@ -273,8 +273,7 @@ def _hill_order(*symbols):
 	"""
 	Return iterator over element symbols in order of Hill notation.
 
-	Examples
-	--------
+	**Examples**
 	>>> for i in _hill_order('H', 'C[12]', 'O'): print(i, end='')
 	CHO
 

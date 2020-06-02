@@ -64,8 +64,7 @@ class defaultkeydict(defaultdict):
 	"""
 	defaultdict where default_factory should have the signature key -> value
 
-	Examples
-	--------
+	**Examples**
 	>>> d = defaultkeydict(lambda k: f'[{k}]' , {'a': '[a]', 'b': '[B]'})
 	>>> d['a']
 	'[a]'
@@ -103,7 +102,7 @@ def _itruediv(d1, d2):
 
 class ArithmeticDict(defaultdict):
 	"""
-		A dictionary which supports arithmetics
+	A dictionary which supports arithmetics
 
 	Subclassed from defaultdict, with support for addition, subtraction,
 	multiplication and division. If other term/factor has a :meth:`keys` method
@@ -111,12 +110,11 @@ class ArithmeticDict(defaultdict):
 	missing, the operation is broadcasted onto all values.
 	Nonexisting keys are interpreted to signal a zero.
 
-	Notes
-	-----
-	``__eq__`` ignores values equal to ``self.default_factory()``
+	.. note::
 
-	Examples
-	--------
+		``__eq__`` ignores values equal to ``self.default_factory()``
+
+	**Examples**
 	>>> d1 = ArithmeticDict(float, {'a': 2.0, 'b': 3.0})
 	>>> d2 = ArithmeticDict(float, {'b': 5.0, 'c': 7.0})
 	>>> (d1 + d2) == {'a': 2., 'b': 8., 'c': 7., 'd': 0.}

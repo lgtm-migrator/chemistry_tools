@@ -25,26 +25,26 @@ Isotope Distributions
 
 # stdlib
 from collections import OrderedDict
-from enum import Enum
+from typing import Any, List, Union
+
+# this package
+from chemistry_tools.formulae import formula as _formula
 
 # this package
 from .dataarray import DataArray
 from .unicode import string_to_unicode
+from domdf_python_tools.enums import IntEnum  # type: ignore # TODO
 
 
-class IsoDistSort(Enum):
+class IsoDistSort(IntEnum):
 	"""
 	Lookup for sorting isotope distribution output
 	"""
-	formula = 0
-	mass = 1
-	abundance = 2
-	relative_abundance = 3
-	Formula = 0
-	Mass = 1
-	Abundance = 2
-	Relative_abundance = 3
-	Relative_Abundance = 3
+
+	Formula = formula = 0  #, "Sort isosope distribution by formulae"
+	Mass = mass = 1  #, "Sort isotope distribution by masses"
+	Abundance = abundance = 2  #, "Sort isotope distribution by abundances"
+	Relative_Abundance = Relative_abundance = relative_abundance = 3  #, "Sort isotope distribution by relative abundances"
 
 	def __int__(self):
 		return int(self.value)
@@ -55,7 +55,7 @@ class IsotopeDistribution(DataArray):
 
 
 	Each composition can be accessed with their hill formulae like a dictionary
-	(e.g. iso_dict["H[1]2O[16]"]
+	(e.g. iso_dict["H[1]2O[16]"])
 	"""
 
 	# TODO: as_mass_spec
@@ -63,8 +63,8 @@ class IsotopeDistribution(DataArray):
 	def __init__(self, formula):
 		"""
 
-		:param formula: A :class:`Formula` object to create the distribution for
-		:type formula: :class:`Formula`
+		:param formula: A :class:`~chemistry_tools.formulae.formula.Formula`  object to create the distribution for
+		:type formula: :class:`~chemistry_tools.formulae.formula.Formula` 
 		"""
 
 		iso_compositions = list(formula.iter_isotopologues())
@@ -85,23 +85,24 @@ class IsotopeDistribution(DataArray):
 	_as_table_alignment = ["left", "right", "right", "right"]
 	_as_table_float_format = [None, ".4f", ".6f", ".6f"]
 
-	def as_array(self, sort_by=IsoDistSort.formula, reverse=False, format_percentage=True):
+	def as_array(
+			self,
+			sort_by: Union[int, IsoDistSort] = IsoDistSort.formula,
+			reverse: bool = False,
+			format_percentage: bool = True
+			) -> List[List[Any]]:
 		"""
 		Returns the isotope distribution data as a list of lists
 
 		:param sort_by: The column to sort by.
-		:type sort_by: IsoDistSort
+		:type sort_by: ~chemistry_tools.formulae.iso_dist.IsoDistSort
 		:param: Whether the isotopologues should be sorted in reverse order. Default ``False``.
 		:type reverse: bool, optional
 		:param: Whether the abundances should be formatted as percentages or not. Default ``False``.
 		:type format_percentage: bool, optional
-
-		:rtype: list[list]
 		"""
 
-		if sort_by not in IsoDistSort:
-			raise ValueError(f"Unrecognised value for 'sort_by': {sort_by}")
-		elif sort_by == IsoDistSort.formula:
+		if sort_by == IsoDistSort.formula:
 			sort_key = lambda comp: comp.hill_formula
 		elif sort_by == IsoDistSort.mass:
 			sort_key = lambda comp: comp.mass

@@ -7,8 +7,8 @@ Test property_format
 
 """
 
-# stdlib
-from chemistry_tools.spectrum_similarity import create_array, SpectrumSimilarity
+# this package
+from chemistry_tools.spectrum_similarity import SpectrumSimilarity, create_array
 
 
 def test_SpectrumSimilarity():

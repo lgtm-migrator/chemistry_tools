@@ -22,33 +22,34 @@
 
 # stdlib
 from abc import abstractmethod
-
 #  3rd party
-import pandas
+from typing import Any, Dict, List, Optional, Set, Union
+
+# 3rd party
+import pandas  # type: ignore
+
+# this package
 import tabulate
-from cawdrey import FrozenOrderedDict
+from cawdrey import FrozenOrderedDict  # type: ignore # TODO
 
 
 class DataArray(FrozenOrderedDict):
 	"""
-	A class that can output data as an array, to CSV, as a pandas DataFrame,
+	A class that can output data as a :class:`pandas.DataFrame`, to CSV,
 	or as a pretty-printed table in a variety of formats.
+
+	:param formula: The formula in hill notation
+	:type formula: str
+	:param data: A dictionary of data to add to the internal
+		:class:`~cawdrey.frozenordereddict.FrozenOrderedDict`
+	:type data: dict
 	"""
 
-	def __init__(self, formula, data):
-		"""
-
-		:param formula: A :class:`Formula` object to create the distribution for
-		:type formula: :class:`Formula`
-		:param data: A dictionary of data to add to the internal
-			:class:`~cawdrey.frozenordereddict.FrozenOrderedDict`
-		:type data: dict
-		"""
-
+	def __init__(self, formula: str, data: Dict):
 		super().__init__(**data)
 		self.formula = formula
 
-	def as_csv(self, *args, sep=",", **kwargs):
+	def as_csv(self, *args, sep: str = ",", **kwargs) -> str:
 		"""
 		Returns the data as a CSV formatted string
 
@@ -62,28 +63,27 @@ class DataArray(FrozenOrderedDict):
 
 		return "\n".join(sep.join(x) for x in self.as_array(*args, **kwargs))
 
-	_as_array_kwargs = set()
+	_as_array_kwargs: Set[str] = set()
+	_as_table_alignment: List[str] = []
+	_as_table_float_format: List[Optional[str]] = []
 
 	@abstractmethod
-	def as_array(self, *args, **kwargs):
+	def as_array(self, sort_by: Any, reverse: bool = False) -> List[List[Any]]:
 		pass
 
-	def as_dataframe(self, *args, **kwargs):
+	def as_dataframe(self, *args, **kwargs) -> pandas.DataFrame:
 		"""
 		Returns the isotope distribution data as a pandas DataFrame
 
 		Any arguments taken by ``as_array`` can also be used here.
 
-		:rtype: :class:`pandas.DataFrame`
+		:rtype: pandas.DataFrame
 		"""
 
 		array = self.as_array(*args, **kwargs)
 		return pandas.DataFrame.from_records(array[1:], columns=array[0])
 
-	_as_table_alignment = []
-	_as_table_float_format = []
-
-	def as_table(self, *args, **kwargs):
+	def as_table(self, *args, **kwargs) -> str:
 		"""
 		Returns the isotope distribution data as a table using
 		`tabulate <https://github.com/astanin/python-tabulate>`_
@@ -111,8 +111,8 @@ class DataArray(FrozenOrderedDict):
 		array = self.as_array(*args, **array_kwargs)
 		return tabulate.tabulate(array[1:], array[0], **tabulate_kwargs)
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return self.__repr__()
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f"<{self.__class__.__name__}({self.formula})>"

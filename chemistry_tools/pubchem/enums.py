@@ -20,7 +20,8 @@
 #  MA 02110-1301, USA.
 #
 
-from domdf_python_tools.enums import StrEnum
+# this package
+from domdf_python_tools.enums import StrEnum  # type: ignore # TODO
 
 
 class PubChemNamespace(StrEnum):

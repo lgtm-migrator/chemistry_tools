@@ -42,11 +42,11 @@
 #  |  THE SOFTWARE.
 #
 
-# 3rd party
-from domdf_python_tools.enums import IntEnum
-
 # this package
 from chemistry_tools.pubchem.errors import ResponseParseError
+
+# this package
+from domdf_python_tools.enums import IntEnum  # type: ignore # TODO
 
 
 class BondType(IntEnum):
@@ -85,7 +85,7 @@ class Bond:
 		self.style = style
 
 	def __repr__(self):
-		return 'Bond({}, {}, {})'.format(self.aid1, self.aid2, self.order)
+		return f'Bond({self.aid1}, {self.aid2}, {self.order!r})'
 
 	def __eq__(self, other):
 		return (

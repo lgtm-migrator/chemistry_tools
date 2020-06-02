@@ -7,8 +7,10 @@ Test Atom class
 
 """
 
-import pytest
+# 3rd party
+import pytest  # type: ignore
 
+# this package
 from chemistry_tools.pubchem.atom import Atom
 
 

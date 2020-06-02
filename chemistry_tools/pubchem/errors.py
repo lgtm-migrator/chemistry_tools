@@ -44,6 +44,7 @@ Error handling functions
 #  |  THE SOFTWARE.
 #
 
+# stdlib
 import json
 
 HTTP_ERROR_CODES = [400, 404, 405, 504, 501, 500]
@@ -120,8 +121,6 @@ class MethodNotAllowedError(PubChemHTTPError):
 class TimeoutError(PubChemHTTPError):
 	"""
 	The request timed out, from server overload or too broad a request.
-
-	See :ref:`Avoiding TimeoutError <avoiding_timeouterror>` for more information.
 	"""
 
 	def __init__(self, msg='The request timed out'):

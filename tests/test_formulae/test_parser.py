@@ -49,14 +49,16 @@
 import decimal
 
 # 3rd party
-import pytest
-from mathematical.utils import rounders
+import pytest  # type: ignore
 
 # this package
 from chemistry_tools.formulae.html import string_to_html
 from chemistry_tools.formulae.latex import string_to_latex
 from chemistry_tools.formulae.parser import mass_from_composition, relative_atomic_masses, string_to_composition
 from chemistry_tools.formulae.unicode import string_to_unicode
+
+# this package
+from mathematical.utils import rounders  # type: ignore # TODO
 
 
 def test_formula_to_composition():

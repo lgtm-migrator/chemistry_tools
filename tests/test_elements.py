@@ -1,6 +1,8 @@
-import pytest
+# 3rd party
+import pytest  # type: ignore
 
-from chemistry_tools.elements import ELEMENTS, groups, H, Isotope
+# this package
+from chemistry_tools.elements import ELEMENTS, H, Isotope, groups
 
 
 @pytest.mark.parametrize(

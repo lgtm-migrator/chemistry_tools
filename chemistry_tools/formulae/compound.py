@@ -74,8 +74,7 @@ Parse formulae into a Python object
 #
 
 # 3rd party
-import quantities
-from domdf_python_tools.bases import Dictable
+import quantities  # type: ignore
 
 # this package
 from chemistry_tools.formulae.formula import Formula
@@ -83,33 +82,34 @@ from chemistry_tools.formulae.html import string_to_html
 from chemistry_tools.formulae.latex import string_to_latex
 from chemistry_tools.formulae.unicode import string_to_unicode
 
+# this package
+from domdf_python_tools.bases import Dictable  # type: ignore # TODO
+
 
 class Compound(Dictable):
 	"""
 	Class representing a chemical compound.
 
-	Parameters
-	----------
-	name : str
-	latex_name : str
-	unicode_name : str
-	html_name : str
-	formula: Formula
-		The chemical formula of the compound. If none this is generated from the name
-	data : dict
-		Free form dictionary. Could be simple such as ``{'mp': 0, 'bp': 100}``
+	:param name: The name of the compound
+	:type name: str
+	:param formula: The chemical formula of the compound. If ``None`` this is generated from the name
+	:type formula: ~chemistry_tools.formulae.formula.Formula
+	:param data: Free form dictionary. Could be simple such as ``{'mp': 0, 'bp': 100}``
 		or considerably more involved, e.g.: ``{'diffusion_coefficient': {\
 		'water': lambda T: 2.1*m**2/s/K*(T - 273.15*K)}}``.
-
-	Attributes
-	----------
-	mass
-		The mass of the compound
-	formula:
-		The :class:`Formula` object representing the compound
-	data
-		Free form dictionary of additional properties.
+	:type data: dict
+	:param latex_name:
+	:type latex_name: str
+	:param unicode_name:
+	:type unicode_name: str
+	:param html_name:
+	:type html_name: str
 	"""
+
+	# 	formula:
+	# 		The :class:`~chemistry_tools.formulae.formula.Formula` object representing the compound
+	# 	data
+	# 		Free form dictionary of additional properties.
 
 	def __init__(
 			self,
@@ -168,7 +168,7 @@ class Compound(Dictable):
 	@property
 	def charge(self):
 		"""
-		Convenience prop for accessing charge of the formula
+		Returns the charge of the compound.
 		"""
 
 		return self.formula.charge
@@ -176,7 +176,7 @@ class Compound(Dictable):
 	@property
 	def mass(self):
 		"""
-		Convenience prop for accessing the mass of the formula
+		Returns the mass of the compound.
 		"""
 
 		return self.formula.mass
@@ -185,12 +185,11 @@ class Compound(Dictable):
 		"""
 		Returns the molar mass (with units) of the substance
 
-		Examples
-		--------
+		**Examples**
 		>>> nh4p = Compound.from_formula('NH4+')
 		>>> from chemistry_tools.units import quantities
 		>>> nh4p.molar_mass(quantities)
-		array(18.0384511...) * g/mol
+		df(18.0384511...) * g/mol
 
 		"""
 

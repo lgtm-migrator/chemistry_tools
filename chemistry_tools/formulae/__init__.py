@@ -73,6 +73,7 @@ Parse formulae into a Python object
 #  |  DOI: `10.1021/acs.jproteome.8b00717 <http://dx.doi.org/10.1021/acs.jproteome.8b00717>`_
 #
 
+# this package
 from .compound import Compound
 from .formula import Formula
 from .html import string_to_html

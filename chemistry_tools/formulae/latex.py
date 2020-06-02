@@ -88,8 +88,7 @@ def string_to_latex(formula, prefixes=None, infixes=None, **kwargs):
 	"""
 	Convert formula string to latex representation
 
-	Examples
-	--------
+	**Examples**
 	>>> string_to_latex('NH4+')
 	'NH_{4}^{+}'
 	>>> string_to_latex('Fe(CN)6+2')

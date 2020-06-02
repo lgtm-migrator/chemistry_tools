@@ -20,9 +20,11 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
+# stdlib
+from typing import Union, no_type_check
 
 
-def cas_int_to_string(cas_no):
+def cas_int_to_string(cas_no: int) -> str:
 	"""
 	Converts an integer CAS number to a hyphenated string
 
@@ -51,7 +53,7 @@ def cas_int_to_string(cas_no):
 	return f"{block_1}-{block_2}-{check_digit}"
 
 
-def check_cas_number(cas_no):
+def check_cas_number(cas_no: int) -> int:
 	"""
 	Checks the CAS number to ensure the check digit is valid
 	with respect to the rest of the number.
@@ -62,6 +64,7 @@ def check_cas_number(cas_no):
 
 	:param cas_no:
 	:type cas_no: int
+
 	:return:
 	:rtype: int
 	"""
@@ -86,12 +89,13 @@ def check_cas_number(cas_no):
 		return (check_total % 10) - check_digit
 
 
-def cas_string_to_int(cas_no):
+@no_type_check
+def cas_string_to_int(cas_no: Union[str, int]) -> int:
 	"""
 	Converts a hyphenated string CAS number to a integer
 
 	:param cas_no:
-	:type cas_no: str
+	:type cas_no: str or int
 
 	:return:
 	:rtype: int
@@ -108,9 +112,12 @@ def cas_string_to_int(cas_no):
 
 	cas_no = block_1 + block_2 + check_digit
 
-	if check_cas_number(cas_no):
+	check_value = check_cas_number(int(cas_no))
+
+	if check_value:
 		raise ValueError(
-				f"Invalid CAS Number. Check digit mismatch: expected {check_digit}, computed {check_cas_number(cas_no) + check_digit}."
+				f"Invalid CAS Number. Check digit mismatch: expected {check_digit}, "
+				f"computed {check_value + check_digit}."
 				)
 
 	return cas_no

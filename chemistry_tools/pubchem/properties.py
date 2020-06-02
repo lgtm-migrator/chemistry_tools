@@ -47,16 +47,16 @@
 import warnings
 from collections import namedtuple
 from textwrap import dedent
-from typing import Any
-
-# 3rd party
-from tabulate import tabulate
+from typing import Any, List
 
 # this package
 from chemistry_tools.formulae import Formula
+
+# this package
 from .enums import PubChemFormats, PubChemNamespace
 from .pug_rest import _do_rest_get
 from .utils import _force_sequence_or_csv
+from tabulate import tabulate
 
 PropData = namedtuple("PropData", "name, description, type, attr_name")
 
@@ -311,7 +311,7 @@ def rest_get_properties_json(identifier, namespace=PubChemNamespace.name, proper
 	:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
 
 	:type properties: str, Sequence[str]
-	:param **kwargs: Optional arguments that ``json.loads`` takes.
+	:param kwargs: Optional arguments that ``json.loads`` takes.
 	:raises ValueError: If the response body does not contain valid json.
 
 	:return: Parsed json data
@@ -341,7 +341,7 @@ def rest_get_properties(identifier, namespace=PubChemNamespace.name, properties=
 	:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
 
 	:type properties: str, Sequence[str]
-	:param **kwargs: Optional arguments that ``json.loads`` takes.
+
 	:raises ValueError: If the response body does not contain valid json.
 
 	:return:
@@ -387,7 +387,8 @@ def get_properties(identifier, properties='', namespace="name", as_dataframe=Fal
 		supplying either a comma-separated string or a list.
 	:type identifier: str, Sequence[str]
 
-	:param properties: The properties to retrieve for the compound. See the table below. Can be either a comma-separated string or a list.
+	:param properties: The properties to retrieve for the compound. See the table below. Can be either a
+		comma-separated string or a list.
 
 	:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
 
@@ -398,6 +399,7 @@ def get_properties(identifier, properties='', namespace="name", as_dataframe=Fal
 	:type as_dataframe: bool, optional
 
 	:raises ValueError: If the response body does not contain valid json.
+	:raises NotFoundError: If the compound with the requested identifier was not found in PubChem.
 
 	:return: List of dictionaries mapping properties to values
 	:rtype: List[dict]
@@ -421,10 +423,44 @@ def get_properties(identifier, properties='', namespace="name", as_dataframe=Fal
 		results.append(parsed_data)
 
 	if as_dataframe:
-		import pandas as pd
-		return pd.DataFrame.from_records(results, index='CID')
+		import pandas  # type: ignore
+		return pandas.DataFrame.from_records(results, index='CID')
 
 	return results
+
+
+@insert_valid_properties_table()
+def get_property(identifier, property='', namespace="name") -> Any:
+	"""
+	Returns the requested property for the compound with the given identifier.
+
+	This convenience function only allows for a single property to be accessed at once,
+	and for only a single compound. if you require multiple properties and/or properties for
+	multiple compounds use :class:`chemistry_tools.pubchem.properties.get_properties`, which helps
+	reduce the burden on the PubChem servers.
+
+	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
+	:type identifier: str
+
+	:param property: The property to retrieve for the compound. See the table below.
+
+	:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
+
+	:type property: str
+	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`. Default "name"
+	:type namespace: PubChemNamespace, optional
+
+	:raises ValueError: If the response body does not contain valid json.
+	:raises NotFoundError: If the compound with the requested identifier was not found in PubChem.
+
+	:return: The requested property. Type depends on the property requested
+	"""
+
+	property_ = _force_valid_properties(property)[0]
+
+	data = rest_get_properties_json(identifier, namespace, [property_])
+
+	return parse_properties(data)[0][property_]
 
 
 def parse_properties(property_data):
@@ -465,7 +501,7 @@ def parse_properties(property_data):
 
 
 class PubChemProperty(namedtuple("__BasePubChemProperty", "label name value dtype source")):
-	__slots__ = []
+	__slots__: List[str] = []
 
 	def __new__(cls, label, name=None, value=None, dtype=None, source=None):
 		if source is None:

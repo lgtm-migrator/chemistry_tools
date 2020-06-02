@@ -108,6 +108,7 @@ Group 2: Alkaline Earth Metals in the Periodic Table
 
 __all__ = ("Be", "Mg", "Ca", "Sr", "Ba", "Ra")
 
+# this package
 from .classes import Element
 
 # Isotope 0 Key:

@@ -8,7 +8,7 @@ Test compound object with 3D record.
 """
 
 # 3rd party
-import pytest
+import pytest  # type: ignore
 
 # this package
 from chemistry_tools.pubchem.compound import Compound

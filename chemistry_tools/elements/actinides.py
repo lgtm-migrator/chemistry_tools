@@ -143,6 +143,7 @@ Actinides (or actinoids) in the Periodic Table
 
 __all__ = ("Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr")
 
+# this package
 from . import classes
 
 # Isotope 0 Key:

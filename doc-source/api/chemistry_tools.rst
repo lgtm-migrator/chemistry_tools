@@ -36,7 +36,7 @@
 :mod:`chemistry_tools.names`
 ===================================
 
-.. automodule:: chemistry_tools.lookup
+.. automodule:: chemistry_tools.names
     :members:
 
 

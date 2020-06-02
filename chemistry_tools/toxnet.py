@@ -26,10 +26,10 @@ Read data from National Library of Medicine TOXNET
 
 # 3rd party
 import requests
-from bs4 import BeautifulSoup
 
 # this package
 from .property_format import *
+from bs4 import BeautifulSoup  # type: ignore
 
 
 def toxnet(cas):

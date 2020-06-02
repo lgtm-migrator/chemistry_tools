@@ -143,6 +143,7 @@ Lanthanides (or lanthanoids) in the Periodic Table
 
 __all__ = ("La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu")
 
+# this package
 from .classes import Element
 
 # Isotope 0 Key:

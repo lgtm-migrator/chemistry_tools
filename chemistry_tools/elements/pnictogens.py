@@ -108,6 +108,7 @@ Group 15: Pnictogens in the Periodic Table
 
 __all__ = ("N", "P", "As", "Sb", "Bi", "Mc")
 
+# this package
 from .classes import Element
 
 # Isotope 0 Key:

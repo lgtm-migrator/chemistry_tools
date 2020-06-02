@@ -241,6 +241,7 @@ __all__ = (
 		"Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn",
 		)
 
+# this package
 from .classes import Element
 
 # Isotope 0 Key:

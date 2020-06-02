@@ -98,8 +98,7 @@ def string_to_unicode(formula, prefixes=None, infixes=None, **kwargs):
 	"""
 	Convert formula string to unicode string representation
 
-	Examples
-	--------
+	**Examples**
 	>>> string_to_unicode('NH4+') == 'NH₄⁺'
 	True
 	>>> string_to_unicode('Fe(CN)6+2') == 'Fe(CN)₆²⁺'

@@ -25,9 +25,15 @@ Functions for working with IUPAC names for chemicals
 
 # stdlib
 import re
+from typing import Any, List
+
+# 3rd party
+from pandas import DataFrame  # type: ignore
 
 # this package
+from chemistry_tools import cached_requests
 from chemistry_tools.constants import prefixes
+from chemistry_tools.pubchem.errors import HTTP_ERROR_CODES
 
 multiplier_regex = re.compile("*".join([f"({prefix})" for prefix in prefixes.values()]) + "*")
 
@@ -47,11 +53,41 @@ re_strings = [
 		re.compile(r"phthalate"),
 		re.compile(r"picrate"),
 		re.compile(r"toluene"),
+		re.compile(r"methyl"),
+		re.compile(r"(?<!m)ethyl"),
+		re.compile(r"propyl"),
+		re.compile(r"butyl"),
 		re.compile(r" "),
+		re.compile(r"\("),
+		re.compile(r"\)"),
+		re.compile(r"hydroxyl"),
+		re.compile(r"amin[oe]"),
+		re.compile(r"amide"),
+		]
+
+
+_iupac_subs = [
+		# e.g. Bis(2-Nitrophenyl)Amine -> 2,2'-Dinitrophenylamine
+		(re.compile(r"^(bis)(\()(\d)(-)(.*)(phenyl)(\))"), r"\3,\3'-Di\5di\6"),
+		# e.g. 2-Nitro-N-(4-nitrophenyl)aniline -> 2,4'-Dinitrophenylaniline
+		(re.compile(r"^(\d)(-nitro-n-\()(\d)(-nitro)(.*)(\))"), r"\1,\3'-Dinitro-N-\5"),
+
+		(re.compile(r"-?[Nn]-phenylaniline"), "diphenylamine"),
+		(re.compile(r"carbanilide"), "-1,3-diphenylurea"),
+		(re.compile(r"(glycerol)(-)(\d)(-nitrate)"), r"\3-mononitroglycerin"),
+		(re.compile(r"n,n'-"), "1,3-"),
+		(re.compile(r"dipicryl"), "hexanitrodiphenyl"),
+		(re.compile(r"picryl$"), "-1,3,5-trinitrobenzene"),
+		(re.compile(r"picryl"), "-1,3,5-trinitrophenyl"),
 		]
 
 
 def get_IUPAC_parts(string):
+	string = string.lower()
+
+	for regex, sub in _iupac_subs:
+		string = regex.sub(sub.lower(), string)
+
 	split_points = set()
 
 	for regex in re_strings:
@@ -60,6 +96,11 @@ def get_IUPAC_parts(string):
 			if start != end:
 				split_points.add(start)
 				split_points.add(end)
+
+	for match in re.finditer(r"(-)(\d)(-)", string.lower()):
+		start, end = match.span()
+		if start != end:
+			split_points.add(start + 1)
 
 	split_points.discard(0)
 	split_points = sorted(split_points)
@@ -72,6 +113,22 @@ def get_IUPAC_parts(string):
 		start_point = point
 
 	elements.append("".join(string_chars[start_point:]))
+
+	# Fixups
+	fixups = [
+			["guani", "di", "ne"],
+			]
+
+	for fixup in fixups:
+		length = len(fixup)
+		for i in range(len(elements)):
+			if elements[i:i+length] == fixup:
+				elements = elements[:i] + ["".join(fixup)] + elements[i+length:]
+
+	# Remove null elements
+	null_elements = {" ", ""}
+
+	elements = [x for x in elements if x not in null_elements]
 
 	while not elements[-1]:
 		elements = elements[:-1]
@@ -162,20 +219,58 @@ def _get_split_and_sorted_lists(iupac_names):
 	return split_names, sorted_names
 
 
-def sort_array_by_name(array, name_col=0):
+def sort_array_by_name(array: List[List[Any]], name_col: int = 0, reverse: bool = False) -> List[List[Any]]:
 	"""
 	Sort a list of lists by the IUPAC name in each row.
 
 	:param array:
-	:type array: List[List]
 	:param name_col: The index of the column containing the IUPAC names
-	:type name_col: int
+	:type name_col: int, optional
+	:param reverse: Whether the names should be sorted in reverse order. Default is ``False``, which sorts from A-Z
+	:type reverse: bool, optional
 
-	:return:
-	:rtype:
+
+	:return: The sorted array
 	"""
 
 	names = [row[name_col] for row in array]
 	sort_order = get_IUPAC_sort_order(names)
-	sorted_array = sorted(array, key=lambda row: sort_order[row[0]])
+	sorted_array = sorted(array, key=lambda row: sort_order[row[name_col]], reverse=reverse)
 	return sorted_array
+
+
+def sort_dataframe_by_name(df: DataFrame, name_col: str, reverse: bool = False) -> DataFrame:
+	"""
+	Sort a Pandas :class:`pandas.DataFrame` by the IUPAC name in each row.
+
+	:param df:
+	:type df: pandas.DataFrame
+	:param name_col: The name of the column containing the IUPAC names
+	:type name_col: str
+	:param reverse: Whether the names should be sorted in reverse order. Default is ``False``, which sorts from A-Z
+	:type reverse: bool, optional
+
+	:return: The sorted DataFrame
+	:rtype: pandas.DataFrame
+	"""
+
+	names = df[name_col]
+	sort_order = get_IUPAC_sort_order(names)
+	sorted_df = df.loc[df[name_col].map(sort_order).sort_values(ascending=(not reverse)).index]
+	return sorted_df
+
+
+def iupac_name_from_cas(cas_number: str) -> str:
+	r = cached_requests.get(f"https://cactus.nci.nih.gov/chemical/structure/{cas_number}/iupac_name")
+	if r.status_code in HTTP_ERROR_CODES:
+		raise ValueError(f"No compound found for CAS number {cas_number}")
+	print(r.text)
+	return r.text
+
+
+def cas_from_iupac_name(iupac_name: str) -> str:
+	r = cached_requests.get(f"https://cactus.nci.nih.gov/chemical/structure/{iupac_name}/cas")
+	if r.status_code in HTTP_ERROR_CODES:
+		raise ValueError(f"No compound found for name {iupac_name}")
+	print(r.text)
+	return r.text.split("\n")[0]

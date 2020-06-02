@@ -49,9 +49,9 @@
 from collections import defaultdict
 
 # 3rd party
-import numpy as np
-import pytest
-import quantities
+import numpy  # type: ignore
+import pytest  # type: ignore
+import quantities  # type: ignore
 
 # this package
 from chemistry_tools import units
@@ -95,8 +95,8 @@ def test_allclose():
 	assert not allclose(42, 43 * quantities.meter)
 	assert not allclose(42 * quantities.meter, 42)
 
-	a = np.linspace(2, 3) * quantities.second
-	b = np.linspace(2 / 3600., 3 / 3600.) * quantities.hour
+	a = numpy.linspace(2, 3) * quantities.second
+	b = numpy.linspace(2 / 3600., 3 / 3600.) * quantities.hour
 	assert allclose(a, b)
 	assert allclose([3600 * quantities.second, 2 * quantities.metre / quantities.hour],
 					[1 * quantities.hour, 2 / 3600 * quantities.metre / quantities.second])
@@ -171,7 +171,7 @@ def test_to_unitless():
 		to_unitless([42, 43], quantities.metre)
 
 	with pytest.raises(ValueError):
-		to_unitless(np.array([42, 43]), quantities.metre)
+		to_unitless(numpy.array([42, 43]), quantities.metre)
 
 	vals = [1.0, 2.0] * dm
 	result = to_unitless(vals, quantities.metre)
@@ -200,7 +200,7 @@ def test_to_unitless():
 	g2 = UncertainQuantity(-4.46, units.per100eV, 0)
 	assert abs(to_unitless(-g2, g_unit) - 4.46 * 1.036e-7) < 1e-9
 
-	vals = np.array([1. * dm, 2. * dm], dtype=object)
+	vals = numpy.array([1. * dm, 2. * dm], dtype=object)
 	result = to_unitless(vals, quantities.metre)
 	assert result[0] == 0.1
 	assert result[1] == 0.2
@@ -219,7 +219,7 @@ def test_UncertainQuantity():
 
 
 def test_linspace():
-	ls = np.linspace(2 * quantities.second, 3 * quantities.second)
+	ls = numpy.linspace(2 * quantities.second, 3 * quantities.second)
 	assert abs(to_unitless(ls[0], quantities.hour) - 2 / 3600.) < 1e-15
 
 
@@ -357,7 +357,7 @@ def test_unitless_in_registry():
 	ref = 3 * 1.0364268834527753e-07
 	assert abs(mag - ref) < 1e-14
 	ul = unitless_in_registry([3 * units.per100eV, 5 * quantities.mol / quantities.J], SI_base_registry)
-	assert np.allclose(ul, [ref, 5], rtol=1e-6)
+	assert numpy.allclose(ul, [ref, 5], rtol=1e-6)
 
 
 def test_compare_equality():
@@ -369,8 +369,8 @@ def test_compare_equality():
 	assert not compare_equality(3 * quantities.m, 2 * quantities.m)
 	assert not compare_equality(3 * quantities.m, 3 * quantities.s)
 	assert not compare_equality(3 * quantities.m, 3 * quantities.m**2)
-	assert not compare_equality(3 * quantities.m, np.array(3))
-	assert not compare_equality(np.array(3), 3 * quantities.m)
+	assert not compare_equality(3 * quantities.m, numpy.array(3))
+	assert not compare_equality(numpy.array(3), 3 * quantities.m)
 	assert compare_equality([3, None], [3, None])
 	assert not compare_equality([3, None, 3], [3, None, None])
 	assert not compare_equality([None, None, 3], [None, None, 2])
@@ -402,30 +402,6 @@ def test__sum():
 
 	# sum() does not work here...
 	assert (_sum([0.1 * quantities.metre, 1 * units.decimetre]) - 2 * units.decimetre) / quantities.metre == 0
-
-
-def test_Backend():
-	b = units.Backend()
-	with pytest.raises(ValueError):
-		b.exp(-3 * quantities.metre)
-	assert abs(b.exp(1234 * quantities.metre / quantities.kilometre) - b.exp(1.234)) < 1e-14
-
-
-def test_Backend__numpy():
-	b = units.Backend(np)
-	assert b.sum([1000 * quantities.metre / quantities.kilometre, 1], axis=0) == 2.0
-
-	with pytest.raises(AttributeError):
-		np.Piecewise
-
-
-def test_Backend__sympy():
-	sympy = pytest.importorskip("sympy")
-	b = units.Backend('sympy')
-	assert b.sin(b.pi) == 0
-
-	with pytest.raises(AttributeError):
-		b.min
 
 
 def test_format_string():
@@ -461,7 +437,7 @@ def test_pow0():
 
 	a = [1, 2] * quantities.metre
 	b = a**0
-	assert np.allclose(b, [1, 1])
+	assert numpy.allclose(b, [1, 1])
 
 	c = a**2
 	assert allclose(c, [1, 4] * quantities.m**2)
@@ -471,10 +447,10 @@ def test_uniform():
 	from chemistry_tools.units import uniform
 
 	base = [3 * quantities.km, 200 * quantities.m]
-	refs = [np.array([3000, 200]), np.array([3, 0.2])]
+	refs = [numpy.array([3000, 200]), numpy.array([3, 0.2])]
 
 	def _check(case, ref):
-		assert np.any(np.all(uniform(case).magnitude == ref, axis=1))
+		assert numpy.any(numpy.all(uniform(case).magnitude == ref, axis=1))
 
 	_check(base, refs)
 	_check(tuple(base), refs)
@@ -485,4 +461,4 @@ def test_uniform():
 def test_fold_constants():
 	from chemistry_tools.units import fold_constants
 
-	assert abs(fold_constants(quantities.constants.pi) - np.pi) < 1e-15
+	assert abs(fold_constants(quantities.constants.pi) - numpy.pi) < 1e-15

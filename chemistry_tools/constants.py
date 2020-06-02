@@ -50,7 +50,7 @@
 from collections import namedtuple
 
 # 3rd party
-import quantities
+import quantities  # type: ignore
 
 _anions = {  # Incomplete
 		'F-': 'fluoride',

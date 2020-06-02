@@ -54,80 +54,18 @@
 
 # stdlib
 from functools import lru_cache
-
-# 3rd party
-from domdf_python_tools import doctools
-from domdf_python_tools.bases import Dictable
-from memoized_property import memoized_property
+from typing import Dict, Tuple
 
 # this package
-from . import _table
+from . import _elements, _table
+from domdf_python_tools import doctools  # type: ignore # TODO
+from domdf_python_tools.bases import Dictable  # type: ignore # TODO
+from memoized_property import memoized_property  # type: ignore
 
 
 class Element(Dictable):
-	"""Chemical element.
-
-	Attributes
-	----------
-	number : int
-		Atomic number.
-	symbol : str of length 1 or 2
-		Chemical symbol.
-	name : str
-		Name in English.
-	group : int
-		Group in periodic table.
-	period : int
-		Period in periodic table.
-	block : int
-		Block in periodic table.
-	series : int
-		Index to chemical series.
-	protons : int
-		Number of protons.
-	neutrons : int
-		Number of neutrons in the most abundant naturally occurring stable.
-		isotope
-	nominalmass : int
-		Mass number of the most abundant naturally occurring stable isotope.
-	electrons : int
-		Number of electrons.
-	mass : float
-		Relative atomic mass. Ratio of the average mass of atoms
-		of the element to 1/12 of the mass of an atom of 12C.
-	exactmass : float
-		Relative atomic mass calculated from the isotopic composition.
-	eleneg : float
-		Electronegativity (Pauling scale).
-	covrad : float
-		Covalent radius in Angstrom.
-	atmrad :
-		Atomic radius in Angstrom.
-	vdwrad : float
-		Van der Waals radius in Angstrom.
-	tboil : float
-		Boiling temperature in K.
-	tmelt : float
-		Melting temperature in K.
-	density : float
-		Density at 295K in g/cm3 respectively g/L.
-	oxistates : str
-		Oxidation states.
-	eleaffin : float
-		Electron affinity in eV.
-	eleconfig : str
-		Ground state electron configuration.
-	eleconfig_dict : dict
-		Ground state electron configuration (shell, subshell): electrons.
-	eleshells : int
-		Number of electrons per shell.
-	ionenergy : tuple
-		Ionization energies in eV
-	isotopes : dict
-		Isotopic composition.
-		keys: isotope mass number
-		values: Isotope(relative atomic mass, abundance)
-
+	"""
+	Chemical element.
 	"""
 
 	def __init__(
@@ -220,43 +158,84 @@ class Element(Dictable):
 				)
 
 	@memoized_property
-	def number(self):
+	def number(self) -> int:
+		"""
+		Returns the atomic number of the element.
+		"""
+
 		return self._number
 
 	@memoized_property
-	def symbol(self):
+	def symbol(self) -> str:
+		"""
+		Returns the chemical symbol of the element.
+		"""
+
 		return self._symbol
 
 	@memoized_property
-	def name(self):
+	def name(self) -> str:
+		"""
+		Returns the name of the element in English.
+		"""
+
 		return self._name
 
 	@memoized_property
-	def electrons(self):
+	def electrons(self) -> int:
+		"""
+		Returns the number of electrons in the element.
+		"""
+
 		return self._electrons
 
 	@memoized_property
-	def protons(self):
+	def protons(self) -> int:
+		"""
+		Returns the number of protons in the element.
+		"""
+
 		return self._protons
 
 	@memoized_property
-	def group(self):
+	def group(self) -> int:
+		"""
+		 Group in periodic table.
+		"""
+
 		return self._group
 
 	@memoized_property
-	def period(self):
+	def period(self) -> int:
+		"""
+		Period in periodic table.
+		"""
+
 		return self._period
 
 	@memoized_property
-	def block(self):
+	def block(self) -> str:
+		"""
+		Block in periodic table.
+		"""
+
 		return self._block
 
 	@memoized_property
-	def series(self):
+	def series(self) -> int:
+		"""
+		Index to chemical series.
+		"""
+
 		return self._series
 
 	@memoized_property
-	def mass(self):
+	def mass(self) -> float:
+		"""
+		Returns the relative atomic mass.
+
+		Ratio of the average mass of atoms.
+		"""
 		return self._mass
 
 	@memoized_property
@@ -264,51 +243,103 @@ class Element(Dictable):
 		return self._mass
 
 	@memoized_property
-	def eleneg(self):
+	def eleneg(self) -> float:
+		"""
+		Returns the Electronegativity (Pauling scale).
+		"""
+
 		return self._eleneg
 
 	@memoized_property
-	def eleaffin(self):
+	def eleaffin(self) -> float:
+		"""
+		Returns the electron affinity in eV.
+		"""
+
 		return self._eleaffin
 
 	@memoized_property
-	def covrad(self):
+	def covrad(self) -> float:
+		"""
+		Returns the Covalent radius in Angstrom.
+		"""
+
 		return self._covrad
 
 	@memoized_property
-	def atmrad(self):
+	def atmrad(self) -> float:
+		"""
+		Returns the Atomic radius in Angstrom.
+		"""
+
 		return self._atmrad
 
 	@memoized_property
-	def vdwrad(self):
+	def vdwrad(self) -> float:
+		"""
+		Returns the Van der Waals radius in Angstrom.
+		"""
+
 		return self._vdwrad
 
 	@memoized_property
-	def tboil(self):
+	def tboil(self) -> float:
+		"""
+		Returns the boiling temperature in K.
+		"""
+
 		return self._tboil
 
 	@memoized_property
-	def tmelt(self):
+	def tmelt(self) -> float:
+		"""
+		Returns the melting temperature in K.
+		"""
+
 		return self._tmelt
 
 	@memoized_property
-	def density(self):
+	def density(self) -> float:
+		"""
+		Returns the density at 295K in g/cm3 respectively g/L.
+		"""
+
 		return self._density
 
 	@memoized_property
-	def eleconfig(self):
+	def eleconfig(self) -> str:
+		"""
+		Returns the Ground state electron configuration.
+		"""
+
 		return self._eleconfig
 
 	@memoized_property
-	def oxistates(self):
+	def oxistates(self) -> str:
+		"""
+		Returns the oxidation states
+		"""
+
 		return self._oxistates
 
 	@memoized_property
-	def ionenergy(self):
+	def ionenergy(self) -> Tuple:  # TODO
+		"""
+		Returns the ionization energies in eV
+		"""
+
 		return self._ionenergy
 
 	@memoized_property
-	def isotopes(self):
+	def isotopes(self) -> Dict[int, "Isotope"]:
+		"""
+		Returns the Isotopic composition.
+
+		keys: isotope mass number
+
+		values: Isotope(relative atomic mass, abundance)
+		"""
+
 		return self._isotopes
 
 	@memoized_property
@@ -359,7 +390,7 @@ class Element(Dictable):
 				))
 
 	@memoized_property
-	def nominalmass(self):
+	def nominalmass(self) -> int:
 		"""
 		Return mass number of most abundant natural stable isotope.
 		"""
@@ -373,7 +404,7 @@ class Element(Dictable):
 		return nominalmass
 
 	@memoized_property
-	def neutrons(self):
+	def neutrons(self) -> int:
 		"""
 		Return number neutrons in most abundant natural stable isotope.
 		"""
@@ -381,7 +412,7 @@ class Element(Dictable):
 		return self.nominalmass - self.protons
 
 	@memoized_property
-	def exactmass(self):
+	def exactmass(self) -> float:
 		"""
 		Return relative atomic mass calculated from isotopic composition.
 		"""
@@ -389,23 +420,25 @@ class Element(Dictable):
 		return sum(iso.mass * iso.abundance for iso in self.isotopes.values())
 
 	@memoized_property
-	def eleconfig_dict(self):
+	def eleconfig_dict(self) -> Dict[Tuple, int]:  # TODO
 		"""
-		Return electron configuration as dict.
+		Returns the ground state electron configuration.
+
+		Mapping of Tuple(shell, subshell): electrons.
 		"""
 
 		adict = {}
 		if self.eleconfig.startswith('['):
 			base = self.eleconfig.split(' ', 1)[0][1:-1]
-			adict.update(_table.ELEMENTS[base].eleconfig_dict)
+			adict.update(_elements.ELEMENTS[base].eleconfig_dict)
 		for e in self.eleconfig.split()[bool(adict):]:
 			adict[(int(e[0]), e[1])] = int(e[2:]) if len(e) > 2 else 1
 		return adict
 
 	@memoized_property
-	def eleshells(self):
+	def eleshells(self) -> Tuple[int, ...]:
 		"""
-		Return number of electrons in shell as tuple.
+		Return number of electrons per shell as tuple.
 		"""
 
 		eleshells = [0, 0, 0, 0, 0, 0, 0]
@@ -581,7 +614,7 @@ class HeavyHydrogen(Element):
 			raise ValueError("'HeavyHydrogen' can only be used for Deuterium and Tritium")
 
 	@memoized_property
-	def nominalmass(self):
+	def nominalmass(self) -> int:
 		"""
 		Return mass number of most abundant natural stable isotope.
 		"""
@@ -590,6 +623,8 @@ class HeavyHydrogen(Element):
 			return 2
 		elif self.symbol == "T":
 			return 3
+		else:
+			raise ValueError("Unknown heavy hydrogen isotope.")
 
 	@memoized_property
 	def as_isotope(self):

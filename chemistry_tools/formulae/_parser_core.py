@@ -235,8 +235,7 @@ def _parse_isotope_string(label):
 
 def _parse_multiplicity(strings, substance_keys=None):
 	"""
-	Examples
-	--------
+	**Examples**
 	>>> _parse_multiplicity(['2 H2O2', 'O2']) == {'H2O2': 2, 'O2': 1}
 	True
 	>>> _parse_multiplicity(['2 * H2O2', 'O2']) == {'H2O2': 2, 'O2': 1}

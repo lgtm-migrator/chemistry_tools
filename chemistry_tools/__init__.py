@@ -83,38 +83,21 @@ __license__ = "LGPL"
 __version__ = "0.3.0"
 __email__ = "dominic@davis-foster.co.uk"
 
-# stdlib
-import pathlib
-
-# 3rd party
-import appdirs
-import requests
-from cachecontrol import CacheControl
-from cachecontrol.caches.file_cache import FileCache
-
-cache_dir = pathlib.Path(appdirs.user_cache_dir("chemistry_tools"))
-if not cache_dir.exists():
-	cache_dir.mkdir(parents=True, exist_ok=True)
-
-session = requests.session()
-cached_requests = CacheControl(requests.Session(), cache=FileCache(cache_dir))
-
-
-def clear_cache():
-	import shutil
-	shutil.rmtree(cache_dir)
-
+# this package
+from chemistry_tools.rate_limiter import cached_requests, clear_cache
 
 __all__ = [
-		"spectrum_similarity",
-		"constants",
-		"property_format",
-		"toxnet",
-		"formulae",
-		"pubchem",
-		"units",
+		# "spectrum_similarity",
+		# "constants",
+		# "property_format",
+		# "toxnet",
+		# "formulae",
+		# "pubchem",
+		# "units",
 		"cached_requests",
+		"clear_cache",
 		]
 
 if __name__ == '__main__':
+
 	print(__version__)

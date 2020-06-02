@@ -254,7 +254,7 @@ __all__ = (
 		"Cn",
 		)
 
-from .classes import Element, Elements, Isotope
+# this package
 from ._elements import *
 from ._isotope_data import isotope_data  # , undefined_isotopes
 from ._table import *
@@ -262,6 +262,7 @@ from .actinides import *
 from .alkali_metals import *
 from .alkaline_earth_metals import *
 from .chalcogens import *
+from .classes import Element, Elements, Isotope
 from .halogens import *
 from .lanthanides import *
 from .noble_gases import *

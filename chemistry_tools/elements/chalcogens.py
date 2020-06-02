@@ -107,6 +107,7 @@ Group 16: Chalcogens in the Periodic Table
 
 __all__ = ("O", "S", "Se", "Te", "Po", "Lv")
 
+# this package
 from .classes import Element
 
 # Isotope 0 Key:

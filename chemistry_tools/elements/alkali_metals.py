@@ -107,6 +107,7 @@ Group 1: Alkali Metals in the Periodic Table
 
 __all__ = ('Li', 'Na', 'K', 'Rb', 'Cs', 'Fr')
 
+# this package
 from .classes import Element
 
 # Isotope 0 Key:

@@ -98,7 +98,7 @@ def rest_get_description(identifier, namespace=PubChemNamespace.name, **kwargs):
 	:type identifier: str, Sequence[str]
 	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`
 	:type namespace: PubChemNamespace, optional
-	:param **kwargs: Optional arguments that ``json.loads`` takes.
+	:param kwargs: Optional arguments that ``json.loads`` takes.
 	:raises ValueError: If the response body does not contain valid json.
 
 	:return: Parsed json data

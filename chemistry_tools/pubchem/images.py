@@ -64,6 +64,6 @@ def rest_get_structure_image(identifier, namespace=PubChemNamespace.name, width=
 	:rtype: :py:class:`PIL.Image.Image`
 	"""
 
-	from PIL import Image
+	from PIL import Image  # type: ignore
 	r = _do_rest_get(namespace, identifier, "PNG", png_width=width, png_height=height)
 	return Image.open(BytesIO(r.content))
