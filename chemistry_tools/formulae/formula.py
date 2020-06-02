@@ -107,17 +107,19 @@ Parse formulae into a Python object
 import math
 from collections import Counter, defaultdict
 from itertools import combinations_with_replacement, product
-
-#  3rd party
-from mathematical.utils import gcd_array
+from typing import Dict, List, Optional, Sequence, Tuple
 
 # this package
-from chemistry_tools.elements import D, ELEMENTS, isotope_data, T
+from chemistry_tools.elements import ELEMENTS, D, T, isotope_data
 from chemistry_tools.formulae.parser import string_to_composition
+
+# this package
 from ._parser_core import _make_isotope_string
 from .composition import Composition
 from .iso_dist import IsotopeDistribution
-from .utils import _hill_order, _split_isotope, GROUPS
+from .utils import GROUPS, _hill_order, _split_isotope
+#  3rd party
+from mathematical.utils import gcd_array  # type: ignore # TODO
 
 
 class Formula(defaultdict, Counter):
@@ -126,20 +128,17 @@ class Formula(defaultdict, Counter):
 	It is based on :class:`python:dict`, with the symbols of chemical elements
 	as keys and the values equal to the number of atoms of the corresponding
 	element in the compound.
+
+	:param composition: A :class:`~chemistry_tools.formulae.formula.Formula` object with the elemental
+		composition of a substance, or a :class:`python:dict` representing the same.
+		If ``None`` an empty object is created
+	:param charge:
+	:type charge: int, optional
 	"""
 
 	# TODO: option to convert D and T to H[2] and H[3] ("heavy hydrogen")
 
-	def __init__(self, composition=None, charge=0):
-		"""
-		:param composition: A :py:class:`Formula` object with the elemental composition of a substance,
-			or a :class:`python:dict` representing the same.
-			If ``None`` an empty object is created
-		:type composition: :py:class:`Formula`, optional
-		:param charge:
-		:type charge: int, optional
-		"""
-
+	def __init__(self, composition: Optional[Dict[str, int]] = None, charge: int = 0):
 		defaultdict.__init__(self, int)
 
 		self.charge = 0
@@ -178,19 +177,18 @@ class Formula(defaultdict, Counter):
 			self.charge = charge
 
 	@classmethod
-	def from_string(cls, formula, charge=0):
+	def from_string(cls, formula: str, charge: int = 0):
 		"""
-		Create a new :class:`Formula` object by parsing a string
+		Create a new :class:`~chemistry_tools.formulae.formula.Formula` object by parsing a string
 
 		.. note:: Isotopes cannot (currently) be parsed using this method
 
 		:param formula: A string with a chemical formula
-		:type formula:
+		:type formula: str
 		:param charge:
 		:type charge: int, optional
 
-		:rtype: :class:`Formula`
-		# TODO: should throw error for unrecognised elements CGCGAATTCGCG
+		TODO: should throw error for unrecognised elements CGCGAATTCGCG
 		"""
 
 		_class = cls()
@@ -244,21 +242,28 @@ class Formula(defaultdict, Counter):
 		return _class
 
 	@classmethod
-	def from_mass_fractions(cls, fractions, charge=0, maxcount=10, precision=1e-4):
+	def from_mass_fractions(
+			cls,
+			fractions: Dict[str, float],
+			charge: int = 0,
+			maxcount: int = 10,
+			precision: float = 1e-4,
+			) -> "Formula":
 		"""
-		Create a new :class:`Formula` object from elemental mass fractions by parsing a string
+		Create a new :class:`~chemistry_tools.formulae.formula.Formula` object from elemental mass fractions by parsing a string
 
 		.. note:: Isotopes cannot (currently) be parsed using this method
 
 		:param fractions: A dictionary of elements and mass fractions
-		:type fractions: dict
 		:param charge:
 		:type charge: int, optional
+		:param maxcount:
+		:type maxcount:
+		:param precision:
+		:type precision:
 
-		:rtype: :class:`Formula`
+		**Examples**
 
-		Examples
-		--------
 		>>> Formula.from_mass_fractions({'H': 0.112, 'O': 0.888})
 		'H2O'
 		>>> Formula.from_mass_fractions({'D': 0.2, 'O': 0.8})
@@ -322,22 +327,21 @@ class Formula(defaultdict, Counter):
 		return cls.from_string(''.join(formula), charge=charge)
 
 	@classmethod
-	def from_kwargs(cls, *, charge=0, **kwargs):
+	def from_kwargs(cls, *, charge: int = 0, **kwargs) -> "Formula":
 		"""
-		Create a new :class:`Formula` object from keyword arguments representing the elements in the compound
+		Create a new :class:`~chemistry_tools.formulae.formula.Formula` object from
+		keyword arguments representing the elements in the compound.
 
 		:param charge:
 		:type charge: int, optional
-
-		:rtype: :class:`Formula`
 		"""
 
 		return cls(kwargs, charge=charge)
 
 	@property
-	def monoisotopic_mass(self):
+	def monoisotopic_mass(self) -> float:
 		"""
-		Calculate the monoisotopic mass of a :py:class:`Formula`.
+		Calculate the monoisotopic mass of a :class:`~chemistry_tools.formulae.formula.Formula`.
 		If any isotopes are already present in the formula, the mass of these will be preserved
 
 		:return: mass
@@ -367,9 +371,9 @@ class Formula(defaultdict, Counter):
 	nominal_mass = exact_mass = monoisotopic_mass
 
 	@property
-	def mass(self):
+	def mass(self) -> float:
 		"""
-		Calculate the average mass of a :py:class:`Formula`.
+		Calculate the average mass of a :class:`~chemistry_tools.formulae.formula.Formula`.
 
 		Note that mass is not averaged for elements with specified isotopes.
 
@@ -407,9 +411,9 @@ class Formula(defaultdict, Counter):
 	def average_mz(self):
 		return self.get_mz(average=True)
 
-	def get_mz(self, average=True, charge=None):
+	def get_mz(self, average: bool = True, charge: bool = None) -> float:
 		"""
-		Calculate the average mass:charge ratio (*m/z*) of a :py:class:`Formula`.
+		Calculate the average mass:charge ratio (*m/z*) of a :class:`~chemistry_tools.formulae.formula.Formula`.
 
 		:param average: If :py:const:`True` then the average *m/z* is calculated. Note that mass
 			is not averaged for elements with specified isotopes. Default is
@@ -423,9 +427,9 @@ class Formula(defaultdict, Counter):
 		"""
 
 		if average:
-			mass = self.average_mass
+			mass = self.mass
 		else:
-			mass = self.exact_mass
+			mass = self.monoisotopic_mass
 
 		# Calculate m/z
 		if charge:
@@ -435,7 +439,10 @@ class Formula(defaultdict, Counter):
 
 		return mass
 
-	def most_probable_isotopic_composition(self, elements_with_isotopes=None):
+	def most_probable_isotopic_composition(
+			self,
+			elements_with_isotopes: Optional[Sequence[str]] = None,
+			) -> Tuple["Formula", float]:
 		"""
 		Calculate the most probable isotopic composition of a molecule/ion.
 
@@ -444,10 +451,9 @@ class Formula(defaultdict, Counter):
 
 		:param elements_with_isotopes: A set of elements to be considered in isotopic distribution
 			(by default, every element has an isotopic distribution).
-		:type: elements_with_isotopes: container of str, optional
+
 		:return: A tuple with the most probable isotopic composition and its
 			relative abundance.
-		:rtype: (Formula, float)
 		"""
 
 		# Removing isotopes from the composition.
@@ -479,7 +485,7 @@ class Formula(defaultdict, Counter):
 		return isotopic_composition, isotopic_composition.isotopic_composition_abundance
 
 	@property
-	def isotopic_composition_abundance(self):
+	def isotopic_composition_abundance(self) -> float:
 		"""
 		Calculate the relative abundance of the current isotopic composition
 		of this molecule.
@@ -488,7 +494,7 @@ class Formula(defaultdict, Counter):
 		:rtype: float
 		"""
 
-		isotopic_composition = defaultdict(dict)
+		isotopic_composition: defaultdict = defaultdict(dict)
 
 		# Check if there are default and non-default isotopes of the same
 		# element and rearrange the elements.
@@ -522,9 +528,9 @@ class Formula(defaultdict, Counter):
 	def iter_isotopologues(
 			self,
 			report_abundance=False,
-			elements_with_isotopes=None,
-			isotope_threshold=5e-4,
-			overall_threshold=0
+			elements_with_isotopes: Optional[Sequence[str]] = None,
+			isotope_threshold: float = 5e-4,
+			overall_threshold: float = 0,
 			):
 		"""
 		Iterate over possible isotopic states of the molecule.
@@ -535,14 +541,11 @@ class Formula(defaultdict, Counter):
 		:param report_abundance: If :py:const:`True`, the output will contain 2-tuples: `(composition, abundance)`.
 			Otherwise, only compositions are yielded. Default is :py:const:`False`.
 		:type: report_abundance: bool, optional
-		:param elements_with_isotopes: A set of elements to be considered in isotopic distribution
+		:param elements_with_isotopes: A set of elements to be considered in isotopic distributions
 			(by default, every element has an isotopic distribution).
-		:type: elements_with_isotopes: container of str, optional
-		:param isotope_threshold: The threshold abundance of a specific isotope to be considered.
-			Default is :py:const:`5e-4`.
+		:param isotope_threshold: The threshold abundance of a specific isotope to be considered. Default ``5e-4``
 		:type: isotope_threshold: float, optional
-		:param overall_threshold: The threshold abundance of the calculated isotopic composition.
-			Default is :py:const:`0`.
+		:param overall_threshold: The threshold abundance of the calculated isotopic composition. Default ``0``
 		:type: overall_threshold: float, optional
 
 		:return: Iterator over possible isotopic compositions.
@@ -583,12 +586,10 @@ class Formula(defaultdict, Counter):
 			else:
 				yield ic
 
-	def isotope_distribution(self):
+	def isotope_distribution(self) -> IsotopeDistribution:
 		"""
 		Returns a :class:`IsotopeDistribution` object representing the distribution of the
 		isotopologues of the formula
-
-		:rtype: :class:`IsotopeDistribution`
 		"""
 
 		return IsotopeDistribution(self)
@@ -689,16 +690,16 @@ class Formula(defaultdict, Counter):
 
 	def _repr_pretty_(self, p, cycle):
 		if cycle:  # should never happen
-			p.text('{} object with a cyclic reference'.format(type(self).__name__))
+			p.text(f'{type(self).__name__} object with a cyclic reference')
 		p.text(str(self))
 
 	@property
-	def hill_formula(self):
+	def hill_formula(self) -> str:
 		"""
 		Returns formula in Hill notation
 
-		Examples
-		--------
+		**Examples**
+
 		>>> Formula.from_string('BrC2H5').hill_formula
 		'C2H5Br'
 		>>> Formula.from_string('HBr').hill_formula
@@ -742,12 +743,12 @@ class Formula(defaultdict, Counter):
 		return ''.join(hill)
 
 	@property
-	def no_isotope_hill_formula(self):
+	def no_isotope_hill_formula(self) -> str:
 		"""
 		Returns formula in Hill notation, without any isotopes specified
 
-		Examples
-		--------
+		**Examples**
+
 		>>> Formula.from_string('BrC2H5').no_isotope_hill_formula
 		'C2H5Br'
 		>>> Formula.from_string('HBr').no_isotope_hill_formula
@@ -760,7 +761,7 @@ class Formula(defaultdict, Counter):
 
 		hill = []
 
-		ordered_symbols = dict()
+		ordered_symbols: Dict[str, int] = dict()
 
 		for symbol in _hill_order(self.elements):
 			count = self[symbol]
@@ -778,20 +779,20 @@ class Formula(defaultdict, Counter):
 		return ''.join(hill)
 
 	@property
-	def empirical_formula(self):
+	def empirical_formula(self) -> str:
 		"""
 		Returns the empirical formula in Hill notation.
 
 		The empirical formula has the simplest whole number ratio of atoms
 		of each element present in formula.
 
-		Examples
-		--------
-		>>> Formula.from_string('H2O').empirical
+		**Examples**
+
+		>>> Formula.from_string('H2O').empirical_formula
 		'H2O'
-		>>> Formula.from_string('S4').empirical
+		>>> Formula.from_string('S4').empirical_formula
 		'S'
-		>>> Formula.from_string('C6H12O6').empirical
+		>>> Formula.from_string('C6H12O6').empirical_formula
 		'CH2O'
 
 		:rtype: str
@@ -810,12 +811,12 @@ class Formula(defaultdict, Counter):
 		return ''.join(hill)
 
 	@property
-	def n_atoms(self):
+	def n_atoms(self) -> int:
 		"""
 		Return the number of atoms in the formula.
 
-		Examples
-		--------
+		**Examples**
+
 		>>> Formula.from_string('CH3COOH').n_atoms
 		8
 
@@ -824,12 +825,12 @@ class Formula(defaultdict, Counter):
 		return sum(list(self.values()))
 
 	@property
-	def n_elements(self):
+	def n_elements(self) -> int:
 		"""
 		Return the number of elements in the formula.
 
-		Examples
-		--------
+		**Examples**
+
 		>>> Formula.from_string('CH3COOH').n_elements
 		3
 
@@ -838,7 +839,7 @@ class Formula(defaultdict, Counter):
 		return len(self)
 
 	@property
-	def elements(self):
+	def elements(self) -> List[str]:  # type: ignore
 		"""
 		Returns a list of the element symbols in the formula.
 		"""
@@ -846,7 +847,7 @@ class Formula(defaultdict, Counter):
 		return list(self.keys())
 
 	@property
-	def composition(self):
+	def composition(self) -> Composition:
 		"""
 		Returns a :class:`Composition` object representing the elemental composition of the Formula
 
