@@ -80,7 +80,7 @@ import re
 from collections import defaultdict
 from functools import lru_cache
 from string import ascii_lowercase, ascii_uppercase
-from typing import Dict, Iterable, List, Sequence, Union
+from typing import Any, Dict, Iterable, List, Sequence, Union
 
 # this package
 from chemistry_tools.elements import ELEMENTS
@@ -91,7 +91,9 @@ from ._parser_core import _formula_to_parts, _get_charge, _get_leading_integer, 
 from .latex import _latex_mapping
 
 _atom = r'([A-Z][a-z+]*)(?:\[(\d+)\])?([+-]?\d+)?'
-_formula = fr'^({_atom})*$'
+_atom_re = re.compile(_atom)
+_formula_re = re.compile(fr'^({_atom})*$')
+
 relative_atomic_masses = [element.mass for element in ELEMENTS]
 
 
@@ -242,7 +244,7 @@ def _get_formula_parser():
 	return formula
 
 
-def _parse_stoich(stoich):
+def _parse_stoich(stoich) -> Dict[int, Any]:
 	if stoich == 'e':  # special case, the electron is not an element
 		return {}
 
@@ -259,7 +261,8 @@ def _parse_stoich(stoich):
 
 def string_to_composition(
 		formula: str, prefixes: Iterable[str] = None,
-		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),) -> Dict[int, int]:
+		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),
+		) -> Dict[int, int]:
 	"""
 	Parse composition of formula representing a chemical formula
 
@@ -282,9 +285,11 @@ def string_to_composition(
 
 	if prefixes is None:
 		prefixes = _latex_mapping.keys()
+
 	stoich_tok, chg_tok = _formula_to_parts(formula, prefixes, suffixes)[:2]
 	tot_comp = {}
 	parts = stoich_tok.split('.')
+
 	for idx, stoich in enumerate(parts):
 		if idx == 0:
 			m = 1
@@ -309,6 +314,7 @@ def string_to_composition(
 				tot_comp[k] = m * v
 			else:
 				tot_comp[k] += m * v
+
 	if chg_tok is not None:
 		tot_comp[0] = _get_charge(chg_tok)
 
@@ -402,6 +408,7 @@ def mass_from_composition(composition: Dict[Union[str, int], int], charge: int =
 					"either as a keyword argument or as the '0' key of 'composition'")
 
 	mass = 0.0
+
 	for k, v in composition.items():
 		if k == 0:  # electron
 			mass -= v * 5.489e-4
@@ -409,4 +416,5 @@ def mass_from_composition(composition: Dict[Union[str, int], int], charge: int =
 			mass += v * ELEMENTS[k].mass
 		elif isinstance(k, int):
 			mass += v * ELEMENTS[k].mass
+
 	return mass

@@ -48,12 +48,12 @@ from chemistry_tools.pubchem.bond import parse_bonds
 from chemistry_tools.pubchem.enums import CoordinateType
 from chemistry_tools.pubchem.full_record import parse_full_record, rest_get_full_record
 from chemistry_tools.pubchem.properties import (
-		_force_valid_properties,
-		insert_valid_properties_table,
-		parse_properties,
-		rest_get_properties_json,
-		valid_properties
-		)
+	_force_valid_properties,
+	insert_valid_properties_table,
+	parse_properties,
+	rest_get_properties_json,
+	valid_properties
+)
 from chemistry_tools.pubchem.synonyms import get_synonyms
 
 # this package
@@ -102,7 +102,7 @@ class Compound(Dictable):
 				bonds=self._bonds,
 				)
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'Compound({self.cid})' if self.cid else 'Compound()'
 
 	def to_series(self):

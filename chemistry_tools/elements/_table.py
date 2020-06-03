@@ -54,11 +54,14 @@
 
 __all__ = ("PERIODS", "BLOCKS", "GROUPS", "SERIES")
 
-PERIODS = {1: 'K', 2: 'L', 3: 'M', 4: 'N', 5: 'O', 6: 'P', 7: 'Q'}
+# stdlib
+from typing import Dict, Tuple
+
+PERIODS: Dict[int, str] = {1: 'K', 2: 'L', 3: 'M', 4: 'N', 5: 'O', 6: 'P', 7: 'Q'}
 
 BLOCKS = {'s': '', 'g': '', 'f': '', 'd': '', 'p': ''}
 
-GROUPS = {
+GROUPS: Dict[int, Tuple[str, str]] = {
 		1: ('IA', 'Alkali metals'),
 		2: ('IIA', 'Alkaline earths'),
 		3: ('IIIB', ''),
@@ -79,7 +82,7 @@ GROUPS = {
 		18: ('VIIIA', 'Noble gases'),
 		}
 
-SERIES = {
+SERIES: Dict[int, str] = {
 		1: 'Nonmetals',
 		2: 'Noble gases',
 		3: 'Alkali metals',

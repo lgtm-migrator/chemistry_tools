@@ -1,5 +1,5 @@
 numpy>=1.16.0
-pandas>=0.24.0
+pandas>=1.0.1
 appdirs>=1.4.3
 quantities >= 0.12.4
 requests>=2.21.0

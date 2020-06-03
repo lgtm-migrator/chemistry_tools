@@ -87,7 +87,7 @@ class PubChemHTTPError(PubChemPyError):
 		elif self.code == 500:
 			raise ServerError(self.msg)
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return repr(self.msg)
 
 

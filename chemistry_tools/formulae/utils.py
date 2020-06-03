@@ -105,10 +105,12 @@ import re
 from functools import lru_cache
 
 # this package
+from typing import Dict, Iterable, List, Sequence, Set, Tuple, Union
+
 from chemistry_tools.elements import ELEMENTS
 
 # Common chemical groups
-GROUPS = {
+GROUPS: Dict[str, str] = {
 		'Abu': 'C4H7NO',
 		'Acet': 'C2H3O',
 		'Acm': 'C3H6NO',
@@ -230,7 +232,7 @@ _iso_bracket_regex = re.compile(r"^(\[)(\d+)(\])$")
 
 
 @lru_cache()
-def _split_isotope(string):
+def _split_isotope(string: str) -> Tuple[str, int]:
 	"""
 	Returns the symbol and massnumber for the isotope represented by ``string``.
 
@@ -239,11 +241,10 @@ def _split_isotope(string):
 	:param string:
 	:type string: str
 
-	:return:
-	:rtype: (str, int)
+	:return: Tuple representing the element and the isotope number
 	"""
 
-	isotope = 0
+	isotope = "0"
 
 	iso_re_1 = _isotope_regex_1.findall(string)
 	iso_re_2 = _isotope_regex_2.findall(string)
@@ -269,38 +270,32 @@ def _split_isotope(string):
 	return ELEMENTS[elem].symbol, int(isotope)
 
 
-def _hill_order(*symbols):
+_hill_isotope_re = r"^(%s)(\[[0-9]*\])?$"
+_hill_carbon_re = re.compile(_hill_isotope_re % "C")
+_hill_hydrogen_re = re.compile(_hill_isotope_re % "H")
+
+
+def _hill_order(symbols: Sequence[str]) -> Iterable[str]:
 	"""
-	Return iterator over element symbols in order of Hill notation.
+	Returns iterator over element symbols in order of Hill notation.
 
 	**Examples**
 	>>> for i in _hill_order('H', 'C[12]', 'O'): print(i, end='')
 	CHO
-
 	"""
 
-	if len(symbols) == 0:
-		raise TypeError("'_hill_order' requires at least 1 argument (0 given)")
-	elif len(symbols) == 1:
-		if isinstance(symbols[0], (list, tuple, set)):
-			symbols = symbols[0]
+	symbols_list: List[str] = list(set(symbols))
 
-	symbols = list(set(symbols))
-
-	isotope_re = r"^(%s)(\[[0-9]*\])?$"
-	carbon_re = re.compile(isotope_re % "C")
-	hydrogen_re = re.compile(isotope_re % "H")
-
-	carbon_isotopes = list(filter(carbon_re.findall, symbols))
+	carbon_isotopes = list(filter(_hill_carbon_re.findall, symbols_list))
 
 	if carbon_isotopes:
 		for isotope in sorted(carbon_isotopes):
-			symbols.remove(isotope)
+			symbols_list.remove(isotope)
 			yield isotope
 
-		hydrogen_isotopes = list(filter(hydrogen_re.findall, symbols))
+		hydrogen_isotopes = list(filter(_hill_hydrogen_re.findall, symbols_list))
 		for isotope in sorted(hydrogen_isotopes):
-			symbols.remove(isotope)
+			symbols_list.remove(isotope)
 			yield isotope
 
-	yield from sorted(symbols)
+	yield from sorted(symbols_list)

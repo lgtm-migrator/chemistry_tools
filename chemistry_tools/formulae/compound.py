@@ -73,6 +73,9 @@ Parse formulae into a Python object
 #  |  DOI: `10.1021/acs.jproteome.8b00717 <http://dx.doi.org/10.1021/acs.jproteome.8b00717>`_
 #
 
+# stdlib
+from typing import Dict, Optional
+
 # 3rd party
 import quantities  # type: ignore
 
@@ -111,23 +114,27 @@ class Compound(Dictable):
 	# 	data
 	# 		Free form dictionary of additional properties.
 
+	formula: Formula
+	latex_name: str
+	unicode_name: str
+	html_name: str
+
 	def __init__(
 			self,
-			name,
-			formula=None,
-			data=None,
-			latex_name=None,
-			unicode_name=None,
-			html_name=None,
+			name: str,
+			formula: Optional[Formula] = None,
+			data: Optional[Dict] = None,
+			latex_name: Optional[str] = None,
+			unicode_name: Optional[str] = None,
+			html_name: Optional[str] = None,
 			):
 
 		super().__init__()
 
-		self.name = name
+		self.name: str = name
 
 		if formula is None:
-			formula = name
-			self.formula = Formula.from_string(formula)
+			self.formula = Formula.from_string(name)
 		else:
 			self.formula = formula
 
@@ -146,7 +153,7 @@ class Compound(Dictable):
 		else:
 			self.html_name = string_to_html(self.formula.hill_formula)
 
-		self.data = data or {}
+		self.data: Optional[Dict] = data or {}
 
 	@property
 	def __dict__(self):
@@ -159,47 +166,52 @@ class Compound(Dictable):
 				data=self.data,
 				)
 
-	def __eq__(self, other):
+	def __eq__(self, other) -> bool:
 		if isinstance(other, str):
 			return self.name == other
 		else:
-			super().__eq__(other)
+			return super().__eq__(other)
 
 	@property
-	def charge(self):
+	def charge(self) -> int:
 		"""
 		Returns the charge of the compound.
+
+		:rtype: int
 		"""
 
 		return self.formula.charge
 
 	@property
-	def mass(self):
+	def mass(self) -> float:
 		"""
 		Returns the mass of the compound.
+
+		:rtype: int
 		"""
 
 		return self.formula.mass
 
-	def molar_mass(self):
+	def molar_mass(self) -> quantities.quantity.Quantity:
 		"""
 		Returns the molar mass (with units) of the substance
 
 		**Examples**
-		>>> nh4p = Compound.from_formula('NH4+')
+		>>> nh4p = Compound('NH4+')
 		>>> from chemistry_tools.units import quantities
 		>>> nh4p.molar_mass(quantities)
 		df(18.0384511...) * g/mol
 
+		:rtype: ~quantities.quantity.Quantity
 		"""
 
 		return self.mass * quantities.g / quantities.mol
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f"<{self.__class__.__name__}({self.name}, {self.formula})>"
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return str(self.name)
 
-	def _repr_html_(self):
+	def _repr_html_(self) -> str:
 		return self.html_name

@@ -80,7 +80,7 @@ class Atom:
 		self.z = z
 		self.charge = charge
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'Atom({self.aid}, {self.element})'
 
 	def __eq__(self, other):

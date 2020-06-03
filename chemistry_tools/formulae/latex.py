@@ -74,19 +74,27 @@ Functions and constants for converting formulae to LaTeX
 #  |  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+# stdlib
+from typing import Dict, Optional, Sequence, Union
+
 # this package
 from ._parser_core import _formula_to_format, _greek_letters
 
-_latex_mapping = {k + '-': '\\' + k + '-' for k in _greek_letters}
+_latex_mapping: Dict[str, str] = {k + '-': '\\' + k + '-' for k in _greek_letters}
 _latex_mapping['epsilon-'] = '\\varepsilon-'
 _latex_mapping['omicron-'] = 'o-'
 _latex_mapping['.'] = '^\\bullet '
-_latex_infix_mapping = {'.': '\\cdot '}
+_latex_infix_mapping: Dict[str, str] = {'.': '\\cdot '}
 
 
-def string_to_latex(formula, prefixes=None, infixes=None, **kwargs):
+def string_to_latex(
+		formula: str,
+		prefixes: Optional[Dict[str, str]] = None,
+		infixes: Optional[Dict[str, str]] = None,
+		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),
+		) -> str:
 	"""
-	Convert formula string to latex representation
+	Convert formula string to LaTeX representation
 
 	**Examples**
 	>>> string_to_latex('NH4+')
@@ -102,30 +110,42 @@ def string_to_latex(formula, prefixes=None, infixes=None, **kwargs):
 
 	:param formula: Chemical formula, e.g. 'H2O', 'Fe+3', 'Cl-'
 	:type formula: str
-	:param prefixes: Prefix transofmrations. Default: greek letters and ``.``
-	:type prefixes: dict
-	:param infixes: Infix transformations. Default ``.``
-	:type infixes: dict
-	:param kwargs:
-	:type kwargs:
+	:param prefixes: Mapping of prefixes to their LaTeX equivalents. Default greek letters and ``.``
+	:param infixes: Mapping of infixes to their LaTeX equivalents. Default ``.``
+	:param suffixes: Suffixes to keep, e.g. ('(g)', '(s)')
 
-	:return:
-	:rtype:
+	:return: The LaTeX representation of the formula
+	:rtype: str
 	"""
-
-	# TODO: suffixes: iterable of str
-	# 	What suffixes not to interpret, default: (s), (l), (g), (aq)
 
 	if prefixes is None:
 		prefixes = _latex_mapping
+
 	if infixes is None:
 		infixes = _latex_infix_mapping
-	return _formula_to_format(latex_subscript, latex_superscript, formula, prefixes, infixes, **kwargs)
+
+	return _formula_to_format(latex_subscript, latex_superscript, formula, prefixes, infixes, suffixes)
 
 
-def latex_subscript(val):
+def latex_subscript(val: Union[str, float]) -> str:
+	"""
+	Returns the LaTeX subscript of the given value.
+
+	:param val: The value to superscript
+
+	:rtype: str
+	"""
+
 	return f'_{{{val}}}'
 
 
-def latex_superscript(val):
+def latex_superscript(val: Union[str, float]) -> str:
+	"""
+	Returns the LaTeX superscript of the given value.
+
+	:param val: The value to subscript
+
+	:rtype: str
+	"""
+
 	return f'^{{{val}}}'

@@ -75,17 +75,19 @@ Functions and constants for convert formulae to unicode
 #
 
 # this package
+from typing import Dict, Optional, Sequence, Union
+
 from ._parser_core import _formula_to_format, _greek_letters, _greek_u
 
-_unicode_mapping = {k + '-': v + '-' for k, v in zip(_greek_letters, _greek_u)}
+_unicode_mapping: Dict[str, str] = {k + '-': v + '-' for k, v in zip(_greek_letters, _greek_u)}
 _unicode_mapping['.'] = '⋅'
-_unicode_infix_mapping = {'.': '·'}
-_unicode_sub = {}
+_unicode_infix_mapping: Dict[str, str] = {'.': '·'}
+_unicode_sub: Dict[str, str] = {}
 
 for k, v in enumerate("₀₁₂₃₄₅₆₇₈₉"):
 	_unicode_sub[str(k)] = v
 
-_unicode_sup = {
+_unicode_sup: Dict[str, str] = {
 		'+': '⁺',
 		'-': '⁻',
 		}
@@ -94,7 +96,12 @@ for k, v in enumerate("⁰¹²³⁴⁵⁶⁷⁸⁹"):
 	_unicode_sup[str(k)] = v
 
 
-def string_to_unicode(formula, prefixes=None, infixes=None, **kwargs):
+def string_to_unicode(
+		formula: str,
+		prefixes: Optional[Dict[str, str]] = None,
+		infixes: Optional[Dict[str, str]] = None,
+		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),
+		) -> str:
 	"""
 	Convert formula string to unicode string representation
 
@@ -112,29 +119,42 @@ def string_to_unicode(formula, prefixes=None, infixes=None, **kwargs):
 
 	:param formula: Chemical formula, e.g. 'H2O', 'Fe+3', 'Cl-'
 	:type formula: str
-	:param prefixes: Prefix transofmrations. Default: greek letters and ``.``
-	:type prefixes: dict
-	:param infixes: Infix transofmrations. Default: ``.``
-	:type infixes: dict
-	:param kwargs:
-	:type kwargs:
-	:return:
-	:rtype:
-	"""
+	:param prefixes: Mapping of prefixes to their Unicode equivalents. Default greek letters and ``.``
+	:param infixes: Mapping of infixes to their Unicode equivalents. Default ``.``
+	:param suffixes: Suffixes to keep, e.g. ('(g)', '(s)')
 
-	# TODO: 	suffixes : tuple of strings
-	# 		Suffixes to keep, e.g. ('(g)', '(s)')
+	:return: The Unicode representation of the formula
+	:rtype: str
+	"""
 
 	if prefixes is None:
 		prefixes = _unicode_mapping
+
 	if infixes is None:
 		infixes = _unicode_infix_mapping
-	return _formula_to_format(unicode_subscript, unicode_superscript, formula, prefixes, infixes, **kwargs)
+
+	return _formula_to_format(unicode_subscript, unicode_superscript, formula, prefixes, infixes, suffixes)
 
 
-def unicode_subscript(val):
-	return ''.join(_unicode_sub[str(_)] for _ in val)
+def unicode_subscript(val: Union[str, float]) -> str:
+	"""
+	Returns the Unicode subscript of the given value.
+
+	:param val: The value to superscript
+
+	:rtype: str
+	"""
+
+	return ''.join(_unicode_sub[str(_)] for _ in str(val))
 
 
-def unicode_superscript(val):
-	return ''.join(_unicode_sup[str(_)] for _ in val)
+def unicode_superscript(val: Union[str, float]) -> str:
+	"""
+	Returns the Unicode superscript of the given value.
+
+	:param val: The value to subscript
+
+	:rtype: str
+	"""
+
+	return ''.join(_unicode_sup[str(_)] for _ in str(val))

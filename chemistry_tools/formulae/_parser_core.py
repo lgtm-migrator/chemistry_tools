@@ -77,6 +77,7 @@ Core functions and constants for parsing formulae
 # stdlib
 import re
 import warnings
+from typing import Callable, Dict, Iterable, List, Sequence, Tuple, Union
 
 _greek_letters = (
 		'alpha',
@@ -107,8 +108,29 @@ _greek_letters = (
 _greek_u = 'αβγδεζηθικλμνξοπρστυφχψω'
 
 
-def _formula_to_format(sub, sup, formula, prefixes=None, infixes=None, suffixes=('(s)', '(l)', '(g)', '(aq)')):
-	# TODO: make isootope square brackets be superscript
+def _formula_to_format(
+		sub: Callable,
+		sup: Callable,
+		formula,
+		prefixes: Dict[str, str],
+		infixes: Dict[str, str],
+		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),
+		) -> str:
+	"""
+
+	:param sub: The function to call to subscript a string.
+	:param sup: The function to call to superscript a string.
+	:param formula: The formula to format
+	:type formula:
+	:param prefixes: Mapping of prefixes to their equivalents in the desired format
+	:param infixes: Mapping of infixes to their equivalents in the desired format
+	:param suffixes: Suffixes to keep, e.g. ('(g)', '(s)')
+
+	:return: The formatted formula
+	:rtype: str
+	"""
+
+	# TODO: make isotope square brackets be superscript
 	parts = _formula_to_parts(formula, prefixes.keys(), suffixes)
 	stoichs = parts[0].split('.')
 	string = ''
@@ -118,7 +140,7 @@ def _formula_to_format(sub, sup, formula, prefixes=None, infixes=None, suffixes=
 			m = 1
 		else:
 			m, stoich = _get_leading_integer(stoich)
-			string += _subs('.', infixes)
+			string += replace_substrings('.', infixes)
 		if m != 1:
 			string += str(m)
 
@@ -131,19 +153,38 @@ def _formula_to_format(sub, sup, formula, prefixes=None, infixes=None, suffixes=
 		if chg > 0:
 			token = '+' if chg == 1 else '%d+' % chg
 		string += sup(token)
+
 	if len(parts) > 4:
 		raise ValueError("Incorrect formula")
-	pre_str = ''.join(map(lambda x: _subs(x, prefixes), parts[2]))
+
+	pre_str = ''.join(map(lambda x: replace_substrings(x, prefixes), parts[2]))
+
 	return pre_str + string + ''.join(parts[3])
 
 
-def _formula_to_parts(formula, prefixes, suffixes):
+def _formula_to_parts(
+		formula,
+		prefixes: Iterable[str],
+		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),
+		) -> List:
+	"""
+
+	:param formula: The formula to split into parts
+	:type formula:
+	:param prefixes: Mapping of prefixes to their HTML equivalents. Default greek letters and ``.``
+	:param suffixes: Suffixes to keep, e.g. ('(g)', '(s)')
+
+	:return:
+	"""
+
 	# Drop prefixes and suffixes
 	drop_pref, drop_suff = [], []
+
 	for ign in prefixes:
 		if formula.startswith(ign):
 			drop_pref.append(ign)
 			formula = formula[len(ign):]
+
 	for ign in suffixes:
 		if formula.endswith(ign):
 			drop_suff.append(ign)
@@ -153,34 +194,70 @@ def _formula_to_parts(formula, prefixes, suffixes):
 	for token in '+-':
 		if token in formula:
 			if formula.count(token) > 1:
-				raise ValueError("Multiple tokens: %s" % token)
+				raise ValueError(f"Multiple tokens: {token}")
 			parts = formula.split(token)
 			parts[1] = token + parts[1]
 			break
 	else:
 		parts = [formula, None]
-	return parts + [tuple(drop_pref), tuple(drop_suff[::-1])]
+
+	return [*parts, tuple(drop_pref), tuple(drop_suff[::-1])]
 
 
-def _subs(string, patterns):
+def replace_substrings(string: str, patterns: Dict[str, str]) -> str:
+	"""
+	Replace substrings in a string
+
+	:param string: The string to replace substrings in
+	:type string: str
+	:param patterns: A dictionary mapping substrings to their replacements
+
+	:return: The resulting string
+	:rtype: str
+	"""
+
 	for patt, repl in patterns.items():
 		string = string.replace(patt, repl)
+
 	return string
 
 
-def _get_leading_integer(s):
-	m = re.findall(r'^\d+', s)
-	if len(m) == 0:
-		m = 1
-	elif len(m) == 1:
-		s = s[len(m[0]):]
-		m = int(m[0])
+def _get_leading_integer(s: str) -> Tuple[int, str]:
+	"""
+	Returns the leading integer from the string. If no leading integer is found it is assumed to be ``1``.
+
+	:param s: The string to parse
+	:type s: str
+
+	:return: A tuple comprising the leading integer and the remainder of the string
+	"""
+
+	matches = re.findall(r"^\d+", s)
+
+	if len(matches) == 0:
+		integer = 1
+	elif len(matches) == 1:
+		s = s[len(matches[0]):]
+		integer = int(matches[0])
 	else:
-		raise ValueError("Failed to parse: %s" % s)
-	return m, s
+		raise ValueError(f"Failed to parse: {s}")
+
+	return integer, s
 
 
-def _get_charge(charge_str):
+def _get_charge(charge_str: str) -> int:
+	"""
+	Parses a string representing a charge
+
+	:param charge_str:
+	:type charge_str: str
+
+	:return: The charge
+	:rtype: int
+
+	:raises: :exc:`ValueError` if the charge string cannot be parsed
+	"""
+
 	if charge_str == '+':
 		return 1
 	elif charge_str == '-':
@@ -190,24 +267,37 @@ def _get_charge(charge_str):
 		if token in charge_str:
 			if anti in charge_str:
 				raise ValueError("Invalid charge description (+ & - present)")
+
 			before, after = charge_str.split(token)
+
 			if len(before) > 0 and len(after) > 0:
 				raise ValueError("Values both before and after charge token")
+
 			if len(before) > 0:
 				# will_be_missing_in='0.8.0'
 				warnings.warn("'Fe/3+' deprecated, use e.g. 'Fe+3'", DeprecationWarning, stacklevel=3)
 				return sign * int(1 if before == '' else before)
+
 			if len(after) > 0:
 				return sign * int(1 if after == '' else after)
+
 	raise ValueError("Invalid charge description (+ or - missing)")
 
 
-def _make_isotope_string(element_name, isotope_num):
+def _make_isotope_string(element_name: str, isotope_num: Union[str, int]) -> str:
 	"""
-	Form a string label for an isotope.
+	Form a string label for an isotope. If ``isotope_num`` = 0 ``element_name`` is returned unchanged.
+
+	:param element_name: The name or symbol of the element
+	:type element_name: str
+	:param isotope_num: The isotope number
+	:type isotope_num: str or int
+
+	:return: The isotope string
+	:rtype: str
 	"""
 
-	if isotope_num == 0:
+	if isotope_num in {0, "0"}:
 		return element_name
 	else:
 		return f'[{isotope_num}{element_name}]'
@@ -217,7 +307,7 @@ _isotope_string = re.compile(r'^([A-Z][a-z+]*)(?:\[(\d+)\])?$')
 
 
 # TODO: merge with _split_isotope
-def _parse_isotope_string(label):
+def _parse_isotope_string(label: str) -> Tuple[str, int]:
 	"""
 	Parse an string with an isotope label and return the element name and
 	the isotope number.
@@ -226,15 +316,25 @@ def _parse_isotope_string(label):
 	('C', 0)
 	>>> _parse_isotope_string('C[12]')
 	('C', 12)
+
+	:param label: The isotope label to parse
+	:type label: str
+
+	:return: The name/symbol of the element, and the isotope number
 	"""
 
-	element_name, num = _isotope_string.match(label).groups()
-	isotope_num = int(num) if num else 0
-	return element_name, isotope_num
+	matches = _isotope_string.match(label)
+	if matches:
+		element_name, num = matches.groups()
+		isotope_num = int(num) if num else 0
+		return element_name, isotope_num
+	else:
+		raise ValueError(f"Failed to parse: {label}")
 
 
-def _parse_multiplicity(strings, substance_keys=None):
+def _parse_multiplicity(strings: Iterable[str], substance_keys=None) -> Dict[str, float]:
 	"""
+
 	**Examples**
 	>>> _parse_multiplicity(['2 H2O2', 'O2']) == {'H2O2': 2, 'O2': 1}
 	True
@@ -245,24 +345,40 @@ def _parse_multiplicity(strings, substance_keys=None):
 	>>> _parse_multiplicity(['H2O', 'H2O']) == {'H2O': 2}
 	True
 
+	:param strings:
+	:type strings:
+	:param substance_keys:
+	:type substance_keys:
+
+	:return:
 	"""
-	result = {}
+
+	result: Dict[str, float] = {}
+
 	for items in [re.split(' \\* | ', s) for s in strings]:
 		items = [x for x in items if x != '']
+
 		if len(items) == 0:
 			continue
+
 		elif len(items) == 1:
 			if items[0] not in result:
 				result[items[0]] = 0
+
 			result[items[0]] += 1
+
 		elif len(items) == 2:
 			if items[1] not in result:
 				result[items[1]] = 0
+
 			result[items[1]] += float(items[0]) if '.' in items[0] or 'e' in items[0] else int(items[0])
+
 		else:
 			raise ValueError("To many parts in substring")
+
 	if substance_keys is not None:
 		for k in result:
 			if k not in substance_keys:
-				raise ValueError(f"Unkown substance_key: {k}")
+				raise ValueError(f"Unknown substance_key: {k}")
+
 	return result

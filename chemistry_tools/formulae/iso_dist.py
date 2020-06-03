@@ -25,15 +25,15 @@ Isotope Distributions
 
 # stdlib
 from collections import OrderedDict
-from typing import Any, List, Union
-
-# this package
-from chemistry_tools.formulae import formula as _formula
+from typing import TYPE_CHECKING, Any, List, Union
 
 # this package
 from .dataarray import DataArray
 from .unicode import string_to_unicode
-from domdf_python_tools.enums import IntEnum  # type: ignore # TODO
+from aenum import IntEnum  # type: ignore # TODO
+
+if TYPE_CHECKING:
+	from chemistry_tools.formulae.formula import Formula
 
 
 class IsoDistSort(IntEnum):
@@ -46,9 +46,6 @@ class IsoDistSort(IntEnum):
 	Abundance = abundance = 2  #, "Sort isotope distribution by abundances"
 	Relative_Abundance = Relative_abundance = relative_abundance = 3  #, "Sort isotope distribution by relative abundances"
 
-	def __int__(self):
-		return int(self.value)
-
 
 class IsotopeDistribution(DataArray):
 	"""
@@ -60,7 +57,7 @@ class IsotopeDistribution(DataArray):
 
 	# TODO: as_mass_spec
 
-	def __init__(self, formula):
+	def __init__(self, formula: "Formula"):
 		"""
 
 		:param formula: A :class:`~chemistry_tools.formulae.formula.Formula`  object to create the distribution for
@@ -69,7 +66,7 @@ class IsotopeDistribution(DataArray):
 
 		iso_compositions = list(formula.iter_isotopologues())
 		compositions = OrderedDict()
-		max_abundance = 0
+		max_abundance: float = 0
 
 		for comp in iso_compositions:
 			compositions[comp.hill_formula] = comp
@@ -79,7 +76,7 @@ class IsotopeDistribution(DataArray):
 
 		super().__init__(formula=iso_compositions[0].no_isotope_hill_formula, data=compositions)
 
-		self.max_abundance = max_abundance
+		self.max_abundance: float = max_abundance
 
 	_as_array_kwargs = {"sort_by", "reverse", "format_percentage"}
 	_as_table_alignment = ["left", "right", "right", "right"]
@@ -130,6 +127,6 @@ class IsotopeDistribution(DataArray):
 
 		return output
 
-	def __str__(self):
+	def __str__(self) -> str:
 		table = self.as_table(sort_by=IsoDistSort.relative_abundance, reverse=True, tablefmt="fancy_grid")
 		return f"\n Isotope Distribution for {string_to_unicode(self.formula)}\n{table}"

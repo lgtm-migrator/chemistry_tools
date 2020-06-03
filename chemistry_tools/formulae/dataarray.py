@@ -30,7 +30,7 @@ import pandas  # type: ignore
 
 # this package
 import tabulate
-from cawdrey import FrozenOrderedDict  # type: ignore # TODO
+from cawdrey import FrozenOrderedDict
 
 
 class DataArray(FrozenOrderedDict):
@@ -45,9 +45,13 @@ class DataArray(FrozenOrderedDict):
 	:type data: dict
 	"""
 
+	_as_array_kwargs: Set[str] = set()
+	_as_table_alignment: List[str] = []
+	_as_table_float_format: List[Optional[str]] = []
+
 	def __init__(self, formula: str, data: Dict):
 		super().__init__(**data)
-		self.formula = formula
+		self.formula: str = formula
 
 	def as_csv(self, *args, sep: str = ",", **kwargs) -> str:
 		"""
@@ -62,10 +66,6 @@ class DataArray(FrozenOrderedDict):
 		"""
 
 		return "\n".join(sep.join(x) for x in self.as_array(*args, **kwargs))
-
-	_as_array_kwargs: Set[str] = set()
-	_as_table_alignment: List[str] = []
-	_as_table_float_format: List[Optional[str]] = []
 
 	@abstractmethod
 	def as_array(self, sort_by: Any, reverse: bool = False) -> List[List[Any]]:
@@ -95,8 +95,9 @@ class DataArray(FrozenOrderedDict):
 		:rtype: str
 		"""
 
-		tabulate_kwargs = {}
-		array_kwargs = {}
+		tabulate_kwargs: Dict[str, Any] = {}
+		array_kwargs: Dict[str, Any] = {}
+
 		for arg, val in kwargs.items():
 			if arg in self._as_array_kwargs:
 				array_kwargs[arg] = val
@@ -105,10 +106,12 @@ class DataArray(FrozenOrderedDict):
 
 		if "colalign" not in tabulate_kwargs:
 			tabulate_kwargs["colalign"] = self._as_table_alignment
+
 		if "floatfmt" not in tabulate_kwargs:
 			tabulate_kwargs["floatfmt"] = self._as_table_float_format
 
 		array = self.as_array(*args, **array_kwargs)
+
 		return tabulate.tabulate(array[1:], array[0], **tabulate_kwargs)
 
 	def __str__(self) -> str:

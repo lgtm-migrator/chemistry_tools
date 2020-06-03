@@ -84,7 +84,7 @@ class Bond:
 		self.order = BondType(order)
 		self.style = style
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f'Bond({self.aid1}, {self.aid2}, {self.order!r})'
 
 	def __eq__(self, other):

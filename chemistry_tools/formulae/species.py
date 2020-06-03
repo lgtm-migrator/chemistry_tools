@@ -101,12 +101,13 @@
 #  |
 
 # stdlib
-from typing import Dict, Optional
+from typing import Dict, Optional, Type, TypeVar
 
 # this package
 from .formula import Formula
-#  3rd party
-from cawdrey import frozendict  # type: ignore # TODO
+from cawdrey import frozendict
+
+S = TypeVar('S', bound='Species')
 
 
 class Species(Formula):
@@ -124,7 +125,7 @@ class Species(Formula):
 	:type phase: str
 	"""
 
-	_phases = frozendict(s="Solid", l="Liquid", g="Gas", aq="Aqueous")
+	_phases: frozendict[str, str] = frozendict(s="Solid", l="Liquid", g="Gas", aq="Aqueous")
 
 	def __init__(self, composition: Optional[Dict[str, int]] = None, charge: int = 0, phase=None):
 		super().__init__(composition, charge)
@@ -132,20 +133,21 @@ class Species(Formula):
 		self.phase = phase
 
 	@classmethod
-	def from_kwargs(cls, *, charge=0, phase=None, **kwargs):
+	def from_kwargs(cls: Type["S"], *, charge: int = 0, phase: str = None, **kwargs) -> S:
 		"""
-		Create a new :class:`Species` object from keyword arguments representing the elements in the compound
+		Create a new :class:`~chemistry_tools.formulae.species.Species` object from keyword
+		arguments representing the elements in the compound.
 
 		:param charge:
 		:type charge: int, optional
-
-		:rtype: :class:`~chemistry_tools.formulae.formula.Formula`
+		:param phase:
+		:type phase: int, optional
 		"""
 
 		return cls(kwargs, charge=charge, phase=phase)
 
 	@classmethod
-	def from_string(cls, formula: str, charge: int = 0, phase: str = None):
+	def from_string(cls: Type["S"], formula: str, charge: int = 0, phase: str = None) -> S:
 		"""
 
 		Create a new :class:`~chemistry_tools.formulae.species.Species` object by parsing a string
@@ -185,19 +187,20 @@ class Species(Formula):
 
 		f = super().from_string(formula, charge)
 		f.phase = phase
+
 		return f
 
 	def copy(self):
 		return self.__class__(self, charge=self.charge, phase=self.phase)
 
-	def __eq__(self, other):
+	def __eq__(self, other) -> bool:
 		if isinstance(other, Species):
 			if super().__eq__(other):
 				return self.phase == other.phase
-		else:
-			return super().__eq__(other)
 
-	def _repr_elements(self):
+		return super().__eq__(other)
+
+	def _repr_elements(self) -> str:
 		elements = super()._repr_elements()
 
 		if self.phase:
@@ -206,7 +209,7 @@ class Species(Formula):
 		return elements
 
 	@property
-	def hill_formula(self):
+	def hill_formula(self) -> str:
 		"""
 
 		:return:
@@ -221,7 +224,7 @@ class Species(Formula):
 			return hill
 
 	@property
-	def empirical_formula(self):
+	def empirical_formula(self) -> str:
 		"""
 
 		:return:

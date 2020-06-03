@@ -75,17 +75,22 @@ Functions and constants for converting formulae to html
 #
 
 # stdlib
-from typing import Dict, Union
+from typing import Dict, Optional, Sequence, Union
 
 # this package
 from ._parser_core import _formula_to_format, _greek_letters
 
-_html_mapping = {k + '-': '&' + k + ';-' for k in _greek_letters}
+_html_mapping: Dict[str, str] = {k + '-': '&' + k + ';-' for k in _greek_letters}
 _html_mapping['.'] = '&sdot;'
 _html_infix_mapping = _html_mapping
 
 
-def string_to_html(formula: str, prefixes: Dict = None, infixes: Dict = None, **kwargs) -> str:
+def string_to_html(
+		formula: str,
+		prefixes: Optional[Dict[str, str]] = None,
+		infixes: Optional[Dict[str, str]] = None,
+		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),
+		) -> str:
 	"""
 	Convert formula string to HTML string representation.
 
@@ -103,24 +108,21 @@ def string_to_html(formula: str, prefixes: Dict = None, infixes: Dict = None, **
 
 	:param formula: Chemical formula, e.g. 'H2O', 'Fe+3', 'Cl-'
 	:type formula: str
-	:param prefixes: Prefix transformations. Default greek letters and ``.``
-	:type prefixes: dict
-	:param infixes: Infix transformations. Default ``.``
-	:type infixes: dict
+	:param prefixes: Mapping of prefixes to their HTML equivalents. Default greek letters and ``.``
+	:param infixes: Mapping of infixes to their HTML equivalents. Default ``.``
 	:param suffixes: Suffixes to keep, e.g. ('(g)', '(s)')
-	:type suffixes: tuple of strings
 
 	:return: The HTML representation of the formula
 	:rtype: str
 	"""
 
-	# TODO: dict contents type
-
 	if prefixes is None:
 		prefixes = _html_mapping
+
 	if infixes is None:
 		infixes = _html_infix_mapping
-	return _formula_to_format(html_subscript, html_superscript, formula, prefixes, infixes, **kwargs)
+
+	return _formula_to_format(html_subscript, html_superscript, formula, prefixes, infixes, suffixes)
 
 
 def html_subscript(val: Union[str, float]) -> str:

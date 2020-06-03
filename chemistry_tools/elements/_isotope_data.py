@@ -53,6 +53,7 @@ h_plus = {0: (1.00727646677, 1.0), 1: (1.00727646677, 1.0)}
 electron = {0: (0.00054857990943, 1.0)}
 
 isotope_data = dict()
+
 for element in ELEMENTS:
 
 	# if element.symbol in undefined_isotopes:

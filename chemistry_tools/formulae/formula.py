@@ -107,7 +107,7 @@ Parse formulae into a Python object
 import math
 from collections import Counter, defaultdict
 from itertools import combinations_with_replacement, product
-from typing import Dict, List, Optional, Sequence, Tuple
+from typing import Dict, List, Optional, Sequence, Tuple, Type, TypeVar
 
 # this package
 from chemistry_tools.elements import ELEMENTS, D, T, isotope_data
@@ -120,6 +120,8 @@ from .iso_dist import IsotopeDistribution
 from .utils import GROUPS, _hill_order, _split_isotope
 #  3rd party
 from mathematical.utils import gcd_array  # type: ignore # TODO
+
+F = TypeVar('F', bound='Formula')
 
 
 class Formula(defaultdict, Counter):
@@ -177,7 +179,7 @@ class Formula(defaultdict, Counter):
 			self.charge = charge
 
 	@classmethod
-	def from_string(cls, formula: str, charge: int = 0):
+	def from_string(cls: Type["F"], formula: str, charge: int = 0) -> F:
 		"""
 		Create a new :class:`~chemistry_tools.formulae.formula.Formula` object by parsing a string
 
@@ -243,7 +245,7 @@ class Formula(defaultdict, Counter):
 
 	@classmethod
 	def from_mass_fractions(
-			cls,
+			cls: Type["F"],
 			fractions: Dict[str, float],
 			charge: int = 0,
 			maxcount: int = 10,
@@ -327,7 +329,7 @@ class Formula(defaultdict, Counter):
 		return cls.from_string(''.join(formula), charge=charge)
 
 	@classmethod
-	def from_kwargs(cls, *, charge: int = 0, **kwargs) -> "Formula":
+	def from_kwargs(cls: Type["F"], *, charge: int = 0, **kwargs) -> F:
 		"""
 		Create a new :class:`~chemistry_tools.formulae.formula.Formula` object from
 		keyword arguments representing the elements in the compound.
@@ -674,7 +676,7 @@ class Formula(defaultdict, Counter):
 		else:
 			return NotImplemented
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return f'{type(self).__name__}({", ".join(self._repr_elements())})'
 
 	def _repr_elements(self):
@@ -685,7 +687,7 @@ class Formula(defaultdict, Counter):
 
 		return elements
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return str(self)
 
 	def _repr_pretty_(self, p, cycle):
@@ -847,7 +849,7 @@ class Formula(defaultdict, Counter):
 		return list(self.keys())
 
 	@property
-	def composition(self) -> Composition:
+	def composition(self) -> "Composition":
 		"""
 		Returns a :class:`Composition` object representing the elemental composition of the Formula
 

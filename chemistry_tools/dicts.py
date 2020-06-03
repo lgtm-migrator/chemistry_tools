@@ -214,7 +214,7 @@ class ArithmeticDict(defaultdict):
 		other // self """
 		return self.__class__(self.default_factory, {k: other // v for k, v in self.items()})
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f"{self.__class__.__name__}({repr(self.default_factory)}, {dict(self)})"
 
 	def _element_eq(self, a, b):

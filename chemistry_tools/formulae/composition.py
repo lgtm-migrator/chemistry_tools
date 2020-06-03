@@ -25,10 +25,9 @@ Elemental composition of a :class:`~chemistry_tools.formulae.formula.Formula`
 
 # stdlib
 from enum import Enum
-from typing import Any, List, Optional
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 # this package
-import chemistry_tools
 from chemistry_tools.elements import ELEMENTS
 
 # this package
@@ -36,6 +35,9 @@ from ._parser_core import _make_isotope_string
 from .dataarray import DataArray
 from .unicode import string_to_unicode
 from .utils import _split_isotope
+
+if TYPE_CHECKING:
+	from chemistry_tools.formulae.formula import Formula
 
 
 class CompositionSort(Enum):
@@ -54,7 +56,7 @@ class CompositionSort(Enum):
 	Rel_Mass = "rel_mass"
 	Mass_Fraction = "mass_fraction"
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return str(self.value)
 
 
@@ -66,8 +68,8 @@ class Composition(DataArray):
 	:type formula: ~chemistry_tools.formulae.formula.Formula
 	"""
 
-	def __init__(self, formula: "chemistry_tools.formulae.formula.Formula"):
-		data = {}
+	def __init__(self, formula: "Formula"):
+		data: Dict[str, Dict] = {}
 
 		for isymbol, count in formula.items():
 			symbol, isotope = _split_isotope(isymbol)
@@ -85,7 +87,7 @@ class Composition(DataArray):
 
 		super().__init__(formula=formula.hill_formula, data=data)
 
-		self._total_mass = formula.mass
+		self._total_mass: float = formula.mass
 
 	@property
 	def total_mass(self) -> float:
@@ -108,10 +110,14 @@ class Composition(DataArray):
 		return len(self)
 
 	_as_array_kwargs = {"sort_by", "reverse"}
+	_as_table_alignment = ["left", "right", "right", "right"]
+	_as_table_float_format = [None, None, ".4f", ".4f"]
 
-	def as_array(self,
-					sort_by: CompositionSort = CompositionSort.symbol,
-					reverse: bool = False) -> List[List[Any]]:
+	def as_array(
+			self,
+			sort_by: CompositionSort = CompositionSort.symbol,
+			reverse: bool = False,
+			) -> List[List[Any]]:
 		"""
 		Returns the elemental composition as a list of lists.
 
@@ -144,9 +150,6 @@ class Composition(DataArray):
 		output.insert(0, ["Element", "Count", "Relative Mass", "Mass Fraction"])
 
 		return output
-
-	_as_table_alignment = ["left", "right", "right", "right"]
-	_as_table_float_format = [None, None, ".4f", ".4f"]
 
 	def __str__(self) -> str:
 		table = self.as_table(sort_by=CompositionSort.symbol, reverse=True, tablefmt="fancy_grid")
