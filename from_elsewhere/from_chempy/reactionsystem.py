@@ -53,7 +53,7 @@ from chemistry_tools.units import to_unitless
 from .chemistry import Reaction, Substance
 
 
-import numpy as np
+import numpy  # type: ignore
 
 from chemistry_tools.units import to_unitless, unit_of
 
@@ -93,8 +93,7 @@ class ReactionSystem:
 	nr : int
 		Number of reactions.
 
-	Examples
-	--------
+	**Examples**
 	>>> from chempy import Reaction
 	>>> r1 = Reaction({'R1': 1}, {'P1': 1}, 42.0)
 	>>> rsys = ReactionSystem([r1], 'R1 P1')
@@ -207,7 +206,7 @@ class ReactionSystem:
 
 		Parameters
 		----------
-		**kwargs:
+		kwargs:
 			 Keyword arguments passed on to :class:`ReactionSystem`.
 
 		Returns
@@ -219,7 +218,8 @@ class ReactionSystem:
 			- ``'nonparticipating'``: keys not appearing in any reactions.
 
 		"""
-		import numpy as np
+		import numpy  # type: ignore
+
 		irrev_rxns = []
 		for r in self.rxns:
 			try:
@@ -229,13 +229,13 @@ class ReactionSystem:
 		irrev_rsys = ReactionSystem(irrev_rxns, self.substances, **kwargs)
 		all_r = irrev_rsys.all_reac_stoichs()
 		all_p = irrev_rsys.all_prod_stoichs()
-		if np.any(all_r < 0) or np.any(all_p < 0):
+		if numpy.any(all_r < 0) or numpy.any(all_p < 0):
 			raise ValueError("Expected positive stoichiometric coefficients")
 		net = all_p - all_r
 		accumulated, depleted, unaffected, nonparticipating = set(), set(), set(), set()
 		for i, sk in enumerate(irrev_rsys.substances.keys()):
-			in_r = np.any(net[:, i] < 0)
-			in_p = np.any(net[:, i] > 0)
+			in_r = numpy.any(net[:, i] < 0)
+			in_p = numpy.any(net[:, i] > 0)
 			if in_r and in_p:
 				pass
 			elif in_r:
@@ -243,8 +243,8 @@ class ReactionSystem:
 			elif in_p:
 				accumulated.add(sk)
 			else:
-				if np.any(all_p[:, i] > 0):
-					assert np.all(all_p[:, i] == all_r[:, i]), "Open issue at github.com/bjodah/chempy"
+				if numpy.any(all_p[:, i] > 0):
+					assert numpy.all(all_p[:, i] == all_r[:, i]), "Open issue at github.com/bjodah/chempy"
 					unaffected.add(sk)
 				else:
 					nonparticipating.add(sk)
@@ -402,11 +402,10 @@ class ReactionSystem:
 			Tokens which causes lines to be ignored when prefixed by any of them.
 		substance_factory : callable
 			Defaults to ``cls._BaseSubstance.from_formula``. Can be set to e.g. ``Substance``.
-		**kwargs:
+		kwargs:
 			Keyword arguments passed to the constructor of the class
 
-		Examples
-		--------
+		**Examples**
 		>>> rs = ReactionSystem.from_string('\\n'.join(['2 HNO2 -> H2O + NO + NO2; 3', '2 NO2 -> N2O4; 4']))
 		>>> r1, r2 = 5*5*3, 7*7*4
 		>>> rs.rates({'HNO2': 5, 'NO2': 7}) == {'HNO2': -2*r1, 'H2O': r1, 'NO': r1, 'NO2': r1 - 2*r2, 'N2O4': r2}
@@ -538,8 +537,7 @@ class ReactionSystem:
 		----------
 		substance_key: str
 
-		Examples
-		--------
+		**Examples**
 		>>> rs = ReactionSystem.from_string('2 H2 + O2 -> 2 H2O\n 2 H2O2 -> 2 H2O + O2')
 		>>> rs.substance_participation('H2')
 		[0]
@@ -622,8 +620,7 @@ class ReactionSystem:
 		per_substance: dict or array
 		varied: dict
 
-		Examples
-		--------
+		**Examples**
 		>>> rsys = ReactionSystem([], 'A B C')
 		>>> arr, keys = rsys.per_substance_varied({'A': 2, 'B': 3, 'C': 5}, {'C': [5, 7, 9, 11]})
 		>>> arr.shape, keys
@@ -701,8 +698,7 @@ class ReactionSystem:
 		substances. Multiplying the matrix with a vector of concentrations give an equation which
 		is an invariant (corresponds to mass & charge conservation).
 
-		Examples
-		--------
+		**Examples**
 		>>> s = 'Cu+2 + NH3 -> CuNH3+2'
 		>>> import re
 		>>> substances = re.split(r' \+ | -> ', s)
@@ -745,8 +741,7 @@ class ReactionSystem:
 		per substance, i.e. the sum of all upper bounds amount to more substance than
 		available in ``init_conc``.
 
-		Examples
-		--------
+		**Examples**
 		>>> rs = ReactionSystem.from_string('2 HNO2 -> H2O + NO + NO2 \n 2 NO2 -> N2O4')
 		>>> from collections import defaultdict
 		>>> c0 = defaultdict(float, HNO2=20)
@@ -850,7 +845,7 @@ def get_coeff_mtx(substances, stoichs):
 	2 dimensional array of shape (len(substances), len(stoichs))
 
 	"""
-	A = np.zeros((len(substances), len(stoichs)), dtype=int)
+	A = numpy.zeros((len(substances), len(stoichs)), dtype=int)
 	for ri, sb in enumerate(substances):
 		for ci, (reac, prod) in enumerate(stoichs):
 			A[ri, ci] = prod.get(sb, 0) - reac.get(sb, 0)
@@ -882,8 +877,7 @@ def decompose_yields(yields, rxns, atol=1e-10):
 		Absolute tolerance for residuals.
 
 
-	Examples
-	--------
+	**Examples**
 	>>> from chempy import Reaction
 	>>> h2a = Reaction({'H2O': 1}, {'H2': 1, 'O': 1})
 	>>> h2b = Reaction({'H2O': 1}, {'H2': 1, 'H2O2': 1}, inact_reac={'H2O': 1})
@@ -911,9 +905,9 @@ def decompose_yields(yields, rxns, atol=1e-10):
 	A = rsys.net_stoichs(yields.keys())
 	b = list(yields.values())
 	unit = unit_of(b[0])
-	x, residuals, rank, s = np.linalg.lstsq(
-		np.asarray(A.T, dtype=np.float64), to_unitless(b, unit), rcond=2e-16*max(A.shape))
+	x, residuals, rank, s = numpy.linalg.lstsq(
+		numpy.asarray(A.T, dtype=numpy.float64), to_unitless(b, unit), rcond=2e-16 * max(A.shape))
 	if len(residuals) > 0:
-		if np.any(residuals > atol):
+		if numpy.any(residuals > atol):
 			raise ValueError("atol not satisfied")
 	return x*unit

@@ -200,7 +200,7 @@ class Compound(Dictable):
 		>>> nh4p = Compound('NH4+')
 		>>> from chemistry_tools.units import quantities
 		>>> nh4p.molar_mass(quantities)
-		df(18.0384511...) * g/mol
+		array(18.0384511...) * g/mol
 
 		:rtype: ~quantities.quantity.Quantity
 		"""

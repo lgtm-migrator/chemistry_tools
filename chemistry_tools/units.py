@@ -339,7 +339,7 @@ def uniform(container: Union[Tuple, List, Dict]):
 	**Examples**
 	>>> km, m = quantities.kilometre, quantities.metre
 	>>> uniform(dict(a=3*km, b=200*m))  # doctest: +SKIP
-	{'b': df(200.0) * m, 'a': df(3000.0) * m}
+	{'b': array(200.0) * m, 'a': array(3000.0) * m}
 	"""
 
 	if isinstance(container, (tuple, list)):

@@ -397,7 +397,7 @@ class Reaction:
 		from .printing import str_
 		return str_(self, substances=substances, with_param=with_param, with_name=with_name, **kwargs)
 	
-	def __str__(self):
+	def __str__(self) -> str:
 		return self.string(with_param=True, with_name=True)
 	
 	def latex(self, substances, with_param=False, with_name=False, **kwargs):
