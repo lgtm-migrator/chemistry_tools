@@ -1,5 +1,5 @@
 memoized_property>=1.0.3
-tabulate>=0.8.8
+tabulate>=0.8.3
 aenum>=2.2.3
 domdf_python_tools>=0.3.4
 Pillow>=7.0.0
