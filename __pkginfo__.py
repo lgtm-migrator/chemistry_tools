@@ -42,7 +42,7 @@ __copyright__ = """
 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 """
 
-__version__ = "0.3.0.b1"
+__version__ = "0.3.0"
 
 modname = "chemistry_tools"
 pypi_name = "chemistry_tools"
@@ -69,7 +69,7 @@ project_urls = {
 repo_root = pathlib.Path(__file__).parent
 
 # Get info from files; set: long_description
-long_description = (repo_root / "README.rst").read_text().replace("0.3.0.b1", __version__) + '\n'
+long_description = (repo_root / "README.rst").read_text().replace("0.3.0", __version__) + '\n'
 conda_description = """Python tools for analysis of chemical compounds
 
 
