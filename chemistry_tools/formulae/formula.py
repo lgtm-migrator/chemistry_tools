@@ -664,7 +664,7 @@ class Formula(defaultdict, Counter):
 	def __rmul__(self, other):
 		return self * other
 
-	def __eq__(self, other):
+	def __eq__(self, other) -> bool:
 		if isinstance(other, (dict, Formula)):
 			self_items = {i for i in self.items() if i[1]}
 			other_items = {i for i in other.items() if i[1]}

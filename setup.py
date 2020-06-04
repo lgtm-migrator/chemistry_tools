@@ -26,5 +26,6 @@ setup(
 		url=web,
 		version=__version__,
 		keywords=keywords,
+		zip_safe=False,
 
 		)

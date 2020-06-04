@@ -8,3 +8,4 @@ pyparsing>=2.2.0
 pandas>=1.0.1
 mathematical>=0.1.7
 cawdrey>=0.1.5
+aenum

@@ -103,10 +103,9 @@
 # stdlib
 import re
 from functools import lru_cache
-
-# this package
 from typing import Dict, Iterable, List, Sequence, Set, Tuple, Union
 
+# this package
 from chemistry_tools.elements import ELEMENTS
 
 # Common chemical groups

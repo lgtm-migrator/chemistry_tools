@@ -232,7 +232,7 @@ class ArithmeticDict(defaultdict):
 		except TypeError:
 			return False
 
-	def __eq__(self, other):
+	def __eq__(self, other) -> bool:
 		return self._discrepancy(other, self._element_eq)
 
 	def isclose(self, other, rtol=1e-12, atol=None):

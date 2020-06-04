@@ -47,6 +47,7 @@ Functions for interacting with PubChem PUG_REST API
 
 # stdlib
 import time
+from typing import Dict, Iterable, List, Optional, Sequence, Union
 from urllib.parse import quote
 
 # 3rd party
@@ -63,14 +64,14 @@ from chemistry_tools.rate_limiter import rate_limit
 
 @rate_limit
 def _do_rest_get(
-		namespace,
-		identifier,
-		format_=PubChemFormats.JSON,
-		domain=None,
-		record_type="2d",
-		png_width=300,
-		png_height=300
-		):
+		namespace: Union[PubChemNamespace, str],
+		identifier: Union[str, int, Sequence[Union[str, int]]],
+		format_: Union[PubChemFormats, str] = PubChemFormats.JSON,
+		domain: Optional[str] = None,
+		record_type: str = "2d",
+		png_width: int = 300,
+		png_height: int = 300,
+		) -> requests.Response:
 	"""
 	:param identifier: Identifiers (e.g. name, CID) for the compounds to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
@@ -94,10 +95,12 @@ def _do_rest_get(
 	if not PubChemFormats.is_valid_value(format_):
 		raise ValueError(f"'{format_}' is not a valid value for 'format_'")
 
+	parsed_identifier: List[str]
+
 	if namespace == PubChemNamespace.cid:
-		identifier = _force_sequence_or_csv(identifier, "identifier")
+		parsed_identifier = _force_sequence_or_csv(identifier, "identifier")
 	else:
-		identifier = [identifier]
+		parsed_identifier = [str(identifier)]
 
 	query_params = {}
 
@@ -105,9 +108,9 @@ def _do_rest_get(
 		query_params["image_size"] = f"{png_width}x{png_height}"
 
 	try:
-		r = _do_cached_request(namespace, identifier, format_, domain, record_type, query_params)
+		r = _do_cached_request(namespace, parsed_identifier, format_, domain, record_type, query_params)
 	except requests.exceptions.ConnectionError:
-		r = _do_cached_request(namespace, identifier, format_, domain, record_type, query_params)
+		r = _do_cached_request(namespace, parsed_identifier, format_, domain, record_type, query_params)
 
 	if r.status_code in HTTP_ERROR_CODES:
 		raise PubChemHTTPError(r)
@@ -115,7 +118,15 @@ def _do_rest_get(
 	return r
 
 
-def _do_cached_request(namespace, identifier, format_, domain, record_type, query_params):
+def _do_cached_request(
+		namespace: Union[PubChemNamespace, str],
+		identifier: Union[Iterable[str], str],
+		format_: Union[PubChemFormats, str],
+		domain: Optional[str],
+		record_type: str,
+		query_params: Dict,
+		) -> requests.Response:
+
 	if domain:
 		r = cached_requests.get(f"{_make_base_url(namespace, identifier)}/{domain}/{format_}", params=query_params)
 	else:
@@ -130,7 +141,14 @@ def get_full_json(cid):
 	return json_file.json()
 
 
-def async_get(identifier, namespace='cid', operation=None, output='JSON', searchtype=None, **kwargs):
+def async_get(
+		identifier,
+		namespace: Union[PubChemNamespace, str] = 'cid',
+		operation=None,
+		output='JSON',
+		searchtype=None,
+		**kwargs
+		) -> bytes:
 	"""
 	Request wrapper that automatically handles async requests.
 	"""
@@ -156,7 +174,14 @@ def async_get(identifier, namespace='cid', operation=None, output='JSON', search
 	return response
 
 
-def request(identifier, namespace='cid', operation=None, output='JSON', searchtype=None, **kwargs):
+def request(
+		identifier,
+		namespace: Union[PubChemNamespace, str] = 'cid',
+		operation=None,
+		output: Union[PubChemFormats, str] = 'JSON',
+		searchtype=None,
+		**kwargs,
+		) -> requests.Response:
 	"""
 	Construct API request from parameters and return the response.
 
@@ -179,7 +204,7 @@ def request(identifier, namespace='cid', operation=None, output='JSON', searchty
 
 	urlid = quote(identifier.encode('utf8'))
 
-	comps = filter(None, [API_BASE, "compound", searchtype, namespace, urlid, operation, output])
+	comps = filter(None, [API_BASE, "compound", searchtype, namespace, urlid, operation, output])  # type: ignore
 	apiurl = '/'.join(comps)
 
 	# Filter None values from kwargs

@@ -20,8 +20,11 @@
 #  MA 02110-1301, USA.
 #
 
+# stdlib
+from typing import Any
+
 # this package
-from domdf_python_tools.enums import StrEnum  # type: ignore # TODO
+from domdf_python_tools.enums import IntEnum, StrEnum  # type: ignore # TODO
 
 
 class PubChemNamespace(StrEnum):
@@ -50,8 +53,8 @@ class PubChemNamespace(StrEnum):
 	# TODO: listkey for formula lookup https://pubchemdocs.ncbi.nlm.nih.gov/pug-rest$_Toc494865583
 
 	@classmethod
-	def is_valid_value(cls, value):
-		return str(value) in set(str(item) for item in PubChemNamespace)
+	def is_valid_value(cls, value: Any) -> bool:
+		return str(value) in set(str(item) for item in PubChemNamespace)  # type: ignore
 
 
 class PubChemFormats(StrEnum):
@@ -69,11 +72,11 @@ class PubChemFormats(StrEnum):
 	Png = "PNG"
 
 	@classmethod
-	def is_valid_value(cls, value):
-		return str(value).upper() in set(str(item) for item in PubChemFormats)
+	def is_valid_value(cls, value: Any) -> bool:
+		return str(value).upper() in set(str(item) for item in PubChemFormats)  # type: ignore
 
 
-class CoordinateType:
+class CoordinateType(IntEnum):
 	TWO_D = 1
 	THREE_D = 2
 	SUBMITTED = 3
@@ -89,3 +92,7 @@ class CoordinateType:
 	UNITS_POINTS = 13
 	UNITS_STDBONDS = 14
 	UNITS_UNKNOWN = 255
+
+	@classmethod
+	def is_valid_value(cls, value: Any) -> bool:
+		return str(value).upper() in set(str(item) for item in CoordinateType)  # type: ignore

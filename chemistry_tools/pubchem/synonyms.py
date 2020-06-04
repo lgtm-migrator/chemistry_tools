@@ -22,7 +22,7 @@
 #
 
 # stdlib
-from typing import Sequence, Union
+from typing import Dict, List, Sequence, Union
 
 # this package
 from chemistry_tools.pubchem.enums import PubChemNamespace
@@ -57,7 +57,10 @@ class Synonyms(list):
 		return val
 
 
-def get_synonyms(identifier, namespace="name"):
+def get_synonyms(
+		identifier: Union[str, int, Sequence[Union[str, int]]],
+		namespace: Union[PubChemNamespace, str] = "name",
+		) -> List[Dict]:
 	"""
 	Returns a list of synonyms for the compound with the given identifier.
 	As more than one compound may be identified the results are returned in a list.
@@ -89,10 +92,10 @@ def get_synonyms(identifier, namespace="name"):
 
 
 def rest_get_synonyms(
-		identifier: Union[str, Sequence[str]],
+		identifier: Union[str, int, Sequence[Union[str, int]]],
 		namespace: Union[PubChemNamespace, str] = PubChemNamespace.name,
-		**kwargs
-		):
+		**kwargs,
+		) -> Dict:
 	"""
 	Get the list of synonyms for the given compound
 

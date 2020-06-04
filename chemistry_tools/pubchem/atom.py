@@ -44,6 +44,7 @@
 
 # stdlib
 from itertools import zip_longest
+from typing import Any, Dict, FrozenSet, Optional
 
 # this package
 from chemistry_tools.elements import ELEMENTS
@@ -55,7 +56,15 @@ class Atom:
 	Class to represent an atom in a :class:`~pubchempy.Compound`.
 	"""
 
-	def __init__(self, aid, number, x=None, y=None, z=None, charge=0):
+	def __init__(
+			self,
+			aid: int,
+			number: int,
+			x: Optional[float] = None,
+			y: Optional[float] = None,
+			z: Optional[float] = None,
+			charge: int = 0,
+			):
 		"""
 		Initialize with an atom ID, atomic number, coordinates and optional change.
 
@@ -64,40 +73,47 @@ class Atom:
 		:param number: The Atomic number for this atom.
 		:type number: int
 		:param x: The x coordinate for this atom.
-		:type x: float
+		:type x: float, optional
 		:param y: The y coordinate for this atom.
-		:type y: float
+		:type y: float, optional
 		:param z: The z coordinate for this atom. Will be ``None`` in 2D Compound records.
 		:type z: float, optional
 		:param charge: Formal charge on atom.
 		:type charge: int, optional
 		"""
 
-		self.aid = aid
-		self.number = number
-		self.x = x
-		self.y = y
-		self.z = z
-		self.charge = charge
+		self.aid: int = aid
+		self.number: int = number
+		self.x: Optional[float] = x
+		self.y: Optional[float] = y
+		self.z: Optional[float] = z
+		self.charge: int = charge
 
 	def __repr__(self) -> str:
 		return f'Atom({self.aid}, {self.element})'
 
-	def __eq__(self, other):
+	def __eq__(self, other) -> bool:
 		return (
-				isinstance(other, type(self)) and self.aid == other.aid and self.element == other.element
-				and self.x == other.x and self.y == other.y and self.z == other.z and self.charge == other.charge
-				)
+			isinstance(other, type(self))
+			and self.aid == other.aid
+			and self.element == other.element
+			and self.x == other.x
+			and self.y == other.y
+			and self.z == other.z
+			and self.charge == other.charge
+			)  # yapf: disable
 
 	@property
-	def element(self):
+	def element(self) -> str:
 		"""
 		The element symbol for this atom.
+
+		:rtype: str
 		"""
 
 		return ELEMENTS[self.number].symbol
 
-	def to_dict(self):
+	def to_dict(self) -> Dict[str, Any]:
 		"""
 		Return a dictionary containing Atom data.
 		"""
@@ -113,7 +129,7 @@ class Atom:
 
 		return data
 
-	def set_coordinates(self, x, y, z=None):
+	def set_coordinates(self, x: float, y: float, z: Optional[float] = None) -> None:
 		"""
 		Set all coordinate dimensions at once.
 		"""
@@ -123,7 +139,7 @@ class Atom:
 		self.z = z
 
 	@property
-	def coordinate_type(self):
+	def coordinate_type(self) -> str:
 		"""
 		Returns whether this atom has 2D or 3D coordinates.
 
@@ -136,19 +152,18 @@ class Atom:
 			return '3d'
 
 
-def parse_atoms(atoms_dict, coords_dict=None):
+def parse_atoms(atoms_dict: Dict[str, Any], coords_dict: Optional[Dict] = None) -> Dict[FrozenSet[int], Atom]:
 	"""
 
 	:param atoms_dict:
 	:type atoms_dict: dict
 	:param coords_dict:
-	:type coords_dict: dict or None
 
 	:return:
 	:rtype: dict
 	"""
 
-	atoms = {}
+	atoms: Dict[FrozenSet[int], Atom] = {}
 
 	# Create atoms
 	aids = atoms_dict['aid']

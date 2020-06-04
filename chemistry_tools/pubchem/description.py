@@ -20,13 +20,16 @@
 #  MA 02110-1301, USA.
 #
 
+# stdlib
+from typing import Any, Dict, List, Sequence, Union
+
 # this package
 from chemistry_tools.pubchem.enums import PubChemNamespace
 from chemistry_tools.pubchem.properties import rest_get_properties_json
 from chemistry_tools.pubchem.pug_rest import _do_rest_get
 
 
-def get_iupac_name(name):
+def get_iupac_name(name: str) -> str:
 	"""
 	Returns the systematic IUPAC name for the compound with the given name
 
@@ -42,7 +45,7 @@ def get_iupac_name(name):
 	return str(iupac_name)
 
 
-def get_description(name):
+def get_description(name: str) -> str:
 	"""
 	Returns the description compound with the given name
 
@@ -58,7 +61,7 @@ def get_description(name):
 	return parsed_data[0]["Description"]
 
 
-def get_common_name(name):
+def get_common_name(name: str) -> str:
 	"""
 	Returns the common name for the compound with the given name
 
@@ -74,7 +77,7 @@ def get_common_name(name):
 	return parsed_data[0]["Title"]
 
 
-def get_compound_id(name):
+def get_compound_id(name: str) -> str:
 	"""
 	Returns the compound ID (CID) for the compound with the given name
 
@@ -90,12 +93,15 @@ def get_compound_id(name):
 	return parsed_data[0]["CID"]
 
 
-def rest_get_description(identifier, namespace=PubChemNamespace.name, **kwargs):
+def rest_get_description(
+		identifier: Union[str, int, Sequence[Union[str, int]]],
+		namespace: Union[PubChemNamespace, str] = PubChemNamespace.name,
+		**kwargs,
+		):
 	"""
 	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
-	:type identifier: str, Sequence[str]
 	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`
 	:type namespace: PubChemNamespace, optional
 	:param kwargs: Optional arguments that ``json.loads`` takes.
@@ -108,7 +114,7 @@ def rest_get_description(identifier, namespace=PubChemNamespace.name, **kwargs):
 	return _do_rest_get(namespace, identifier, domain="description").json(**kwargs)
 
 
-def parse_description(description_data):
+def parse_description(description_data: Dict[str, Any]) -> List[Dict]:
 	"""
 	Parse raw data from the ``description`` endpoint of the REST API
 

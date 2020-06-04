@@ -42,11 +42,14 @@
 #  |  THE SOFTWARE.
 #
 
+# stdlib
+from typing import Any, Dict, FrozenSet, Optional, Union
+
 # this package
 from chemistry_tools.pubchem.errors import ResponseParseError
 
 # this package
-from domdf_python_tools.enums import IntEnum  # type: ignore # TODO
+from aenum import IntEnum  # type: ignore # TODO
 
 
 class BondType(IntEnum):
@@ -65,7 +68,13 @@ class Bond:
 	Class to represent a bond between two atoms in a :class:`~pubchempy.Compound`.
 	"""
 
-	def __init__(self, aid1, aid2, order=BondType.SINGLE, style=None):
+	def __init__(
+			self,
+			aid1: int,
+			aid2: int,
+			order: Union[int, BondType] = BondType.SINGLE,
+			style=None,
+			):
 		"""
 		Initialize with begin and end atom IDs, bond order and bond style.
 
@@ -73,27 +82,30 @@ class Bond:
 		:type aid1: int
 		:param aid2: ID of the end atom of this bond
 		:type aid2: int
-		:param order: Bond order.
-		:type order: :class:`chemistry_tools.pubchem.bond.BondType`
+		:param order: Bond order
+		:type order: ~chemistry_tools.pubchem.bond.BondType
 		:param style: Bond style annotation.
 		:type style:
 		"""
 
-		self.aid1 = aid1
-		self.aid2 = aid2
-		self.order = BondType(order)
+		self.aid1: int = aid1
+		self.aid2: int = aid2
+		self.order: BondType = BondType(order)
 		self.style = style
 
 	def __repr__(self) -> str:
 		return f'Bond({self.aid1}, {self.aid2}, {self.order!r})'
 
-	def __eq__(self, other):
+	def __eq__(self, other) -> bool:
 		return (
-				isinstance(other, type(self)) and self.aid1 == other.aid1 and self.aid2 == other.aid2
-				and self.order == other.order and self.style == other.style
-				)
+			isinstance(other, type(self))
+			and self.aid1 == other.aid1
+			and self.aid2 == other.aid2
+			and self.order == other.order
+			and self.style == other.style
+			)  # yapf: disable
 
-	def to_dict(self):
+	def to_dict(self) -> Dict[str, Any]:
 		"""
 		Return a dictionary containing Bond data.
 		"""
@@ -106,7 +118,7 @@ class Bond:
 		return data
 
 
-def parse_bonds(bonds_dict, coords_dict=None):
+def parse_bonds(bonds_dict: Dict[str, Any], coords_dict: Optional[Dict] = None) -> Dict[FrozenSet[int], Bond]:
 	"""
 
 	:param bonds_dict:
@@ -118,7 +130,7 @@ def parse_bonds(bonds_dict, coords_dict=None):
 	:rtype: dict
 	"""
 
-	bonds = {}
+	bonds: Dict[FrozenSet[int], Bond] = {}
 
 	if not bonds_dict:
 		return bonds

@@ -23,13 +23,19 @@
 
 # stdlib
 from io import BytesIO
+from typing import Sequence, Union
 
 # this package
 from .enums import PubChemNamespace
 from .pug_rest import _do_rest_get
 
 
-def get_structure_image(identifier, namespace="name", width=300, height=300):
+def get_structure_image(
+		identifier: Union[str, int, Sequence[Union[str, int]]],
+		namespace="name",
+		width=300,
+		height=300,
+		):
 	"""
 	Returns an image of the structure of the compound with the given name
 
@@ -45,7 +51,12 @@ def get_structure_image(identifier, namespace="name", width=300, height=300):
 	return rest_get_structure_image(identifier, namespace, width, height)
 
 
-def rest_get_structure_image(identifier, namespace=PubChemNamespace.name, width=300, height=300):
+def rest_get_structure_image(
+		identifier: Union[str, int, Sequence[Union[str, int]]],
+		namespace: Union[PubChemNamespace, str] = PubChemNamespace.name,
+		width=300,
+		height=300
+		):
 	"""
 	Get an image of the compound
 

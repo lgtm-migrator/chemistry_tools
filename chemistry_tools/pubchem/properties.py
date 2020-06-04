@@ -47,7 +47,10 @@
 import warnings
 from collections import namedtuple
 from textwrap import dedent
-from typing import Any, List
+from typing import Any, Callable, Dict, Iterable, List, NamedTuple, Sequence, Union
+
+# 3rd party
+from pandas import DataFrame  # type: ignore
 
 # this package
 from chemistry_tools.formulae import Formula
@@ -58,9 +61,15 @@ from .pug_rest import _do_rest_get
 from .utils import _force_sequence_or_csv
 from tabulate import tabulate
 
-PropData = namedtuple("PropData", "name, description, type, attr_name")
 
-_properties = [
+class PropData(NamedTuple):
+	name: str
+	description: str
+	type: Callable
+	attr_name: str
+
+
+_properties: List[PropData] = [
 		PropData("MolecularFormula", "Molecular formula.", Formula.from_string, "molecular_formula"),
 		PropData(
 				"MolecularWeight",
@@ -270,20 +279,30 @@ _properties = [
 				),
 		]
 
-valid_property_descriptions = tabulate([(prop.name, prop.description) for prop in _properties],
-										headers=["Property", "Description"])
+valid_property_descriptions: str = tabulate(
+		[(prop.name, prop.description) for prop in _properties],
+		headers=["Property", "Description"],
+		)
 
 # Properties for PubChem REST API
-valid_properties = {prop.name: prop.type for prop in _properties}
+valid_properties: Dict[str, Callable] = {prop.name: prop.type for prop in _properties}
 
 # Allows properties to optionally be specified as underscore_separated, consistent with Compound attributes
-PROPERTY_MAP = {prop.attr_name: prop.name for prop in _properties}
+PROPERTY_MAP: Dict[str, str] = {prop.attr_name: prop.name for prop in _properties}
 
 
-def insert_valid_properties_table():
+def insert_valid_properties_table() -> Callable:
+	"""
+	Decorator to insert table of valid properties into the docstring of the decorated function
+	"""
 
-	def wrapper(target):
-		deindented_doc = dedent(target.__doc__)
+	def wrapper(target: Callable) -> Callable:
+		target_doc = target.__doc__
+
+		if not target_doc:
+			return target
+
+		deindented_doc = dedent(target_doc)
 
 		replaced_doc = deindented_doc.replace(
 				":: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::",
@@ -298,19 +317,23 @@ def insert_valid_properties_table():
 
 
 @insert_valid_properties_table()
-def rest_get_properties_json(identifier, namespace=PubChemNamespace.name, properties='', **kwargs):
+def rest_get_properties_json(
+		identifier: Union[str, int, Sequence[Union[str, int]]],
+		namespace=PubChemNamespace.name,
+		properties: Union[Sequence[str], str] = '',
+		**kwargs
+		) -> Dict:
 	"""
 	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
-	:type identifier: str, Sequence[str]
 	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`
 	:type namespace: PubChemNamespace, optional
-	:param properties: The properties to retrieve for the compound. See the table below. Can be either a comma-separated string or a list.
+	:param properties: The properties to retrieve for the compound. See the table below. Can be either a
+		comma-separated string or a list.
 
 	:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
 
-	:type properties: str, Sequence[str]
 	:param kwargs: Optional arguments that ``json.loads`` takes.
 	:raises ValueError: If the response body does not contain valid json.
 
@@ -328,7 +351,12 @@ def rest_get_properties_json(identifier, namespace=PubChemNamespace.name, proper
 
 
 @insert_valid_properties_table()
-def rest_get_properties(identifier, namespace=PubChemNamespace.name, properties='', format_=PubChemFormats.CSV):
+def rest_get_properties(
+		identifier: Union[str, int, Sequence[Union[str, int]]],
+		namespace=PubChemNamespace.name,
+		properties: Union[Sequence[str], str] = '',
+		format_: Union[PubChemFormats, str] = PubChemFormats.CSV,
+		):
 	"""
 	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
@@ -336,11 +364,14 @@ def rest_get_properties(identifier, namespace=PubChemNamespace.name, properties=
 	:type identifier: str, Sequence[str]
 	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`
 	:type namespace: PubChemNamespace, optional
-	:param properties: The properties to retrieve for the compound. See the table below. Can be either a comma-separated string or a list.
+	:param properties: The properties to retrieve for the compound. See the table below. Can be either a
+		comma-separated string or a list.
 
 	:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
 
 	:type properties: str, Sequence[str]
+	:param format_: The format to obtain the data in
+	:type format_: PubChemFormats
 
 	:raises ValueError: If the response body does not contain valid json.
 
@@ -357,7 +388,16 @@ def rest_get_properties(identifier, namespace=PubChemNamespace.name, properties=
 	return _do_rest_get(namespace, identifier, domain=f"property/{','.join(properties)}", format_=format_).text
 
 
-def _force_valid_properties(properties):
+def _force_valid_properties(properties: Union[str, Iterable[str]]) -> List[str]:
+	"""
+	Coerce ``properties`` into a list of strings and exclude any invalid properties,
+	or raise a :exc:`ValueError` if that is not possible.
+
+	:param properties:
+
+	:return:
+	"""
+
 	properties = _force_sequence_or_csv(properties, "properties")
 
 	ordered_properties = []
@@ -377,7 +417,12 @@ def _force_valid_properties(properties):
 
 
 @insert_valid_properties_table()
-def get_properties(identifier, properties='', namespace="name", as_dataframe=False):
+def get_properties(
+		identifier: Union[str, int, Sequence[Union[str, int]]],
+		properties: Union[Sequence[str], str] = '',
+		namespace: Union[PubChemNamespace, str] = "name",
+		as_dataframe: bool = False,
+		) -> Union[List[Dict[str, Any]], DataFrame]:
 	"""
 	Returns the requested properties for the compound with the given identifier.
 	As more than one compound may be identified the results are returned in a list.
@@ -385,14 +430,12 @@ def get_properties(identifier, properties='', namespace="name", as_dataframe=Fal
 	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
-	:type identifier: str, Sequence[str]
 
 	:param properties: The properties to retrieve for the compound. See the table below. Can be either a
 		comma-separated string or a list.
 
 	:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
 
-	:type properties: str, Sequence[str]
 	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`. Default "name"
 	:type namespace: PubChemNamespace, optional
 	:param as_dataframe: Automatically extract the properties into a pandas :class:`~pandas.DataFrame`.
@@ -402,7 +445,6 @@ def get_properties(identifier, properties='', namespace="name", as_dataframe=Fal
 	:raises NotFoundError: If the compound with the requested identifier was not found in PubChem.
 
 	:return: List of dictionaries mapping properties to values
-	:rtype: List[dict]
 	"""
 
 	if isinstance(properties, str) and properties.lower() == "all":
@@ -423,14 +465,17 @@ def get_properties(identifier, properties='', namespace="name", as_dataframe=Fal
 		results.append(parsed_data)
 
 	if as_dataframe:
-		import pandas  # type: ignore
-		return pandas.DataFrame.from_records(results, index='CID')
+		return DataFrame.from_records(results, index='CID')
 
 	return results
 
 
 @insert_valid_properties_table()
-def get_property(identifier, property='', namespace="name") -> Any:
+def get_property(
+		identifier: Union[str, int, Sequence[Union[str, int]]],
+		property='',
+		namespace: Union[PubChemNamespace, str] = "name"
+		) -> Any:
 	"""
 	Returns the requested property for the compound with the given identifier.
 
@@ -500,7 +545,16 @@ def parse_properties(property_data):
 	return list(compounds.values())
 
 
-class PubChemProperty(namedtuple("__BasePubChemProperty", "label name value dtype source")):
+class __BasePubChemProperty(NamedTuple):
+	label: str
+	name: str
+	value: Any
+	dtype: Callable
+	source: Dict
+
+
+class PubChemProperty(__BasePubChemProperty):
+
 	__slots__: List[str] = []
 
 	def __new__(cls, label, name=None, value=None, dtype=None, source=None):
@@ -516,11 +570,15 @@ class PubChemProperty(namedtuple("__BasePubChemProperty", "label name value dtyp
 		return super().__new__(cls, label, name, value, dtype, source)
 
 
-def string_list(val):
+def string_list(val: Iterable[Any]) -> List[str]:
+	"""
+	Coerce an iterable of values to a list of strings.
+	"""
+
 	return [str(x) for x in val]
 
 
-def _parse_record_property(prop):
+def _parse_record_property(prop: Dict) -> PubChemProperty:
 	urn = prop["urn"]
 
 	if "name" in urn:
@@ -529,6 +587,8 @@ def _parse_record_property(prop):
 		prop_name = None
 
 	dtype = urn["datatype"]
+
+	prop_dtype: Callable
 
 	if dtype == 7:
 		prop_dtype = float

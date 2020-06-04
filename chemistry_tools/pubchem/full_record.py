@@ -20,13 +20,26 @@
 #  MA 02110-1301, USA.
 #
 
+# stdlib
+from typing import Dict, Sequence, Union
+
 # this package
 from chemistry_tools.pubchem.enums import PubChemNamespace
 from chemistry_tools.pubchem.properties import _parse_record_property
 from chemistry_tools.pubchem.pug_rest import _do_rest_get
 
 
-def parse_full_record(record):
+def parse_full_record(record: Dict):
+	"""
+	Parse the complete PubChem record for a compound.
+
+	:param record:
+	:type record: dict
+
+	:return:
+	:rtype:
+	"""
+
 	parsed_records = []
 
 	for compound in record["PC_Compounds"]:
@@ -66,7 +79,12 @@ def parse_full_record(record):
 	return parsed_records
 
 
-def rest_get_full_record(identifier, namespace=PubChemNamespace.name, record_type="2d", **kwargs):
+def rest_get_full_record(
+		identifier: Union[str, int, Sequence[Union[str, int]]],
+		namespace: Union[PubChemNamespace, str] = PubChemNamespace.name,
+		record_type: str = "2d",
+		**kwargs,
+		) -> Dict:
 	"""
 	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by

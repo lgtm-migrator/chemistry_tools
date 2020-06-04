@@ -47,12 +47,14 @@ Various tools
 
 # stdlib
 from collections.abc import Sequence, Set
+from typing import Any, Dict, Iterable, List, Union
 
 # this package
 from chemistry_tools.pubchem import API_BASE
+from chemistry_tools.pubchem.enums import PubChemNamespace
 
 
-def format_string(stringwithmarkup):
+def format_string(stringwithmarkup: Dict[str, Any]) -> str:
 	"""
 	Convert a PubChem formatted string into an HTML formatted string
 	"""
@@ -78,12 +80,19 @@ def format_string(stringwithmarkup):
 		string[start] = f"<{style}>{string[start]}"
 		string[end] = f"{string[end]}</{style}>"
 
-	string = ''.join(string)
-
-	return string
+	return ''.join(string)
 
 
-def _force_sequence_or_csv(value, name):
+def _force_sequence_or_csv(value: Union[str, int, Iterable[Union[str, int]]], name: str) -> List[str]:
+	"""
+	Coerce ``value`` into a list of strings, including splitting comma-separated values.
+	If that is not possible a :exc:`ValueError` is raised.
+
+	:param value: The value to coerce to a list of strings.
+	:param name: The name of the property. Used for error messages.
+	:type name: str
+	"""
+
 	err_msg = f"Please supply one or more {name}, either as a comma-separated string or a Sequence of strings."
 
 	if not value:
@@ -93,15 +102,17 @@ def _force_sequence_or_csv(value, name):
 
 	err_msg = f"'{name}' must be either a comma-separated string or a Sequence of strings"
 
+	parsed_value: List[str]
+
 	if isinstance(value, str):
-		value = value.split(",")
+		parsed_value = value.split(",")
 
 	elif isinstance(value, int):
-		value = [str(value)]
+		parsed_value = [str(value)]
 
 	elif isinstance(value, (Sequence, Set)):
 
-		output = []
+		output: List[str] = []
 
 		for idx, val in enumerate(value):
 			if isinstance(val, str):
@@ -111,15 +122,18 @@ def _force_sequence_or_csv(value, name):
 			else:
 				raise ValueError(err_msg)
 
-		value = output
+		parsed_value = output
 
 	else:
 		raise ValueError(err_msg)
 
-	return [val.strip() for val in value]
+	return [val.strip() for val in parsed_value]
 
 
-def _make_base_url(namespace, identifier):
+def _make_base_url(
+		namespace: Union[PubChemNamespace, str],
+		identifier: Union[str, int, Iterable[Union[str, int]]],
+		) -> str:
 
 	identifier = _force_sequence_or_csv(identifier, "identifier")
 	namespace = str(namespace)

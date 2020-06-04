@@ -74,9 +74,10 @@ Functions and constants for convert formulae to unicode
 #  |  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# this package
+# stdlib
 from typing import Dict, Optional, Sequence, Union
 
+# this package
 from ._parser_core import _formula_to_format, _greek_letters, _greek_u
 
 _unicode_mapping: Dict[str, str] = {k + '-': v + '-' for k, v in zip(_greek_letters, _greek_u)}

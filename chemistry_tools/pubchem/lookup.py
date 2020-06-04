@@ -21,15 +21,22 @@ Lookup properties for compound by name or CAS number
 #  MA 02110-1301, USA.
 #
 
+# stdlib
+from typing import List, Sequence, Union
+
 # this package
 from chemistry_tools.pubchem.compound import Compound
 from chemistry_tools.pubchem.description import parse_description, rest_get_description
+from chemistry_tools.pubchem.enums import PubChemNamespace
 
 # TODO: xrefs
 # TODO: formula search with listkey and pagination 	https://pubchemdocs.ncbi.nlm.nih.gov/pug-rest$_Toc494865589
 
 
-def get_compounds(identifier, namespace="name"):
+def get_compounds(
+		identifier: Union[str, int, Sequence[Union[str, int]]],
+		namespace: Union[PubChemNamespace, str] = "name",
+		) -> List[Compound]:
 	"""
 	Returns a list of Compound objects for compounds that match the search criteria
 	As more than one compound may be identified the results are returned in a list.

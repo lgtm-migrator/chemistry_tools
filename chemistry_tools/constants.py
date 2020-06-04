@@ -48,6 +48,7 @@
 
 # stdlib
 from collections import namedtuple
+from typing import NamedTuple, Optional
 
 # 3rd party
 import quantities  # type: ignore
@@ -115,11 +116,24 @@ _cation_oxidation_states = {  # This needs to be reviewed, just from the top of 
 		}
 
 
-class Constant(namedtuple('__BaseConstant', 'name value unit symbol')):
+class __BaseConstant(NamedTuple):
+	name: str
+	value: float
+	unit: Optional[quantities.quantity.Quantity]
+	symbol: Optional[str]
+
+
+class Constant(__BaseConstant):
 	# TODO: docstring
 
 	# make symbol and unit optional
-	def __new__(cls, name: str, value: float, unit: quantities.quantity.Quantity = None, symbol: str = None):
+	def __new__(
+			cls,
+			name: str,
+			value: float,
+			unit: Optional[quantities.quantity.Quantity] = None,
+			symbol: Optional[str] = None,
+			):
 		return super().__new__(cls, name, value, unit, symbol)
 
 	def as_quantity(self):
@@ -139,7 +153,7 @@ class Constant(namedtuple('__BaseConstant', 'name value unit symbol')):
 
 
 # The following from periodictable
-# public domain data
+# Public Domain data
 # Author: Paul Kienzle
 avogadro_number = avogadro_constant = Constant(
 		name="Avogadro constant", value=6.02214179e23, unit=1 / quantities.mol, symbol="N<sub>A</sub>"
