@@ -45,7 +45,6 @@
 
 # stdlib
 import warnings
-from collections import namedtuple
 from textwrap import dedent
 from typing import Any, Callable, Dict, Iterable, List, NamedTuple, Sequence, Union
 

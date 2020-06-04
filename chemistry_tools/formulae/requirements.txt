@@ -1,9 +1,7 @@
-quantities>=0.12.4
-domdf_python_tools>=0.3.4
+aenum>=2.2.3
 tabulate>=0.8.3
-pyparsing>=2.2.0
-pandas>=1.0.1
-mathematical>=0.1.7
 cawdrey>=0.1.5
+pyparsing>=2.2.0
+mathematical>=0.1.7
+domdf_python_tools>=0.3.4
 memoized-property>=1.0.3
-aenum

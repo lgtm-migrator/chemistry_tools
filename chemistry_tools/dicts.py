@@ -48,9 +48,13 @@
 # stdlib
 from collections import defaultdict
 from itertools import chain
+from typing import Dict
+
+# 3rd party
+from cawdrey.base import KT, VT
 
 
-class AttrDict(dict):
+class AttrDict(Dict[KT, VT]):
 	"""
 	Subclass of dict with attribute access to keys
 	"""

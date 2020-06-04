@@ -159,7 +159,7 @@ def latex_of_unit(quant):
 	return _latex_from_dimensionality(quant.dimensionality).strip('$')
 
 
-def unicode_of_unit(quant):
+def unicode_of_unit(quant: quantities.quantity.Quantity) -> str:
 	"""
 	Returns unicode reperesentation of the unit of a quantity
 
@@ -171,7 +171,7 @@ def unicode_of_unit(quant):
 	return quant.dimensionality.unicode
 
 
-def html_of_unit(quant):
+def html_of_unit(quant: quantities.quantity.Quantity) -> str:
 	"""
 	Returns HTML reperesentation of the unit of a quantity
 
@@ -211,7 +211,7 @@ def unit_registry_from_human_readable(unit_registry):
 # Abstraction of underlying package providing units and dimensional analysis:
 
 
-def is_unitless(expr):
+def is_unitless(expr) -> bool:
 	"""
 	Returns ``True`` if ``expr`` is unitless, otherwise ``False``
 

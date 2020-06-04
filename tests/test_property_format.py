@@ -12,10 +12,10 @@ from chemistry_tools import property_format
 
 
 def test_degC():
-	assert property_format.degC("150 deg C") == "150°C"
-	assert property_format.degC("150deg C") == "150°C"
-	assert property_format.degC("150 DEG C") == "150°C"
-	assert property_format.degC("150DEG C") == "150°C"
+	assert property_format.degC("150 deg C") == "150\u205f°C"
+	assert property_format.degC("150deg C") == "150\u205f°C"
+	assert property_format.degC("150 DEG C") == "150\u205f°C"
+	assert property_format.degC("150DEG C") == "150\u205f°C"
 
 
 def test_equals():

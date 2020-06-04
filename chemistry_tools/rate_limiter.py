@@ -53,10 +53,10 @@ def rate_limit(func):
 
 	min_time = 0.2
 
-	def wrapper(*args, **kwargs):
+	def rate_limit_wrapper(*args, **kwargs):
 		now = datetime.datetime.now()
 
-		time_since_last_run = (now - wrapper.last_run_time).total_seconds()
+		time_since_last_run = (now - rate_limit_wrapper.last_run_time).total_seconds()
 		print(f"Last ran {time_since_last_run} seconds ago")
 
 		if time_since_last_run < min_time:
@@ -64,22 +64,23 @@ def rate_limit(func):
 			print(f"Waiting {wait_time} seconds")
 			time.sleep(wait_time)
 
-		wrapper.last_run_time = now
+		rate_limit_wrapper.last_run_time = now
 		res = func(*args, **kwargs)
 		return res
 
-	wrapper.last_run_time = datetime.datetime.fromtimestamp(0)
+	rate_limit_wrapper.last_run_time = datetime.datetime.fromtimestamp(0)
 
-	return wrapper
+	return rate_limit_wrapper
 
 
 class RateLimitAdapter(CacheControlAdapter):
 
-	def send(self, request, cacheable_methods=None, **kw):
+	def send(self, request, cacheable_methods=None, **kwargs):
 		"""
 		Send a request. Use the request information to see if it
 		exists in the cache and cache the response if we need to and can.
 		"""
+
 		cacheable = cacheable_methods or self.cacheable_methods
 		if request.method in cacheable:
 			try:
@@ -92,13 +93,13 @@ class RateLimitAdapter(CacheControlAdapter):
 			# check for etags and add headers if appropriate
 			request.headers.update(self.controller.conditional_headers(request))
 
-		resp = self.rate_limited_send(request, **kw)
+		resp = self.rate_limited_send(request, **kwargs)
 
 		return resp
 
 	@rate_limit
 	def rate_limited_send(self, *args, **kwargs):
-		super(CacheControlAdapter, self).send(*args, **kwargs)
+		return super(CacheControlAdapter, self).send(*args, **kwargs)
 
 
 cache_dir = pathlib.Path(appdirs.user_cache_dir("chemistry_tools"))
@@ -111,7 +112,7 @@ cache_adapter = CacheControlAdapter(heuristic=ExpiresAfter(days=28))
 cached_requests = CacheControl(requests.Session(), cache=FileCache(cache_dir))
 
 
-def clear_cache():
+def clear_cache() -> None:
 	import shutil
 	shutil.rmtree(cache_dir)
 

@@ -77,3 +77,6 @@ additional_requirements_files:
   - "chemistry_tools/formulae/requirements.txt"
 
 tox_testenv_extras: all
+
+sphinx_conf_preamble:
+  - "warnings.filterwarnings('ignore', message='WARNING: duplicate object description of chemistry_tools.elements')"

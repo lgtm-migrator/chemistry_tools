@@ -59,10 +59,8 @@ from chemistry_tools.pubchem import API_BASE
 from chemistry_tools.pubchem.enums import PubChemFormats, PubChemNamespace
 from chemistry_tools.pubchem.errors import HTTP_ERROR_CODES, PubChemHTTPError
 from chemistry_tools.pubchem.utils import _force_sequence_or_csv, _make_base_url
-from chemistry_tools.rate_limiter import rate_limit
 
 
-@rate_limit
 def _do_rest_get(
 		namespace: Union[PubChemNamespace, str],
 		identifier: Union[str, int, Sequence[Union[str, int]]],

@@ -1,56 +1,85 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 #
-# Copyright 2019-2020 Dominic Davis-Foster
+#  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 3 of the License, or
+#  (at your option) any later version.
 #
-# Adapted from SpectrumSimilarity.R
-# Part of OrgMassSpecR
-# Copyright 2011-2017 Nathan Dodder <nathand@sccwrp.org>
-# Available under the BSD 2-Clause License
-
-__author__ = "Dominic Davis-Foster"
-__copyright__ = "Copyright 2019 Dominic Davis-Foster"
-
-__license__ = "LGPL"
-__version__ = "0.1.0"
-__email__ = "dominic@davis-foster.co.uk"
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU Lesser General Public License for more details.
+#
+#  You should have received a copy of the GNU Lesser General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+#  MA 02110-1301, USA.
+#
+#  Adapted from SpectrumSimilarity.R
+#  Part of OrgMassSpecR
+#  |  Copyright (c) 2011-2017 Nathan Dodder <nathand@sccwrp.org>
+#  |  Available under the BSD 2-Clause License
+#  |
+#  |  Redistribution and use in source and binary forms, with or without modification,
+#  |  are permitted provided that the following conditions are met:
+#  |
+#  |    Redistributions of source code must retain the above copyright notice, this
+#  |    list of conditions and the following disclaimer.
+#  |
+#  |    Redistributions in binary form must reproduce the above copyright notice, this
+#  |    list of conditions and the following disclaimer in the documentation and/or
+#  |    other materials provided with the distribution.
+#  |
+#  |  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+#  |  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+#  |  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+#  |  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+#  |  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+#  |  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+#  |  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+#  |  ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+#  |  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+#  |  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
 
 # 3rd party
+from typing import Tuple
+
 import numpy  # type: ignore
-import pandas as pd  # type: ignore
+import pandas  # type: ignore
 
 
 def SpectrumSimilarity(
-		spec_top,
-		spec_bottom,
-		t=0.25,
-		b=10,
-		top_label=None,
-		bottom_label=None,
-		xlim=(50, 1200),
-		x_threshold=0,
-		print_alignment=False,
-		print_graphic=True,
-		output_list=False,
+		spec_top: numpy.ndarray,
+		spec_bottom: numpy.ndarray,
+		t: float = 0.25,
+		b: float = 10,
+		top_label: str = None,
+		bottom_label: str = None,
+		xlim: Tuple[int, int] = (50, 1200),
+		x_threshold: float = 0,
+		print_alignment: bool = False,
+		print_graphic: bool = True,
+		output_list: bool = False,
 		):
 	"""
 
 	:param spec_top: Array containing the experimental spectrum's peak list with the m/z values in the
 		first column and corresponding intensities in the second
-	:type spec_top: numpy.df
 	:param spec_bottom: Array containing the reference spectrum's peak list with the m/z values in the
 		first column and corresponding intensities in the second
-	:type spec_bottom: numpy.df
 	:param t: numeric value specifying the tolerance used to align the m/z values of the two spectra.
 	:type t: float
-	:param b: numeric value specifying the baseline threshold for peak identification. Expressed as a percent of the maximum intensity.
+	:param b: numeric value specifying the baseline threshold for peak identification.
+		Expressed as a percent of the maximum intensity.
 	:type b: float
 	:param top_label: string to label the top spectrum.
 	:type top_label: str
 	:param bottom_label: string to label the bottom spectrum.
 	:type bottom_label: str
 	:param xlim: tuple of length 2, defining the beginning and ending values of the x-axis.
-	:type xlim: tuple of int
 	:param x_threshold: numeric value specifying
 	:type x_threshold: float
 	:param print_alignment:  whether the intensities should be printed
@@ -59,22 +88,20 @@ def SpectrumSimilarity(
 	:type print_graphic: bool
 	:param output_list: whether the intensities should be returned
 	:type output_list: bool
+
 	:return:
 	:rtype:
 	"""
 
-	if print_graphic:
-		import matplotlib.pyplot as plt  # type: ignore
-
 	# format spectra and normalize intensitites
-	top_tmp = pd.DataFrame(data=spec_top, columns=["mz", "intensity"])
+	top_tmp = pandas.DataFrame(data=spec_top, columns=["mz", "intensity"])
 	top_tmp["normalized"] = top_tmp.apply(normalize, args=(max(top_tmp["intensity"]), ), axis=1)
 	top_tmp = top_tmp[top_tmp["mz"].between(xlim[0], xlim[1])]
 	top_plot = top_tmp[["mz", "normalized"]].copy()  # data frame for plotting spectrum
 	top_plot.columns = ["mz", "intensity"]
 	top = top_plot[top_plot["intensity"] >= b]  # data frame for similarity score calculation
 
-	bottom_tmp = pd.DataFrame(data=spec_bottom, columns=["mz", "intensity"])
+	bottom_tmp = pandas.DataFrame(data=spec_bottom, columns=["mz", "intensity"])
 	bottom_tmp["normalized"] = bottom_tmp.apply(normalize, args=(max(bottom_tmp["intensity"]), ), axis=1)
 	bottom_tmp = bottom_tmp[bottom_tmp["mz"].between(xlim[0], xlim[1])]
 	bottom_plot = bottom_tmp[["mz", "normalized"]].copy()  # data frame for plotting spectrum
@@ -92,11 +119,11 @@ def SpectrumSimilarity(
 	# alignment[,c(2,3)][is.na(alignment[,c(2,3)])] <- 0   # convert NAs to zero (R-Help, Sept. 15, 2004, John Fox)
 	# names(alignment) <- c("mz", "intensity.top", "intensity.bottom")
 	#
-	alignment = pd.merge(top, bottom, on="mz", how="outer")
+	alignment = pandas.merge(top, bottom, on="mz", how="outer")
 	alignment.fillna(value=0, inplace=True)  # Convert NaN to 0
 	alignment.columns = ["mz", "intensity_top", "intensity_bottom"]
 	if print_alignment:
-		with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+		with pandas.option_context('display.max_rows', None, 'display.max_columns', None):
 			print(alignment)
 
 	# similarity score calculation
@@ -116,7 +143,7 @@ def SpectrumSimilarity(
 			)
 
 	# Reverse Match
-	reverse_alignment = pd.merge(top, bottom, on="mz", how="right")
+	reverse_alignment = pandas.merge(top, bottom, on="mz", how="right")
 	reverse_alignment = reverse_alignment.dropna()  # Remove rows containing NaN
 	reverse_alignment.columns = ["mz", "intensity_top", "intensity_bottom"]
 	u = numpy.array(reverse_alignment.iloc[:, 1])
@@ -129,6 +156,8 @@ def SpectrumSimilarity(
 	# generate plot
 
 	if print_graphic:
+		import matplotlib.pyplot as plt  # type: ignore
+
 		fig, ax = plt.subplots()
 		# fig.scatter(top_plot["mz"],top_plot["intensity"], s=0)
 		ax.vlines(top_plot["mz"], 0, top_plot["intensity"], color="blue")
@@ -200,7 +229,7 @@ def SpectrumSimilarity(
 	#
 	#
 
-	# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+	# with pandas.option_context('display.max_rows', None, 'display.max_columns', None):
 	# 	print(similarity_score)
 
 	if output_list:

@@ -25,7 +25,7 @@ Functions for working with IUPAC names for chemicals
 
 # stdlib
 import re
-from typing import Any, List
+from typing import Any, Dict, List, Pattern, Sequence, Tuple
 
 # 3rd party
 from pandas import DataFrame  # type: ignore
@@ -37,7 +37,7 @@ from chemistry_tools.pubchem.errors import HTTP_ERROR_CODES
 
 multiplier_regex = re.compile("*".join([f"({prefix})" for prefix in prefixes.values()]) + "*")
 
-re_strings = [
+re_strings: List[Pattern] = [
 		re.compile(r"((\d+),?)+(\d+)-"),
 		multiplier_regex,
 		re.compile(r"nitro"),
@@ -66,7 +66,9 @@ re_strings = [
 		]
 
 
-_iupac_subs = [
+_iupac_subs: List[Tuple[Pattern, str]] = [
+		# (Regex, replacement)
+
 		# e.g. Bis(2-Nitrophenyl)Amine -> 2,2'-Dinitrophenylamine
 		(re.compile(r"^(bis)(\()(\d)(-)(.*)(phenyl)(\))"), r"\3,\3'-Di\5di\6"),
 		# e.g. 2-Nitro-N-(4-nitrophenyl)aniline -> 2,4'-Dinitrophenylaniline
@@ -81,8 +83,20 @@ _iupac_subs = [
 		(re.compile(r"picryl"), "-1,3,5-trinitrophenyl"),
 		]
 
+_hyphen_digit_hyphen = re.compile(r"(-)(\d)(-)")
 
-def get_IUPAC_parts(string):
+
+def get_IUPAC_parts(string: str) -> List[str]:
+	"""
+	Splits an IUPAC name for a compound into its constituent parts.
+
+	:param string: The IUPAC name to split
+	:type string: str
+
+	:return:
+	:rtype:
+	"""
+
 	string = string.lower()
 
 	for regex, sub in _iupac_subs:
@@ -97,18 +111,18 @@ def get_IUPAC_parts(string):
 				split_points.add(start)
 				split_points.add(end)
 
-	for match in re.finditer(r"(-)(\d)(-)", string.lower()):
+	for match in _hyphen_digit_hyphen.finditer(string.lower()):
 		start, end = match.span()
 		if start != end:
 			split_points.add(start + 1)
 
 	split_points.discard(0)
-	split_points = sorted(split_points)
+	split_points_list = sorted(split_points)
 	start_point = 0
 
 	string_chars = list(string)
 	elements = []
-	for point in split_points:
+	for point in split_points_list:
 		elements.append("".join(string_chars[start_point:point]))
 		start_point = point
 
@@ -141,15 +155,13 @@ def get_IUPAC_parts(string):
 # alphabet = ascii_letters + "0123456789" + ",'" + "- " + '!"#$%&()*+./:;<=>?@[\\]^_`{|}~'
 
 
-def sort_IUPAC_names(iupac_names):
+def sort_IUPAC_names(iupac_names: Sequence[str]) -> List[str]:
 	"""
-	Sort the list of IUPAC names into order.
+	Sort a list of IUPAC names into order.
 
-	:param iupac_names:
-	:type iupac_names: List[str]
+	:param iupac_names: The list of IUPAC names to sort
 
-	:return:
-	:rtype: List[str]
+	:return: The list of sorted IUPAC names
 	"""
 
 	sort_order = get_IUPAC_sort_order(iupac_names)
@@ -158,9 +170,9 @@ def sort_IUPAC_names(iupac_names):
 	return sorted(iupac_names, key=lambda x: sort_order[x])
 
 
-def get_IUPAC_sort_order(iupac_names):
+def get_IUPAC_sort_order(iupac_names: Sequence[str]) -> Dict[str, int]:
 	"""
-	Returns the order the names should be sorted in.
+	Returns the order the given IUPAC names should be sorted in.
 
 	Useful when sorting arrays containing data in addition to the name.
 	e.g.
@@ -169,11 +181,9 @@ def get_IUPAC_sort_order(iupac_names):
 
 	where row[0] would be the name of the compound
 
-	:param iupac_names:
-	:type iupac_names: List[str]
+	:param iupac_names: The list of IUPAC names to sort
 
-	:return:
-	:rtype: List[int]
+	:return: Dictionary mapping the IUPAC names to the order in which they should be sorted
 	"""
 
 	split_names, sorted_names = _get_split_and_sorted_lists(iupac_names)
@@ -185,16 +195,15 @@ def get_IUPAC_sort_order(iupac_names):
 	return sort_order
 
 
-def get_sorted_parts(iupac_names):
+def get_sorted_parts(iupac_names: Sequence[str]) -> List[List[str]]:
 	"""
 	Returns parts of the IUPAC names sorted into order.
-	# The parts are in reverse order (i.e. diphenylamine becomes ["amine", "phenyl", "di"]).
+
+	The parts returned are in reverse order (i.e. diphenylamine becomes ["amine", "phenyl", "di"]).
 
 	:param iupac_names:
-	:type iupac_names: List[str]
 
 	:return:
-	:rtype: List[List[str]]
 	"""
 
 	split_names, sorted_names = _get_split_and_sorted_lists(iupac_names)
@@ -202,7 +211,7 @@ def get_sorted_parts(iupac_names):
 	return [split_names[split_names.index(name)] for name in sorted_names]
 
 
-def _get_split_and_sorted_lists(iupac_names):
+def _get_split_and_sorted_lists(iupac_names: Sequence[str]) -> Tuple[List[List[str]], List[List[str]]]:
 	split_names = []
 
 	for name in iupac_names:
@@ -261,6 +270,16 @@ def sort_dataframe_by_name(df: DataFrame, name_col: str, reverse: bool = False) 
 
 
 def iupac_name_from_cas(cas_number: str) -> str:
+	"""
+	Returns the corresponding IUPAC name for the given CAS number
+
+	:param cas_number: The cas number to search
+	:type cas_number: str
+
+	:return: The IUPAC name
+	:rtype: str
+	"""
+
 	r = cached_requests.get(f"https://cactus.nci.nih.gov/chemical/structure/{cas_number}/iupac_name")
 	if r.status_code in HTTP_ERROR_CODES:
 		raise ValueError(f"No compound found for CAS number {cas_number}")
@@ -269,6 +288,16 @@ def iupac_name_from_cas(cas_number: str) -> str:
 
 
 def cas_from_iupac_name(iupac_name: str) -> str:
+	"""
+	Returns the corresponding CAS number for the given IUPAC name
+
+	:param iupac_name: The IUPAC name to search
+	:type iupac_name: str
+
+	:return: The cas number
+	:rtype: str
+	"""
+
 	r = cached_requests.get(f"https://cactus.nci.nih.gov/chemical/structure/{iupac_name}/cas")
 	if r.status_code in HTTP_ERROR_CODES:
 		raise ValueError(f"No compound found for name {iupac_name}")

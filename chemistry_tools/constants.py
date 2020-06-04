@@ -48,7 +48,7 @@
 
 # stdlib
 from collections import namedtuple
-from typing import NamedTuple, Optional
+from typing import Dict, NamedTuple, Optional
 
 # 3rd party
 import quantities  # type: ignore
@@ -155,24 +155,29 @@ class Constant(__BaseConstant):
 # The following from periodictable
 # Public Domain data
 # Author: Paul Kienzle
+
 avogadro_number = avogadro_constant = Constant(
 		name="Avogadro constant", value=6.02214179e23, unit=1 / quantities.mol, symbol="N<sub>A</sub>"
 		)  # (30)
+
 plancks_constant = planck_constant = Constant(
 		name="Planck's constant",
 		value=4.13566733e-15 * (10**34),
 		unit=quantities.electron_volt / quantities.second,
 		symbol="h"
 		)  # (10)
+
 speed_of_light = Constant(
 		name="Speed of Light", value=299792458, unit=quantities.m / quantities.second, symbol="c"
 		)  # (exact)
+
 electron_radius = Constant(name="Electron Radius", value=2.8179402894e-15, unit=quantities.m, symbol="rₑ")  # (58)
 
 # From NIST Reference on Constants, Units, and Uncertainty
 #   http://physics.nist.gov/cuu/index.html
 # neutron mass = 1.008 664 915 97(43) u
 # atomic mass constant m_u = 1.660 538 782(83) x 10-27 kg
+
 neutron_mass = Constant(
 		name="Neutron mass", value=1.00866491597, unit=quantities.atomic_mass_unit, symbol="n<sup>o</sup>"
 		)  # (43)
@@ -200,7 +205,7 @@ molar_gas_constant = Constant(
 		)
 
 # IUPAC prefixes
-prefixes = {
+prefixes: Dict[int, str] = {
 		1: "mono",
 		2: "di",
 		3: "tri",

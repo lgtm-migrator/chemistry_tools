@@ -5,10 +5,11 @@
 #   -*- coding: utf-8 -*-
 #
 #  property_format.py
-"""Format Physical Properties for Chemicals"""
-
+"""
+Format Physical Properties for Chemicals
+"""
 #
-#  Copyright (c) 2019 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published by
@@ -31,26 +32,23 @@
 import re
 from decimal import Decimal
 
-
-def degC(string):
-	string = string.replace(" deg C", "°C")
-	string = string.replace("deg C", "°C")
-	string = string.replace(" DEG C", "°C")
-	string = string.replace("DEG C", "°C")
-	return string
-
-
-def equals(string):
-	string = string.replace("= ", " = ")
-	string = string.replace("  = ", " = ")
-	return string
-
-
+deg_c_re = re.compile(r"(\s*)(deg|DEG)(\s*)(C)")
+dec_c_symbol = "°C"
+mmath_space = "\u205F"
+equals_re = re.compile(r"\s*=\s*")
 scientific_regex = re.compile("X10.[0-9]+")
 f2c_regex = re.compile(r"\d*\.?\d+ *° *F")
 
 
-def scientific(string):
+def degC(string: str) -> str:
+	return deg_c_re.sub(f"{mmath_space}{dec_c_symbol}", string)
+
+
+def equals(string: str) -> str:
+	return equals_re.sub(" = ", string)
+
+
+def scientific(string: str) -> str:
 	"""
 	TODO: Finish
 
@@ -68,15 +66,15 @@ def scientific(string):
 	return scientific_regex.sub(f"×10<sup>{magnitude}</sup>", string)
 
 
-def uscg1999(string):
+def uscg1999(string: str) -> str:
 	return string.replace("(USCG, 1999)", '')
 
 
-def trailspace(string):
+def trailspace(string: str) -> str:
 	return string.rstrip(" ")
 
 
-def f2c(string):
+def f2c(string: str) -> str:
 	try:
 		temperature = f2c_regex.findall(string)[0].replace("F", '').replace("°", '').replace(" ", '')
 	except IndexError:
@@ -89,5 +87,5 @@ def f2c(string):
 	return f2c_regex.sub(f"{temperature}°C", string)
 
 
-def property_format(string):
+def property_format(string: str) -> str:
 	return trailspace(f2c(uscg1999(scientific(degC(equals(string))))))

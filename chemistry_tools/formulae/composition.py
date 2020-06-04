@@ -25,7 +25,7 @@ Elemental composition of a :class:`~chemistry_tools.formulae.formula.Formula`
 
 # stdlib
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import TYPE_CHECKING, Any, Dict, List
 
 # this package
 from chemistry_tools.elements import ELEMENTS

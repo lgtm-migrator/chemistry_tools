@@ -103,7 +103,7 @@
 # stdlib
 import re
 from functools import lru_cache
-from typing import Dict, Iterable, List, Sequence, Set, Tuple, Union
+from typing import Dict, Iterable, List, Sequence, Tuple
 
 # this package
 from chemistry_tools.elements import ELEMENTS
