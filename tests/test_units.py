@@ -160,7 +160,6 @@ def test_unit_of():
 
 
 def test_to_unitless():
-	from chemistry_tools.units import to_unitless
 
 	dm = units.decimetre
 	vals = [1.0 * dm, 2.0 * dm]
