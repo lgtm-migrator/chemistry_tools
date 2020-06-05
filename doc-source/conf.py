@@ -20,7 +20,7 @@ sys.path.append(os.path.abspath('..'))
 
 from __pkginfo__ import __version__
 
-warnings.filterwarnings('ignore', message='duplicate object description of')
+warnings.filterwarnings('ignore', message='duplicate object description of chemistry_tools.elements')
 
 github_url = f"https://github.com/domdfcoding/chemistry_tools"
 

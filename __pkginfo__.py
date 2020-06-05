@@ -77,7 +77,7 @@ Before installing please ensure you have added the following channels: domdfcodi
 __all__.append("conda_description")
 
 install_requires = (repo_root / "requirements.txt").read_text().split('\n')
-extras_require = {'pubchem': ['memoized_property>=1.0.3', 'tabulate>=0.8.3', 'aenum>=2.2.3', 'domdf_python_tools>=0.3.6', 'Pillow>=7.0.0', 'cawdrey>=0.1.5', 'pyparsing>=2.2.0', 'mathematical>=0.1.7'], 'elements': ['domdf_python_tools>=0.3.6', 'memoized-property>=1.0.3'], 'formulae': ['aenum>=2.2.3', 'tabulate>=0.8.3', 'cawdrey>=0.1.5', 'pyparsing>=2.2.0', 'mathematical>=0.1.7', 'domdf_python_tools>=0.3.6', 'memoized-property>=1.0.3'], 'plotting': ['matplotlib>=3.0.0'], 'toxnet': ['beautifulsoup4>=4.7.0'], 'all': ['Pillow>=7.0.0', 'aenum>=2.2.3', 'beautifulsoup4>=4.7.0', 'cawdrey>=0.1.5', 'domdf_python_tools>=0.3.6', 'mathematical>=0.1.7', 'matplotlib>=3.0.0', 'memoized-property>=1.0.3', 'memoized_property>=1.0.3', 'pyparsing>=2.2.0', 'tabulate>=0.8.3']}
+extras_require = {'pubchem': ['memoized-property>=1.0.3', 'tabulate>=0.8.3', 'aenum>=2.2.3', 'domdf_python_tools>=0.3.6', 'Pillow>=7.0.0', 'cawdrey>=0.1.5', 'pyparsing>=2.2.0', 'mathematical>=0.1.7'], 'elements': ['domdf_python_tools>=0.3.6', 'memoized-property>=1.0.3'], 'formulae': ['aenum>=2.2.3', 'tabulate>=0.8.3', 'cawdrey>=0.1.5', 'pyparsing>=2.2.0', 'mathematical>=0.1.7', 'domdf_python_tools>=0.3.6', 'memoized-property>=1.0.3'], 'plotting': ['matplotlib>=3.0.0'], 'toxnet': ['beautifulsoup4>=4.7.0'], 'all': ['Pillow>=7.0.0', 'aenum>=2.2.3', 'beautifulsoup4>=4.7.0', 'cawdrey>=0.1.5', 'domdf_python_tools>=0.3.6', 'mathematical>=0.1.7', 'matplotlib>=3.0.0', 'memoized-property>=1.0.3', 'pyparsing>=2.2.0', 'tabulate>=0.8.3']}
 
 classifiers = [
 		'Development Status :: 4 - Beta',
