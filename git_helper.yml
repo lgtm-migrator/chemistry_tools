@@ -79,4 +79,4 @@ additional_requirements_files:
 tox_testenv_extras: all
 
 sphinx_conf_preamble:
-  - "warnings.filterwarnings('ignore', message='WARNING: duplicate object description of chemistry_tools.elements')"
+  - "warnings.filterwarnings('ignore', message='duplicate object description of chemistry_tools.elements')"

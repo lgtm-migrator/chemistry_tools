@@ -3,5 +3,5 @@ tabulate>=0.8.3
 cawdrey>=0.1.5
 pyparsing>=2.2.0
 mathematical>=0.1.7
-domdf_python_tools>=0.3.4
+domdf_python_tools>=0.3.6
 memoized-property>=1.0.3

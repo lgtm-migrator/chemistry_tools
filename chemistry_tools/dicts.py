@@ -50,7 +50,7 @@ from collections import defaultdict
 from itertools import chain
 from typing import Dict
 
-# 3rd party
+# this package
 from cawdrey.base import KT, VT
 
 

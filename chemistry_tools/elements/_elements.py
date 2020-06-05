@@ -153,8 +153,8 @@ alternate_spellings = {
 		"Sulfur": "Sulphur",  # Not IUPAC and not etymologically correct, but widely used in BrE
 		}
 
-for element, spelling in alternate_spellings.items():
-	ELEMENTS.add_alternate_spelling(ELEMENTS[element], spelling)
+for symbol, spelling in alternate_spellings.items():
+	ELEMENTS.add_alternate_spelling(ELEMENTS[symbol], spelling)
 
 for element in [D, T]:
 	ELEMENTS.add_alternate_spelling(element, element.name)

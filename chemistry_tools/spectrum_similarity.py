@@ -44,9 +44,10 @@
 #  |  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# 3rd party
-from typing import Tuple
+# stdlib
+from typing import Optional, Tuple
 
+# 3rd party
 import numpy  # type: ignore
 import pandas  # type: ignore
 
@@ -56,8 +57,8 @@ def SpectrumSimilarity(
 		spec_bottom: numpy.ndarray,
 		t: float = 0.25,
 		b: float = 10,
-		top_label: str = None,
-		bottom_label: str = None,
+		top_label: Optional[str] = None,
+		bottom_label: Optional[str] = None,
 		xlim: Tuple[int, int] = (50, 1200),
 		x_threshold: float = 0,
 		print_alignment: bool = False,

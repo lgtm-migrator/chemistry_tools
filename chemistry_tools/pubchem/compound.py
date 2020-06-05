@@ -348,7 +348,7 @@ class Compound(Dictable):
 		return self._synonyms
 
 	@classmethod
-	def from_cid(cls: Type["C"], cid, record_type: str = "2d") -> C:
+	def from_cid(cls: Type["C"], cid, record_type: str = "2d") -> "Compound":
 		"""
 		Returns the Compound objects for the compound with the given CID
 

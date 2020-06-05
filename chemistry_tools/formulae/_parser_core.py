@@ -77,9 +77,9 @@ Core functions and constants for parsing formulae
 # stdlib
 import re
 import warnings
-from typing import Callable, Dict, Iterable, List, Sequence, Tuple, Union
+from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence, Tuple, Union
 
-_greek_letters = (
+_greek_letters: Tuple[str, ...] = (
 		'alpha',
 		'beta',
 		'gamma',
@@ -105,13 +105,14 @@ _greek_letters = (
 		'psi',
 		'omega',
 		)
+
 _greek_u = 'αβγδεζηθικλμνξοπρστυφχψω'
 
 
 def _formula_to_format(
 		sub: Callable,
 		sup: Callable,
-		formula,
+		formula: str,
 		prefixes: Dict[str, str],
 		infixes: Dict[str, str],
 		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),
@@ -121,7 +122,7 @@ def _formula_to_format(
 	:param sub: The function to call to subscript a string.
 	:param sup: The function to call to superscript a string.
 	:param formula: The formula to format
-	:type formula:
+	:type formula: str
 	:param prefixes: Mapping of prefixes to their equivalents in the desired format
 	:param infixes: Mapping of infixes to their equivalents in the desired format
 	:param suffixes: Suffixes to keep, e.g. ('(g)', '(s)')
@@ -163,10 +164,10 @@ def _formula_to_format(
 
 
 def _formula_to_parts(
-		formula,
+		formula: str,
 		prefixes: Iterable[str],
 		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),
-		) -> List:
+		) -> List[Any]:
 	"""
 
 	:param formula: The formula to split into parts
@@ -199,7 +200,7 @@ def _formula_to_parts(
 			parts[1] = token + parts[1]
 			break
 	else:
-		parts = [formula, None]
+		parts = [formula, None]  # type: ignore
 
 	return [*parts, tuple(drop_pref), tuple(drop_suff[::-1])]
 
@@ -330,55 +331,3 @@ def _parse_isotope_string(label: str) -> Tuple[str, int]:
 		return element_name, isotope_num
 	else:
 		raise ValueError(f"Failed to parse: {label}")
-
-
-def _parse_multiplicity(strings: Iterable[str], substance_keys=None) -> Dict[str, float]:
-	"""
-
-	**Examples**
-	>>> _parse_multiplicity(['2 H2O2', 'O2']) == {'H2O2': 2, 'O2': 1}
-	True
-	>>> _parse_multiplicity(['2 * H2O2', 'O2']) == {'H2O2': 2, 'O2': 1}
-	True
-	>>> _parse_multiplicity(['']) == {}
-	True
-	>>> _parse_multiplicity(['H2O', 'H2O']) == {'H2O': 2}
-	True
-
-	:param strings:
-	:type strings:
-	:param substance_keys:
-	:type substance_keys:
-
-	:return:
-	"""
-
-	result: Dict[str, float] = {}
-
-	for items in [re.split(' \\* | ', s) for s in strings]:
-		items = [x for x in items if x != '']
-
-		if len(items) == 0:
-			continue
-
-		elif len(items) == 1:
-			if items[0] not in result:
-				result[items[0]] = 0
-
-			result[items[0]] += 1
-
-		elif len(items) == 2:
-			if items[1] not in result:
-				result[items[1]] = 0
-
-			result[items[1]] += float(items[0]) if '.' in items[0] or 'e' in items[0] else int(items[0])
-
-		else:
-			raise ValueError("To many parts in substring")
-
-	if substance_keys is not None:
-		for k in result:
-			if k not in substance_keys:
-				raise ValueError(f"Unknown substance_key: {k}")
-
-	return result

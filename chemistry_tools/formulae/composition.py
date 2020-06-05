@@ -25,19 +25,17 @@ Elemental composition of a :class:`~chemistry_tools.formulae.formula.Formula`
 
 # stdlib
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import Any, Dict, List
 
 # this package
 from chemistry_tools.elements import ELEMENTS
+from chemistry_tools import formulae
 
 # this package
 from ._parser_core import _make_isotope_string
 from .dataarray import DataArray
 from .unicode import string_to_unicode
 from .utils import _split_isotope
-
-if TYPE_CHECKING:
-	from chemistry_tools.formulae.formula import Formula
 
 
 class CompositionSort(Enum):
@@ -68,7 +66,7 @@ class Composition(DataArray):
 	:type formula: ~chemistry_tools.formulae.formula.Formula
 	"""
 
-	def __init__(self, formula: "Formula"):
+	def __init__(self, formula: "formulae.Formula"):
 		data: Dict[str, Dict] = {}
 
 		for isymbol, count in formula.items():

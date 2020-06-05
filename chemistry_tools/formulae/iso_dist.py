@@ -25,15 +25,15 @@ Isotope Distributions
 
 # stdlib
 from collections import OrderedDict
-from typing import TYPE_CHECKING, Any, List, Union
+from typing import Any, List, Union
+
+# this package
+from chemistry_tools import formulae
 
 # this package
 from .dataarray import DataArray
 from .unicode import string_to_unicode
 from aenum import IntEnum  # type: ignore # TODO
-
-if TYPE_CHECKING:
-	from chemistry_tools.formulae.formula import Formula
 
 
 class IsoDistSort(IntEnum):
@@ -57,7 +57,7 @@ class IsotopeDistribution(DataArray):
 
 	# TODO: as_mass_spec
 
-	def __init__(self, formula: "Formula"):
+	def __init__(self, formula: "formulae.Formula"):
 		"""
 
 		:param formula: A :class:`~chemistry_tools.formulae.formula.Formula`  object to create the distribution for

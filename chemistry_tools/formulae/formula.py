@@ -413,7 +413,7 @@ class Formula(defaultdict, Counter):
 	def average_mz(self):
 		return self.get_mz(average=True)
 
-	def get_mz(self, average: bool = True, charge: bool = None) -> float:
+	def get_mz(self, average: bool = True, charge: Optional[int] = None) -> float:
 		"""
 		Calculate the average mass:charge ratio (*m/z*) of a :class:`~chemistry_tools.formulae.formula.Formula`.
 

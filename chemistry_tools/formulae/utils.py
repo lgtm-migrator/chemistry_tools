@@ -228,6 +228,9 @@ _isotope_regex_1 = re.compile(r"^([A-z]+)(\[\d*\])$")
 _isotope_regex_2 = re.compile(r"^(\[[A-z]+)(\d*\])$")
 _isotope_regex_3 = re.compile(r"^(\[\d*)([A-z]+\])$")
 _iso_bracket_regex = re.compile(r"^(\[)(\d+)(\])$")
+_hill_isotope_re = r"^(%s)(\[[0-9]*\])?$"
+_hill_carbon_re = re.compile(_hill_isotope_re % "C")
+_hill_hydrogen_re = re.compile(_hill_isotope_re % "H")
 
 
 @lru_cache()
@@ -267,11 +270,6 @@ def _split_isotope(string: str) -> Tuple[str, int]:
 		raise ValueError(f'Unknown chemical element with symbol {elem}')
 
 	return ELEMENTS[elem].symbol, int(isotope)
-
-
-_hill_isotope_re = r"^(%s)(\[[0-9]*\])?$"
-_hill_carbon_re = re.compile(_hill_isotope_re % "C")
-_hill_hydrogen_re = re.compile(_hill_isotope_re % "H")
 
 
 def _hill_order(symbols: Sequence[str]) -> Iterable[str]:

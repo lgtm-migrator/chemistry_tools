@@ -133,21 +133,21 @@ class Species(Formula):
 		self.phase = phase
 
 	@classmethod
-	def from_kwargs(cls: Type["S"], *, charge: int = 0, phase: str = None, **kwargs) -> S:
+	def from_kwargs(cls: Type["S"], *, charge: int = 0, phase: Optional[str] = None, **kwargs) -> S:
 		"""
 		Create a new :class:`~chemistry_tools.formulae.species.Species` object from keyword
 		arguments representing the elements in the compound.
 
-		:param charge:
+		:param charge: The charge of the compound
 		:type charge: int, optional
-		:param phase:
-		:type phase: int, optional
+		:param phase: The phase of the compound (e.g. ``s`` for solid)
+		:type phase: str, optional
 		"""
 
 		return cls(kwargs, charge=charge, phase=phase)
 
 	@classmethod
-	def from_string(cls: Type["S"], formula: str, charge: int = 0, phase: str = None) -> S:
+	def from_string(cls: Type["S"], formula: str, charge: int = 0, phase: Optional[str] = None) -> S:
 		"""
 
 		Create a new :class:`~chemistry_tools.formulae.species.Species` object by parsing a string
