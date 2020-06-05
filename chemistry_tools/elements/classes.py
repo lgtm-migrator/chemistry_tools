@@ -54,7 +54,7 @@
 
 # stdlib
 from functools import lru_cache
-from typing import Any, Dict, Iterable, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 # this package
 from . import _elements, _table

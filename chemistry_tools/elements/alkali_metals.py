@@ -105,7 +105,7 @@ Group 1: Alkali Metals in the Periodic Table
 #
 #  Isotope data from http://www.nist.gov/pml/data/comp.cfm .
 
-__all__ = ('Li', 'Na', 'K', 'Rb', 'Cs', 'Fr')
+__all__ = ("Li", "Na", "K", "Rb", "Cs", "Fr")
 
 # this package
 from .classes import Element

@@ -28,8 +28,8 @@ from enum import Enum
 from typing import Any, Dict, List
 
 # this package
-from chemistry_tools.elements import ELEMENTS
 from chemistry_tools import formulae
+from chemistry_tools.elements import ELEMENTS
 
 # this package
 from ._parser_core import _make_isotope_string
