@@ -11,6 +11,9 @@ conda_channels:
   - domdfcoding
   - conda-forge
 
+exclude_files:
+  - setup
+
 python_deploy_version: 3.6
 
 # Additional lines for .gitignore
@@ -29,6 +32,8 @@ travis_pypi_secure: "qS+l+TaW6WCEXf5m7NFMO56p3QEaH2PZEmh7QEcTzPPMaGe43EuI1seSfwg
 # additional lines for MANIFEST.in
 manifest_additional:
   - recursive-include chemistry_tools/ requirements.txt
+  - recursive-exclude tests/ *
+  - prune tests*
 
 # directory that contains tests
 tests_dir: "tests"

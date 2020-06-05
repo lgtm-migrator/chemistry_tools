@@ -19,7 +19,7 @@ setup(
 		license=__license__,
 		long_description=long_description,
 		name=pypi_name,
-		packages=find_packages(exclude=("tests", "doc-source")),
+		packages=find_packages(exclude=("tests", "tests.test_pubchem", "tests.test_formulae", "doc-source")),
 		project_urls=project_urls,
 		py_modules=py_modules,
 		python_requires=">=3.6",
