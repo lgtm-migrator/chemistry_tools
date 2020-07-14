@@ -5,7 +5,7 @@ email: "dominic@davis-foster.co.uk"
 version: "0.3.1"
 username: "domdfcoding"
 license: 'LGPLv3+'
-short_desc: 'Python tools for analysis of chemical compounds'
+short_desc: 'Python tools for analysis of chemical compounds.'
 
 conda_channels:
   - domdfcoding
@@ -41,8 +41,6 @@ tests_dir: "tests"
 # Additional arguments for setup.py
 #additional_setup_args:
 #  foo: bar
-
-conda_description: "Python tools for analysis of chemical compounds"
 
 classifiers:
   - 'Development Status :: 4 - Beta'
@@ -85,3 +83,7 @@ tox_testenv_extras: all
 
 sphinx_conf_preamble:
   - "warnings.filterwarnings('ignore', message='duplicate object description of chemistry_tools.elements')"
+
+keywords:
+  - chemistry
+  - utility

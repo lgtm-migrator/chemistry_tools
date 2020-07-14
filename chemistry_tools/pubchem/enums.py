@@ -24,56 +24,51 @@
 from typing import Any
 
 # this package
-from domdf_python_tools.enums import IntEnum, StrEnum  # type: ignore # TODO
+from domdf_python_tools.enums import IntEnum, StrEnum
 
 
 class PubChemNamespace(StrEnum):
-	cid = "cid"
-	name = "name"
-	smiles = "smiles"
-	# inchi = "inchi"# TODO: requires argument
-	# sdf = "sdf"
-	inchikey = "inchikey"
-	# formula = "formula"
-	Cid = "cid"
-	Name = "name"
-	Smiles = "smiles"
-	# Inchi = "inchi"# TODO: requires argument
-	# Sdf = "sdf"
-	Inchikey = "inchikey"
-	# Formula = "formula"
-	CID = "cid"
-	NAME = "name"
-	SMILES = "smiles"
-	# INCHI = "inchi"# TODO: requires argument
-	# SDF = "sdf"
-	INCHIKEY = "inchikey"
-	# FORMULA = "formula"
+	CID = Cid = cid = "cid", "PubChem Compound ID"
+	Name = NAME = name = "name", "Comopound Name"
+	SMILES = Smiles = smiles = "smiles", "SMILES String"
+	INCHIKEY = Inchikey = inchikey = "inchikey", "InChI Key"
+	# INCHI = Inchi = inchi = "inchi"# TODO: requires argument
+	# Formula = FORMULA = formula = "formula"
+	# SDF = Sdf = sdf = "sdf"
 
 	# TODO: listkey for formula lookup https://pubchemdocs.ncbi.nlm.nih.gov/pug-rest$_Toc494865583
 
+	def __new__(cls, value, doc):
+		obj = str.__new__(cls, value)  # noqa
+		obj._value_ = value
+		obj.__doc__ = doc
+		return obj
+
 	@classmethod
 	def is_valid_value(cls, value: Any) -> bool:
-		return str(value) in set(str(item) for item in PubChemNamespace)  # type: ignore
+		return str(value) in set(str(item) for item in PubChemNamespace)  # noqa # type: ignore
 
 
+# @document_enum
 class PubChemFormats(StrEnum):
-	JSON = "JSON"
-	Json = "JSON"
-	json = "JSON"
-	XML = "XML"
-	Xml = "XML"
-	xml = "XML"
-	CSV = "CSV"
-	csv = "CSV"
-	Csv = "CSV"
-	PNG = "PNG"
-	png = "PNG"
-	Png = "PNG"
+	"""
+	Enum of supported formats for the PubChem REST API.
+	"""
+
+	JSON = Json = json = "JSON"
+	XML = Xml = xml = "XML"
+	CSV = csv = Csv = "CSV"
+	PNG = png = Png = "PNG"
+
+	def __new__(cls, value):
+		obj = str.__new__(cls, value)  # noqa
+		obj._value_ = value
+		obj.__doc__ = f"{value} Format"
+		return obj
 
 	@classmethod
 	def is_valid_value(cls, value: Any) -> bool:
-		return str(value).upper() in set(str(item) for item in PubChemFormats)  # type: ignore
+		return str(value).upper() in set(str(item) for item in PubChemFormats)  # noqa # type: ignore
 
 
 class CoordinateType(IntEnum):

@@ -4,22 +4,28 @@
 # This file is managed by `git_helper`. Don't edit it directly
 
 # stdlib
+import inspect
 import os
 import re
 import sys
 import warnings
-from sphinx.locale import _
+from pprint import pprint
+from typing import Any, List, Optional, Tuple, Union
+
+from sphinx.errors import PycodeError
+from sphinx.locale import _, __
 
 # Suppress warnings from sphinx_autodoc_typehints
 # TODO: Remove once the following issues is resolved:
 # https://github.com/agronholm/sphinx-autodoc-typehints/issues/133
+from sphinx.pycode import ModuleAnalyzer
+
 warnings.filterwarnings('ignore', message='sphinx.util.inspect.Signature\(\) is deprecated')
 
 sys.path.append(os.path.abspath('.'))
 sys.path.append(os.path.abspath('..'))
 
 from __pkginfo__ import __version__
-
 
 warnings.filterwarnings('ignore', message='duplicate object description of chemistry_tools.elements')
 
@@ -52,6 +58,7 @@ extensions = [
 		"sphinx_tabs.tabs",
 		"sphinx-prompt",
 		"sphinx_autodoc_typehints",
+		"better_enum.autoenum",
 		]
 
 sphinxemoji_style = 'twemoji'

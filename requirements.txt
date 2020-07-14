@@ -5,3 +5,4 @@ quantities >= 0.12.4
 requests>=2.21.0
 cachecontrol[filecache]>=0.12.6
 lockfile
+enum_tools >=0.1.0
