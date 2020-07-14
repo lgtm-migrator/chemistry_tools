@@ -38,9 +38,6 @@ manifest_additional:
 # directory that contains tests
 tests_dir: "tests"
 
-# Additional arguments for setup.py
-#additional_setup_args:
-#  foo: bar
 
 classifiers:
   - 'Development Status :: 4 - Beta'
@@ -58,10 +55,6 @@ classifiers:
   - "Topic :: Scientific/Engineering :: Chemistry"
 #  - "Topic :: Scientific/Engineering :: Visualization"
 
-
-
-#keywords:
-#  -
 
 extras_require:
   pubchem: "chemistry_tools/pubchem/requirements.txt"
@@ -82,8 +75,12 @@ additional_requirements_files:
 tox_testenv_extras: all
 
 sphinx_conf_preamble:
+  - import warnings
   - "warnings.filterwarnings('ignore', message='duplicate object description of chemistry_tools.elements')"
 
 keywords:
   - chemistry
   - utility
+
+extra_sphinx_extensions:
+  - enum_tools.autoenum

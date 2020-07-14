@@ -5,8 +5,8 @@ recursive-exclude **/__pycache__ *
 recursive-include chemistry_tools/ requirements.txt
 recursive-exclude tests/ *
 prune tests*
-chemistry_tools/pubchem/ requirements.txt
-chemistry_tools/elements/ requirements.txt
-chemistry_tools/formulae/ requirements.txt
+include chemistry_tools/pubchem/requirements.txt
+include chemistry_tools/elements/requirements.txt
+include chemistry_tools/formulae/requirements.txt
 recursive-include chemistry_tools/ *.pyi
-recursive-include chemistry_tools/ py.typed
+include chemistry_tools/py.typed

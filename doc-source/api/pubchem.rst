@@ -134,4 +134,3 @@
 .. automodule:: chemistry_tools.pubchem.utils
 	:members:
 	:undoc-members:
-

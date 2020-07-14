@@ -51,6 +51,7 @@ def test_properties_types(c1):
 
 	pass
 
+
 def test_values(c1):
 	# TODO: Now seems to return formatted string
 	# assert c1.boiling_point == Decimal('80.08')

@@ -1,8 +1,8 @@
-memoized-property>=1.0.3
-tabulate>=0.8.3
 aenum>=2.2.3
-domdf_python_tools>=0.3.6
-Pillow>=7.0.0
 cawdrey>=0.1.5
-pyparsing>=2.2.0
+domdf_python_tools>=0.3.6
 mathematical>=0.1.7
+memoized-property>=1.0.3
+Pillow>=7.0.0
+pyparsing>=2.2.0
+tabulate>=0.8.3

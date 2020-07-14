@@ -42,7 +42,6 @@ Examples
 14693.181589001004
 >>> for ele in ELEMENTS:
 ... 	ele.validate()
-... 	ele = eval(repr(ele))
 
 """
 #

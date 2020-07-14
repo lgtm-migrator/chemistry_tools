@@ -26,7 +26,7 @@ def test_coordinate_type(c3d):
 
 def test_atoms(c3d):
 	assert len(c3d.atoms) == 75
-	assert set(a.element for a in c3d.atoms) == {'C', 'H', 'O', 'N'}
+	assert {a.element for a in c3d.atoms} == {'C', 'H', 'O', 'N'}
 	assert set(c3d.elements) == {'C', 'H', 'O', 'N'}
 
 

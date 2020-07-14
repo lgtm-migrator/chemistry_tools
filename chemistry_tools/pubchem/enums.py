@@ -32,6 +32,7 @@ class PubChemNamespace(StrEnum):
 	Name = NAME = name = "name", "Comopound Name"
 	SMILES = Smiles = smiles = "smiles", "SMILES String"
 	INCHIKEY = Inchikey = inchikey = "inchikey", "InChI Key"
+
 	# INCHI = Inchi = inchi = "inchi"# TODO: requires argument
 	# Formula = FORMULA = formula = "formula"
 	# SDF = Sdf = sdf = "sdf"
@@ -46,7 +47,7 @@ class PubChemNamespace(StrEnum):
 
 	@classmethod
 	def is_valid_value(cls, value: Any) -> bool:
-		return str(value) in set(str(item) for item in PubChemNamespace)  # noqa # type: ignore
+		return str(value) in {str(item) for item in PubChemNamespace}  # noqa # type: ignore
 
 
 # @document_enum
@@ -68,7 +69,7 @@ class PubChemFormats(StrEnum):
 
 	@classmethod
 	def is_valid_value(cls, value: Any) -> bool:
-		return str(value).upper() in set(str(item) for item in PubChemFormats)  # noqa # type: ignore
+		return str(value).upper() in {str(item) for item in PubChemFormats}  # noqa # type: ignore
 
 
 class CoordinateType(IntEnum):
@@ -90,4 +91,4 @@ class CoordinateType(IntEnum):
 
 	@classmethod
 	def is_valid_value(cls, value: Any) -> bool:
-		return str(value).upper() in set(str(item) for item in CoordinateType)  # type: ignore
+		return str(value).upper() in {str(item) for item in CoordinateType}  # type: ignore

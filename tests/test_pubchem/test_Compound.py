@@ -42,7 +42,7 @@ def test_basic(c1):
 def test_atoms(c1):
 	assert len(c1.atoms) == 12
 	print([a.element for a in c1.atoms])
-	assert set(a.element for a in c1.atoms) == {'C', 'H'}
+	assert {a.element for a in c1.atoms} == {'C', 'H'}
 	assert set(c1.elements) == {'C', 'H'}
 
 
@@ -55,7 +55,7 @@ def test_single_atom():
 
 def test_bonds(c1):
 	assert len(c1.bonds) == 12
-	assert set(int(b.order) for b in c1.bonds) == {int(BondType.SINGLE), int(BondType.DOUBLE)}
+	assert {int(b.order) for b in c1.bonds} == {int(BondType.SINGLE), int(BondType.DOUBLE)}
 
 
 def test_charge(c1):

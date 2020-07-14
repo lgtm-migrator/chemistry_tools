@@ -4,52 +4,66 @@ Chemistry Tools
 
 .. start short_desc
 
-**Python tools for analysis of chemical compounds**
+**Python tools for analysis of chemical compounds.**
 
 .. end short_desc
 
-.. start shields 
+.. start shields
 
 .. list-table::
 	:stub-columns: 1
 	:widths: 10 90
 
 	* - Docs
-	  - |docs|
+	  - |docs| |docs_check|
 	* - Tests
-	  - |travis| |requires| |coveralls| |codefactor|
+	  - |travis| |actions_windows| |actions_macos| |coveralls| |codefactor|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 	* - Anaconda
 	  - |conda-version| |conda-platform|
+	* - Activity
+	  - |commits-latest| |commits-since| |maintained|
 	* - Other
-	  - |license| |language| |commits-since| |commits-latest| |maintained| 
+	  - |license| |language| |requires| |pre_commit|
 
-.. |docs| image:: https://readthedocs.org/projects/chemistry_tools/badge/?version=latest
+.. |docs| image:: https://img.shields.io/readthedocs/chemistry_tools/latest?logo=read-the-docs
 	:target: https://chemistry_tools.readthedocs.io/en/latest/?badge=latest
 	:alt: Documentation Status
+
+.. |docs_check| image:: https://github.com/domdfcoding/chemistry_tools/workflows/Docs%20Check/badge.svg
+	:target: https://github.com/domdfcoding/chemistry_tools/actions?query=workflow%3A%22Docs+Check%22
+	:alt: Docs Check Status
 
 .. |travis| image:: https://img.shields.io/travis/com/domdfcoding/chemistry_tools/master?logo=travis
 	:target: https://travis-ci.com/domdfcoding/chemistry_tools
 	:alt: Travis Build Status
 
+.. |actions_windows| image:: https://github.com/domdfcoding/chemistry_tools/workflows/Windows%20Tests/badge.svg
+	:target: https://github.com/domdfcoding/chemistry_tools/actions?query=workflow%3A%22Windows+Tests%22
+	:alt: Windows Tests Status
+
+.. |actions_macos| image:: https://github.com/domdfcoding/chemistry_tools/workflows/macOS%20Tests/badge.svg
+	:target: https://github.com/domdfcoding/chemistry_tools/actions?query=workflow%3A%22macOS+Tests%22
+	:alt: macOS Tests Status
+
 .. |requires| image:: https://requires.io/github/domdfcoding/chemistry_tools/requirements.svg?branch=master
 	:target: https://requires.io/github/domdfcoding/chemistry_tools/requirements/?branch=master
 	:alt: Requirements Status
 
-.. |coveralls| image:: https://coveralls.io/repos/github/domdfcoding/chemistry_tools/badge.svg?branch=master
+.. |coveralls| image:: https://img.shields.io/coveralls/github/domdfcoding/chemistry_tools/master?logo=coveralls
 	:target: https://coveralls.io/github/domdfcoding/chemistry_tools?branch=master
 	:alt: Coverage
 
-.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/chemistry_tools
+.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/chemistry_tools?logo=codefactor
 	:target: https://www.codefactor.io/repository/github/domdfcoding/chemistry_tools
 	:alt: CodeFactor Grade
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/chemistry_tools.svg
+.. |pypi-version| image:: https://img.shields.io/pypi/v/chemistry_tools
 	:target: https://pypi.org/project/chemistry_tools/
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/chemistry_tools.svg
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/chemistry_tools?logo=python&logoColor=white
 	:target: https://pypi.org/project/chemistry_tools/
 	:alt: PyPI - Supported Python Versions
 
@@ -61,17 +75,17 @@ Chemistry Tools
 	:target: https://pypi.org/project/chemistry_tools/
 	:alt: PyPI - Wheel
 
-.. |conda-version| image:: https://img.shields.io/conda/v/domdfcoding/chemistry_tools
-	:alt: Conda - Package Version
+.. |conda-version| image:: https://img.shields.io/conda/v/domdfcoding/chemistry_tools?logo=anaconda
 	:target: https://anaconda.org/domdfcoding/chemistry_tools
+	:alt: Conda - Package Version
 
 .. |conda-platform| image:: https://img.shields.io/conda/pn/domdfcoding/chemistry_tools?label=conda%7Cplatform
-	:alt: Conda - Platform
 	:target: https://anaconda.org/domdfcoding/chemistry_tools
+	:alt: Conda - Platform
 
 .. |license| image:: https://img.shields.io/github/license/domdfcoding/chemistry_tools
-	:alt: License
 	:target: https://github.com/domdfcoding/chemistry_tools/blob/master/LICENSE
+	:alt: License
 
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/chemistry_tools
 	:alt: GitHub top language
@@ -86,6 +100,10 @@ Chemistry Tools
 
 .. |maintained| image:: https://img.shields.io/maintenance/yes/2020
 	:alt: Maintenance
+
+.. |pre_commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
+	:target: https://github.com/pre-commit/pre-commit
+	:alt: pre-commit
 
 .. end shields
 
@@ -188,4 +206,3 @@ Also based on Pyteomics (https://github.com/levitsky/pyteomics)
 Copyright (c) 2011-2015, Anton Goloborodko & Lev Levitsky
 
 Licensed under the Apache License
-

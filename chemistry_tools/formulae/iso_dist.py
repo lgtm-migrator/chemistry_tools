@@ -61,7 +61,7 @@ class IsotopeDistribution(DataArray):
 		"""
 
 		:param formula: A :class:`~chemistry_tools.formulae.formula.Formula`  object to create the distribution for
-		:type formula: :class:`~chemistry_tools.formulae.formula.Formula` 
+		:type formula: :class:`~chemistry_tools.formulae.formula.Formula`
 		"""
 
 		iso_compositions = list(formula.iter_isotopologues())

@@ -205,7 +205,8 @@ class PhysicalProperties:
 						elif section["TOCHeading"] == "Other Identifiers":
 							for subsection in section["Section"]:
 								if subsection["TOCHeading"] == "CAS":
-									self.CAS = subsection["Information"][0]["Value"]["StringWithMarkup"][0]["String"]
+									self.CAS = subsection["Information"][0]["Value"]["StringWithMarkup"][0][
+											"String"]
 
 		except KeyError:
 			pass
@@ -217,7 +218,6 @@ class PhysicalProperties:
 		automatically generated record may be returned that contains properties that have been calculated on the
 		fly. These records will not have a CID prop.
 	"""
-
 
 	def get_property_description(self, prop):
 		try:
