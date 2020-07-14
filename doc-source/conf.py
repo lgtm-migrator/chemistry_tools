@@ -1,40 +1,30 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
-# This file is managed by `git_helper`. Don't edit it directly
+# This file is managed by `repo_helper`. Don't edit it directly
 
 # stdlib
-import inspect
 import os
 import re
 import sys
-import warnings
-from pprint import pprint
-from typing import Any, List, Optional, Tuple, Union
 
-from sphinx.errors import PycodeError
-from sphinx.locale import _, __
-
-# Suppress warnings from sphinx_autodoc_typehints
-# TODO: Remove once the following issues is resolved:
-# https://github.com/agronholm/sphinx-autodoc-typehints/issues/133
-from sphinx.pycode import ModuleAnalyzer
-
-warnings.filterwarnings('ignore', message='sphinx.util.inspect.Signature\(\) is deprecated')
+# 3rd party
+from sphinx.locale import _
 
 sys.path.append(os.path.abspath('.'))
 sys.path.append(os.path.abspath('..'))
 
 from __pkginfo__ import __version__
 
+# User-configurable lines
+import warnings
 warnings.filterwarnings('ignore', message='duplicate object description of chemistry_tools.elements')
+# End of user-configurable lines
 
-github_url = f"https://github.com/domdfcoding/chemistry_tools"
+github_url = "https://github.com/domdfcoding/chemistry_tools"
 
 rst_prolog = f""".. |pkgname| replace:: chemistry_tools
 .. |pkgname2| replace:: ``chemistry_tools``
 .. |browse_github| replace:: `Browse the GitHub Repository <{github_url}>`__
-.. |ghurl| replace:: {github_url}
 """
 
 author = "Dominic Davis-Foster"
@@ -58,7 +48,10 @@ extensions = [
 		"sphinx_tabs.tabs",
 		"sphinx-prompt",
 		"sphinx_autodoc_typehints",
-		"better_enum.autoenum",
+		"sphinx.ext.autosummary",
+		"autodocsumm",
+		"sphinx_copybutton",
+		'enum_tools.autoenum',
 		]
 
 sphinxemoji_style = 'twemoji'
@@ -81,7 +74,7 @@ intersphinx_mapping = {
 		"SciPy": ('https://docs.scipy.org/doc/scipy/reference', None),
 		"matplotlib": ('https://matplotlib.org', None),
 		"h5py": ('https://docs.h5py.org/en/latest/', None),
-		"Sphinx": ('https://www.sphinx-doc.org/en/stable/', None),
+		"Sphinx": ('https://www.sphinx-doc.org/en/master/', None),
 		"Django": ('https://docs.djangoproject.com/en/dev/', 'https://docs.djangoproject.com/en/dev/_objects/'),
 		"sarge": ('https://sarge.readthedocs.io/en/latest/', None),
 		"attrs": ('https://www.attrs.org/en/stable/', None),
@@ -92,30 +85,21 @@ html_theme_options = {
 		'logo_only': False,
 		}
 html_theme_path = ["../.."]
-# html_logo = "logo/pyms.png"
-html_show_sourcelink = False  # True will show link to source
+html_show_sourcelink = True  # True will show link to source
 
 html_context = {
 		'display_github': True,
 		'github_user': 'domdfcoding',
 		'github_repo': 'chemistry_tools',
 		'github_version': 'master',
-		'conf_py_path': '/',
+		'conf_py_path': '/doc-source/',
 		}
 
 htmlhelp_basename = slug
 
-latex_documents = [
-		('index', f'{slug}.tex', project, author, 'manual'),
-		]
-
-man_pages = [
-		('index', slug, project, [author], 1)
-		]
-
-texinfo_documents = [
-		('index', slug, project, author, slug, project, 'Miscellaneous'),
-		]
+latex_documents = [('index', f'{slug}.tex', project, author, 'manual')]
+man_pages = [('index', slug, project, [author], 1)]
+texinfo_documents = [('index', slug, project, author, slug, project, 'Miscellaneous')]
 
 
 # Extensions to theme docs
@@ -133,14 +117,14 @@ def setup(app):
 							'type',
 							label=_('Type'),
 							has_arg=False,
-							names=('type',),
-							bodyrolename='class'
+							names=('type', ),
+							bodyrolename='class',
 							),
 					Field(
 							'default',
 							label=_('Default'),
 							has_arg=False,
-							names=('default',),
+							names=('default', ),
 							),
 					]
 			)
