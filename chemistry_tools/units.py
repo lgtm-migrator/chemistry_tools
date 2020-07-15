@@ -54,6 +54,7 @@ from typing import Dict, List, Tuple, Union
 # 3rd party
 import numpy  # type: ignore
 import quantities  # type: ignore
+import quantities.markup  # type: ignore
 
 # this package
 from chemistry_tools.dicts import ArithmeticDict
@@ -143,8 +144,7 @@ def unit_registry_to_human_readable(unit_registry):
 
 def _latex_from_dimensionality(dim):
 	# see https://github.com/python-quantities/python-quantities/issues/148
-	from quantities.markup import format_units_latex  # type: ignore
-	return format_units_latex(dim, mult=r'\\cdot')
+	return quantities.markup.format_units_latex(dim, mult=r'\\cdot')
 
 
 def latex_of_unit(quant):
@@ -522,8 +522,7 @@ def format_string(value, precision='%.5g', tex=False):
 	if tex:
 		unit_str = latex_of_unit(value)
 	else:
-		from quantities.markup import config  # type: ignore
-		attr = 'unicode' if config.use_unicode else 'string'
+		attr = 'unicode' if quantities.markup.config.use_unicode else 'string'
 		unit_str = getattr(value.dimensionality, attr)
 	return precision % float(value.magnitude), unit_str
 

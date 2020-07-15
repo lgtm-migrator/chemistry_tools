@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 test_Compound
 ~~~~~~~~~~~~~
@@ -19,6 +18,7 @@ from chemistry_tools.pubchem.atom import Atom
 from chemistry_tools.pubchem.bond import BondType
 from chemistry_tools.pubchem.compound import Compound
 from chemistry_tools.pubchem.lookup import get_compounds
+from chemistry_tools.formulae import Formula
 
 
 @pytest.fixture(scope='module')
@@ -78,7 +78,6 @@ def test_identifiers(c1):
 	assert c1.smiles == "C1=CC=CC=C1"
 	assert c1.get_property("InChI").startswith('InChI=')
 	assert re.match(r'^[A-Z]{14}-[A-Z]{10}-[A-Z\d]$', c1.get_property("InChIKey"))
-	from chemistry_tools.formulae import Formula
 	assert isinstance(c1.get_property("MolecularFormula"), Formula)
 	assert isinstance(c1.molecular_formula, Formula)
 	assert c1.get_property("MolecularFormula").hill_formula == "C6H6"

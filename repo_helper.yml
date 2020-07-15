@@ -81,3 +81,6 @@ keywords:
 
 extra_sphinx_extensions:
   - enum_tools.autoenum
+
+yapf_exclude:
+  - "*.pyi"
