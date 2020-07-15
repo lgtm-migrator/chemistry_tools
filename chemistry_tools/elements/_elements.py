@@ -52,9 +52,9 @@
 #  |
 #
 
-__all__ = ("ELEMENTS", "H", "D", "T")
-
 # this package
+from typing import Dict
+
 from . import classes
 from .actinides import *
 from .alkali_metals import *
@@ -67,6 +67,8 @@ from .pnictogens import *
 from .tetrels import *
 from .transition_metals import *
 from .triels import *
+
+__all__ = ("ELEMENTS", "H", "D", "T")
 
 # TODO: nominal mass (massnumber) and monoisotopic mass
 
@@ -147,7 +149,7 @@ ELEMENTS = classes.Elements(
 # )
 
 
-alternate_spellings = {
+alternate_spellings: Dict[str, str] = {
 		"Caesium": "Cesium",  # AmE
 		"Aluminium": "Aluminum",  # AmE
 		"Sulfur": "Sulphur",  # Not IUPAC and not etymologically correct, but widely used in BrE

@@ -141,10 +141,10 @@ Lanthanides (or lanthanoids) in the Periodic Table
 #
 #  Isotope data from http://www.nist.gov/pml/data/comp.cfm .
 
-__all__ = ("La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu")
-
 # this package
 from .classes import Element
+
+__all__ = ("La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu")
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.

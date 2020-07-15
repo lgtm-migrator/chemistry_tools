@@ -144,13 +144,12 @@ Installation
 
 
 .. toctree::
-	:maxdepth: 3
+	:maxdepth: 6
 	:caption: API Reference
+	:glob:
 
-	api/chemistry_tools
-	api/elements
-	api/formulae
-	api/pubchem
+	api/*/index
+	api/*
 
 .. toctree::
 	:maxdepth: 3

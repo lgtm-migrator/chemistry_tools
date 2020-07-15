@@ -106,10 +106,10 @@ Group 15: Pnictogens in the Periodic Table
 #
 #  Isotope data from http://www.nist.gov/pml/data/comp.cfm .
 
-__all__ = ("N", "P", "As", "Sb", "Bi", "Mc")
-
 # this package
 from .classes import Element
+
+__all__ = ("N", "P", "As", "Sb", "Bi", "Mc")
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.

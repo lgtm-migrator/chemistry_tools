@@ -11,9 +11,6 @@ conda_channels:
   - domdfcoding
   - conda-forge
 
-exclude_files:
-  - setup
-
 python_deploy_version: 3.6
 
 # Additional lines for .gitignore

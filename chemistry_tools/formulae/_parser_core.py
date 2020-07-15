@@ -77,7 +77,7 @@ Core functions and constants for parsing formulae
 # stdlib
 import re
 import warnings
-from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence, Tuple, Union
+from typing import Any, Callable, Dict, Iterable, List, Sequence, Tuple, Union
 
 _greek_letters: Tuple[str, ...] = (
 		'alpha',

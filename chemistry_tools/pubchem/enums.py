@@ -29,7 +29,7 @@ from domdf_python_tools.enums import IntEnum, StrEnum
 
 class PubChemNamespace(StrEnum):
 	CID = Cid = cid = "cid", "PubChem Compound ID"
-	Name = NAME = name = "name", "Comopound Name"
+	Name = NAME = name = "name", "Compound Name"
 	SMILES = Smiles = smiles = "smiles", "SMILES String"
 	INCHIKEY = Inchikey = inchikey = "inchikey", "InChI Key"
 
@@ -47,7 +47,7 @@ class PubChemNamespace(StrEnum):
 
 	@classmethod
 	def is_valid_value(cls, value: Any) -> bool:
-		return str(value) in {str(item) for item in PubChemNamespace}  # noqa # type: ignore
+		return str(value) in {str(item) for item in PubChemNamespace}  # type: ignore
 
 
 # @document_enum
@@ -69,7 +69,7 @@ class PubChemFormats(StrEnum):
 
 	@classmethod
 	def is_valid_value(cls, value: Any) -> bool:
-		return str(value).upper() in {str(item) for item in PubChemFormats}  # noqa # type: ignore
+		return str(value).upper() in {str(item) for item in PubChemFormats}  # type: ignore
 
 
 class CoordinateType(IntEnum):

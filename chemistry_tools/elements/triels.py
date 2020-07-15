@@ -106,10 +106,10 @@ Group 13: Triels (or boron group) in the Periodic Table
 #
 #  Isotope data from http://www.nist.gov/pml/data/comp.cfm .
 
-__all__ = ("B", "Al", "Ga", "In", "Tl", "Nh")
-
 # this package
 from .classes import Element
+
+__all__ = ("B", "Al", "Ga", "In", "Tl", "Nh")
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.

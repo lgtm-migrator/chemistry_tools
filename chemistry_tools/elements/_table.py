@@ -52,10 +52,10 @@
 #  |
 #
 
-__all__ = ("PERIODS", "BLOCKS", "GROUPS", "SERIES")
-
 # stdlib
 from typing import Dict, Tuple
+
+__all__ = ("PERIODS", "BLOCKS", "GROUPS", "SERIES")
 
 PERIODS: Dict[int, str] = {1: 'K', 2: 'L', 3: 'M', 4: 'N', 5: 'O', 6: 'P', 7: 'Q'}
 

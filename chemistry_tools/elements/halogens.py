@@ -105,10 +105,10 @@ Group 17: Halogens in the Periodic Table
 #
 #  Isotope data from http://www.nist.gov/pml/data/comp.cfm .
 
-__all__ = ("F", "Cl", "Br", "I", "At", "Ts")
-
 # this package
 from .classes import Element
+
+__all__ = ("F", "Cl", "Br", "I", "At", "Ts")
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.

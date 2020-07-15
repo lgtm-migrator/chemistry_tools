@@ -234,15 +234,15 @@ Transition Metals block in the Periodic Table
 #
 #  Isotope data from http://www.nist.gov/pml/data/comp.cfm .
 
+# this package
+from .classes import Element
+
 __all__ = (
 		"Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn",
 		"Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd",
 		"Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg",
 		"Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn",
 		)
-
-# this package
-from .classes import Element
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.

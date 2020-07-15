@@ -33,7 +33,7 @@ from chemistry_tools import formulae
 # this package
 from .dataarray import DataArray
 from .unicode import string_to_unicode
-from aenum import IntEnum  # type: ignore # TODO
+from enum_tools import IntEnum
 
 
 class IsoDistSort(IntEnum):

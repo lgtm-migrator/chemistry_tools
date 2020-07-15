@@ -105,10 +105,10 @@ Group 16: Chalcogens in the Periodic Table
 #
 #  Isotope data from http://www.nist.gov/pml/data/comp.cfm .
 
-__all__ = ("O", "S", "Se", "Te", "Po", "Lv")
-
 # this package
 from .classes import Element
+
+__all__ = ("O", "S", "Se", "Te", "Po", "Lv")
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.

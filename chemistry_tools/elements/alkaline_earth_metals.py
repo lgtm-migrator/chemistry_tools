@@ -106,10 +106,10 @@ Group 2: Alkaline Earth Metals in the Periodic Table
 #
 #  Isotope data from http://www.nist.gov/pml/data/comp.cfm .
 
-__all__ = ("Be", "Mg", "Ca", "Sr", "Ba", "Ra")
-
 # this package
 from .classes import Element
+
+__all__ = ("Be", "Mg", "Ca", "Sr", "Ba", "Ra")
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.

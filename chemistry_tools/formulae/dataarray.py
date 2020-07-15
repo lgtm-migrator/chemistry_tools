@@ -23,7 +23,7 @@
 # stdlib
 from abc import abstractmethod
 #  3rd party
-from typing import Any, Dict, List, Optional, Set, Union
+from typing import Any, Dict, List, Optional, Set
 
 # 3rd party
 import pandas  # type: ignore

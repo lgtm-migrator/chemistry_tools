@@ -109,10 +109,10 @@ Group 18: Noble Gases in the Periodic Table
 #
 #  Isotope data from http://www.nist.gov/pml/data/comp.cfm .
 
-__all__ = ("He", "Ne", "Ar", "Kr", "Xe", "Rn", "Og")
-
 # this package
 from .classes import Element
+
+__all__ = ("He", "Ne", "Ar", "Kr", "Xe", "Rn", "Og")
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.

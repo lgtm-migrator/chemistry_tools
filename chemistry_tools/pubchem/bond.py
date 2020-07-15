@@ -49,7 +49,7 @@ from typing import Any, Dict, FrozenSet, Optional, Union
 from chemistry_tools.pubchem.errors import ResponseParseError
 
 # this package
-from aenum import IntEnum  # type: ignore # TODO
+from enum_tools import IntEnum
 
 
 class BondType(IntEnum):

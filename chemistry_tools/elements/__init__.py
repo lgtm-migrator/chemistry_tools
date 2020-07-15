@@ -121,6 +121,62 @@ Examples
 #  Isotope data from http://www.nist.gov/pml/data/comp.cfm
 #
 
+# this package
+from ._elements import ELEMENTS, D, H, T
+from ._isotope_data import isotope_data  # , undefined_isotopes
+from ._table import BLOCKS, GROUPS, PERIODS, SERIES
+from .actinides import Ac, Am, Bk, Cf, Cm, Es, Fm, Lr, Md, No, Np, Pa, Pu, Th, U
+from .alkali_metals import Cs, Fr, K, Li, Na, Rb
+from .alkaline_earth_metals import Ba, Be, Ca, Mg, Ra, Sr
+from .chalcogens import Lv, O, Po, S, Se, Te
+from .classes import Element, Elements, Isotope
+from .halogens import At, Br, Cl, F, I, Ts
+from .lanthanides import Ce, Dy, Er, Eu, Gd, Ho, La, Lu, Nd, Pm, Pr, Sm, Tb, Tm, Yb
+from .noble_gases import Ar, He, Kr, Ne, Og, Rn, Xe
+from .pnictogens import As, Bi, Mc, N, P, Sb
+from .tetrels import C, Fl, Ge, Pb, Si, Sn
+from .transition_metals import (
+		Ag,
+		Au,
+		Bh,
+		Cd,
+		Cn,
+		Co,
+		Cr,
+		Cu,
+		Db,
+		Ds,
+		Fe,
+		Hf,
+		Hg,
+		Hs,
+		Ir,
+		Mn,
+		Mo,
+		Mt,
+		Nb,
+		Ni,
+		Os,
+		Pd,
+		Pt,
+		Re,
+		Rf,
+		Rg,
+		Rh,
+		Ru,
+		Sc,
+		Sg,
+		Ta,
+		Tc,
+		Ti,
+		V,
+		W,
+		Y,
+		Zn,
+		Zr
+		)
+from .triels import Al, B, Ga, In, Nh, Tl
+
 __all__ = (
 		'Element',
 		'Isotope',
@@ -252,62 +308,6 @@ __all__ = (
 		"Rg",
 		"Cn",
 		)
-
-# this package
-from ._elements import ELEMENTS, D, H, T
-from ._isotope_data import isotope_data  # , undefined_isotopes
-from ._table import BLOCKS, GROUPS, PERIODS, SERIES
-from .actinides import Ac, Am, Bk, Cf, Cm, Es, Fm, Lr, Md, No, Np, Pa, Pu, Th, U
-from .alkali_metals import Cs, Fr, K, Li, Na, Rb
-from .alkaline_earth_metals import Ba, Be, Ca, Mg, Ra, Sr
-from .chalcogens import Lv, O, Po, S, Se, Te
-from .classes import Element, Elements, Isotope
-from .halogens import At, Br, Cl, F, I, Ts
-from .lanthanides import Ce, Dy, Er, Eu, Gd, Ho, La, Lu, Nd, Pm, Pr, Sm, Tb, Tm, Yb
-from .noble_gases import Ar, He, Kr, Ne, Og, Rn, Xe
-from .pnictogens import As, Bi, Mc, N, P, Sb
-from .tetrels import C, Fl, Ge, Pb, Si, Sn
-from .transition_metals import (
-		Ag,
-		Au,
-		Bh,
-		Cd,
-		Cn,
-		Co,
-		Cr,
-		Cu,
-		Db,
-		Ds,
-		Fe,
-		Hf,
-		Hg,
-		Hs,
-		Ir,
-		Mn,
-		Mo,
-		Mt,
-		Nb,
-		Ni,
-		Os,
-		Pd,
-		Pt,
-		Re,
-		Rf,
-		Rg,
-		Rh,
-		Ru,
-		Sc,
-		Sg,
-		Ta,
-		Tc,
-		Ti,
-		V,
-		W,
-		Y,
-		Zn,
-		Zr
-		)
-from .triels import Al, B, Ga, In, Nh, Tl
 
 period_lengths = (2, 8, 8, 18, 18, 32, 32)
 accum_period_lengths = (2, 10, 18, 36, 54, 86, 118)
