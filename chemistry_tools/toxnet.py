@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 #  toxnet.py
 """
@@ -26,10 +25,10 @@ Read data from National Library of Medicine TOXNET
 
 # 3rd party
 import requests
+from bs4 import BeautifulSoup  # type: ignore
 
 # this package
 from .property_format import *
-from bs4 import BeautifulSoup  # type: ignore
 
 
 def toxnet(cas):
@@ -154,6 +153,7 @@ def toxnet(cas):
 # Soup CAMEO Link from PubChem page if necessary
 
 if __name__ == "__main__":
+	# stdlib
 	import pprint
 
 	pprint.pprint(toxnet("122-39-4"))

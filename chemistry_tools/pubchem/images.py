@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 #  images.py
 #
@@ -75,6 +74,7 @@ def rest_get_structure_image(
 	:rtype: :py:class:`PIL.Image.Image`
 	"""
 
+	# 3rd party
 	from PIL import Image  # type: ignore
 	r = _do_rest_get(namespace, identifier, "PNG", png_width=width, png_height=height)
 	return Image.open(BytesIO(r.content))

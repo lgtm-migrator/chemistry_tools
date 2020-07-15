@@ -46,6 +46,8 @@
 from typing import Any, Dict, FrozenSet, List, Optional, Sequence, Type, TypeVar, Union
 
 # 3rd party
+from domdf_python_tools.bases import Dictable
+from memoized_property import memoized_property  # type: ignore
 from pandas import DataFrame, Series  # type: ignore
 
 # this package
@@ -62,10 +64,6 @@ from chemistry_tools.pubchem.properties import (
 		valid_properties
 		)
 from chemistry_tools.pubchem.synonyms import get_synonyms
-
-# this package
-from domdf_python_tools.bases import Dictable  # type: ignore # TODO
-from memoized_property import memoized_property  # type: ignore
 
 C = TypeVar('C', bound='Compound')
 
@@ -356,6 +354,7 @@ class Compound(Dictable):
 		:rtype:
 		"""
 
+		# this package
 		from chemistry_tools.pubchem.lookup import get_compounds
 
 		comp = get_compounds(cid, "cid")[0]

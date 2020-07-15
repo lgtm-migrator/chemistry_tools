@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: UTF-8 -*-
 #
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #  This program is free software; you can redistribute it and/or modify
@@ -157,6 +156,7 @@ def SpectrumSimilarity(
 	# generate plot
 
 	if print_graphic:
+		# 3rd party
 		import matplotlib.pyplot as plt  # type: ignore
 
 		fig, ax = plt.subplots()

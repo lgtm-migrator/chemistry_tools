@@ -113,7 +113,9 @@ cached_requests = CacheControl(requests.Session(), cache=FileCache(cache_dir))
 
 
 def clear_cache() -> None:
+	# stdlib
 	import shutil
+
 	shutil.rmtree(cache_dir)
 
 

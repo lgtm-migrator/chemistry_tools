@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 #  elements.py
 #
@@ -56,11 +55,13 @@
 from functools import lru_cache
 from typing import Dict, List, Optional, Tuple, Union
 
-# this package
-from . import _elements, _table
+# 3rd party
 from domdf_python_tools import doctools  # type: ignore # TODO
 from domdf_python_tools.bases import Dictable  # type: ignore # TODO
 from memoized_property import memoized_property  # type: ignore
+
+# this package
+from . import _elements, _table
 
 IsotopeDict = Dict[int, Union["Isotope", Tuple[float, float]]]
 
@@ -636,6 +637,7 @@ class Elements:
 
 	@lru_cache()
 	def split_isotope(self, string: str):
+		# this package
 		from chemistry_tools.formulae.formula import _split_isotope
 		return _split_isotope(string)
 

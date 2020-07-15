@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 #  __init__.py
 """
@@ -319,6 +318,7 @@ groups[2] = tuple(x + 2 for x in accum_period_lengths[:-1])  # alkaline earth me
 groups[18] = accum_period_lengths  # noble gases
 
 if __name__ == '__main__':
+	# stdlib
 	import doctest
 
 	print(f'ELEMENTS = {repr(ELEMENTS)}')
