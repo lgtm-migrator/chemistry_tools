@@ -84,5 +84,3 @@ extra_sphinx_extensions:
 
 yapf_exclude:
   - "*.pyi"
-
-parallel_ci: False
