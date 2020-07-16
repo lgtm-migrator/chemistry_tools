@@ -28,6 +28,7 @@ import datetime
 import pathlib
 import time
 import zlib
+import shutil
 
 # 3rd party
 import appdirs  # type: ignore
@@ -113,8 +114,12 @@ cached_requests = CacheControl(requests.Session(), cache=FileCache(cache_dir))
 
 
 def clear_cache() -> None:
-	# stdlib
-	import shutil
+	"""
+	Clear the cache
+
+	:return:
+	:rtype:
+	"""
 
 	shutil.rmtree(cache_dir)
 
