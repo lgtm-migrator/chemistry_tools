@@ -3,6 +3,6 @@
 ===========================================
 
 .. automodule:: chemistry_tools.spectrum_similarity
-    :members:
-    :autosummary:
-    :undoc-members:
+	:members:
+	:autosummary:
+	:undoc-members:

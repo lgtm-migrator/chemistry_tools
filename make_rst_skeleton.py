@@ -51,15 +51,18 @@ class Module:
 		print(dotted_name)
 		buf = '========'
 		buf += '=' * len(dotted_name)
-		buf += f"\n:mod:`{dotted_name}`\n========"
+		if dotted_name.startswith("chemistry_tools.elements"):
+			buf += f"\n:mod:`~{dotted_name}`\n========"
+		else:
+			buf += f"\n:mod:`{dotted_name}`\n========"
 		buf += '=' * len(dotted_name)
 		if extras:
 			buf += f"\n\n.. extras-require:: {extras}\n"
 			buf += f"	:file: {extras}/requirements.txt"
 		buf += f"\n\n.. automodule:: {dotted_name}\n"
-		buf += "    :members:\n"
-		buf += "    :autosummary:\n"
-		buf += "    :undoc-members:\n"
+		buf += "	:members:\n"
+		buf += "	:autosummary:\n"
+		buf += "	:undoc-members:\n"
 		with (directory / self.name).with_suffix(".rst").open("w", encoding="UTF-8") as fp:
 			clean_writer(buf, fp)
 
@@ -97,9 +100,9 @@ for subpackage in chemistry_tools.subpackages:
 		buf += f"	:file: {subpackage_dir.name}/requirements.txt\n"
 		buf += f"	:scope: package"
 		buf += f"\n\n.. toctree:: {dotted_name}\n"
-		buf += "    :maxdepth: 3\n"
-		buf += "    :glob:\n\n"
-		buf += "    ./*"
+		buf += "	:maxdepth: 3\n"
+		buf += "	:glob:\n\n"
+		buf += "	./*"
 		clean_writer(buf, fp)
 
 	for submodule in subpackage.submodules:

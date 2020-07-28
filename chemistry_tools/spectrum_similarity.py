@@ -44,7 +44,7 @@
 #
 
 # stdlib
-from typing import Optional, Tuple
+from typing import Mapping, Optional, Sequence, Tuple, Union
 
 # 3rd party
 import numpy  # type: ignore
@@ -65,6 +65,7 @@ def SpectrumSimilarity(
 		output_list: bool = False,
 		):
 	"""
+	Calculate the similarity score for two mass spectra.
 
 	:param spec_top: Array containing the experimental spectrum's peak list with the m/z values in the
 		first column and corresponding intensities in the second
@@ -248,10 +249,28 @@ def SpectrumSimilarity(
 # simscore <- as.vector((u %*% v)^2 / (sum(u^2) * sum(v^2)))   # cos squared
 
 
-def normalize(row, max_val):
+def normalize(row: Union[Mapping, pandas.Series], max_val: Union[float, str]) -> float:
+	"""
+
+	:param row:
+	:param max_val:
+
+	:return:
+	"""
+
 	# http://jonathansoma.com/lede/foundations/classes/pandas%20columns%20and%20functions/apply-a-function-to-every-row-in-a-pandas-dataframe/
 	return (row["intensity"] / float(max_val)) * 100.0
 
 
-def create_array(intensities, mz):
+def create_array(intensities: Sequence[float], mz: Sequence[float]) -> numpy.ndarray:
+	"""
+	Create a :class:`numpy.ndarray`, in a format appropriate for :func:`.~SpectrumSimilarity`,
+	from a list of intensities and a list of *m/z* values.
+
+	:param intensities: List of intensities
+	:param mz: List of *m/z* values.
+
+	:return:
+	"""
+
 	return numpy.column_stack((mz, intensities))

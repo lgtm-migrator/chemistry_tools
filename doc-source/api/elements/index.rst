@@ -7,7 +7,7 @@
 	:scope: package
 
 .. toctree:: chemistry_tools.elements
-    :maxdepth: 3
-    :glob:
+	:maxdepth: 3
+	:glob:
 
-    ./*
+	./*

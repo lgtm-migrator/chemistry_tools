@@ -176,8 +176,10 @@ def get_IUPAC_sort_order(iupac_names: Sequence[str]) -> Dict[str, int]:
 
 	Useful when sorting arrays containing data in addition to the name.
 	e.g.
-	>>> sort_order = get_IUPAC_sort_order([row[0] for row in data])
-	>>> sorted_data = sorted(data, key=lambda row: sort_order[row[0]])
+
+	.. code-block:: python
+		>>> sort_order = get_IUPAC_sort_order([row[0] for row in data])
+		>>> sorted_data = sorted(data, key=lambda row: sort_order[row[0]])
 
 	where row[0] would be the name of the compound
 
@@ -235,7 +237,8 @@ def sort_array_by_name(array: List[List[Any]], name_col: int = 0, reverse: bool 
 	:param array:
 	:param name_col: The index of the column containing the IUPAC names
 	:type name_col: int, optional
-	:param reverse: Whether the names should be sorted in reverse order. Default is ``False``, which sorts from A-Z
+	:param reverse: Whether the names should be sorted in reverse order. Default is :py:obj:`False`, which sorts from A-Z
+	:no-default reverse:
 	:type reverse: bool, optional
 
 
@@ -250,17 +253,16 @@ def sort_array_by_name(array: List[List[Any]], name_col: int = 0, reverse: bool 
 
 def sort_dataframe_by_name(df: DataFrame, name_col: str, reverse: bool = False) -> DataFrame:
 	"""
-	Sort a Pandas :class:`pandas.DataFrame` by the IUPAC name in each row.
+	Sort a Pandas :class:`~pandas.DataFrame` by the IUPAC name in each row.
 
 	:param df:
-	:type df: pandas.DataFrame
 	:param name_col: The name of the column containing the IUPAC names
 	:type name_col: str
-	:param reverse: Whether the names should be sorted in reverse order. Default is ``False``, which sorts from A-Z
+	:param reverse: Whether the names should be sorted in reverse order. Default is :py:obj:`False`, which sorts from A-Z
+	:no-default reverse:
 	:type reverse: bool, optional
 
 	:return: The sorted DataFrame
-	:rtype: pandas.DataFrame
 	"""
 
 	names = df[name_col]

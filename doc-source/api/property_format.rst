@@ -3,6 +3,6 @@
 =======================================
 
 .. automodule:: chemistry_tools.property_format
-    :members:
-    :autosummary:
-    :undoc-members:
+	:members:
+	:autosummary:
+	:undoc-members:

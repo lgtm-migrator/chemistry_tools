@@ -3,6 +3,6 @@
 =============================
 
 .. automodule:: chemistry_tools.dicts
-    :members:
-    :autosummary:
-    :undoc-members:
+	:members:
+	:autosummary:
+	:undoc-members:

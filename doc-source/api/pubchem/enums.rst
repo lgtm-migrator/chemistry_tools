@@ -6,6 +6,6 @@
 	:file: pubchem/requirements.txt
 
 .. automodule:: chemistry_tools.pubchem.enums
-    :members:
-    :autosummary:
-    :undoc-members:
+	:members:
+	:autosummary:
+	:undoc-members:

@@ -6,6 +6,6 @@
 	:file: formulae/requirements.txt
 
 .. automodule:: chemistry_tools.formulae.iso_dist
-    :members:
-    :autosummary:
-    :undoc-members:
+	:members:
+	:autosummary:
+	:undoc-members:
