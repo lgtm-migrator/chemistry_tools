@@ -85,7 +85,7 @@ intersphinx_mapping = {
 		"attrs": ('https://www.attrs.org/en/stable/', None),
 		}
 
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'domdf_sphinx_theme'
 html_theme_options = {
 		'logo_only': False,
 		}
