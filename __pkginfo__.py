@@ -44,9 +44,9 @@ modname = "chemistry_tools"
 pypi_name = "chemistry_tools"
 import_name = "chemistry_tools"
 __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
-short_desc = "Python tools for analysis of chemical compounds."
-__author__ = author = "Dominic Davis-Foster"
-author_email = "dominic@davis-foster.co.uk"
+short_desc = 'Python tools for analysis of chemical compounds.'
+__author__ = author = 'Dominic Davis-Foster'
+author_email = 'dominic@davis-foster.co.uk'
 github_username = "domdfcoding"
 web = github_url = "https://github.com/domdfcoding/chemistry_tools"
 repo_root = pathlib.Path(__file__).parent

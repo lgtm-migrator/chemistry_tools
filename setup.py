@@ -15,7 +15,7 @@ from __pkginfo__ import *  # pylint: disable=wildcard-import
 
 
 setup(
-		description="Python tools for analysis of chemical compounds.",
+		description='Python tools for analysis of chemical compounds.',
 		extras_require=extras_require,
 		install_requires=install_requires,
 		py_modules=[],
