@@ -66,7 +66,6 @@ from . import _elements, _table
 
 __all__ = ["Element", "Isotope", "Elements", "HeavyHydrogen", "IsotopeDict"]
 
-
 #: Type alias for isotope dictionaries.
 IsotopeDict = Dict[int, Union["Isotope", Tuple[float, float]]]
 
@@ -75,28 +74,28 @@ IsotopeDict = Dict[int, Union["Isotope", Tuple[float, float]]]
 class Element(Dictable):
 	"""
 	Chemical element.
-	
-	:param number: 
-	:param symbol: 
-	:param name: 
-	:param group: 
-	:param period: 
-	:param block: 
-	:param series: 
-	:param mass: 
-	:param eleneg: 
-	:param eleaffin: 
-	:param covrad: 
-	:param atmrad: 
-	:param vdwrad: 
-	:param tboil: 
-	:param tmelt: 
-	:param density: 
-	:param eleconfig: 
-	:param oxistates: 
-	:param ionenergy: 
-	:param isotopes: 
-	:param description: 
+
+	:param number:
+	:param symbol:
+	:param name:
+	:param group:
+	:param period:
+	:param block:
+	:param series:
+	:param mass:
+	:param eleneg:
+	:param eleaffin:
+	:param covrad:
+	:param atmrad:
+	:param vdwrad:
+	:param tboil:
+	:param tmelt:
+	:param density:
+	:param eleconfig:
+	:param oxistates:
+	:param ionenergy:
+	:param isotopes:
+	:param description:
 	"""
 
 	_ionenergy: Tuple

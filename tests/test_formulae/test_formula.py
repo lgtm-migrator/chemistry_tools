@@ -328,7 +328,6 @@ def test_properties():
 	assert O.nominalmass == 16
 
 
-
 @pytest.mark.parametrize(
 		"formula, mass, exact_mass",
 		[
@@ -402,7 +401,8 @@ def test_equivalent(formula_1, formula_2):
 
 
 @pytest.mark.parametrize(
-		"formula_1, formula_2", [
+		"formula_1, formula_2",
+		[
 				("CuSO4.5H2O", "CuH10O9S"),
 				("C1000H1000", "CH"),
 				("Ru2(CO)8", "C4O4Ru"),

@@ -187,7 +187,6 @@ plancks_constant = planck_constant = Constant(
 		symbol='h'
 		)  # (10)
 
-
 #: The speed of light in a vacuum.
 speed_of_light = Constant(
 		name="Speed of light", value=299792458, unit=quantities.m / quantities.second, symbol='c'

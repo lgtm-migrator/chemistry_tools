@@ -119,7 +119,10 @@ class Bond:
 		return data
 
 
-def parse_bonds(bonds_dict: Dict[str, Any], coords_dict: Optional[Dict] = None,) -> Dict[FrozenSet[int], Bond]:
+def parse_bonds(
+		bonds_dict: Dict[str, Any],
+		coords_dict: Optional[Dict] = None,
+		) -> Dict[FrozenSet[int], Bond]:
 	"""
 	Parse bonds from the given dictionary.
 

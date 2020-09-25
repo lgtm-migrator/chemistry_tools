@@ -27,10 +27,12 @@ Functions for handling images.
 from io import BytesIO
 from typing import Sequence, Union
 
+# 3rd party
+from PIL import Image  # type: ignore
+
 # this package
 from .enums import PubChemNamespace
 from .pug_rest import do_rest_get
-from PIL import Image  # type: ignore
 
 __all__ = ["get_structure_image"]
 

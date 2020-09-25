@@ -503,7 +503,14 @@ Rn = Element(
 		)
 
 Og = Element(
-		118, "Og", "Oganesson", group=18, period=7, block="p", series=8, isotopes={
+		118,
+		"Og",
+		"Oganesson",
+		group=18,
+		period=7,
+		block="p",
+		series=8,
+		isotopes={
 				293: (293.21467, 0.0),
 				},
 		)

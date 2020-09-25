@@ -96,7 +96,7 @@ def string_to_html(
 	Convert formula string to HTML string representation.
 
 	**Examples**
-	
+
 	.. code-block:: python
 
 		>>> string_to_html("NH4+")

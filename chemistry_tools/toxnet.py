@@ -23,10 +23,11 @@ Read data from National Library of Medicine TOXNET
 #  MA 02110-1301, USA.
 #
 
-# 3rd party
+# stdlib
 from decimal import Decimal
 from typing import Any, Dict
 
+# 3rd party
 import requests
 from bs4 import BeautifulSoup  # type: ignore
 

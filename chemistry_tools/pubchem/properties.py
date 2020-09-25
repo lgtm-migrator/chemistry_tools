@@ -342,6 +342,7 @@ def insert_valid_properties_table() -> Callable:
 
 	return wrapper
 
+
 @insert_valid_properties_table()
 def rest_get_properties_json(
 		identifier: Union[str, int, Sequence[Union[str, int]]],

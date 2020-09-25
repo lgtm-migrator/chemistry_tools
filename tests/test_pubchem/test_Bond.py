@@ -8,6 +8,7 @@ Test Bond class
 
 # 3rd party
 import pytest
+
 # this package
 from chemistry_tools.pubchem.bond import Bond, BondType
 

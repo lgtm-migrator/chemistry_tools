@@ -46,9 +46,10 @@
 from itertools import zip_longest
 from typing import Any, Dict, FrozenSet, Optional
 
-# this package
+# 3rd party
 from domdf_python_tools.doctools import prettify_docstrings
 
+# this package
 from chemistry_tools.elements import ELEMENTS
 from chemistry_tools.pubchem.errors import ResponseParseError
 
@@ -143,7 +144,10 @@ class Atom:
 			return "3d"
 
 
-def parse_atoms(atoms_dict: Dict[str, Any], coords_dict: Optional[Dict] = None,) -> Dict[FrozenSet[int], Atom]:
+def parse_atoms(
+		atoms_dict: Dict[str, Any],
+		coords_dict: Optional[Dict] = None,
+		) -> Dict[FrozenSet[int], Atom]:
 	"""
 	Parse atoms from the given dictionary.
 

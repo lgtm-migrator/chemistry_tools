@@ -79,10 +79,9 @@ from typing import Dict, Optional
 # 3rd party
 import quantities  # type: ignore
 from domdf_python_tools.bases import Dictable
-
-# this package
 from domdf_python_tools.doctools import prettify_docstrings
 
+# this package
 from chemistry_tools.formulae.formula import Formula
 from chemistry_tools.formulae.html import string_to_html
 from chemistry_tools.formulae.latex import string_to_latex
@@ -190,7 +189,7 @@ class Compound(Dictable):
 		Returns the molar mass (with units) of the substance
 
 		**Examples**
-		
+
 		.. code-block:: python
 
 			>>> nh4p = Compound('NH4+')

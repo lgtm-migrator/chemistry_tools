@@ -273,7 +273,7 @@ def string_to_composition(
 	Parse composition of formula representing a chemical formula
 
 	**Examples**
-	
+
 	.. code-block:: python
 
 		>>> string_to_composition('NH4+') == {0: 1, "H": 4, "N": 1}

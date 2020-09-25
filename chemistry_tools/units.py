@@ -45,9 +45,10 @@
 #  |  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# 3rd party
+# stdlib
 from typing import Union
 
+# 3rd party
 import numpy  # type: ignore
 import quantities  # type: ignore
 import quantities.markup  # type: ignore
