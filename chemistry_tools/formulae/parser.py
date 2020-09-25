@@ -73,7 +73,6 @@ Functions and constants for parsing formulae
 #  |  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 # stdlib
 import re
 from collections import defaultdict
@@ -81,20 +80,23 @@ from functools import lru_cache
 from string import ascii_lowercase, ascii_uppercase
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Union
 
+# 3rd party
+import pyparsing  # type: ignore
+
 # this package
 from chemistry_tools.elements import ELEMENTS
 
 # this package
-import pyparsing  # type: ignore
 from ._parser_core import _formula_to_parts, _get_charge, _get_leading_integer
 from .latex import _latex_mapping
 
-_atom = r'([A-Z][a-z+]*)(?:\[(\d+)\])?([+-]?\d+)?'
+__all__ = ["string_to_composition", "mass_from_composition"]
+
+_atom = r"([A-Z][a-z+]*)(?:\[(\d+)\])?([+-]?\d+)?"
 _atom_re = re.compile(_atom)
-_formula_re = re.compile(fr'^({_atom})*$')
+_formula_re = re.compile(fr"^({_atom})*$")
 
 relative_atomic_masses = [element.mass for element in ELEMENTS]
-
 
 # Construct regular expression to match all elements, plus D and T
 element_re_dict: Dict[str, List[str]] = {}
@@ -156,7 +158,7 @@ for elem in element_re:
 @lru_cache()
 def _get_formula_parser():
 	"""
-	Create a forward pyparsing parser for chemical formulae
+	Create a forward pyparsing parser for chemical formulae.
 
 	BNF for simple chemical formula (no nesting)
 
@@ -201,10 +203,7 @@ def _get_formula_parser():
 	# forward declare 'formula' so it can be used in definition of 'term'
 	formula = Forward()
 
-	term = Group(
-			(element | Group(LPAR + formula + RPAR)("subgroup"))
-			+ Optional(integer, default=1)("mult")
-			)
+	term = Group((element | Group(LPAR + formula + RPAR)("subgroup")) + Optional(integer, default=1)("mult"))
 
 	# add parse actions for parse-time processing
 
@@ -231,7 +230,7 @@ def _get_formula_parser():
 		# if there are duplicate element names, sum up by element and
 		# return a new nested ParseResults
 		if duplicates:
-			ctr = defaultdict(int)
+			ctr: Dict = defaultdict(int)
 			for t in tokens:
 				ctr[t[0]] += t[1]
 			return ParseResults([ParseResults([k, v]) for k, v in ctr.items()])
@@ -252,15 +251,13 @@ def _parse_stoich(stoich) -> Dict[int, Any]:
 	if re.findall('|'.join(invalid_re), stoich):
 		raise ValueError(f"Unrecognised formula: {stoich}")
 
-	return {
-			symbols.index(k) + 1: n for k, n
-			in _get_formula_parser().parseString(stoich)
-			}
+	return {symbols.index(k) + 1: n for k, n in _get_formula_parser().parseString(stoich)}
 
 
 def string_to_composition(
-		formula: str, prefixes: Optional[Iterable[str]] = None,
-		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),
+		formula: str,
+		prefixes: Optional[Iterable[str]] = None,
+		suffixes: Sequence[str] = ("(s)", "(l)", "(g)", "(aq)"),
 		) -> Dict[int, int]:
 	"""
 	Parse composition of formula representing a chemical formula
@@ -319,6 +316,7 @@ def string_to_composition(
 
 	return tot_comp
 
+
 def mass_from_composition(composition: Dict[Union[str, int], int], charge: int = 0) -> float:
 	"""
 	Calculates molecular mass from atomic weights.
@@ -345,7 +343,8 @@ def mass_from_composition(composition: Dict[Union[str, int], int], charge: int =
 		if charge != composition[0]:
 			raise ValueError(
 					"'charge' can only be specified once, "
-					"either as a keyword argument or as the '0' key of 'composition'")
+					"either as a keyword argument or as the '0' key of 'composition'"
+					)
 
 	mass = 0.0
 

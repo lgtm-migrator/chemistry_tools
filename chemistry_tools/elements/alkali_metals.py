@@ -107,20 +107,30 @@ Group 1: Alkali Metals in the Periodic Table
 # this package
 from .classes import Element
 
-__all__ = ("Li", "Na", "K", "Rb", "Cs", "Fr")
+__all__ = ("Li", "Na", 'K', "Rb", "Cs", "Fr")
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.
 
-
 Li = Element(
-		3, 'Li', 'Lithium',
-		group=1, period=2, block='s', series=3,
-		mass=6.94, eleneg=0.98, eleaffin=0.618049,
-		covrad=1.23, atmrad=2.05, vdwrad=1.82,
-		tboil=1615.0, tmelt=453.7, density=0.53,
-		eleconfig='[He] 2s',
-		oxistates='1*',
+		3,
+		"Li",
+		"Lithium",
+		group=1,
+		period=2,
+		block='s',
+		series=3,
+		mass=6.94,
+		eleneg=0.98,
+		eleaffin=0.618049,
+		covrad=1.23,
+		atmrad=2.05,
+		vdwrad=1.82,
+		tboil=1615.0,
+		tmelt=453.7,
+		density=0.53,
+		eleconfig="[He] 2s",
+		oxistates="1*",
 		ionenergy=(5.3917, 75.638, 122.451),
 		isotopes={
 				3: (3.03078, 0.0),
@@ -135,22 +145,41 @@ Li = Element(
 				12: (12.05378, 0.0),
 				},
 		description=(
-			"Socket silvery metal. First member of group 1 of the periodic "
-			"table. Lithium salts are used in psychomedicine."
-			)
+				"Socket silvery metal. First member of group 1 of the periodic "
+				"table. Lithium salts are used in psychomedicine."
+				)
 		)
 
 Na = Element(
-		11, 'Na', 'Sodium',
-		group=1, period=3, block='s', series=3,
-		mass=22.98976928, eleneg=0.93, eleaffin=0.547926,
-		covrad=1.54, atmrad=2.23, vdwrad=2.27,
-		tboil=1156.0, tmelt=371.0, density=0.97,
-		eleconfig='[Ne] 3s',
-		oxistates='1*',
+		11,
+		"Na",
+		"Sodium",
+		group=1,
+		period=3,
+		block='s',
+		series=3,
+		mass=22.98976928,
+		eleneg=0.93,
+		eleaffin=0.547926,
+		covrad=1.54,
+		atmrad=2.23,
+		vdwrad=2.27,
+		tboil=1156.0,
+		tmelt=371.0,
+		density=0.97,
+		eleconfig="[Ne] 3s",
+		oxistates="1*",
 		ionenergy=(
-				5.1391, 47.286, 71.64, 98.91, 138.39,
-				172.15, 208.47, 264.18, 299.87, 1465.091,
+				5.1391,
+				47.286,
+				71.64,
+				98.91,
+				138.39,
+				172.15,
+				208.47,
+				264.18,
+				299.87,
+				1465.091,
 				1648.659,
 				),
 		isotopes={
@@ -176,26 +205,52 @@ Na = Element(
 				37: (37.05934, 0.0),
 				},
 		description=(
-			"Soft silvery reactive element belonging to group 1 of the periodic "
-			"table (alkali metals). It is highly reactive, oxidizing in air and "
-			"reacting violently with water, forcing it to be kept under oil. It "
-			"was first isolated by Humphrey Davy in 1807."
-			)
+				"Soft silvery reactive element belonging to group 1 of the periodic "
+				"table (alkali metals). It is highly reactive, oxidizing in air and "
+				"reacting violently with water, forcing it to be kept under oil. It "
+				"was first isolated by Humphrey Davy in 1807."
+				)
 		)
 
 K = Element(
-		19, 'K', 'Potassium',
-		group=1, period=4, block='s', series=3,
-		mass=39.0983, eleneg=0.82, eleaffin=0.501459,
-		covrad=2.03, atmrad=2.77, vdwrad=2.75,
-		tboil=1033.0, tmelt=336.8, density=0.86,
-		eleconfig='[Ar] 4s',
-		oxistates='1*',
+		19,
+		"K",
+		"Potassium",
+		group=1,
+		period=4,
+		block='s',
+		series=3,
+		mass=39.0983,
+		eleneg=0.82,
+		eleaffin=0.501459,
+		covrad=2.03,
+		atmrad=2.77,
+		vdwrad=2.75,
+		tboil=1033.0,
+		tmelt=336.8,
+		density=0.86,
+		eleconfig="[Ar] 4s",
+		oxistates="1*",
 		ionenergy=(
-				4.3407, 31.625, 45.72, 60.91, 82.66,
-				100.0, 117.56, 154.86, 175.814, 503.44,
-				564.13, 629.09, 714.02, 787.13, 861.77,
-				968.0, 1034.0, 4610.955, 4933.931,
+				4.3407,
+				31.625,
+				45.72,
+				60.91,
+				82.66,
+				100.0,
+				117.56,
+				154.86,
+				175.814,
+				503.44,
+				564.13,
+				629.09,
+				714.02,
+				787.13,
+				861.77,
+				968.0,
+				1034.0,
+				4610.955,
+				4933.931,
 				),
 		isotopes={
 				32: (32.02192, 0.0),
@@ -224,24 +279,43 @@ K = Element(
 				55: (54.99971, 0.0),
 				},
 		description=(
-			"Soft silvery metallic element belonging to group 1 of the periodic "
-			"table (alkali metals). Occurs naturally in seawater and a many "
-			"minerals. Highly reactive, chemically, it resembles sodium in its "
-			"behavior and compounds. Discovered by Sir Humphry Davy in 1807."
-			)
+				"Soft silvery metallic element belonging to group 1 of the periodic "
+				"table (alkali metals). Occurs naturally in seawater and a many "
+				"minerals. Highly reactive, chemically, it resembles sodium in its "
+				"behavior and compounds. Discovered by Sir Humphry Davy in 1807."
+				)
 		)
 
 Rb = Element(
-		37, 'Rb', 'Rubidium',
-		group=1, period=5, block='s', series=3,
-		mass=85.4678, eleneg=0.82, eleaffin=0.485916,
-		covrad=2.16, atmrad=2.98, vdwrad=0.0,
-		tboil=961.0, tmelt=312.63, density=1.53,
-		eleconfig='[Kr] 5s',
-		oxistates='1*',
+		37,
+		"Rb",
+		"Rubidium",
+		group=1,
+		period=5,
+		block='s',
+		series=3,
+		mass=85.4678,
+		eleneg=0.82,
+		eleaffin=0.485916,
+		covrad=2.16,
+		atmrad=2.98,
+		vdwrad=0.0,
+		tboil=961.0,
+		tmelt=312.63,
+		density=1.53,
+		eleconfig="[Kr] 5s",
+		oxistates="1*",
 		ionenergy=(
-				4.1771, 27.28, 40.0, 52.6, 71.0,
-				84.4, 99.2, 136.0, 150.0, 277.1,
+				4.1771,
+				27.28,
+				40.0,
+				52.6,
+				71.0,
+				84.4,
+				99.2,
+				136.0,
+				150.0,
+				277.1,
 				),
 		isotopes={
 				71: (70.96532, 0.0),
@@ -278,22 +352,33 @@ Rb = Element(
 				102: (101.95887, 0.0),
 				},
 		description=(
-			"Soft silvery metallic element, belongs to group 1 of the periodic "
-			"table. Rb-97, the naturally occurring isotope, is radioactive. It "
-			"is highly reactive, with properties similar to other elements in "
-			"group 1, like igniting spontaneously in air. Discovered "
-			"spectroscopically in 1861 by W. Bunsen and G.R. Kirchoff."
-			)
+				"Soft silvery metallic element, belongs to group 1 of the periodic "
+				"table. Rb-97, the naturally occurring isotope, is radioactive. It "
+				"is highly reactive, with properties similar to other elements in "
+				"group 1, like igniting spontaneously in air. Discovered "
+				"spectroscopically in 1861 by W. Bunsen and G.R. Kirchoff."
+				)
 		)
 
 Cs = Element(
-		55, 'Cs', 'Caesium',
-		group=1, period=6, block='s', series=3,
-		mass=132.90545196, eleneg=0.79, eleaffin=0.471626,
-		covrad=2.35, atmrad=3.34, vdwrad=0.0,
-		tboil=944.0, tmelt=301.54, density=1.9,
-		eleconfig='[Xe] 6s',
-		oxistates='1*',
+		55,
+		"Cs",
+		"Caesium",
+		group=1,
+		period=6,
+		block='s',
+		series=3,
+		mass=132.90545196,
+		eleneg=0.79,
+		eleaffin=0.471626,
+		covrad=2.35,
+		atmrad=3.34,
+		vdwrad=0.0,
+		tboil=944.0,
+		tmelt=301.54,
+		density=1.9,
+		eleconfig="[Xe] 6s",
+		oxistates="1*",
 		ionenergy=(3.8939, 25.1),
 		isotopes={
 				112: (111.9503, 0.0),
@@ -338,33 +423,44 @@ Cs = Element(
 				151: (150.96219, 0.0),
 				},
 		description=(
-			"Soft silvery-white metallic element belonging to group 1 of the "
-			"periodic table. One of the three metals which are liquid at room "
-			"temperature. Cs-133 is the natural, and only stable, isotope. "
-			"Fifteen other radioisotopes exist. Caesium reacts explosively with "
-			"cold water, and ice at temperatures above 157K. Caesium hydroxide "
-			"is the strongest base known. Caesium is the most electropositive, "
-			"most alkaline and has the least ionization potential of all the "
-			"elements. Known uses include the basis of atomic clocks, catalyst "
-			"for the hydrogenation of some organic compounds, and in "
-			"photoelectric cells. Caesium was discovered by Gustav Kirchoff and "
-			"Robert Bunsen in Germany in 1860 spectroscopically. Its "
-			"identification was based upon the bright blue lines in its "
-			"spectrum. The name comes from the latin word caesius, which means "
-			"sky blue. Caesium should be considered highly toxic. Some of the "
-			"radioisotopes are even more toxic."
-			)
+				"Soft silvery-white metallic element belonging to group 1 of the "
+				"periodic table. One of the three metals which are liquid at room "
+				"temperature. Cs-133 is the natural, and only stable, isotope. "
+				"Fifteen other radioisotopes exist. Caesium reacts explosively with "
+				"cold water, and ice at temperatures above 157K. Caesium hydroxide "
+				"is the strongest base known. Caesium is the most electropositive, "
+				"most alkaline and has the least ionization potential of all the "
+				"elements. Known uses include the basis of atomic clocks, catalyst "
+				"for the hydrogenation of some organic compounds, and in "
+				"photoelectric cells. Caesium was discovered by Gustav Kirchoff and "
+				"Robert Bunsen in Germany in 1860 spectroscopically. Its "
+				"identification was based upon the bright blue lines in its "
+				"spectrum. The name comes from the latin word caesius, which means "
+				"sky blue. Caesium should be considered highly toxic. Some of the "
+				"radioisotopes are even more toxic."
+				)
 		)
 
 Fr = Element(
-		87, 'Fr', 'Francium',
-		group=1, period=7, block='s', series=3,
-		mass=223.0197, eleneg=0.7, eleaffin=0.0,
-		covrad=0.0, atmrad=0.0, vdwrad=0.0,
-		tboil=950.0, tmelt=300.0, density=0.0,
-		eleconfig='[Rn] 7s',
-		oxistates='1*',
-		ionenergy=(4.0727,),
+		87,
+		"Fr",
+		"Francium",
+		group=1,
+		period=7,
+		block='s',
+		series=3,
+		mass=223.0197,
+		eleneg=0.7,
+		eleaffin=0.0,
+		covrad=0.0,
+		atmrad=0.0,
+		vdwrad=0.0,
+		tboil=950.0,
+		tmelt=300.0,
+		density=0.0,
+		eleconfig="[Rn] 7s",
+		oxistates="1*",
+		ionenergy=(4.0727, ),
 		isotopes={
 				199: (199.00726, 0.0),
 				200: (200.00657, 0.0),
@@ -402,9 +498,9 @@ Fr = Element(
 				232: (232.04977, 0.0),
 				},
 		description=(
-			"Radioactive element, belongs to group 1 of the periodic table. "
-			"Found in uranium and thorium ores. The 22 known isotopes are all "
-			"radioactive, with the most stable being Fr-223. Its existence was "
-			"confirmed in 1939 by Marguerite Perey."
-			)
+				"Radioactive element, belongs to group 1 of the periodic table. "
+				"Found in uranium and thorium ores. The 22 known isotopes are all "
+				"radioactive, with the most stable being Fr-223. Its existence was "
+				"confirmed in 1939 by Marguerite Perey."
+				)
 		)

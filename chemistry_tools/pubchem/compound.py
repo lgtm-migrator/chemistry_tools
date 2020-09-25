@@ -65,7 +65,9 @@ from chemistry_tools.pubchem.properties import (
 		)
 from chemistry_tools.pubchem.synonyms import get_synonyms
 
-C = TypeVar('C', bound='Compound')
+__all__ = ["Compound", "compounds_to_frame"]
+
+C = TypeVar('C', bound="Compound")
 
 
 class Compound(Dictable):
@@ -117,7 +119,7 @@ class Compound(Dictable):
 				)
 
 	def __repr__(self) -> str:
-		return f'Compound({self.cid})' if self.cid else 'Compound()'
+		return f"Compound({self.cid})" if self.cid else "Compound()"
 
 	def to_series(self) -> Series:
 		"""
@@ -191,11 +193,11 @@ class Compound(Dictable):
 		Derive Atom objects from the record.
 		"""
 
-		if 'atoms' not in self._record:
+		if "atoms" not in self._record:
 			return None
 
-		atoms_dict = self._record['atoms']
-		coords_dict = self._record.get('coords', None)
+		atoms_dict = self._record["atoms"]
+		coords_dict = self._record.get("coords", None)
 		return parse_atoms(atoms_dict, coords_dict)
 
 	@memoized_property
@@ -204,11 +206,11 @@ class Compound(Dictable):
 		Derive Bond objects from the record.
 		"""
 
-		if 'bonds' not in self._record:
+		if "bonds" not in self._record:
 			return None
 
-		bonds_dict = self._record['bonds']
-		coords_dict = self._record.get('coords', None)
+		bonds_dict = self._record["bonds"]
+		coords_dict = self._record.get("coords", None)
 		return parse_bonds(bonds_dict, coords_dict)
 
 	def precache(self):
@@ -236,10 +238,10 @@ class Compound(Dictable):
 
 	@property
 	def coordinate_type(self) -> Optional[str]:
-		if CoordinateType.TWO_D in self._record['coords'][0]['type']:
-			return '2d'
-		elif CoordinateType.THREE_D in self._record['coords'][0]['type']:
-			return '3d'
+		if CoordinateType.TWO_D in self._record["coords"][0]["type"]:
+			return "2d"
+		elif CoordinateType.THREE_D in self._record["coords"][0]["type"]:
+			return "3d"
 		return None
 
 	@property
@@ -449,7 +451,7 @@ class Compound(Dictable):
 		# Skip first 4 bytes (contain length of fingerprint) and last 7 bits (padding) then re-pad to 881 bits
 
 		if self.fingerprint:
-			return f'{int(self.fingerprint[8:], 16):020b}'[:-7].zfill(881)
+			return f"{int(self.fingerprint[8:], 16):020b}"[:-7].zfill(881)
 		else:
 			return None
 
@@ -480,7 +482,7 @@ class Compound(Dictable):
 	# 			if count > 1:
 	# 				hill.append(f"<sub>{count}</sub>")
 	#
-	# 	return ''.join(hill)
+	# 	return "".join(hill)
 
 
 # TODO from record:
@@ -501,4 +503,4 @@ def compounds_to_frame(compounds: Union[Compound, List[Compound]]) -> DataFrame:
 	if isinstance(compounds, Compound):
 		compounds = [compounds]
 
-	return DataFrame.from_records([dict(c) for c in compounds], index='CID')
+	return DataFrame.from_records([dict(c) for c in compounds], index="CID")

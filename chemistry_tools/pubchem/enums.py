@@ -23,8 +23,10 @@
 # stdlib
 from typing import Any
 
-# this package
+# 3rd party
 from domdf_python_tools.enums import IntEnum, StrEnum
+
+__all__ = ["PubChemNamespace", "PubChemFormats", "CoordinateType"]
 
 
 class PubChemNamespace(StrEnum):

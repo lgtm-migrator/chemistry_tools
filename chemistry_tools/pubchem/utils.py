@@ -52,6 +52,8 @@ from typing import Any, Dict, Iterable, List, Union
 from chemistry_tools.pubchem import API_BASE
 from chemistry_tools.pubchem.enums import PubChemNamespace
 
+__all__ = ["format_string"]
+
 
 def format_string(stringwithmarkup: Dict[str, Any]) -> str:
 	"""

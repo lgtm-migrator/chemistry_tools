@@ -28,6 +28,15 @@ from chemistry_tools.pubchem.enums import PubChemNamespace
 from chemistry_tools.pubchem.properties import rest_get_properties_json
 from chemistry_tools.pubchem.pug_rest import _do_rest_get
 
+__all__ = [
+		"get_iupac_name",
+		"get_description",
+		"get_common_name",
+		"get_compound_id",
+		"rest_get_description",
+		"parse_description"
+		]
+
 
 def get_iupac_name(name: str) -> str:
 	"""

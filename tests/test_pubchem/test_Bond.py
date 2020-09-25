@@ -13,7 +13,7 @@ import pytest  # type: ignore
 from chemistry_tools.pubchem.bond import Bond, BondType
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def b1():
 	return Bond(1, 2, order=BondType.QUADRUPLE)
 

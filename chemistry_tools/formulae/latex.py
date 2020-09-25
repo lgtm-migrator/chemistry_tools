@@ -2,7 +2,7 @@
 #
 #  latex.py
 """
-Functions and constants for converting formulae to LaTeX
+Functions and constants for converting formulae to LaTeX.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -79,21 +79,23 @@ from typing import Dict, Optional, Sequence, Union
 # this package
 from ._parser_core import _formula_to_format, _greek_letters
 
+__all__ = ["string_to_latex", "latex_subscript", "latex_superscript"]
+
 _latex_mapping: Dict[str, str] = {k + '-': '\\' + k + '-' for k in _greek_letters}
-_latex_mapping['epsilon-'] = '\\varepsilon-'
-_latex_mapping['omicron-'] = 'o-'
-_latex_mapping['.'] = '^\\bullet '
-_latex_infix_mapping: Dict[str, str] = {'.': '\\cdot '}
+_latex_mapping["epsilon-"] = "\\varepsilon-"
+_latex_mapping["omicron-"] = "o-"
+_latex_mapping['.'] = "^\\bullet "
+_latex_infix_mapping: Dict[str, str] = {'.': "\\cdot "}
 
 
 def string_to_latex(
 		formula: str,
 		prefixes: Optional[Dict[str, str]] = None,
 		infixes: Optional[Dict[str, str]] = None,
-		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),
+		suffixes: Sequence[str] = ("(s)", "(l)", "(g)", "(aq)"),
 		) -> str:
 	"""
-	Convert formula string to LaTeX representation
+	Convert formula string to LaTeX representation.
 
 	**Examples**
 	>>> string_to_latex('NH4+')
@@ -135,7 +137,7 @@ def latex_subscript(val: Union[str, float]) -> str:
 	:rtype: str
 	"""
 
-	return f'_{{{val}}}'
+	return f"_{{{val}}}"
 
 
 def latex_superscript(val: Union[str, float]) -> str:
@@ -147,4 +149,4 @@ def latex_superscript(val: Union[str, float]) -> str:
 	:rtype: str
 	"""
 
-	return f'^{{{val}}}'
+	return f"^{{{val}}}"

@@ -2,7 +2,7 @@
 #
 #  _parser_core.py
 """
-Core functions and constants for parsing formulae
+Core functions and constants for parsing formulae.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -78,34 +78,36 @@ import re
 import warnings
 from typing import Any, Callable, Dict, Iterable, List, Sequence, Tuple, Union
 
+__all__ = ["replace_substrings"]
+
 _greek_letters: Tuple[str, ...] = (
-		'alpha',
-		'beta',
-		'gamma',
-		'delta',
-		'epsilon',
-		'zeta',
-		'eta',
-		'theta',
-		'iota',
-		'kappa',
-		'lambda',
-		'mu',
-		'nu',
-		'xi',
-		'omicron',
-		'pi',
-		'rho',
-		'sigma',
-		'tau',
-		'upsilon',
-		'phi',
-		'chi',
-		'psi',
-		'omega',
+		"alpha",
+		"beta",
+		"gamma",
+		"delta",
+		"epsilon",
+		"zeta",
+		"eta",
+		"theta",
+		"iota",
+		"kappa",
+		"lambda",
+		"mu",
+		"nu",
+		"xi",
+		"omicron",
+		"pi",
+		"rho",
+		"sigma",
+		"tau",
+		"upsilon",
+		"phi",
+		"chi",
+		"psi",
+		"omega",
 		)
 
-_greek_u = 'αβγδεζηθικλμνξοπρστυφχψω'
+_greek_u = "αβγδεζηθικλμνξοπρστυφχψω"
 
 
 def _formula_to_format(
@@ -114,7 +116,7 @@ def _formula_to_format(
 		formula: str,
 		prefixes: Dict[str, str],
 		infixes: Dict[str, str],
-		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),
+		suffixes: Sequence[str] = ("(s)", "(l)", "(g)", "(aq)"),
 		) -> str:
 	"""
 
@@ -124,7 +126,7 @@ def _formula_to_format(
 	:type formula: str
 	:param prefixes: Mapping of prefixes to their equivalents in the desired format
 	:param infixes: Mapping of infixes to their equivalents in the desired format
-	:param suffixes: Suffixes to keep, e.g. ('(g)', '(s)')
+	:param suffixes: Suffixes to keep, e.g. ("(g)", "(s)")
 
 	:return: The formatted formula
 	:rtype: str
@@ -144,14 +146,14 @@ def _formula_to_format(
 		if m != 1:
 			string += str(m)
 
-		string += re.sub(r'([0-9]+)(?![^\[]*\])', lambda m: sub(m.group(1)), stoich)
+		string += re.sub(r"([0-9]+)(?![^\[]*\])", lambda m: sub(m.group(1)), stoich)
 
 	if parts[1] is not None:
 		chg = _get_charge(parts[1])
 		if chg < 0:
-			token = '-' if chg == -1 else '%d-' % -chg
+			token = '-' if chg == -1 else f"{-chg:d}-"
 		if chg > 0:
-			token = '+' if chg == 1 else '%d+' % chg
+			token = '+' if chg == 1 else f"{chg:d}+"
 		string += sup(token)
 
 	if len(parts) > 4:
@@ -165,14 +167,14 @@ def _formula_to_format(
 def _formula_to_parts(
 		formula: str,
 		prefixes: Iterable[str],
-		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),
+		suffixes: Sequence[str] = ("(s)", "(l)", "(g)", "(aq)"),
 		) -> List[Any]:
 	"""
 
 	:param formula: The formula to split into parts
 	:type formula:
 	:param prefixes: Mapping of prefixes to their HTML equivalents. Default greek letters and ``.``
-	:param suffixes: Suffixes to keep, e.g. ('(g)', '(s)')
+	:param suffixes: Suffixes to keep, e.g. ("(g)", "(s)")
 
 	:return:
 	"""
@@ -191,7 +193,7 @@ def _formula_to_parts(
 			formula = formula[:-len(ign)]
 
 	# Extract charge
-	for token in '+-':
+	for token in "+-":
 		if token in formula:
 			if formula.count(token) > 1:
 				raise ValueError(f"Multiple tokens: {token}")
@@ -263,7 +265,7 @@ def _get_charge(charge_str: str) -> int:
 	elif charge_str == '-':
 		return -1
 
-	for token, anti, sign in zip('+-', '-+', (1, -1)):
+	for token, anti, sign in zip("+-", "-+", (1, -1)):
 		if token in charge_str:
 			if anti in charge_str:
 				raise ValueError("Invalid charge description (+ & - present)")
@@ -274,7 +276,7 @@ def _get_charge(charge_str: str) -> int:
 				raise ValueError("Values both before and after charge token")
 
 			if len(before) > 0:
-				# will_be_missing_in='0.8.0'
+				# will_be_missing_in="0.8.0'
 				warnings.warn("'Fe/3+' deprecated, use e.g. 'Fe+3'", DeprecationWarning, stacklevel=3)
 				return sign * int(1 if before == '' else before)
 
@@ -300,10 +302,10 @@ def _make_isotope_string(element_name: str, isotope_num: Union[str, int]) -> str
 	if isotope_num in {0, "0"}:
 		return element_name
 	else:
-		return f'[{isotope_num}{element_name}]'
+		return f"[{isotope_num}{element_name}]"
 
 
-_isotope_string = re.compile(r'^([A-Z][a-z+]*)(?:\[(\d+)\])?$')
+_isotope_string = re.compile(r"^([A-Z][a-z+]*)(?:\[(\d+)\])?$")
 
 
 # TODO: merge with _split_isotope
@@ -312,10 +314,10 @@ def _parse_isotope_string(label: str) -> Tuple[str, int]:
 	Parse an string with an isotope label and return the element name and
 	the isotope number.
 
-	>>> _parse_isotope_string('C')
-	('C', 0)
-	>>> _parse_isotope_string('C[12]')
-	('C', 12)
+	>>> _parse_isotope_string("C")
+	("C", 0)
+	>>> _parse_isotope_string("C[12]")
+	("C", 12)
 
 	:param label: The isotope label to parse
 	:type label: str

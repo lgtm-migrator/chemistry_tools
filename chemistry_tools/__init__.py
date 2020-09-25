@@ -97,6 +97,6 @@ __all__ = [
 		"clear_cache",
 		]
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
 	print(__version__)

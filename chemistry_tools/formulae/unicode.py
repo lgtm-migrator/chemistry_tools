@@ -2,7 +2,7 @@
 #
 #  unicode.py
 """
-Functions and constants for convert formulae to unicode
+Functions and constants for convert formulae to unicode.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -79,6 +79,8 @@ from typing import Dict, Optional, Sequence, Union
 # this package
 from ._parser_core import _formula_to_format, _greek_letters, _greek_u
 
+__all__ = ["string_to_unicode", "unicode_subscript", "unicode_superscript"]
+
 _unicode_mapping: Dict[str, str] = {k + '-': v + '-' for k, v in zip(_greek_letters, _greek_u)}
 _unicode_mapping['.'] = '⋅'
 _unicode_infix_mapping: Dict[str, str] = {'.': '·'}
@@ -100,7 +102,7 @@ def string_to_unicode(
 		formula: str,
 		prefixes: Optional[Dict[str, str]] = None,
 		infixes: Optional[Dict[str, str]] = None,
-		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),
+		suffixes: Sequence[str] = ("(s)", "(l)", "(g)", "(aq)"),
 		) -> str:
 	"""
 	Convert formula string to unicode string representation

@@ -30,6 +30,8 @@ from bs4 import BeautifulSoup  # type: ignore
 # this package
 from .property_format import *
 
+__all__ = ["toxnet"]
+
 
 def toxnet(cas):
 	try:
@@ -40,14 +42,14 @@ def toxnet(cas):
 		# print(origin_url)
 		# print(origin_soup.find("a", {"id": "anch_103"}))
 		# print(origin_soup.find("input", {"name": "dfield"}))
-		data_url = origin_soup.find("input", {"name": "dfield"}).find_next_sibling("a")["href"][:-4] + "cpp"
+		data_url = origin_soup.find("input", {"name": "dfield"}).find_next_sibling('a')["href"][:-4] + "cpp"
 		# print(data_url)
 		data_page = requests.get(base_url + data_url)
 		data_soup = BeautifulSoup(data_page.text, "html.parser")
 	except AttributeError:
 		raise ValueError(f"No Record was found for {cas}")
 
-	physical_properties = {}
+	physical_properties = {}  # type: ignore
 
 	for prop in data_soup.findAll("h3"):
 		prop_name = str(prop).replace("<h3>", '').replace(":</h3>", '')

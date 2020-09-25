@@ -109,6 +109,9 @@ from collections import Counter, defaultdict
 from itertools import combinations_with_replacement, product
 from typing import Dict, List, Optional, Sequence, Tuple, Type, TypeVar
 
+# 3rd party
+from mathematical.utils import gcd_array  # type: ignore # TODO
+
 # this package
 from chemistry_tools.elements import ELEMENTS, D, T, isotope_data
 from chemistry_tools.formulae.parser import string_to_composition
@@ -118,10 +121,10 @@ from ._parser_core import _make_isotope_string
 from .composition import Composition
 from .iso_dist import IsotopeDistribution
 from .utils import GROUPS, _hill_order, _split_isotope
-#  3rd party
-from mathematical.utils import gcd_array  # type: ignore # TODO
 
-F = TypeVar('F', bound='Formula')
+__all__ = ["Formula"]
+
+F = TypeVar('F', bound="Formula")
 
 
 class Formula(defaultdict, Counter):
@@ -158,8 +161,8 @@ class Formula(defaultdict, Counter):
 						if charge != composition.charge:
 							# No point raising error if the charges are the same
 							raise ValueError(
-									'Charge is specified in both the composition and with the '
-									f'`charge` keyword argument. {charge}, {self.charge}'
+									"Charge is specified in both the composition and with the "
+									f"'charge' keyword argument. {charge}, {self.charge}"
 									)
 
 					charge = composition.charge
@@ -172,14 +175,14 @@ class Formula(defaultdict, Counter):
 			if charge != self.charge:
 				# No point raising error if the charges are the same
 				raise ValueError(
-						'Charge is specified in both the formula and with the '
-						f'`charge` keyword argument. {charge}, {self.charge}'
+						"Charge is specified in both the formula and with the "
+						f"'charge' keyword argument. {charge}, {self.charge}"
 						)
 		elif charge:
 			self.charge = charge
 
 	@classmethod
-	def from_string(cls: Type["F"], formula: str, charge: int = 0) -> F:
+	def from_string(cls: Type['F'], formula: str, charge: int = 0) -> F:
 		"""
 		Create a new :class:`~chemistry_tools.formulae.formula.Formula` object by parsing a string
 
@@ -200,7 +203,7 @@ class Formula(defaultdict, Counter):
 
 		# Substitute abbreviations of common chemical groups
 		for grp in reversed(sorted(GROUPS)):
-			formula = formula.replace(grp, f'({GROUPS[grp]})')
+			formula = formula.replace(grp, f"({GROUPS[grp]})")
 
 		comp_and_charge = string_to_composition(formula)
 		# print(comp_and_charge)
@@ -298,7 +301,7 @@ class Formula(defaultdict, Counter):
 					mass = ELEMENTS[symbol].isotopes[massnum].mass
 				except KeyError as exc:
 					raise ValueError(f"Unknown isotope '[{massnum}{symbol}]'") from exc
-				symbol = f'[{massnum}{symbol}]'
+				symbol = f"[{massnum}{symbol}]"
 			numbers[symbol] = fraction / (sumfractions * mass)
 
 		# divide numbers by smallest number
@@ -370,7 +373,29 @@ class Formula(defaultdict, Counter):
 
 		return mass
 
-	nominal_mass = exact_mass = monoisotopic_mass
+	@property
+	def nominal_mass(self) -> float:
+		"""
+		Calculate the monoisotopic mass of a :class:`~chemistry_tools.formulae.formula.Formula`.
+		If any isotopes are already present in the formula, the mass of these will be preserved
+
+		:return: mass
+		:rtype: float
+		"""
+
+		return self.monoisotopic_mass
+
+	@property
+	def exact_mass(self) -> float:
+		"""
+		Calculate the monoisotopic mass of a :class:`~chemistry_tools.formulae.formula.Formula`.
+		If any isotopes are already present in the formula, the mass of these will be preserved
+
+		:return: mass
+		:rtype: float
+		"""
+
+		return self.monoisotopic_mass
 
 	@property
 	def mass(self) -> float:
@@ -403,7 +428,18 @@ class Formula(defaultdict, Counter):
 
 		return mass
 
-	average_mass = mass
+	@property
+	def average_mass(self) -> float:
+		"""
+		Calculate the average mass of a :class:`~chemistry_tools.formulae.formula.Formula`.
+
+		Note that mass is not averaged for elements with specified isotopes.
+
+		:return: mass
+		:rtype: float
+		"""
+
+		return self.mass
 
 	@property
 	def mz(self):
@@ -417,9 +453,9 @@ class Formula(defaultdict, Counter):
 		"""
 		Calculate the average mass:charge ratio (*m/z*) of a :class:`~chemistry_tools.formulae.formula.Formula`.
 
-		:param average: If :py:const:`True` then the average *m/z* is calculated. Note that mass
+		:param average: If :py:obj:`True` then the average *m/z* is calculated. Note that mass
 			is not averaged for elements with specified isotopes. Default is
-			:py:const:`True`.
+			:py:obj:`True`.
 		:type: average: bool, optional
 		:param charge: The charge of the compound. If ``None`` then the existing charge of the Formula is used
 		:type: charge: int, optional
@@ -506,11 +542,13 @@ class Formula(defaultdict, Counter):
 			# If there is already an entry for this element and either it
 			# contains a default isotope or newly added isotope is default
 			# then raise an exception.
-			if ((element_name in isotopic_composition)
-				and (isotope_num == 0 or 0 in isotopic_composition[element_name])):
+			if (
+					element_name in isotopic_composition
+					and (isotope_num == 0 or 0 in isotopic_composition[element_name])
+					):
 				raise ValueError(
-						'Please specify the isotopic states of all atoms of '
-						f'{element_name} or do not specify them at all.'
+						"Please specify the isotopic states of all atoms of "
+						f"{element_name} or do not specify them at all."
 						)
 			else:
 				isotopic_composition[element_name][isotope_num] = (self[element])
@@ -540,8 +578,8 @@ class Formula(defaultdict, Counter):
 		The space of possible isotopic compositions is restrained by parameters
 		``elements_with_isotopes``, ``isotope_threshold``, ``overall_threshold``.
 
-		:param report_abundance: If :py:const:`True`, the output will contain 2-tuples: `(composition, abundance)`.
-			Otherwise, only compositions are yielded. Default is :py:const:`False`.
+		:param report_abundance: If :py:obj:`True`, the output will contain 2-tuples: `(composition, abundance)`.
+			Otherwise, only compositions are yielded. Default is :py:obj:`False`.
 		:type: report_abundance: bool, optional
 		:param elements_with_isotopes: A set of elements to be considered in isotopic distributions
 			(by default, every element has an isotopic distribution).
@@ -590,22 +628,18 @@ class Formula(defaultdict, Counter):
 
 	def isotope_distribution(self) -> IsotopeDistribution:
 		"""
-		Returns a :class:`IsotopeDistribution` object representing the distribution of the
+		Returns an :class:`~.IsotopeDistribution` object representing the distribution of the
 		isotopologues of the formula
 		"""
 
 		return IsotopeDistribution(self)
 
-	def copy(self):
-		return self.__class__(self, charge=self.charge)
+	def copy(self: F) -> F:
+		"""
+		Returns a copy of the :class:`~.Formula`.
+		"""
 
-	def __reduce__(self):
-		class_, args, state, list_iterator, dict_iterator = super(defaultdict, self).__reduce__()
-		# Override the reduce of defaultdict so we do not provide the
-		# `int` type as the first argument
-		# which prevents from correctly unpickling the object
-		args = ()
-		return class_, args, state, list_iterator, dict_iterator
+		return self.__class__(self, charge=self.charge)
 
 	def __missing__(self, key):
 		# override default behavior: we don't want to add 0's to the dictionary
@@ -615,7 +649,7 @@ class Formula(defaultdict, Counter):
 		if isinstance(value, float):
 			value = int(round(value))
 		elif not isinstance(value, int):
-			raise TypeError(f'Only integers allowed as values in Formula, got {type(value).__name__}.')
+			raise TypeError(f"Only integers allowed as values in Formula, got {type(value).__name__}.")
 		if value:  # reject 0's
 			super(defaultdict, self).__setitem__(key, value)
 		elif key in self:
@@ -677,7 +711,7 @@ class Formula(defaultdict, Counter):
 			return NotImplemented
 
 	def __str__(self) -> str:
-		return f'{type(self).__name__}({", ".join(self._repr_elements())})'
+		return self.hill_formula
 
 	def _repr_elements(self):
 		elements = [str(dict.__repr__(self))]
@@ -688,11 +722,11 @@ class Formula(defaultdict, Counter):
 		return elements
 
 	def __repr__(self) -> str:
-		return str(self)
+		return f'{type(self).__name__}({", ".join(self._repr_elements())})'
 
 	def _repr_pretty_(self, p, cycle):
 		if cycle:  # should never happen
-			p.text(f'{type(self).__name__} object with a cyclic reference')
+			p.text(f"{type(self).__name__} object with a cyclic reference")
 		p.text(str(self))
 
 	@property

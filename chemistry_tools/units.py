@@ -47,104 +47,13 @@
 
 # stdlib
 from collections import OrderedDict
-from functools import reduce
-from operator import mul
-from typing import Dict, List, Tuple, Union
 
 # 3rd party
 import numpy  # type: ignore
 import quantities  # type: ignore
 import quantities.markup  # type: ignore
 
-# this package
-from chemistry_tools.dicts import ArithmeticDict
-
-# from chemistry_tools.utils import defaultnamedtuple
-
-
-def is_quantity(arg):
-	# this check works even if quantities is not installed.
-	return bool(arg.__class__.__name__ == 'Quantity')
-
-
-energy = ArithmeticDict(int, {'mass': 1, 'length': 2, 'time': -2})
-volume = ArithmeticDict(int, {'length': 3})
-concentration = {'amount': 1} - volume
-
-
-def get_derived_unit(registry, key):
-	"""
-	Get the unit of a physcial quantity in a provided unit system.
-
-	**Examples**
-	>>> m, s = quantities.meter, quantities.second
-	>>> get_derived_unit(SI_base_registry, 'diffusivity') == m**2/s
-	True
-
-	:param registry: mapping 'length', 'mass', 'time', 'current', 'temperature',
-		'luminous_intensity', 'amount'. If registry is ``None`` the
-		function returns 1.0 unconditionally.
-	:type registry: dict (str: unit)
-	:param key: one of the registry keys or one of: 'diffusivity', 'electricalmobility',
-		'permittivity', 'charge', 'energy', 'concentration', 'density',
-		'radiolytic_yield'.
-	:type key: str
-
-	:return:
-	:rtype:
-	"""
-
-	if registry is None:
-		return 1.0
-
-	derived = {
-			'diffusivity': registry['length']**2 / registry['time'],
-			'electrical_mobility': registry['current'] * registry['time']**2 / registry['mass'],
-			'permittivity':
-					(registry['current']**2 * registry['time']**4 / (registry['length']**3 * registry['mass'])),
-			'charge': registry['current'] * registry['time'],
-			'energy': registry['mass'] * registry['length']**2 / registry['time']**2,
-			'concentration': registry['amount'] / registry['length']**3,
-			'density': registry['mass'] / registry['length']**3,
-			}
-	derived['diffusion'] = derived['diffusivity']  # 'diffusion' is deprecated
-	derived['radiolytic_yield'] = registry['amount'] / derived['energy']
-	derived['doserate'] = derived['energy'] / registry['mass'] / registry['time']
-	derived['linear_energy_transfer'] = derived['energy'] / registry['length']
-
-	try:
-		return derived[key]
-	except KeyError:
-		return registry[key]
-
-
-def unit_registry_to_human_readable(unit_registry):
-	"""
-	Serialization of a unit registry.
-	"""
-
-	if unit_registry is None:
-		return None
-
-	new_registry = {}
-	integer_one = 1
-
-	for k in SI_base_registry:
-		if unit_registry[k] is integer_one:
-			new_registry[k] = 1, 1
-		else:
-			dim_list = list(unit_registry[k].dimensionality)
-			if len(dim_list) != 1:
-				raise TypeError(f"Compound units not allowed: {dim_list}")
-			u_symbol = dim_list[0].u_symbol
-			new_registry[k] = float(unit_registry[k]), u_symbol
-
-	return new_registry
-
-
-def _latex_from_dimensionality(dim):
-	# see https://github.com/python-quantities/python-quantities/issues/148
-	return quantities.markup.format_units_latex(dim, mult=r'\\cdot')
+__all__ = ["latex_of_unit", "compare_equality", "allclose", "format_string"]
 
 
 def latex_of_unit(quant):
@@ -156,238 +65,8 @@ def latex_of_unit(quant):
 	\mathrm{\frac{1}{K}}
 	"""
 
-	return _latex_from_dimensionality(quant.dimensionality).strip('$')
-
-
-def unicode_of_unit(quant: quantities.quantity.Quantity) -> str:
-	"""
-	Returns unicode reperesentation of the unit of a quantity
-
-	**Examples**
-	>>> print(unicode_of_unit(1/quantities.kelvin))
-	1/K
-	"""
-
-	return quant.dimensionality.unicode
-
-
-def html_of_unit(quant: quantities.quantity.Quantity) -> str:
-	"""
-	Returns HTML reperesentation of the unit of a quantity
-
-	**Examples**
-	>>> print(html_of_unit(2*quantities.m**2))
-	m<sup>2</sup>
-	"""
-
-	return quant.dimensionality.html
-
-
-def unit_registry_from_human_readable(unit_registry):
-	"""
-	Deserialization of unit_registry.
-	"""
-
-	if unit_registry is None:
-		return None
-
-	new_registry = {}
-
-	for k in SI_base_registry:
-		factor, u_symbol = unit_registry[k]
-		if u_symbol == 1:
-			unit_quants = [1]
-		else:
-			unit_quants = list(quantities.Quantity(0, u_symbol).dimensionality.keys())
-
-		if len(unit_quants) != 1:
-			raise TypeError("Unknown UnitQuantity: {}".format(unit_registry[k]))
-		else:
-			new_registry[k] = factor * unit_quants[0]
-
-	return new_registry
-
-
-# Abstraction of underlying package providing units and dimensional analysis:
-
-
-def is_unitless(expr) -> bool:
-	"""
-	Returns ``True`` if ``expr`` is unitless, otherwise ``False``
-
-	**Examples**
-	>>> is_unitless(42)
-	True
-	>>> is_unitless(42*quantities.kilogram)
-	False
-	"""
-
-	if hasattr(expr, 'dimensionality'):
-		if expr == quantities.dimensionless:
-			return True
-		else:
-			return expr.simplified.dimensionality == quantities.dimensionless.dimensionality
-
-	if isinstance(expr, dict):
-		return all(is_unitless(_) for _ in expr.values())
-
-	elif isinstance(expr, (tuple, list)):
-		return all(is_unitless(_) for _ in expr)
-
-	return True
-
-
-def unit_of(expr, simplified=False):
-	"""
-	Returns the unit of a quantity
-
-	**Examples**
-	>>> unit_of(42 * pq.second) == unit_of(12 * pq.second)
-	True
-	>>> unit_of(42)
-	1
-	"""
-	if isinstance(expr, (tuple, list)):
-		return unit_of(uniform(expr)[0], simplified)
-	elif isinstance(expr, dict):
-		return unit_of(list(uniform(expr).values())[0], simplified)
-
-	try:
-		if simplified:
-			return expr.units.simplified
-		else:
-			return expr.units
-	except AttributeError:
-		return 1
-
-
-def rescale(value, unit):
-	try:
-		return value.rescale(unit)
-	except AttributeError:
-		if unit == 1:
-			return value
-		else:
-			raise
-
-
-def to_unitless(value, new_unit=None):
-	"""
-	Nondimensionalization of a quantity.
-
-	:param value:
-	:type value: quantity
-	:param new_unit:
-	:type new_unit: unit
-
-	**Examples**
-	>>> f'{to_unitless(1*quantities.metre, quantities.nm):.1g}'
-	'1e+09'
-	>>> '%.1g %.1g' % tuple(to_unitless([1*quantities.m, 1*quantities.mm], quantities.nm))
-	'1e+09 1e+06'
-
-	"""
-	integer_one = 1
-	if new_unit is None:
-		new_unit = quantities.dimensionless
-
-	if isinstance(value, (list, tuple)):
-		return numpy.array([to_unitless(elem, new_unit) for elem in value])
-
-	elif isinstance(value, numpy.ndarray) and not hasattr(value, 'rescale'):
-		if is_unitless(new_unit) and new_unit == 1 and value.dtype != object:
-			return value
-		return numpy.array([to_unitless(elem, new_unit) for elem in value])
-
-	elif isinstance(value, dict):
-		new_value = dict(value.items())  # value.copy()
-		for k in value:
-			new_value[k] = to_unitless(value[k], new_unit)
-		return new_value
-
-	elif isinstance(value, (int, float)) and new_unit is integer_one or new_unit is None:
-		return value
-
-	elif isinstance(value, str):
-		raise ValueError("str not supported")
-
-	else:
-		try:
-			try:
-				result = (value * quantities.dimensionless / new_unit).rescale(quantities.dimensionless)
-			except AttributeError:
-				if new_unit == quantities.dimensionless:
-					return value
-				else:
-					raise
-			else:
-				if result.ndim == 0:
-					return float(result)
-				else:
-					return numpy.asarray(result)
-
-		except TypeError:
-			return numpy.array([to_unitless(elem, new_unit) for elem in value])
-
-
-def uniform(container: Union[Tuple, List, Dict]):
-	"""
-	Turns a list, tuple or dict with mixed units into one with uniform units.
-
-	:param container:
-
-	**Examples**
-	>>> km, m = quantities.kilometre, quantities.metre
-	>>> uniform(dict(a=3*km, b=200*m))  # doctest: +SKIP
-	{'b': array(200.0) * m, 'a': array(3000.0) * m}
-	"""
-
-	if isinstance(container, (tuple, list)):
-		unit = unit_of(container[0])
-
-	elif isinstance(container, dict):
-		unit = unit_of(list(container.values())[0])
-		return container.__class__([(k, to_unitless(v, unit) * unit) for k, v in container.items()])
-
-	else:
-		return container
-
-	return to_unitless(container, unit) * unit
-
-
-def get_physical_dimensionality(value):
-	if is_unitless(value):
-		return {}
-
-	_quantities_mapping = {
-			quantities.UnitLength: 'length',
-			quantities.UnitMass: 'mass',
-			quantities.UnitTime: 'time',
-			quantities.UnitCurrent: 'current',
-			quantities.UnitTemperature: 'temperature',
-			quantities.UnitLuminousIntensity: 'luminous_intensity',
-			quantities.UnitSubstance: 'amount'
-			}
-
-	return {_quantities_mapping[k.__class__]: v for k, v in uniform(value).simplified.dimensionality.items()}
-
-
-def _get_unit_from_registry(dimensionality, registry):
-	return reduce(mul, [registry[k]**v for k, v in dimensionality.items()])
-
-
-def default_unit_in_registry(value, registry):
-	_dimensionality = get_physical_dimensionality(value)
-
-	if _dimensionality == {}:
-		return 1
-
-	return _get_unit_from_registry(_dimensionality, registry)
-
-
-def unitless_in_registry(value, registry):
-	_default_unit = default_unit_in_registry(value, registry)
-	return to_unitless(value, _default_unit)
+	# see https://github.com/python-quantities/python-quantities/issues/148
+	return quantities.markup.format_units_latex(quant.dimensionality, mult=r"\\cdot").strip('$')
 
 
 # NumPy like functions for compatibility:
@@ -463,42 +142,8 @@ def allclose(a, b, rtol=1e-8, atol=None):
 			return numpy.all([_d <= _lim for _d, _lim in zip(d, lim)])
 
 
-def logspace_from_lin(start, stop, num=50):
-	"""
-	Logarithmically spaced data points
-
-	**Example**
-
-	>>> abs(logspace_from_lin(2, 8, num=3)[1] - 4) < 1e-15
-	True
-	"""
-
-	unit = unit_of(start)
-	start_ = numpy.log2(to_unitless(start, unit))
-	stop_ = numpy.log2(to_unitless(stop, unit))
-	return numpy.exp2(numpy.linspace(start_, stop_, num)) * unit
-
-
-def _sum(iterable):
-	try:
-		result = next(iterable)
-	except TypeError:
-		result = iterable[0]
-		for elem in iterable[1:]:
-			result += elem
-		return result
-	else:
-		try:
-			while True:
-				result += next(iterable)
-		except StopIteration:
-			return result
-		else:
-			raise ValueError("Not sure how this point was reached")
-
-
 # TODO: decide whether to deprecate in favor of "number_to_scientific_latex"?
-def format_string(value, precision='%.5g', tex=False):
+def format_string(value, precision="%.5g", tex=False):
 	"""
 	Formats a scalar with unit as two strings
 
@@ -522,98 +167,44 @@ def format_string(value, precision='%.5g', tex=False):
 	if tex:
 		unit_str = latex_of_unit(value)
 	else:
-		attr = 'unicode' if quantities.markup.config.use_unicode else 'string'
+		attr = "unicode" if quantities.markup.config.use_unicode else "string"
 		unit_str = getattr(value.dimensionality, attr)
 	return precision % float(value.magnitude), unit_str
 
 
-def concatenate(arrays, **kwargs):
-	"""
-	Patched version of numpy.concatenate
-
-	**Examples**
-	>>> from chemistry_tools.units import quantities
-	>>> all(concatenate(([2, 3]*quantities.s, [4, 5]*quantities.s)) == [2, 3, 4, 5]*quantities.s)
-	True
-	"""
-	unit = unit_of(arrays[0])
-	result = numpy.concatenate([to_unitless(arr, unit) for arr in arrays], **kwargs)
-	return result * unit
-
-
-def fold_constants(arg):
-	if hasattr(arg, 'dimensionality'):
-		m = arg.magnitude
-		d = 1
-		for k, v in arg.dimensionality.items():
-			if isinstance(k, quantities.UnitConstant):
-				m = m * k.simplified**v
-			else:
-				d = d * k**v
-		return m * d
-	else:
-		return arg
-
-
-def _sanity_check_quantities(pq):
-	# See https://github.com/python-quantities/python-quantities/pull/116
-	a = pq.UncertainQuantity([1, 2], pq.m, [.1, .2])
-	assert (-a).uncertainty[0] == (a * -1).uncertainty[0]
-
-	# See https://github.com/python-quantities/python-quantities/pull/126
-	assert (3 * pq.m)**0 == 1 * pq.dimensionless
-
-
-_sanity_check_quantities(quantities)
-
 # Additional units to complement quantities
 per100eV = quantities.UnitQuantity(
-		'per_100_eV', 1 / (100 * quantities.eV * quantities.constants.Avogadro_constant), u_symbol='(100eV)**-1'
+		"per_100_eV", 1 / (100 * quantities.eV * quantities.constants.Avogadro_constant), u_symbol="(100eV)**-1"
 		)
-dm = decimetre = quantities.UnitQuantity('decimetre', quantities.m / 10.0, u_symbol='dm')
+dm = decimetre = quantities.UnitQuantity("decimetre", quantities.m / 10.0, u_symbol="dm")
 m3 = quantities.metre**3
 dm3 = decimetre**3
 cm3 = quantities.centimetre**3
-nanomolar = quantities.UnitQuantity('nM', 1e-6 * quantities.mole / m3, u_symbol='nM')
-molal = quantities.UnitQuantity('molal', quantities.mole / quantities.kg, u_symbol='molal')
-micromole = quantities.UnitQuantity('micromole', quantities.mole / 1e6, u_symbol='μmol')
-nanomole = quantities.UnitQuantity('nanomole', quantities.mole / 1e9, u_symbol='nmol')
-kilojoule = quantities.UnitQuantity('kilojoule', 1e3 * quantities.joule, u_symbol='kJ')
-kilogray = quantities.UnitQuantity('kilogray', 1e3 * quantities.gray, u_symbol='kGy')
+nanomolar = quantities.UnitQuantity("nM", 1e-6 * quantities.mole / m3, u_symbol="nM")
+molal = quantities.UnitQuantity("molal", quantities.mole / quantities.kg, u_symbol="molal")
+micromole = quantities.UnitQuantity("micromole", quantities.mole / 1e6, u_symbol="μmol")
+nanomole = quantities.UnitQuantity("nanomole", quantities.mole / 1e9, u_symbol="nmol")
+kilojoule = quantities.UnitQuantity("kilojoule", 1e3 * quantities.joule, u_symbol="kJ")
+kilogray = quantities.UnitQuantity("kilogray", 1e3 * quantities.gray, u_symbol="kGy")
 perMolar_perSecond = 1 / quantities.molar / quantities.s
 umol_per_J = quantities.umol / quantities.joule
 
 # unit registry data and logic:
 SI_base_registry = {
-		'length': quantities.metre,
-		'mass': quantities.kilogram,
-		'time': quantities.second,
-		'current': quantities.ampere,
-		'temperature': quantities.kelvin,
-		'luminous_intensity': quantities.candela,
-		'amount': quantities.mole
+		"length": quantities.metre,
+		"mass": quantities.kilogram,
+		"time": quantities.second,
+		"current": quantities.ampere,
+		"temperature": quantities.kelvin,
+		"luminous_intensity": quantities.candela,
+		"amount": quantities.mole
 		}
 
-dimension_codes = OrderedDict(
-		zip(
-				'length mass time current temperature amount'.split(),  # not considering luminous_intensity
-				'L M T I Θ N'.split()
-				)
-		)
-
-#
-# class DimensionalitySI(
-# 		defaultnamedtuple('DimensionalitySIBase', dimension_codes.keys(), (0, ) * len(dimension_codes))
-# 		):
-#
-# 	def __mul__(self, other):
-# 		return self.__class__(*(x + y for x, y in zip(self, other)))
-#
-# 	def __truediv__(self, other):
-# 		return self.__class__(*(x - y for x, y in zip(self, other)))
-#
-# 	def __pow__(self, exp):
-# 		return self.__class__(*(x * exp for x in self))
-#
-
-# base_registry = {name: DimensionalitySI(**{name: 1}) for name in dimension_codes}
+dimension_codes = {
+		"length": 'L',
+		"mass": 'M',
+		"time": 'T',
+		"current": 'I',
+		"temperature": 'Θ',
+		"amount": 'N',
+		}

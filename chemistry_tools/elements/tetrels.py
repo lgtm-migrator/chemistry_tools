@@ -105,7 +105,7 @@ Group 14: Tetrels, carbon group, crystallogens or adamantogens in the Periodic T
 #
 #  Isotope data from http://www.nist.gov/pml/data/comp.cfm .
 
-__all__ = ("C", "Si", "Ge", "Sn", "Pb", "Fl")
+__all__ = ('C', "Si", "Ge", "Sn", "Pb", "Fl")
 
 # this package
 from .classes import Element
@@ -113,17 +113,31 @@ from .classes import Element
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.
 
-
 C = Element(
-		6, 'C', 'Carbon',
-		group=14, period=2, block='p', series=1,
-		mass=12.01074, eleneg=2.55, eleaffin=1.262118,
-		covrad=0.77, atmrad=0.91, vdwrad=1.7,
-		tboil=5100.0, tmelt=3825.0, density=3.51,
-		eleconfig='[He] 2s2 2p2',
-		oxistates='4*, 2, -4*',
+		6,
+		'C',
+		"Carbon",
+		group=14,
+		period=2,
+		block='p',
+		series=1,
+		mass=12.01074,
+		eleneg=2.55,
+		eleaffin=1.262118,
+		covrad=0.77,
+		atmrad=0.91,
+		vdwrad=1.7,
+		tboil=5100.0,
+		tmelt=3825.0,
+		density=3.51,
+		eleconfig="[He] 2s2 2p2",
+		oxistates="4*, 2, -4*",
 		ionenergy=(
-				11.2603, 24.383, 47.877, 64.492, 392.077,
+				11.2603,
+				24.383,
+				47.877,
+				64.492,
+				392.077,
 				489.981,
 				),
 		isotopes={
@@ -154,17 +168,39 @@ C = Element(
 		)
 
 Si = Element(
-		14, 'Si', 'Silicon',
-		group=14, period=3, block='p', series=5,
-		mass=28.0855, eleneg=1.9, eleaffin=1.389521,
-		covrad=1.11, atmrad=1.46, vdwrad=2.1,
-		tboil=2630.0, tmelt=1683.0, density=2.33,
-		eleconfig='[Ne] 3s2 3p2',
-		oxistates='4*, -4',
+		14,
+		"Si",
+		"Silicon",
+		group=14,
+		period=3,
+		block='p',
+		series=5,
+		mass=28.0855,
+		eleneg=1.9,
+		eleaffin=1.389521,
+		covrad=1.11,
+		atmrad=1.46,
+		vdwrad=2.1,
+		tboil=2630.0,
+		tmelt=1683.0,
+		density=2.33,
+		eleconfig="[Ne] 3s2 3p2",
+		oxistates="4*, -4",
 		ionenergy=(
-				8.1517, 16.345, 33.492, 45.141, 166.77,
-				205.05, 246.52, 303.17, 351.1, 401.43,
-				476.06, 523.5, 2437.676, 2673.108,
+				8.1517,
+				16.345,
+				33.492,
+				45.141,
+				166.77,
+				205.05,
+				246.52,
+				303.17,
+				351.1,
+				401.43,
+				476.06,
+				523.5,
+				2437.676,
+				2673.108,
 				),
 		isotopes={
 				22: (22.03453, 0.0),
@@ -201,13 +237,24 @@ Si = Element(
 		)
 
 Ge = Element(
-		32, 'Ge', 'Germanium',
-		group=14, period=4, block='p', series=5,
-		mass=72.63, eleneg=2.01, eleaffin=1.232712,
-		covrad=1.22, atmrad=1.52, vdwrad=0.0,
-		tboil=3107.0, tmelt=1211.5, density=5.32,
-		eleconfig='[Ar] 3d10 4s2 4p2',
-		oxistates='4*',
+		32,
+		"Ge",
+		"Germanium",
+		group=14,
+		period=4,
+		block='p',
+		series=5,
+		mass=72.63,
+		eleneg=2.01,
+		eleaffin=1.232712,
+		covrad=1.22,
+		atmrad=1.52,
+		vdwrad=0.0,
+		tboil=3107.0,
+		tmelt=1211.5,
+		density=5.32,
+		eleconfig="[Ar] 3d10 4s2 4p2",
+		oxistates="4*",
 		ionenergy=(7.8994, 15.934, 34.22, 45.71, 93.5),
 		isotopes={
 				58: (57.99101, 0.0),
@@ -252,13 +299,24 @@ Ge = Element(
 		)
 
 Sn = Element(
-		50, 'Sn', 'Tin',
-		group=14, period=5, block='p', series=7,
-		mass=118.71, eleneg=1.96, eleaffin=1.112066,
-		covrad=1.41, atmrad=1.72, vdwrad=2.17,
-		tboil=2876.0, tmelt=505.12, density=7.29,
-		eleconfig='[Kr] 4d10 5s2 5p2',
-		oxistates='4*, 2*',
+		50,
+		"Sn",
+		"Tin",
+		group=14,
+		period=5,
+		block='p',
+		series=7,
+		mass=118.71,
+		eleneg=1.96,
+		eleaffin=1.112066,
+		covrad=1.41,
+		atmrad=1.72,
+		vdwrad=2.17,
+		tboil=2876.0,
+		tmelt=505.12,
+		density=7.29,
+		eleconfig="[Kr] 4d10 5s2 5p2",
+		oxistates="4*, 2*",
 		ionenergy=(7.3439, 14.632, 30.502, 40.734, 72.28),
 		isotopes={
 				99: (98.94933, 0.0),
@@ -310,13 +368,24 @@ Sn = Element(
 		)
 
 Pb = Element(
-		82, 'Pb', 'Lead',
-		group=14, period=6, block='p', series=7,
-		mass=207.2, eleneg=2.33, eleaffin=0.364,
-		covrad=1.47, atmrad=1.81, vdwrad=2.02,
-		tboil=2023.0, tmelt=600.65, density=11.34,
-		eleconfig='[Xe] 4f14 5d10 6s2 6p2',
-		oxistates='4, 2*',
+		82,
+		"Pb",
+		"Lead",
+		group=14,
+		period=6,
+		block='p',
+		series=7,
+		mass=207.2,
+		eleneg=2.33,
+		eleaffin=0.364,
+		covrad=1.47,
+		atmrad=1.81,
+		vdwrad=2.02,
+		tboil=2023.0,
+		tmelt=600.65,
+		density=11.34,
+		eleconfig="[Xe] 4f14 5d10 6s2 6p2",
+		oxistates="4, 2*",
 		ionenergy=(7.4167, 15.032, 31.937, 42.32, 68.8),
 		isotopes={
 				178: (178.00383, 0.0),
@@ -367,8 +436,13 @@ Pb = Element(
 		)
 
 Fl = Element(
-		114, 'Fl', 'Flerovium',
-		group=14, period=7, block='p', series=8,
+		114,
+		"Fl",
+		"Flerovium",
+		group=14,
+		period=7,
+		block='p',
+		series=8,
 		isotopes={
 				285: (285.1837, 0.0),
 				286: (286.18386, 0.0),

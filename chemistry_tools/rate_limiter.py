@@ -2,7 +2,7 @@
 #
 #  rate_limiter.py
 """
-Rate limiters for making calls to external APIs in a polite manner
+Rate limiters for making calls to external APIs in a polite manner.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -26,9 +26,10 @@ Rate limiters for making calls to external APIs in a polite manner
 # stdlib
 import datetime
 import pathlib
+import shutil
 import time
 import zlib
-import shutil
+from typing import Callable
 
 # 3rd party
 import appdirs  # type: ignore
@@ -46,7 +47,7 @@ __all__ = [
 		]
 
 
-def rate_limit(func):
+def rate_limit(func: Callable) -> Callable:
 	"""
 	Decorator to force a function to run no less than 0.2 seconds
 	after it last ran (i.e. max 5 calls per second). Used for rate limiting.
@@ -57,7 +58,7 @@ def rate_limit(func):
 	def rate_limit_wrapper(*args, **kwargs):
 		now = datetime.datetime.now()
 
-		time_since_last_run = (now - rate_limit_wrapper.last_run_time).total_seconds()
+		time_since_last_run = (now - rate_limit_wrapper.last_run_time).total_seconds()  # type: ignore
 		print(f"Last ran {time_since_last_run} seconds ago")
 
 		if time_since_last_run < min_time:
@@ -65,11 +66,11 @@ def rate_limit(func):
 			print(f"Waiting {wait_time} seconds")
 			time.sleep(wait_time)
 
-		rate_limit_wrapper.last_run_time = now
+		rate_limit_wrapper.last_run_time = now  # type: ignore
 		res = func(*args, **kwargs)
 		return res
 
-	rate_limit_wrapper.last_run_time = datetime.datetime.fromtimestamp(0)
+	rate_limit_wrapper.last_run_time = datetime.datetime.fromtimestamp(0)  # type: ignore
 
 	return rate_limit_wrapper
 
@@ -109,16 +110,13 @@ if not cache_dir.exists():
 
 session = requests.session()
 
-cache_adapter = CacheControlAdapter(heuristic=ExpiresAfter(days=28))
+cache_adapter = RateLimitAdapter(heuristic=ExpiresAfter(days=28))
 cached_requests = CacheControl(requests.Session(), cache=FileCache(cache_dir))
 
 
 def clear_cache() -> None:
 	"""
 	Clear the cache
-
-	:return:
-	:rtype:
 	"""
 
 	shutil.rmtree(cache_dir)

@@ -177,24 +177,24 @@ from .transition_metals import (
 from .triels import Al, B, Ga, In, Nh, Tl
 
 __all__ = (
-		'Element',
-		'Isotope',
+		"Element",
+		"Isotope",
 		"PERIODS",
 		"BLOCKS",
 		"GROUPS",
 		"SERIES",
-		'ELEMENTS',
+		"ELEMENTS",
 		"period_lengths",
 		"accum_period_lengths",  # "groups",
 		"H",
 		"D",
 		"T",
-		'Li',  # Alkali Metals
-		'Na',
+		"Li",  # Alkali Metals
+		"Na",
 		'K',
-		'Rb',
-		'Cs',
-		'Fr',
+		"Rb",
+		"Cs",
+		"Fr",
 		"Be",  # Alkaline Earth Metals
 		"Mg",
 		"Ca",
@@ -317,9 +317,9 @@ groups[1] = (1, ) + tuple(x + 1 for x in accum_period_lengths[:-1])  # alkali me
 groups[2] = tuple(x + 2 for x in accum_period_lengths[:-1])  # alkaline earth metals
 groups[18] = accum_period_lengths  # noble gases
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	# stdlib
 	import doctest
 
-	print(f'ELEMENTS = {repr(ELEMENTS)}')
+	print(f"ELEMENTS = {repr(ELEMENTS)}")
 	doctest.testmod(verbose=False)

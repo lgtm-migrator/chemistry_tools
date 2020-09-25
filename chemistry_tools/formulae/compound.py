@@ -78,6 +78,7 @@ from typing import Dict, Optional
 
 # 3rd party
 import quantities  # type: ignore
+from domdf_python_tools.bases import Dictable
 
 # this package
 from chemistry_tools.formulae.formula import Formula
@@ -85,8 +86,7 @@ from chemistry_tools.formulae.html import string_to_html
 from chemistry_tools.formulae.latex import string_to_latex
 from chemistry_tools.formulae.unicode import string_to_unicode
 
-# this package
-from domdf_python_tools.bases import Dictable  # type: ignore # TODO
+__all__ = ["Compound"]
 
 
 class Compound(Dictable):
@@ -201,8 +201,6 @@ class Compound(Dictable):
 		>>> from chemistry_tools.units import quantities
 		>>> nh4p.molar_mass(quantities)
 		array(18.0384511...) * g/mol
-
-		:rtype: ~quantities.quantity.Quantity
 		"""
 
 		return self.mass * quantities.g / quantities.mol

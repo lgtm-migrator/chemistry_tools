@@ -49,6 +49,7 @@ from typing import Any, Callable, Dict, Iterable, List, NamedTuple, Sequence, Un
 
 # 3rd party
 from pandas import DataFrame  # type: ignore
+from tabulate import tabulate
 
 # this package
 from chemistry_tools.formulae import Formula
@@ -57,7 +58,18 @@ from chemistry_tools.formulae import Formula
 from .enums import PubChemFormats, PubChemNamespace
 from .pug_rest import _do_rest_get
 from .utils import _force_sequence_or_csv
-from tabulate import tabulate
+
+__all__ = [
+		"PropData",
+		"insert_valid_properties_table",
+		"rest_get_properties_json",
+		"rest_get_properties",
+		"get_properties",
+		"get_property",
+		"parse_properties",
+		"PubChemProperty",
+		"string_list"
+		]
 
 
 class PropData(NamedTuple):
@@ -463,7 +475,7 @@ def get_properties(
 		results.append(parsed_data)
 
 	if as_dataframe:
-		return DataFrame.from_records(results, index='CID')
+		return DataFrame.from_records(results, index="CID")
 
 	return results
 

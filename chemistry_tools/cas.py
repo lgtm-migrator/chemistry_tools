@@ -23,6 +23,8 @@
 # stdlib
 from typing import Union, no_type_check
 
+__all__ = ["cas_int_to_string", "check_cas_number", "cas_string_to_int"]
+
 
 def cas_int_to_string(cas_no: int) -> str:
 	"""
@@ -103,7 +105,7 @@ def cas_string_to_int(cas_no: Union[str, int]) -> int:
 
 	cas_no = str(cas_no)
 
-	block_1, block_2, check_digit = cas_no.split("-")
+	block_1, block_2, check_digit = cas_no.split('-')
 
 	check_digit = int(check_digit)
 

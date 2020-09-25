@@ -138,8 +138,8 @@ def test_hydrogen():
 	assert ELEMENTS["H"].tmelt == 13.81
 
 	assert ELEMENTS["H"].density == 0.084
-	assert ELEMENTS["H"].eleconfig == '1s'
-	assert ELEMENTS["H"].oxistates == '1*, -1'
+	assert ELEMENTS["H"].eleconfig == "1s"
+	assert ELEMENTS["H"].oxistates == "1*, -1"
 	assert ELEMENTS["H"].ionenergy == (13.5984, )
 
 	assert ELEMENTS["H"].isotopes == {
@@ -180,8 +180,8 @@ def test_groups():
 
 
 def test_atomic_number():
-	assert ELEMENTS['U'].number == 92
-	assert ELEMENTS['carbon'].number == 6
-	assert ELEMENTS['moscovium'].number == 115
+	assert ELEMENTS["U"].number == 92
+	assert ELEMENTS["carbon"].number == 6
+	assert ELEMENTS["moscovium"].number == 115
 	with pytest.raises(KeyError):
-		ELEMENTS['unobtainium']
+		ELEMENTS["unobtainium"]

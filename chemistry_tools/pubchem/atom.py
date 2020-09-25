@@ -50,6 +50,8 @@ from typing import Any, Dict, FrozenSet, Optional
 from chemistry_tools.elements import ELEMENTS
 from chemistry_tools.pubchem.errors import ResponseParseError
 
+__all__ = ["Atom", "parse_atoms"]
+
 
 class Atom:
 	"""
@@ -90,7 +92,7 @@ class Atom:
 		self.charge: int = charge
 
 	def __repr__(self) -> str:
-		return f'Atom({self.aid}, {self.element})'
+		return f"Atom({self.aid}, {self.element})"
 
 	def __eq__(self, other) -> bool:
 		return (
@@ -118,14 +120,14 @@ class Atom:
 		Return a dictionary containing Atom data.
 		"""
 
-		data = {'aid': self.aid, 'number': self.number, 'element': self.element}
+		data = {"aid": self.aid, "number": self.number, "element": self.element}
 
 		for coord in {'x', 'y', 'z'}:
 			if getattr(self, coord) is not None:
 				data[coord] = getattr(self, coord)
 
 		if self.charge != 0:
-			data['charge'] = self.charge
+			data["charge"] = self.charge
 
 		return data
 
@@ -147,9 +149,9 @@ class Atom:
 		"""
 
 		if self.z is None:
-			return '2d'
+			return "2d"
 		else:
-			return '3d'
+			return "3d"
 
 
 def parse_atoms(atoms_dict: Dict[str, Any], coords_dict: Optional[Dict] = None) -> Dict[FrozenSet[int], Atom]:
@@ -166,32 +168,32 @@ def parse_atoms(atoms_dict: Dict[str, Any], coords_dict: Optional[Dict] = None) 
 	atoms: Dict[FrozenSet[int], Atom] = {}
 
 	# Create atoms
-	aids = atoms_dict['aid']
-	elements = atoms_dict['element']
+	aids = atoms_dict["aid"]
+	elements = atoms_dict["element"]
 
 	if not len(aids) == len(elements):
-		raise ResponseParseError('Error parsing atom elements')
+		raise ResponseParseError("Error parsing atom elements")
 
 	for aid, element in zip(aids, elements):
 		atoms[aid] = Atom(aid=aid, number=element)
 
 	# Add coordinates
 	if coords_dict:
-		coord_ids = coords_dict[0]['aid']
+		coord_ids = coords_dict[0]["aid"]
 
-		xs = coords_dict[0]['conformers'][0]['x']
-		ys = coords_dict[0]['conformers'][0]['y']
-		zs = coords_dict[0]['conformers'][0].get('z', [])
+		xs = coords_dict[0]["conformers"][0]["x"]
+		ys = coords_dict[0]["conformers"][0]["y"]
+		zs = coords_dict[0]["conformers"][0].get("z", [])
 
 		if not len(coord_ids) == len(xs) == len(ys) == len(atoms) or (zs and not len(zs) == len(coord_ids)):
-			raise ResponseParseError('Error parsing atom coordinates')
+			raise ResponseParseError("Error parsing atom coordinates")
 
 		for aid, x, y, z in zip_longest(coord_ids, xs, ys, zs):
 			atoms[aid].set_coordinates(x, y, z)
 
 	# Add charges
-	if 'charge' in atoms_dict:
-		for charge in atoms_dict['charge']:
-			atoms[charge['aid']].charge = charge['value']
+	if "charge" in atoms_dict:
+		for charge in atoms_dict["charge"]:
+			atoms[charge["aid"]].charge = charge["value"]
 
 	return atoms

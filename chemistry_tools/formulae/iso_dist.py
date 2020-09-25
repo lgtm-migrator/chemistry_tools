@@ -27,13 +27,17 @@ Isotope Distributions
 from collections import OrderedDict
 from typing import Any, List, Union
 
+# 3rd party
+from enum_tools import IntEnum
+
 # this package
 from chemistry_tools import formulae
 
 # this package
 from .dataarray import DataArray
 from .unicode import string_to_unicode
-from enum_tools import IntEnum
+
+__all__ = ["IsoDistSort", "IsotopeDistribution"]
 
 
 class IsoDistSort(IntEnum):
@@ -41,10 +45,10 @@ class IsoDistSort(IntEnum):
 	Lookup for sorting isotope distribution output
 	"""
 
-	Formula = formula = 0  #, "Sort isosope distribution by formulae"
-	Mass = mass = 1  #, "Sort isotope distribution by masses"
-	Abundance = abundance = 2  #, "Sort isotope distribution by abundances"
-	Relative_Abundance = Relative_abundance = relative_abundance = 3  #, "Sort isotope distribution by relative abundances"
+	Formula = formula = 0  # "Sort isosope distribution by formulae"
+	Mass = mass = 1  # "Sort isotope distribution by masses"
+	Abundance = abundance = 2  # "Sort isotope distribution by abundances"
+	Relative_Abundance = Relative_abundance = relative_abundance = 3  # "Sort isotope distribution by relative abundances"
 
 
 class IsotopeDistribution(DataArray):

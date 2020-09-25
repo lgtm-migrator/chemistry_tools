@@ -27,10 +27,10 @@ from typing import Any, Dict, List, Optional, Set
 
 # 3rd party
 import pandas  # type: ignore
-
-# this package
 import tabulate
 from cawdrey import FrozenOrderedDict
+
+__all__ = ["DataArray"]
 
 
 class DataArray(FrozenOrderedDict):

@@ -53,73 +53,76 @@ from typing import Dict, NamedTuple, Optional
 # 3rd party
 import quantities  # type: ignore
 
+__all__ = ["Constant"]
+
+
 _anions = {  # Incomplete
-		'F-': 'fluoride',
-		'Cl-': 'chloride',
-		'Br-': 'bromide',
-		'I-': 'iodide',
-		'OH-': 'hydroxide',
-		'CN-': 'cyanide',
-		'SCN-': 'thiocyanate',
-		'CO3-2': 'carbonate',
-		'C2O4-2': 'oxalate',
-		'HCO3-': 'hydrogencarbonate',
-		'NO3-': 'nitrate',
-		'NO2-': 'nitrite',
-		'PO4-3': 'phospahte',
-		'HPO4-2': 'hydrogenphospahte',
-		'H2PO4-': 'dihydrogenphospahte',
-		'P-3': 'phosphide',
-		'SO4-2': 'sulphate',
-		'HSO4-': 'hydrogensulphate',
-		'SO3-2': 'sulphite',
-		'HSO3-': 'hydrogensulphite',
-		'S-2': 'sulfide',
-		'ClO-': 'hypochlorite',
-		'ClO2-': 'chlorite',
-		'ClO3-': 'chlorate',
-		'ClO4-': 'perchlorate',
-		'CrO4-2': 'chromate(VI)',
-		'Cr2O7-2': 'dichromate(VI)',
-		'MnO4-2': 'manganate(VI)',
-		'MnO4-': 'permanganate(VII)',
-		'FeO4-2': 'ferrate(VI)',
-		'OsO4-2': 'osmate(VI)',
-		'Bo3-3': 'borate',
-		'BiO3-': 'bismuthate(V)',
+		"F-": "fluoride",
+		"Cl-": "chloride",
+		"Br-": "bromide",
+		"I-": "iodide",
+		"OH-": "hydroxide",
+		"CN-": "cyanide",
+		"SCN-": "thiocyanate",
+		"CO3-2": "carbonate",
+		"C2O4-2": "oxalate",
+		"HCO3-": "hydrogencarbonate",
+		"NO3-": "nitrate",
+		"NO2-": "nitrite",
+		"PO4-3": "phospahte",
+		"HPO4-2": "hydrogenphospahte",
+		"H2PO4-": "dihydrogenphospahte",
+		"P-3": "phosphide",
+		"SO4-2": "sulphate",
+		"HSO4-": "hydrogensulphate",
+		"SO3-2": "sulphite",
+		"HSO3-": "hydrogensulphite",
+		"S-2": "sulfide",
+		"ClO-": "hypochlorite",
+		"ClO2-": "chlorite",
+		"ClO3-": "chlorate",
+		"ClO4-": "perchlorate",
+		"CrO4-2": "chromate(VI)",
+		"Cr2O7-2": "dichromate(VI)",
+		"MnO4-2": "manganate(VI)",
+		"MnO4-": "permanganate(VII)",
+		"FeO4-2": "ferrate(VI)",
+		"OsO4-2": "osmate(VI)",
+		"Bo3-3": "borate",
+		"BiO3-": "bismuthate(V)",
 		}
 
 _cations = {  # Incomplete
-		'H3O+': 'hydronium',
+		"H3O+": "hydronium",
 		}
 
 _cation_oxidation_states = {  # This needs to be reviewed, just from the top of my head
-		'Cr': (2, 3),
-		'Fe': (2, 3),
-		'Mn': (2,),
-		'Co': (2, 3),
-		'Ni': (2, 3),
-		'Cu': (1, 2, 3),
-		'Ag': (1, 2),
-		'Au': (3,),
-		'Zn': (2,),
-		'Cd': (2,),
-		'Hg': (1, 2),  # Tricky: Hg2+2
-		'Al': (3,),
-		'Ga': (3,),
-		'In': (3,),
-		'Tl': (1, 3),
-		'Sn': (2, 4),
-		'Pb': (2, 4),
-		'Bi': (3,),
-		'Sb': (3,),
+		"Cr": (2, 3),
+		"Fe": (2, 3),
+		"Mn": (2,),
+		"Co": (2, 3),
+		"Ni": (2, 3),
+		"Cu": (1, 2, 3),
+		"Ag": (1, 2),
+		"Au": (3,),
+		"Zn": (2,),
+		"Cd": (2,),
+		"Hg": (1, 2),  # Tricky: Hg2+2
+		"Al": (3,),
+		"Ga": (3,),
+		"In": (3,),
+		"Tl": (1, 3),
+		"Sn": (2, 4),
+		"Pb": (2, 4),
+		"Bi": (3,),
+		"Sb": (3,),
 		}
 
 
 class __BaseConstant(NamedTuple):
 	name: str
 	value: float
-	unit: Optional[quantities.quantity.Quantity]
+	unit: quantities.quantity.Quantity
 	symbol: Optional[str]
 
 
@@ -131,7 +134,7 @@ class Constant(__BaseConstant):
 			cls,
 			name: str,
 			value: float,
-			unit: Optional[quantities.quantity.Quantity] = None,
+			unit: quantities.quantity.Quantity,
 			symbol: Optional[str] = None,
 			):
 		return super().__new__(cls, name, value, unit, symbol)
@@ -145,10 +148,10 @@ class Constant(__BaseConstant):
 
 		return self.value * self.unit
 
-	def __float__(self):
+	def __float__(self) -> float:
 		return float(self.value)
 
-	def __int__(self):
+	def __int__(self) -> int:
 		return int(self.value)
 
 
@@ -164,11 +167,11 @@ plancks_constant = planck_constant = Constant(
 		name="Planck's constant",
 		value=4.13566733e-15 * (10**34),
 		unit=quantities.electron_volt / quantities.second,
-		symbol="h"
+		symbol='h'
 		)  # (10)
 
 speed_of_light = Constant(
-		name="Speed of Light", value=299792458, unit=quantities.m / quantities.second, symbol="c"
+		name="Speed of Light", value=299792458, unit=quantities.m / quantities.second, symbol='c'
 		)  # (exact)
 
 electron_radius = Constant(name="Electron Radius", value=2.8179402894e-15, unit=quantities.m, symbol="rₑ")  # (58)
@@ -186,7 +189,7 @@ faraday_constant = Constant(
 		name="Faraday constant",
 		value=96485.3321233100184,
 		unit=quantities.coulomb * (1 / quantities.mol),
-		symbol="F"
+		symbol='F'
 		)
 vacuum_permittivity = Constant(
 		"Vacuum permittivity", value=8.8541878128e-12, unit=quantities.farad / quantities.metre, symbol="ε₀"
@@ -201,7 +204,7 @@ molar_gas_constant = Constant(
 		name="Molar gas constant",
 		value=8.31446261815324,
 		unit=quantities.joule / quantities.kelvin / quantities.mol,
-		symbol="R"
+		symbol='R'
 		)
 
 # IUPAC prefixes

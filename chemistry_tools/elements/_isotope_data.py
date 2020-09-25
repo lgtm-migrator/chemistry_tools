@@ -45,9 +45,10 @@
 #  |  DOI: `10.1021/acs.jproteome.8b00717 <http://dx.doi.org/10.1021/acs.jproteome.8b00717>`_
 #
 
-# this package
+# stdlib
 from typing import Dict, Tuple
 
+# this package
 from chemistry_tools.elements import ELEMENTS
 
 isotopes_dict = Dict[int, Tuple[float, float]]

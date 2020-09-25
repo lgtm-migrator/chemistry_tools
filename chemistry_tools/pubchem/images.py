@@ -28,6 +28,8 @@ from typing import Sequence, Union
 from .enums import PubChemNamespace
 from .pug_rest import _do_rest_get
 
+__all__ = ["get_structure_image", "rest_get_structure_image"]
+
 
 def get_structure_image(
 		identifier: Union[str, int, Sequence[Union[str, int]]],

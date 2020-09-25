@@ -14,29 +14,29 @@ from decimal import Decimal
 import pytest  # type: ignore
 
 # this package
+from chemistry_tools.formulae import Formula
 from chemistry_tools.pubchem.atom import Atom
 from chemistry_tools.pubchem.bond import BondType
 from chemistry_tools.pubchem.compound import Compound
 from chemistry_tools.pubchem.lookup import get_compounds
-from chemistry_tools.formulae import Formula
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def c1():
 	"""Compound CID 241."""
 	return Compound.from_cid(241)
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def c2():
 	"""Compound CID 175."""
 	return Compound.from_cid(175)
 
 
 def test_basic(c1):
-	"""Test Compound is retrieved and has a record and correct CID."""
+	"""Test Compound can be retrieved and has a record with the correct CID."""
 	assert c1.cid == 241
-	assert repr(c1) == 'Compound(241)'
+	assert repr(c1) == "Compound(241)"
 
 
 def test_atoms(c1):
@@ -76,8 +76,8 @@ def test_identifiers(c1):
 	assert len(c1.canonical_smiles) > 10
 	assert len(c1.get_property("IsomericSMILES")) > 10
 	assert c1.smiles == "C1=CC=CC=C1"
-	assert c1.get_property("InChI").startswith('InChI=')
-	assert re.match(r'^[A-Z]{14}-[A-Z]{10}-[A-Z\d]$', c1.get_property("InChIKey"))
+	assert c1.get_property("InChI").startswith("InChI=")
+	assert re.match(r"^[A-Z]{14}-[A-Z]{10}-[A-Z\d]$", c1.get_property("InChIKey"))
 	assert isinstance(c1.get_property("MolecularFormula"), Formula)
 	assert isinstance(c1.molecular_formula, Formula)
 	assert c1.get_property("MolecularFormula").hill_formula == "C6H6"
@@ -129,29 +129,29 @@ def test_properties_values(c1):
 	assert c1.get_property("MonoisotopicMass") == 78.04695
 	assert c1.get_property("TPSA") == Decimal(0)
 	# assert c1.get_property("Complexity") == 15.5  # TODO: full record has 15.5 but getting just property gives 15
-	assert c1.get_property("HBondDonorCount") == Decimal("0")
-	assert c1.get_property("HBondAcceptorCount") == Decimal("0")
-	assert c1.get_property("RotatableBondCount") == Decimal("0")
-	assert c1.get_property("HeavyAtomCount") == Decimal("6")
-	assert c1.get_property("IsotopeAtomCount") == Decimal("0")
+	assert c1.get_property("HBondDonorCount") == Decimal('0')
+	assert c1.get_property("HBondAcceptorCount") == Decimal('0')
+	assert c1.get_property("RotatableBondCount") == Decimal('0')
+	assert c1.get_property("HeavyAtomCount") == Decimal('6')
+	assert c1.get_property("IsotopeAtomCount") == Decimal('0')
 	assert c1.get_property("AtomStereoCount") == 0
-	assert c1.get_property("DefinedAtomStereoCount") == Decimal("0")
-	assert c1.get_property("UndefinedAtomStereoCount") == Decimal("0")
+	assert c1.get_property("DefinedAtomStereoCount") == Decimal('0')
+	assert c1.get_property("UndefinedAtomStereoCount") == Decimal('0')
 	assert c1.get_property("BondStereoCount") == 0
-	assert c1.get_property("DefinedBondStereoCount") == Decimal("0")
-	assert c1.get_property("UndefinedBondStereoCount") == Decimal("0")
-	assert c1.get_property("CovalentUnitCount") == Decimal("1")
+	assert c1.get_property("DefinedBondStereoCount") == Decimal('0')
+	assert c1.get_property("UndefinedBondStereoCount") == Decimal('0')
+	assert c1.get_property("CovalentUnitCount") == Decimal('1')
 	# TODO:assert c1.hill_formula == 'C<sub>6</sub>H<sub>6</sub>'
 	assert c1.canonicalized is True
 
 
 def test_coordinate_type(c1):
-	assert c1.coordinate_type == '2d'
+	assert c1.coordinate_type == "2d"
 
 
 def test_compound_equality():
 	assert Compound.from_cid(241) == Compound.from_cid(241)
-	assert get_compounds('Benzene', 'name')[0], get_compounds('c1ccccc1' == 'smiles')[0]
+	assert get_compounds("Benzene", "name")[0], get_compounds("c1ccccc1" == "smiles")[0]
 
 
 def test_synonyms(c1):
@@ -162,9 +162,9 @@ def test_synonyms(c1):
 def test_compound_dict(c1):
 	assert dict(c1)
 	assert isinstance(dict(c1), dict)
-	assert 'atoms' in dict(c1)
-	assert 'bonds' in dict(c1)
-	assert dict(c1)['atoms'][1].element
+	assert "atoms" in dict(c1)
+	assert "bonds" in dict(c1)
+	assert dict(c1)["atoms"][1].element
 
 
 def test_charged_compound(c2):

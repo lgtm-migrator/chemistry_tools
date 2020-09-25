@@ -35,7 +35,18 @@ from chemistry_tools import cached_requests
 from chemistry_tools.constants import prefixes
 from chemistry_tools.pubchem.errors import HTTP_ERROR_CODES
 
-multiplier_regex = re.compile("*".join([f"({prefix})" for prefix in prefixes.values()]) + "*")
+__all__ = [
+		"get_IUPAC_parts",
+		"sort_IUPAC_names",
+		"get_IUPAC_sort_order",
+		"get_sorted_parts",
+		"sort_array_by_name",
+		"sort_dataframe_by_name",
+		"iupac_name_from_cas",
+		"cas_from_iupac_name"
+		]
+
+multiplier_regex = re.compile('*'.join([f"({prefix})" for prefix in prefixes.values()]) + '*')
 
 re_strings: List[Pattern] = [
 		re.compile(r"((\d+),?)+(\d+)-"),
@@ -65,7 +76,6 @@ re_strings: List[Pattern] = [
 		re.compile(r"amide"),
 		]
 
-
 _iupac_subs: List[Tuple[Pattern, str]] = [
 		# (Regex, replacement)
 
@@ -73,7 +83,6 @@ _iupac_subs: List[Tuple[Pattern, str]] = [
 		(re.compile(r"^(bis)(\()(\d)(-)(.*)(phenyl)(\))"), r"\3,\3'-Di\5di\6"),
 		# e.g. 2-Nitro-N-(4-nitrophenyl)aniline -> 2,4'-Dinitrophenylaniline
 		(re.compile(r"^(\d)(-nitro-n-\()(\d)(-nitro)(.*)(\))"), r"\1,\3'-Dinitro-N-\5"),
-
 		(re.compile(r"-?[Nn]-phenylaniline"), "diphenylamine"),
 		(re.compile(r"carbanilide"), "-1,3-diphenylurea"),
 		(re.compile(r"(glycerol)(-)(\d)(-nitrate)"), r"\3-mononitroglycerin"),
@@ -123,10 +132,10 @@ def get_IUPAC_parts(string: str) -> List[str]:
 	string_chars = list(string)
 	elements = []
 	for point in split_points_list:
-		elements.append("".join(string_chars[start_point:point]))
+		elements.append(''.join(string_chars[start_point:point]))
 		start_point = point
 
-	elements.append("".join(string_chars[start_point:]))
+	elements.append(''.join(string_chars[start_point:]))
 
 	# Fixups
 	fixups = [
@@ -136,11 +145,11 @@ def get_IUPAC_parts(string: str) -> List[str]:
 	for fixup in fixups:
 		length = len(fixup)
 		for i in range(len(elements)):
-			if elements[i:i+length] == fixup:
-				elements = elements[:i] + ["".join(fixup)] + elements[i+length:]
+			if elements[i:i + length] == fixup:
+				elements = elements[:i] + [''.join(fixup)] + elements[i + length:]
 
 	# Remove null elements
-	null_elements = {" ", ""}
+	null_elements = {' ', ''}
 
 	elements = [x for x in elements if x not in null_elements]
 
@@ -221,7 +230,7 @@ def _get_split_and_sorted_lists(iupac_names: Sequence[str]) -> Tuple[List[List[s
 
 		if split_name[0].lower() in prefixes.values():
 			# no positional information at beginning
-			split_name = [" ", *split_name]
+			split_name = [' ', *split_name]
 
 		split_names.append(split_name[::-1])
 

@@ -27,7 +27,7 @@ def test_equals():
 
 
 def test_uscg1999():
-	assert property_format.uscg1999("1234(USCG, 1999)") == '1234'
+	assert property_format.uscg1999("1234(USCG, 1999)") == "1234"
 
 
 def test_trailspace():

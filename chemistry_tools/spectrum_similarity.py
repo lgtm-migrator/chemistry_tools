@@ -50,6 +50,8 @@ from typing import Mapping, Optional, Sequence, Tuple, Union
 import numpy  # type: ignore
 import pandas  # type: ignore
 
+__all__ = ["SpectrumSimilarity", "normalize", "create_array"]
+
 
 def SpectrumSimilarity(
 		spec_top: numpy.ndarray,
@@ -124,7 +126,7 @@ def SpectrumSimilarity(
 	alignment.fillna(value=0, inplace=True)  # Convert NaN to 0
 	alignment.columns = ["mz", "intensity_top", "intensity_bottom"]
 	if print_alignment:
-		with pandas.option_context('display.max_rows', None, 'display.max_columns', None):
+		with pandas.option_context("display.max_rows", None, "display.max_columns", None):
 			print(alignment)
 
 	# similarity score calculation

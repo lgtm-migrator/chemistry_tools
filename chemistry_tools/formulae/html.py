@@ -2,7 +2,7 @@
 #
 #  html.py
 """
-Functions and constants for converting formulae to html
+Functions and constants for converting formulae to html.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -79,8 +79,10 @@ from typing import Dict, Optional, Sequence, Union
 # this package
 from ._parser_core import _formula_to_format, _greek_letters
 
-_html_mapping: Dict[str, str] = {k + '-': '&' + k + ';-' for k in _greek_letters}
-_html_mapping['.'] = '&sdot;'
+__all__ = ["string_to_html", "html_subscript", "html_superscript"]
+
+_html_mapping: Dict[str, str] = {k + '-': '&' + k + ";-" for k in _greek_letters}
+_html_mapping['.'] = "&sdot;"
 _html_infix_mapping = _html_mapping
 
 
@@ -88,28 +90,28 @@ def string_to_html(
 		formula: str,
 		prefixes: Optional[Dict[str, str]] = None,
 		infixes: Optional[Dict[str, str]] = None,
-		suffixes: Sequence[str] = ('(s)', '(l)', '(g)', '(aq)'),
+		suffixes: Sequence[str] = ("(s)", "(l)", "(g)", "(aq)"),
 		) -> str:
 	"""
 	Convert formula string to HTML string representation.
 
 	**Examples**
-	>>> string_to_html('NH4+')
+	>>> string_to_html("NH4+")
 	'NH<sub>4</sub><sup>+</sup>'
-	>>> string_to_html('Fe(CN)6+2')
+	>>> string_to_html("Fe(CN)6+2")
 	'Fe(CN)<sub>6</sub><sup>2+</sup>'
-	>>> string_to_html('Fe(CN)6+2(aq)')
+	>>> string_to_html("Fe(CN)6+2(aq)")
 	'Fe(CN)<sub>6</sub><sup>2+</sup>(aq)'
-	>>> string_to_html('.NHO-(aq)')
+	>>> string_to_html(".NHO-(aq)")
 	'&sdot;NHO<sup>-</sup>(aq)'
-	>>> string_to_html('alpha-FeOOH(s)')
+	>>> string_to_html("alpha-FeOOH(s)")
 	'&alpha;-FeOOH(s)'
 
-	:param formula: Chemical formula, e.g. 'H2O', 'Fe+3', 'Cl-'
+	:param formula: Chemical formula, e.g. "H2O", "Fe+3", "Cl-"
 	:type formula: str
 	:param prefixes: Mapping of prefixes to their HTML equivalents. Default greek letters and ``.``
 	:param infixes: Mapping of infixes to their HTML equivalents. Default ``.``
-	:param suffixes: Suffixes to keep, e.g. ('(g)', '(s)')
+	:param suffixes: Suffixes to keep, e.g. ("(g)", "(s)")
 
 	:return: The HTML representation of the formula
 	:rtype: str

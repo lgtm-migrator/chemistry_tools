@@ -103,11 +103,15 @@
 # stdlib
 from typing import Dict, Optional, Type, TypeVar
 
-# this package
-from .formula import Formula
+# 3rd party
 from cawdrey import frozendict
 
-S = TypeVar('S', bound='Species')
+# this package
+from .formula import Formula
+
+__all__ = ["Species"]
+
+S = TypeVar('S', bound="Species")
 
 
 class Species(Formula):
@@ -149,8 +153,7 @@ class Species(Formula):
 	@classmethod
 	def from_string(cls: Type["S"], formula: str, charge: int = 0, phase: Optional[str] = None) -> S:
 		"""
-
-		Create a new :class:`~chemistry_tools.formulae.species.Species` object by parsing a string
+		Create a new :class:`~chemistry_tools.formulae.species.Species` object by parsing a string.
 
 		.. note:: Isotopes cannot (currently) be parsed using this method
 
@@ -190,10 +193,18 @@ class Species(Formula):
 
 		return f
 
-	def copy(self):
+	def copy(self: S) -> S:
+		"""
+		Returns a copy of the :class:`~.Species`.
+		"""
+
 		return self.__class__(self, charge=self.charge, phase=self.phase)
 
 	def __eq__(self, other) -> bool:
+		"""
+		Returns ``self == other``.
+		"""
+
 		if isinstance(other, Species):
 			if super().__eq__(other):
 				return self.phase == other.phase

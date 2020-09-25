@@ -28,6 +28,8 @@ from chemistry_tools.pubchem.enums import PubChemNamespace
 from chemistry_tools.pubchem.properties import _parse_record_property
 from chemistry_tools.pubchem.pug_rest import _do_rest_get
 
+__all__ = ["parse_full_record", "rest_get_full_record"]
+
 
 def parse_full_record(record: Dict):
 	"""

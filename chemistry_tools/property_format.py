@@ -28,6 +28,8 @@ Format Physical Properties for Chemicals
 import re
 from decimal import Decimal
 
+__all__ = ["degC", "equals", "scientific", "uscg1999", "trailspace", "f2c", "property_format"]
+
 deg_c_re = re.compile(r"(\s*)(deg|DEG)(\s*)(C)")
 dec_c_symbol = "°C"
 mmath_space = "\u205F"
@@ -53,7 +55,7 @@ def scientific(string: str) -> str:
 	"""
 
 	try:
-		magnitude = scientific_regex.findall(string)[0].replace("X10", '').replace("-", "−")
+		magnitude = scientific_regex.findall(string)[0].replace("X10", '').replace('-', '−')
 	except IndexError:  # no scientific notation to format
 		return string
 
@@ -67,19 +69,19 @@ def uscg1999(string: str) -> str:
 
 
 def trailspace(string: str) -> str:
-	return string.rstrip(" ")
+	return string.rstrip(' ')
 
 
 def f2c(string: str) -> str:
 	try:
-		temperature = f2c_regex.findall(string)[0].replace("F", '').replace("°", '').replace(" ", '')
+		temperature = f2c_regex.findall(string)[0].replace('F', '').replace('°', '').replace(' ', '')
 	except IndexError:
 		return string
 
 	# Convert to Celsius and strip trailing 0s and decimal points
 	temperature = str((Decimal(temperature) - 32) * (Decimal(5) / Decimal(9)))
-	if "." in temperature:
-		temperature = temperature.rstrip("0").rstrip(".")
+	if '.' in temperature:
+		temperature = temperature.rstrip('0').rstrip('.')
 	return f2c_regex.sub(f"{temperature}°C", string)
 
 

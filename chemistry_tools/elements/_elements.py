@@ -51,9 +51,10 @@
 #  |
 #
 
-# this package
+# stdlib
 from typing import Dict
 
+# this package
 from . import classes
 from .actinides import *
 from .alkali_metals import *
@@ -72,14 +73,25 @@ __all__ = ("ELEMENTS", "H", "D", "T")
 # TODO: nominal mass (massnumber) and monoisotopic mass
 
 H = classes.Element(
-		1, 'H', 'Hydrogen',
-		group=1, period=1, block='s', series=1,
-		mass=1.007941, eleneg=2.2, eleaffin=0.75420375,
-		covrad=0.32, atmrad=0.79, vdwrad=1.2,
-		tboil=20.28, tmelt=13.81, density=0.084,
-		eleconfig='1s',
-		oxistates='1*, -1',
-		ionenergy=(13.5984,),
+		1,
+		'H',
+		"Hydrogen",
+		group=1,
+		period=1,
+		block='s',
+		series=1,
+		mass=1.007941,
+		eleneg=2.2,
+		eleaffin=0.75420375,
+		covrad=0.32,
+		atmrad=0.79,
+		vdwrad=1.2,
+		tboil=20.28,
+		tmelt=13.81,
+		density=0.084,
+		eleconfig="1s",
+		oxistates="1*, -1",
+		ionenergy=(13.5984, ),
 		isotopes={
 				1: (1.00782503207, 0.999885),
 				2: (2.0141017778, 0.000115),
@@ -90,15 +102,17 @@ H = classes.Element(
 				7: (7.05275, 0.0),
 				},
 		description=(
-			"Colourless, odourless gaseous chemical element. Lightest and most "
-			"abundant element in the universe. Present in water and in all "
-			"organic compounds. Chemically reacts with most elements. Discovered "
-			"by Henry Cavendish in 1776."
-			)
+				"Colourless, odourless gaseous chemical element. Lightest and most "
+				"abundant element in the universe. Present in water and in all "
+				"organic compounds. Chemically reacts with most elements. Discovered "
+				"by Henry Cavendish in 1776."
+				)
 		)
 
 D = classes.HeavyHydrogen(
-		1, 'D', 'Deuterium',
+		1,
+		'D',
+		"Deuterium",
 		mass=2.0141017778,
 		isotopes={
 				1: (1.00782503207, 0.999885),
@@ -112,7 +126,9 @@ D = classes.HeavyHydrogen(
 		)
 
 T = classes.HeavyHydrogen(
-		1, 'T', 'Tritium',
+		1,
+		'T',
+		"Tritium",
 		mass=3.0160492777,
 		isotopes={
 				1: (1.00782503207, 0.999885),
@@ -126,15 +142,124 @@ T = classes.HeavyHydrogen(
 		)
 
 ELEMENTS = classes.Elements(
-		H, He,
-		Li, Be, B, C, N, O, F, Ne,
-		Na, Mg, Al, Si, P, S, Cl, Ar,
-		K, Ca, Sc, Ti, V, Cr, Mn, Fe, Co, Ni, Cu, Zn, Ga, Ge, As, Se, Br, Kr,
-		Rb, Sr, Y, Zr, Nb, Mo, Tc, Ru, Rh, Pd, Ag, Cd, In, Sn, Sb, Te, I, Xe,
-		Cs, Ba, La, Ce, Pr, Nd, Pm, Sm, Eu, Gd, Tb, Dy, Ho, Er, Tm, Yb, Lu, Hf, Ta, W, Re, Os, Ir, Pt, Au, Hg, Tl, Pb,
-		Bi, Po, At, Rn,
-		Fr, Ra, Ac, Th, Pa, U, Np, Pu, Am, Cm, Bk, Cf, Es, Fm, Md, No, Lr, Rf, Db, Sg, Bh, Hs, Mt, Ds, Rg, Cn, Nh, Fl,
-		Mc, Lv, Ts, Og,
+		H,
+		He,
+		Li,
+		Be,
+		B,
+		C,
+		N,
+		O,
+		F,
+		Ne,
+		Na,
+		Mg,
+		Al,
+		Si,
+		P,
+		S,
+		Cl,
+		Ar,
+		K,
+		Ca,
+		Sc,
+		Ti,
+		V,
+		Cr,
+		Mn,
+		Fe,
+		Co,
+		Ni,
+		Cu,
+		Zn,
+		Ga,
+		Ge,
+		As,
+		Se,
+		Br,
+		Kr,
+		Rb,
+		Sr,
+		Y,
+		Zr,
+		Nb,
+		Mo,
+		Tc,
+		Ru,
+		Rh,
+		Pd,
+		Ag,
+		Cd,
+		In,
+		Sn,
+		Sb,
+		Te,
+		I,
+		Xe,
+		Cs,
+		Ba,
+		La,
+		Ce,
+		Pr,
+		Nd,
+		Pm,
+		Sm,
+		Eu,
+		Gd,
+		Tb,
+		Dy,
+		Ho,
+		Er,
+		Tm,
+		Yb,
+		Lu,
+		Hf,
+		Ta,
+		W,
+		Re,
+		Os,
+		Ir,
+		Pt,
+		Au,
+		Hg,
+		Tl,
+		Pb,
+		Bi,
+		Po,
+		At,
+		Rn,
+		Fr,
+		Ra,
+		Ac,
+		Th,
+		Pa,
+		U,
+		Np,
+		Pu,
+		Am,
+		Cm,
+		Bk,
+		Cf,
+		Es,
+		Fm,
+		Md,
+		No,
+		Lr,
+		Rf,
+		Db,
+		Sg,
+		Bh,
+		Hs,
+		Mt,
+		Ds,
+		Rg,
+		Cn,
+		Nh,
+		Fl,
+		Mc,
+		Lv,
+		Ts,
+		Og,
 		)
 
 # ELEMENTS = Elements(
@@ -146,7 +271,6 @@ ELEMENTS = classes.Elements(
 # Cs, Ba, La, Ce, Pr, Nd, Pm, Sm, Eu, Gd, Tb, Dy, Ho, Er, Tm, Yb, Lu, Hf, Ta, W,  Re, Os, Ir, Pt, Au, Hg, Tl, Pb, Bi, Po, At, Rn,
 # Fr, Ra, Ac, Th, Pa, U,  Np, Pu, Am, Cm, Bk, Cf, Es, Fm, Md, No, Lr, Rf, Db, Sg, Bh, Hs, Mt, Ds, Rg, Cn, Nh, Fl, Mc, Lv, Ts, Og,
 # )
-
 
 alternate_spellings: Dict[str, str] = {
 		"Caesium": "Cesium",  # AmE

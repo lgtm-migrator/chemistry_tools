@@ -21,9 +21,9 @@ def test_invalid_identifier():
 	"""
 
 	with pytest.raises(BadRequestError):
-		Compound.from_cid('aergaerhg')
+		Compound.from_cid("aergaerhg")
 	with pytest.raises(NotFoundError):
-		get_compounds('srthrthsr')
+		get_compounds("srthrthsr")
 
 
 def test_notfound_identifier():

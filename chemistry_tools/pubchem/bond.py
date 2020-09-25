@@ -45,11 +45,13 @@
 # stdlib
 from typing import Any, Dict, FrozenSet, Optional, Union
 
+# 3rd party
+from enum_tools import IntEnum
+
 # this package
 from chemistry_tools.pubchem.errors import ResponseParseError
 
-# this package
-from enum_tools import IntEnum
+__all__ = ["BondType", "Bond", "parse_bonds"]
 
 
 class BondType(IntEnum):
@@ -94,7 +96,7 @@ class Bond:
 		self.style = style
 
 	def __repr__(self) -> str:
-		return f'Bond({self.aid1}, {self.aid2}, {self.order!r})'
+		return f"Bond({self.aid1}, {self.aid2}, {self.order!r})"
 
 	def __eq__(self, other) -> bool:
 		return (
@@ -110,10 +112,10 @@ class Bond:
 		Return a dictionary containing Bond data.
 		"""
 
-		data = {'aid1': self.aid1, 'aid2': self.aid2, 'order': self.order}
+		data = {"aid1": self.aid1, "aid2": self.aid2, "order": self.order}
 
 		if self.style is not None:
-			data['style'] = self.style
+			data["style"] = self.style
 
 		return data
 
@@ -136,21 +138,21 @@ def parse_bonds(bonds_dict: Dict[str, Any], coords_dict: Optional[Dict] = None) 
 		return bonds
 
 	# Create bonds
-	aid1s = bonds_dict['aid1']
-	aid2s = bonds_dict['aid2']
-	orders = bonds_dict['order']
+	aid1s = bonds_dict["aid1"]
+	aid2s = bonds_dict["aid2"]
+	orders = bonds_dict["order"]
 
 	if not len(aid1s) == len(aid2s) == len(orders):
-		raise ResponseParseError('Error parsing bonds')
+		raise ResponseParseError("Error parsing bonds")
 
 	for aid1, aid2, order in zip(aid1s, aid2s, orders):
 		bonds[frozenset((aid1, aid2))] = Bond(aid1=aid1, aid2=aid2, order=order)
 
 	# Add styles
-	if coords_dict and 'style' in coords_dict[0]['conformers'][0]:
-		aid1s = coords_dict[0]['conformers'][0]['style']['aid1']
-		aid2s = coords_dict[0]['conformers'][0]['style']['aid2']
-		styles = coords_dict[0]['conformers'][0]['style']['annotation']
+	if coords_dict and "style" in coords_dict[0]["conformers"][0]:
+		aid1s = coords_dict[0]["conformers"][0]["style"]["aid1"]
+		aid2s = coords_dict[0]["conformers"][0]["style"]["aid2"]
+		styles = coords_dict[0]["conformers"][0]["style"]["annotation"]
 		for aid1, aid2, style in zip(aid1s, aid2s, styles):
 			bonds[frozenset((aid1, aid2))].style = style
 

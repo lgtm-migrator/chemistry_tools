@@ -59,6 +59,8 @@ from chemistry_tools.pubchem.enums import PubChemFormats, PubChemNamespace
 from chemistry_tools.pubchem.errors import HTTP_ERROR_CODES, PubChemHTTPError
 from chemistry_tools.pubchem.utils import _force_sequence_or_csv, _make_base_url
 
+__all__ = ["get_full_json", "async_get", "request"]
+
 
 def _do_rest_get(
 		namespace: Union[PubChemNamespace, str],
@@ -140,9 +142,9 @@ def get_full_json(cid):
 
 def async_get(
 		identifier,
-		namespace: Union[PubChemNamespace, str] = 'cid',
+		namespace: Union[PubChemNamespace, str] = "cid",
 		operation=None,
-		output='JSON',
+		output="JSON",
 		searchtype=None,
 		**kwargs
 		) -> bytes:
@@ -151,19 +153,19 @@ def async_get(
 	"""
 	# TODO:
 
-	if (searchtype and searchtype != 'xref') or namespace in ['formula']:
-		r = request(identifier, namespace, None, 'JSON', searchtype, **kwargs)
+	if (searchtype and searchtype != "xref") or namespace in ["formula"]:
+		r = request(identifier, namespace, None, "JSON", searchtype, **kwargs)
 		response = r.content
 		status = r.json()
-		if 'Waiting' in status and 'ListKey' in status['Waiting']:
-			identifier = status['Waiting']['ListKey']
-			namespace = 'listkey'
-			while 'Waiting' in status and 'ListKey' in status['Waiting']:
+		if "Waiting" in status and "ListKey" in status["Waiting"]:
+			identifier = status["Waiting"]["ListKey"]
+			namespace = "listkey"
+			while "Waiting" in status and "ListKey" in status["Waiting"]:
 				time.sleep(2)
-				r = request(identifier, namespace, operation, 'JSON', **kwargs)
+				r = request(identifier, namespace, operation, "JSON", **kwargs)
 				response = r.content
 				status = r.json()
-			if output != 'JSON':
+			if output != "JSON":
 				response = request(identifier, namespace, operation, output, searchtype, **kwargs).content
 	else:
 		response = request(identifier, namespace, operation, output, searchtype, **kwargs).content
@@ -173,9 +175,9 @@ def async_get(
 
 def request(
 		identifier,
-		namespace: Union[PubChemNamespace, str] = 'cid',
+		namespace: Union[PubChemNamespace, str] = "cid",
 		operation=None,
-		output: Union[PubChemFormats, str] = 'JSON',
+		output: Union[PubChemFormats, str] = "JSON",
 		searchtype=None,
 		**kwargs,
 		) -> requests.Response:
@@ -199,7 +201,7 @@ def request(
 	# namespace in ['listkey', 'formula']
 	# searchtype == 'xref'
 
-	urlid = quote(identifier.encode('utf8'))
+	urlid = quote(identifier.encode("utf8"))
 
 	comps = filter(None, [API_BASE, "compound", searchtype, namespace, urlid, operation, output])  # type: ignore
 	apiurl = '/'.join(comps)

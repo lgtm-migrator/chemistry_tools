@@ -83,29 +83,29 @@ from chemistry_tools.formulae.formula import Formula
 
 def test_compound():
 	H2O = Compound(
-			name='H2O',
+			name="H2O",
 			formula=Formula.from_string("H2O", charge=0),
-			latex_name=r'\mathrm{H_{2}O}',
-			data={'pKa': 14},
+			latex_name=r"\mathrm{H_{2}O}",
+			data={"pKa": 14},
 			)
 
 	OH_m = Compound(
-			name='OH-',
+			name="OH-",
 			formula=Formula.from_string("OH-", charge=-1),
-			latex_name=r'\mathrm{OH^{-}}',
+			latex_name=r"\mathrm{OH^{-}}",
 			)
 
-	assert sorted([OH_m, H2O], key=attrgetter('name')) == [H2O, OH_m]
+	assert sorted([OH_m, H2O], key=attrgetter("name")) == [H2O, OH_m]
 
-	H2O = Compound(name='H2O', formula=Formula.from_string("H2O"))
+	H2O = Compound(name="H2O", formula=Formula.from_string("H2O"))
 	assert H2O.formula == {"H": 2, "O": 1}
-	assert H2O.latex_name == 'H_{2}O'
-	assert H2O.unicode_name == 'H₂O'
-	assert H2O.html_name == 'H<sub>2</sub>O'
+	assert H2O.latex_name == "H_{2}O"
+	assert H2O.unicode_name == "H₂O"
+	assert H2O.html_name == "H<sub>2</sub>O"
 
 
 def test_molar_mass():
-	H2O = Compound('H2O')
+	H2O = Compound("H2O")
 	mw_water = H2O.molar_mass()
 	q = mw_water / ((15.9994 + 2 * 1.008) * quantities.gram / quantities.mol)
 	assert abs(q - 1) < 1e-3

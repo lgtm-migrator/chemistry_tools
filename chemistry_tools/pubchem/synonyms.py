@@ -27,6 +27,8 @@ from typing import Dict, List, Sequence, Union
 from chemistry_tools.pubchem.enums import PubChemNamespace
 from chemistry_tools.pubchem.pug_rest import _do_rest_get
 
+__all__ = ["Synonyms", "get_synonyms", "rest_get_synonyms"]
+
 
 class Synonyms(list):
 

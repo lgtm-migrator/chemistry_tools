@@ -29,6 +29,8 @@ from chemistry_tools.pubchem.compound import Compound
 from chemistry_tools.pubchem.description import parse_description, rest_get_description
 from chemistry_tools.pubchem.enums import PubChemNamespace
 
+__all__ = ["get_compounds"]
+
 # TODO: xrefs
 # TODO: formula search with listkey and pagination 	https://pubchemdocs.ncbi.nlm.nih.gov/pug-rest$_Toc494865589
 

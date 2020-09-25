@@ -53,15 +53,17 @@
 
 # stdlib
 from functools import lru_cache
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Mapping, Optional, Tuple, Union
 
 # 3rd party
-from domdf_python_tools import doctools  # type: ignore # TODO
-from domdf_python_tools.bases import Dictable  # type: ignore # TODO
+from domdf_python_tools import doctools
+from domdf_python_tools.bases import Dictable
 from memoized_property import memoized_property  # type: ignore
 
 # this package
 from . import _elements, _table
+
+__all__ = ["Element", "Isotope", "Elements", "HeavyHydrogen"]
 
 IsotopeDict = Dict[int, Union["Isotope", Tuple[float, float]]]
 
@@ -391,33 +393,33 @@ class Element(Dictable):
 
 		for i, j in enumerate(self.ionenergy):
 			if i and (i % 5 == 0):
-				ionenergy_list.append(f'\n        {j}')
+				ionenergy_list.append(f"\n        {j}")
 			else:
-				ionenergy_list.append(f'{j}')
+				ionenergy_list.append(f"{j}")
 
-		ionenergy = ', '.join(ionenergy_list)
+		ionenergy = ", ".join(ionenergy_list)
 
 		if len(self.ionenergy) > 5:
-			ionenergy = f'(\n        {ionenergy},\n    )'
+			ionenergy = f"(\n        {ionenergy},\n    )"
 		elif len(self.ionenergy) == 1:
-			ionenergy = f'({ionenergy},)'
+			ionenergy = f"({ionenergy},)"
 		else:
-			ionenergy = f'({ionenergy})'
+			ionenergy = f"({ionenergy})"
 
 		isotopes_list = []
 
 		for massnum in sorted(self.isotopes):
 			iso = self.isotopes[massnum]
-			isotopes_list.append(f'{massnum}: Isotope({iso.mass}, {iso.abundance}, {massnum})')
+			isotopes_list.append(f"{massnum}: Isotope({iso.mass}, {iso.abundance}, {massnum})")
 
-		isotopes = ',\n        '.join(isotopes_list)
+		isotopes = ",\n        ".join(isotopes_list)
 
 		if len(self.isotopes) > 1:
-			isotopes = f'{{\n        {isotopes},\n    }},'
+			isotopes = f"{{\n        {isotopes},\n    }},"
 		else:
-			isotopes = f'{{{isotopes}}},'
+			isotopes = f"{{{isotopes}}},"
 
-		return ',\n    '.join((
+		return ",\n    ".join((
 				f"Element(\n    {self.number}, '{self.symbol}', '{self.name}'",
 				f"group={self.group}, period={self.period},"
 				f" block='{self.block}', series={self.series}",
@@ -502,16 +504,16 @@ class Element(Dictable):
 		assert self.series in _table.SERIES
 
 		if self.number != self.protons:
-			raise ValueError(f'{self.symbol} - atomic number must equal proton number')
+			raise ValueError(f"{self.symbol} - atomic number must equal proton number")
 
 		if self.protons != sum(self.eleshells):
-			raise ValueError(f'{self.symbol} - number of protons must equal electrons')
+			raise ValueError(f"{self.symbol} - number of protons must equal electrons")
 
 		if len(self.ionenergy) > 1:
 			ionev_ = self.ionenergy[0]
 			for ionev in self.ionenergy[1:]:
 				if ionev <= ionev_:
-					raise ValueError(f'{self.symbol} - ionenergy not increasing')
+					raise ValueError(f"{self.symbol} - ionenergy not increasing")
 				ionev_ = ionev
 
 		mass = 0.0
@@ -523,12 +525,12 @@ class Element(Dictable):
 
 		if abs(mass - self.mass) > 0.03:
 			raise ValueError(
-					f'{self.symbol} - average of isotope masses '
-					f'({mass:.4f}) != mass ({self.mass:.4f})'
+					f"{self.symbol} - average of isotope masses "
+					f"({mass:.4f}) != mass ({self.mass:.4f})"
 					)
 
 		if abs(frac - 1.0) > 1e-9:
-			raise ValueError(f'{self.symbol} - sum of isotope abundances != 1.0')
+			raise ValueError(f"{self.symbol} - sum of isotope abundances != 1.0")
 
 
 class Isotope(Dictable):
@@ -556,10 +558,10 @@ class Isotope(Dictable):
 		return self._massnumber
 
 	def __str__(self) -> str:
-		return f'{self.massnumber}, {self.mass:.4f}, {self.abundance * 100:.6f}%'
+		return f"{self.massnumber}, {self.mass:.4f}, {self.abundance * 100:.6f}%"
 
 	def __repr__(self) -> str:
-		return f'Isotope({repr(self.mass)}, {repr(self.abundance)}, {repr(self.massnumber)})'
+		return f"Isotope({repr(self.mass)}, {repr(self.abundance)}, {repr(self.massnumber)})"
 
 	@property
 	def __dict__(self):
@@ -581,12 +583,12 @@ class Elements:
 	"""
 
 	def __init__(self, *elements):
-		self._list = []
-		self._dict = {}
+		self._list: List[Element] = []
+		self._dict: Dict[Union[str, int], Element] = {}
 
 		for element in elements:
 			if element.number > len(self._list) + 1:
-				raise ValueError('Elements must be added in order')
+				raise ValueError("Elements must be added in order")
 			if element.number <= len(self._list):
 				self._list[element.number - 1] = element
 			else:
@@ -600,10 +602,10 @@ class Elements:
 		return f'[{", ".join(ele.symbol for ele in self._list)}]'
 
 	def __repr__(self) -> str:
-		elements = ',\n    '.join(
-				'\n    '.join(line for line in repr(element).splitlines()) for element in self._list
+		elements = ",\n    ".join(
+				"\n    ".join(line for line in repr(element).splitlines()) for element in self._list
 				)
-		elements = f'Elements(\n    {elements},\n)'
+		elements = f"Elements(\n    {elements},\n)"
 		return elements
 
 	def __contains__(self, item) -> bool:
@@ -668,7 +670,7 @@ class HeavyHydrogen(Element):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 
-		if self.symbol not in {"D", "T"}:
+		if self.symbol not in {'D', 'T'}:
 			raise ValueError("'HeavyHydrogen' can only be used for Deuterium and Tritium")
 
 	@memoized_property
@@ -679,9 +681,9 @@ class HeavyHydrogen(Element):
 		:rtype: int
 		"""
 
-		if self.symbol == "D":
+		if self.symbol == 'D':
 			return 2
-		elif self.symbol == "T":
+		elif self.symbol == 'T':
 			return 3
 		else:
 			raise ValueError("Unknown heavy hydrogen isotope.")
@@ -694,4 +696,4 @@ class HeavyHydrogen(Element):
 		:rtype: str
 		"""
 
-		return f'H[{self.nominalmass}]'
+		return f"H[{self.nominalmass}]"

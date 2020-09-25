@@ -47,6 +47,18 @@ Error handling functions
 # stdlib
 import json
 
+__all__ = [
+		"PubChemPyError",
+		"ResponseParseError",
+		"PubChemHTTPError",
+		"BadRequestError",
+		"NotFoundError",
+		"MethodNotAllowedError",
+		"TimeoutError",
+		"UnimplementedError",
+		"ServerError"
+		]
+
 HTTP_ERROR_CODES = [
 		400,  # Bad Request
 		401,  # Unauthorized
@@ -111,7 +123,7 @@ class PubChemHTTPError(PubChemPyError):
 		self.code = e.status_code
 		self.msg = e.reason
 		try:
-			self.msg += ': %s' % json.loads(e.content.decode())['Fault']['Details'][0]
+			self.msg += f': {json.loads(e.content.decode())["Fault"]["Details"][0]}'
 		except (ValueError, IndexError, KeyError):
 			pass
 		if self.code == 400:
@@ -136,7 +148,7 @@ class BadRequestError(PubChemHTTPError):
 	Request is improperly formed (syntax error in the URL, POST body, etc.).
 	"""
 
-	def __init__(self, msg='Request is improperly formed'):
+	def __init__(self, msg="Request is improperly formed"):
 		self.msg = msg
 
 
@@ -145,7 +157,7 @@ class NotFoundError(PubChemHTTPError):
 	The input record was not found (e.g. invalid CID).
 	"""
 
-	def __init__(self, msg='The input record was not found'):
+	def __init__(self, msg="The input record was not found"):
 		self.msg = msg
 
 
@@ -154,7 +166,7 @@ class MethodNotAllowedError(PubChemHTTPError):
 	Request not allowed (such as invalid MIME type in the HTTP Accept header).
 	"""
 
-	def __init__(self, msg='Request not allowed'):
+	def __init__(self, msg="Request not allowed"):
 		self.msg = msg
 
 
@@ -163,19 +175,19 @@ class TimeoutError(PubChemHTTPError):
 	The request timed out, from server overload or too broad a request.
 	"""
 
-	def __init__(self, msg='The request timed out'):
+	def __init__(self, msg="The request timed out"):
 		self.msg = msg
 
 
 class UnimplementedError(PubChemHTTPError):
 	"""The requested operation has not (yet) been implemented by the server."""
 
-	def __init__(self, msg='The requested operation has not been implemented'):
+	def __init__(self, msg="The requested operation has not been implemented"):
 		self.msg = msg
 
 
 class ServerError(PubChemHTTPError):
 	"""Some problem on the server side (such as a database server down, etc.)."""
 
-	def __init__(self, msg='Some problem on the server side'):
+	def __init__(self, msg="Some problem on the server side"):
 		self.msg = msg

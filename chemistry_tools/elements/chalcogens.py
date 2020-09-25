@@ -107,23 +107,39 @@ Group 16: Chalcogens in the Periodic Table
 # this package
 from .classes import Element
 
-__all__ = ("O", "S", "Se", "Te", "Po", "Lv")
+__all__ = ('O', 'S', "Se", "Te", "Po", "Lv")
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.
 
-
 O = Element(
-		8, 'O', 'Oxygen',
-		group=16, period=2, block='p', series=1,
-		mass=15.999405, eleneg=3.44, eleaffin=1.461112,
-		covrad=0.73, atmrad=0.65, vdwrad=1.52,
-		tboil=90.188, tmelt=54.8, density=1.33,
-		eleconfig='[He] 2s2 2p4',
-		oxistates='-2*, -1',
+		8,
+		'O',
+		"Oxygen",
+		group=16,
+		period=2,
+		block='p',
+		series=1,
+		mass=15.999405,
+		eleneg=3.44,
+		eleaffin=1.461112,
+		covrad=0.73,
+		atmrad=0.65,
+		vdwrad=1.52,
+		tboil=90.188,
+		tmelt=54.8,
+		density=1.33,
+		eleconfig="[He] 2s2 2p4",
+		oxistates="-2*, -1",
 		ionenergy=(
-				13.6181, 35.116, 54.934, 77.412, 113.896,
-				138.116, 739.315, 871.387,
+				13.6181,
+				35.116,
+				54.934,
+				77.412,
+				113.896,
+				138.116,
+				739.315,
+				871.387,
 				),
 		isotopes={
 				12: (12.034405, 0.0),
@@ -147,7 +163,7 @@ O = Element(
 		description=(
 				"A colourless, odourless gaseous element belonging to group 16 of "
 				"the periodic table. It is the most abundant element present in the "
-				"earth's crust. It also makes up 20.8% of the Earth's atmosphere. "
+				"Earth's crust. It also makes up 20.8% of the Earth's atmosphere. "
 				"For industrial purposes, it is separated from liquid air by "
 				"fractional distillation. It is used in high temperature welding, "
 				"and in breathing. It commonly comes in the form of Oxygen, but is "
@@ -157,17 +173,40 @@ O = Element(
 		)
 
 S = Element(
-		16, 'S', 'Sulfur',
-		group=16, period=3, block='p', series=1,
-		mass=32.0648, eleneg=2.58, eleaffin=2.0771029,
-		covrad=1.02, atmrad=1.09, vdwrad=1.8,
-		tboil=717.82, tmelt=392.2, density=2.06,
-		eleconfig='[Ne] 3s2 3p4',
-		oxistates='6*, 4, 2, -2',
+		16,
+		'S',
+		"Sulfur",
+		group=16,
+		period=3,
+		block='p',
+		series=1,
+		mass=32.0648,
+		eleneg=2.58,
+		eleaffin=2.0771029,
+		covrad=1.02,
+		atmrad=1.09,
+		vdwrad=1.8,
+		tboil=717.82,
+		tmelt=392.2,
+		density=2.06,
+		eleconfig="[Ne] 3s2 3p4",
+		oxistates="6*, 4, 2, -2",
 		ionenergy=(
-				10.36, 23.33, 34.83, 47.3, 72.68,
-				88.049, 280.93, 328.23, 379.1, 447.09,
-				504.78, 564.65, 651.63, 707.14, 3223.836,
+				10.36,
+				23.33,
+				34.83,
+				47.3,
+				72.68,
+				88.049,
+				280.93,
+				328.23,
+				379.1,
+				447.09,
+				504.78,
+				564.65,
+				651.63,
+				707.14,
+				3223.836,
 				3494.099,
 				),
 		isotopes={
@@ -205,16 +244,32 @@ S = Element(
 		)
 
 Se = Element(
-		34, 'Se', 'Selenium',
-		group=16, period=4, block='p', series=1,
-		mass=78.971, eleneg=2.55, eleaffin=2.02067,
-		covrad=1.16, atmrad=1.22, vdwrad=1.9,
-		tboil=958.0, tmelt=494.0, density=4.82,
-		eleconfig='[Ar] 3d10 4s2 4p4',
-		oxistates='6, 4*, -2',
+		34,
+		"Se",
+		"Selenium",
+		group=16,
+		period=4,
+		block='p',
+		series=1,
+		mass=78.971,
+		eleneg=2.55,
+		eleaffin=2.02067,
+		covrad=1.16,
+		atmrad=1.22,
+		vdwrad=1.9,
+		tboil=958.0,
+		tmelt=494.0,
+		density=4.82,
+		eleconfig="[Ar] 3d10 4s2 4p4",
+		oxistates="6, 4*, -2",
 		ionenergy=(
-				9.7524, 21.9, 30.82, 42.944, 68.3,
-				81.7, 155.4,
+				9.7524,
+				21.9,
+				30.82,
+				42.944,
+				68.3,
+				81.7,
+				155.4,
 				),
 		isotopes={
 				65: (64.96466, 0.0),
@@ -256,16 +311,32 @@ Se = Element(
 		)
 
 Te = Element(
-		52, 'Te', 'Tellurium',
-		group=16, period=5, block='p', series=5,
-		mass=127.6, eleneg=2.1, eleaffin=1.970875,
-		covrad=1.36, atmrad=1.42, vdwrad=2.06,
-		tboil=1261.0, tmelt=722.72, density=6.25,
-		eleconfig='[Kr] 4d10 5s2 5p4',
-		oxistates='6, 4*, -2',
+		52,
+		"Te",
+		"Tellurium",
+		group=16,
+		period=5,
+		block='p',
+		series=5,
+		mass=127.6,
+		eleneg=2.1,
+		eleaffin=1.970875,
+		covrad=1.36,
+		atmrad=1.42,
+		vdwrad=2.06,
+		tboil=1261.0,
+		tmelt=722.72,
+		density=6.25,
+		eleconfig="[Kr] 4d10 5s2 5p4",
+		oxistates="6, 4*, -2",
 		ionenergy=(
-				9.0096, 18.6, 27.96, 37.41, 58.75,
-				70.7, 137.0,
+				9.0096,
+				18.6,
+				27.96,
+				37.41,
+				58.75,
+				70.7,
+				137.0,
 				),
 		isotopes={
 				105: (104.94364, 0.0),
@@ -316,14 +387,25 @@ Te = Element(
 		)
 
 Po = Element(
-		84, 'Po', 'Polonium',
-		group=16, period=6, block='p', series=5,
-		mass=208.9824, eleneg=2.0, eleaffin=1.9,
-		covrad=1.46, atmrad=1.53, vdwrad=0.0,
-		tboil=0.0, tmelt=527.0, density=9.2,
-		eleconfig='[Xe] 4f14 5d10 6s2 6p4',
-		oxistates='6, 4*, 2',
-		ionenergy=(8.414,),
+		84,
+		"Po",
+		"Polonium",
+		group=16,
+		period=6,
+		block='p',
+		series=5,
+		mass=208.9824,
+		eleneg=2.0,
+		eleaffin=1.9,
+		covrad=1.46,
+		atmrad=1.53,
+		vdwrad=0.0,
+		tboil=0.0,
+		tmelt=527.0,
+		density=9.2,
+		eleconfig="[Xe] 4f14 5d10 6s2 6p4",
+		oxistates="6, 4*, 2",
+		ionenergy=(8.414, ),
 		isotopes={
 				188: (187.999422, 0.0),
 				189: (188.998481, 0.0),
@@ -369,8 +451,13 @@ Po = Element(
 		)
 
 Lv = Element(
-		116, 'Lv', 'Livermorium',
-		group=16, period=7, block='p', series=8,
+		116,
+		"Lv",
+		"Livermorium",
+		group=16,
+		period=7,
+		block='p',
+		series=8,
 		isotopes={
 				289: (289.19886, 0.0),
 				290: (290.19859, 0.0),

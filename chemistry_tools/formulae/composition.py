@@ -2,7 +2,7 @@
 #
 #  composition.py
 """
-Elemental composition of a :class:`~chemistry_tools.formulae.formula.Formula`
+Elemental composition of a :class:`~chemistry_tools.formulae.formula.Formula`.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -37,10 +37,12 @@ from .dataarray import DataArray
 from .unicode import string_to_unicode
 from .utils import _split_isotope
 
+__all__ = ["CompositionSort", "Composition"]
+
 
 class CompositionSort(Enum):
 	"""
-	Lookup for sorting elemental composition output
+	Lookup for sorting elemental composition output.
 	"""
 
 	symbol = "symbol"
@@ -100,7 +102,7 @@ class Composition(DataArray):
 	@property
 	def n_elements(self) -> int:
 		"""
-		Returns the number of elements in the composition
+		Returns the number of elements in the composition.
 
 		:rtype: int
 		"""
