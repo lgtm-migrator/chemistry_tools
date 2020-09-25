@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #
 #  images.py
+"""
+Functions for handling images.
+"""
 #
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -26,57 +29,33 @@ from typing import Sequence, Union
 
 # this package
 from .enums import PubChemNamespace
-from .pug_rest import _do_rest_get
+from .pug_rest import do_rest_get
+from PIL import Image  # type: ignore
 
-__all__ = ["get_structure_image", "rest_get_structure_image"]
+__all__ = ["get_structure_image"]
 
 
 def get_structure_image(
 		identifier: Union[str, int, Sequence[Union[str, int]]],
-		namespace="name",
-		width=300,
-		height=300,
-		):
+		namespace: Union[PubChemNamespace, str] = PubChemNamespace.name,
+		width: int = 300,
+		height: int = 300
+		) -> Image.Image:
 	"""
 	Returns an image of the structure of the compound with the given name
 
 	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
-	:type identifier: str
-
-	:return: Pillow Image data
-	:rtype: :py:class:`PIL.Image.Image`
-	"""
-
-	return rest_get_structure_image(identifier, namespace, width, height)
-
-
-def rest_get_structure_image(
-		identifier: Union[str, int, Sequence[Union[str, int]]],
-		namespace: Union[PubChemNamespace, str] = PubChemNamespace.name,
-		width=300,
-		height=300
-		):
-	"""
-	Get an image of the compound
-
-	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
-		When using the CID namespace data for multiple compounds can be retrieved at once by
-		supplying either a comma-separated string or a list.
-	:type identifier: str, Sequence[str]
 	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`
-	:type namespace: PubChemNamespace, optional
-	:param width:
-	:type width:
-	:param height:
-	:type height:
+	:param width: The image width in pixels.
+	:param height: The image height in pixels.
 
 	:return: Pillow Image data
-	:rtype: :py:class:`PIL.Image.Image`
 	"""
 
-	# 3rd party
-	from PIL import Image  # type: ignore
-	r = _do_rest_get(namespace, identifier, "PNG", png_width=width, png_height=height)
+	r = do_rest_get(namespace, identifier, "PNG", png_width=width, png_height=height)
 	return Image.open(BytesIO(r.content))
+
+
+rest_get_structure_image = get_structure_image

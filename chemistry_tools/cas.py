@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 #
 #  cas.py
+"""
+Functions for working with CAS registry numbers.
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -28,13 +31,9 @@ __all__ = ["cas_int_to_string", "check_cas_number", "cas_string_to_int"]
 
 def cas_int_to_string(cas_no: int) -> str:
 	"""
-	Converts an integer CAS number to a hyphenated string
+	Converts an integer CAS registry number to a hyphenated string
 
 	:param cas_no:
-	:type cas_no: int
-
-	:return:
-	:rtype: str
 	"""
 
 	cas_no = int(cas_no)
@@ -57,18 +56,14 @@ def cas_int_to_string(cas_no: int) -> str:
 
 def check_cas_number(cas_no: int) -> int:
 	"""
-	Checks the CAS number to ensure the check digit is valid
+	Checks the CAS registry number to ensure the check digit is valid
 	with respect to the rest of the number.
 
-	If the CAS number is valid 0 is returned. If there is a problem the difference
-	between the computed check digit and that given as part of the CAS number
-	is returned.
+	If the CAS registry number is valid ``0`` is returned.
+	If there is a problem the difference between the computed check digit
+	and that given as part of the CAS registry number is returned.
 
 	:param cas_no:
-	:type cas_no: int
-
-	:return:
-	:rtype: int
 	"""
 
 	cas_no = abs(int(cas_no))
@@ -94,13 +89,11 @@ def check_cas_number(cas_no: int) -> int:
 @no_type_check
 def cas_string_to_int(cas_no: Union[str, int]) -> int:
 	"""
-	Converts a hyphenated string CAS number to a integer
+	Converts a hyphenated string CAS registry number to an integer.
 
 	:param cas_no:
-	:type cas_no: str or int
 
-	:return:
-	:rtype: int
+	:raises ValueError: If the CAS registry number is invalid.
 	"""
 
 	cas_no = str(cas_no)

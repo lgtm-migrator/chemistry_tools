@@ -49,7 +49,7 @@
 import decimal
 
 # 3rd party
-import pytest  # type: ignore
+import pytest
 from mathematical.utils import rounders
 
 # this package

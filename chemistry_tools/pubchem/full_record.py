@@ -21,25 +21,21 @@
 #
 
 # stdlib
-from typing import Dict, Sequence, Union
+from typing import Dict, List, Sequence, Union
 
 # this package
 from chemistry_tools.pubchem.enums import PubChemNamespace
 from chemistry_tools.pubchem.properties import _parse_record_property
-from chemistry_tools.pubchem.pug_rest import _do_rest_get
+from chemistry_tools.pubchem.pug_rest import do_rest_get
 
 __all__ = ["parse_full_record", "rest_get_full_record"]
 
 
-def parse_full_record(record: Dict):
+def parse_full_record(record: Dict) -> List[Dict]:
 	"""
 	Parse the complete PubChem record for a compound.
 
 	:param record:
-	:type record: dict
-
-	:return:
-	:rtype:
 	"""
 
 	parsed_records = []
@@ -88,19 +84,18 @@ def rest_get_full_record(
 		**kwargs,
 		) -> Dict:
 	"""
+	Obtains the full record for the given compound from the PubChem REST API.
+
 	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
-	:type identifier: str, Sequence[str]
 	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`
-	:type namespace: PubChemNamespace, optional
 	:param record_type:
-	:type record_type:
 	:param kwargs: Optional arguments that ``json.loads`` takes.
+
 	:raises ValueError: If the response body does not contain valid json.
 
 	:return: Parsed json data
-	:rtype: dict
 	"""
 
-	return _do_rest_get(namespace, identifier, record_type=record_type).json(**kwargs)
+	return do_rest_get(namespace, identifier, record_type=record_type).json(**kwargs)

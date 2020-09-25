@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 #
+#  spectrum_similarity.py
+"""
+Mass spectrum similarity calculations.
+"""
+#
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published by
 #  the Free Software Foundation; either version 3 of the License, or
@@ -50,10 +56,10 @@ from typing import Mapping, Optional, Sequence, Tuple, Union
 import numpy  # type: ignore
 import pandas  # type: ignore
 
-__all__ = ["SpectrumSimilarity", "normalize", "create_array"]
+__all__ = ["spectrum_similarity", "normalize", "create_array"]
 
 
-def SpectrumSimilarity(
+def spectrum_similarity(
 		spec_top: numpy.ndarray,
 		spec_bottom: numpy.ndarray,
 		t: float = 0.25,
@@ -65,7 +71,7 @@ def SpectrumSimilarity(
 		print_alignment: bool = False,
 		print_graphic: bool = True,
 		output_list: bool = False,
-		):
+		) -> Union[Tuple[float, float], Tuple[float, float, pandas.DataFrame]]:
 	"""
 	Calculate the similarity score for two mass spectra.
 
@@ -74,26 +80,15 @@ def SpectrumSimilarity(
 	:param spec_bottom: Array containing the reference spectrum's peak list with the m/z values in the
 		first column and corresponding intensities in the second
 	:param t: numeric value specifying the tolerance used to align the m/z values of the two spectra.
-	:type t: float
 	:param b: numeric value specifying the baseline threshold for peak identification.
 		Expressed as a percent of the maximum intensity.
-	:type b: float
 	:param top_label: string to label the top spectrum.
-	:type top_label: str
 	:param bottom_label: string to label the bottom spectrum.
-	:type bottom_label: str
 	:param xlim: tuple of length 2, defining the beginning and ending values of the x-axis.
 	:param x_threshold: numeric value specifying
-	:type x_threshold: float
 	:param print_alignment:  whether the intensities should be printed
-	:type print_alignment: bool
 	:param print_graphic:
-	:type print_graphic: bool
-	:param output_list: whether the intensities should be returned
-	:type output_list: bool
-
-	:return:
-	:rtype:
+	:param output_list: whether the intensities should be returned as a third element of the tuple.
 	"""
 
 	# format spectra and normalize intensitites
@@ -132,8 +127,7 @@ def SpectrumSimilarity(
 	# similarity score calculation
 
 	if x_threshold < 0:
-		print("Error: x_threshold argument must be zero or a positive number")
-		return 1
+		raise ValueError("x_threshold argument must be zero or a positive number")
 
 	# Unimplemented R code
 	# alignment <- alignment[alignment[,1] >= x.threshold, ]
@@ -230,9 +224,6 @@ def SpectrumSimilarity(
 	#
 	#   }
 	#
-	#
-	#
-
 	# with pandas.option_context('display.max_rows', None, 'display.max_columns', None):
 	# 	print(similarity_score)
 
@@ -250,14 +241,15 @@ def SpectrumSimilarity(
 
 # simscore <- as.vector((u %*% v)^2 / (sum(u^2) * sum(v^2)))   # cos squared
 
+SpectrumSimilarity = spectrum_similarity
+
 
 def normalize(row: Union[Mapping, pandas.Series], max_val: Union[float, str]) -> float:
 	"""
+	Returns the normalised intensity for each rows of a :class:`pandas.DataFrame`.
 
 	:param row:
 	:param max_val:
-
-	:return:
 	"""
 
 	# http://jonathansoma.com/lede/foundations/classes/pandas%20columns%20and%20functions/apply-a-function-to-every-row-in-a-pandas-dataframe/

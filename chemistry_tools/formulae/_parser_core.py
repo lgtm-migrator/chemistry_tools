@@ -76,7 +76,7 @@ Core functions and constants for parsing formulae.
 # stdlib
 import re
 import warnings
-from typing import Any, Callable, Dict, Iterable, List, Sequence, Tuple, Union
+from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence, Tuple, Union
 
 __all__ = ["replace_substrings"]
 
@@ -123,13 +123,11 @@ def _formula_to_format(
 	:param sub: The function to call to subscript a string.
 	:param sup: The function to call to superscript a string.
 	:param formula: The formula to format
-	:type formula: str
 	:param prefixes: Mapping of prefixes to their equivalents in the desired format
 	:param infixes: Mapping of infixes to their equivalents in the desired format
 	:param suffixes: Suffixes to keep, e.g. ("(g)", "(s)")
 
 	:return: The formatted formula
-	:rtype: str
 	"""
 
 	# TODO: make isotope square brackets be superscript
@@ -192,16 +190,18 @@ def _formula_to_parts(
 			drop_suff.append(ign)
 			formula = formula[:-len(ign)]
 
+	parts: Tuple[Optional[str], ...]
+
 	# Extract charge
 	for token in "+-":
 		if token in formula:
 			if formula.count(token) > 1:
 				raise ValueError(f"Multiple tokens: {token}")
-			parts = formula.split(token)
-			parts[1] = token + parts[1]
+			parts_: List[str] = formula.split(token)
+			parts = (parts_[0], token + parts_[1], *parts_[2:])
 			break
 	else:
-		parts = [formula, None]  # type: ignore
+		parts = (formula, None)
 
 	return [*parts, tuple(drop_pref), tuple(drop_suff[::-1])]
 
@@ -211,11 +211,9 @@ def replace_substrings(string: str, patterns: Dict[str, str]) -> str:
 	Replace substrings in a string
 
 	:param string: The string to replace substrings in
-	:type string: str
 	:param patterns: A dictionary mapping substrings to their replacements
 
 	:return: The resulting string
-	:rtype: str
 	"""
 
 	for patt, repl in patterns.items():
@@ -229,7 +227,6 @@ def _get_leading_integer(s: str) -> Tuple[int, str]:
 	Returns the leading integer from the string. If no leading integer is found it is assumed to be ``1``.
 
 	:param s: The string to parse
-	:type s: str
 
 	:return: A tuple comprising the leading integer and the remainder of the string
 	"""
@@ -252,12 +249,10 @@ def _get_charge(charge_str: str) -> int:
 	Parses a string representing a charge
 
 	:param charge_str:
-	:type charge_str: str
 
 	:return: The charge
-	:rtype: int
 
-	:raises: :exc:`ValueError` if the charge string cannot be parsed
+	:raises ValueError: If the charge string cannot be parsed.
 	"""
 
 	if charge_str == '+':
@@ -291,12 +286,9 @@ def _make_isotope_string(element_name: str, isotope_num: Union[str, int]) -> str
 	Form a string label for an isotope. If ``isotope_num`` = 0 ``element_name`` is returned unchanged.
 
 	:param element_name: The name or symbol of the element
-	:type element_name: str
 	:param isotope_num: The isotope number
-	:type isotope_num: str or int
 
 	:return: The isotope string
-	:rtype: str
 	"""
 
 	if isotope_num in {0, "0"}:
@@ -305,10 +297,10 @@ def _make_isotope_string(element_name: str, isotope_num: Union[str, int]) -> str
 		return f"[{isotope_num}{element_name}]"
 
 
-_isotope_string = re.compile(r"^([A-Z][a-z+]*)(?:\[(\d+)\])?$")
+_isotope_string = re.compile(r"^([A-Z][a-z+]*)(?:\[(\d+)])?$")
 
 
-# TODO: merge with _split_isotope
+# TODO: merge with split_isotope
 def _parse_isotope_string(label: str) -> Tuple[str, int]:
 	"""
 	Parse an string with an isotope label and return the element name and
@@ -320,7 +312,6 @@ def _parse_isotope_string(label: str) -> Tuple[str, int]:
 	("C", 12)
 
 	:param label: The isotope label to parse
-	:type label: str
 
 	:return: The name/symbol of the element, and the isotope number
 	"""

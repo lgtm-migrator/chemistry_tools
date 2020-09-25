@@ -2,7 +2,7 @@
 #
 #  parser.py
 """
-Functions and constants for parsing formulae
+Functions and constants for parsing formulae.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -78,7 +78,7 @@ import re
 from collections import defaultdict
 from functools import lru_cache
 from string import ascii_lowercase, ascii_uppercase
-from typing import Any, Dict, Iterable, List, Optional, Sequence, Union
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Union
 
 # 3rd party
 import pyparsing  # type: ignore
@@ -96,7 +96,17 @@ _atom = r"([A-Z][a-z+]*)(?:\[(\d+)\])?([+-]?\d+)?"
 _atom_re = re.compile(_atom)
 _formula_re = re.compile(fr"^({_atom})*$")
 
-relative_atomic_masses = [element.mass for element in ELEMENTS]
+#: List of the relative atomic masses of each element, in order.
+relative_atomic_masses: List[float] = [element.mass for element in ELEMENTS]
+
+#: List of regular expressions for invalid formulae.
+invalid_re: List[str]
+
+#: List of regular expressions for matching elements in formulae.
+element_re: List[str]
+
+#: List of regular expressions for matching isotopes in formulae.
+isotopes_re: List[str]
 
 # Construct regular expression to match all elements, plus D and T
 element_re_dict: Dict[str, List[str]] = {}
@@ -263,17 +273,19 @@ def string_to_composition(
 	Parse composition of formula representing a chemical formula
 
 	**Examples**
-	>>> string_to_composition('NH4+') == {0: 1, "H": 4, "N": 1}
-	True
-	>>> string_to_composition('.NHO-(aq)') == {0: -1, "H": 1, "N": 1, "O": 1}
-	True
-	>>> string_to_composition('Na2CO3.7H2O') == {"Na": 2, "C": 1, "O": 10, "H": 14}
-	True
+	
+	.. code-block:: python
 
-	:param formula: Chemical formula, e.g. 'H2O', 'Fe+3', 'Cl-'
-	:type formula: str
-	:param prefixes: Prefixes to ignore, e.g. ('.', 'alpha-')
-	:param suffixes: Suffixes to ignore, e.g. ('(g)', '(s)')
+		>>> string_to_composition('NH4+') == {0: 1, "H": 4, "N": 1}
+		True
+		>>> string_to_composition('.NHO-(aq)') == {0: -1, "H": 1, "N": 1, "O": 1}
+		True
+		>>> string_to_composition('Na2CO3.7H2O') == {"Na": 2, "C": 1, "O": 10, "H": 14}
+		True
+
+	:param formula: Chemical formula, e.g. ``'H2O'``, ``'Fe+3'``, ``'Cl-'``
+	:param prefixes: Prefixes to ignore, e.g. ``('.', 'alpha-')``
+	:param suffixes: Suffixes to ignore.
 
 	:return: The composition, as a dictionary mapping atomic number -> multiplicity.
 		"Atomic number" 0 represents net charge.
@@ -317,7 +329,7 @@ def string_to_composition(
 	return tot_comp
 
 
-def mass_from_composition(composition: Dict[Union[str, int], int], charge: int = 0) -> float:
+def mass_from_composition(composition: Mapping[Union[str, int], int], charge: int = 0) -> float:
 	"""
 	Calculates molecular mass from atomic weights.
 
@@ -325,18 +337,17 @@ def mass_from_composition(composition: Dict[Union[str, int], int], charge: int =
 
 		Atomic number 0 denotes charge or "net electron defficiency"
 
-
 	:param composition: Dictionary mapping str or int (element symbol or atomic number) to int (coefficient)
 	:param charge: The charge of the composition.
-	:type charge: int
 
 	:return: Molecular weight in atomic mass units
-	:rtype: float
 
 	**Example**
 
-	>>> f'{mass_from_composition({0: -1, "H": 1, 8: 1}):.2f}'
-	'17.01'
+	.. code-block:: python
+
+		>>> f'{mass_from_composition({0: -1, "H": 1, 8: 1}):.2f}'
+		'17.01'
 	"""
 
 	if charge and 0 in composition:

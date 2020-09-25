@@ -95,28 +95,30 @@ def string_to_latex(
 		suffixes: Sequence[str] = ("(s)", "(l)", "(g)", "(aq)"),
 		) -> str:
 	"""
-	Convert formula string to LaTeX representation.
+	Convert a formula string to its LaTeX representation.
 
 	**Examples**
-	>>> string_to_latex('NH4+')
-	'NH_{4}^{+}'
-	>>> string_to_latex('Fe(CN)6+2')
-	'Fe(CN)_{6}^{2+}'
-	>>> string_to_latex('Fe(CN)6+2(aq)')
-	'Fe(CN)_{6}^{2+}(aq)'
-	>>> string_to_latex('.NHO-(aq)')
-	'^\\bullet NHO^{-}(aq)'
-	>>> string_to_latex('alpha-FeOOH(s)')
-	'\\alpha-FeOOH(s)'
 
-	:param formula: Chemical formula, e.g. 'H2O', 'Fe+3', 'Cl-'
-	:type formula: str
-	:param prefixes: Mapping of prefixes to their LaTeX equivalents. Default greek letters and ``.``
-	:param infixes: Mapping of infixes to their LaTeX equivalents. Default ``.``
-	:param suffixes: Suffixes to keep, e.g. ('(g)', '(s)')
+	.. code-block:: python
 
-	:return: The LaTeX representation of the formula
-	:rtype: str
+		>>> string_to_latex('NH4+')
+		'NH_{4}^{+}'
+		>>> string_to_latex('Fe(CN)6+2')
+		'Fe(CN)_{6}^{2+}'
+		>>> string_to_latex('Fe(CN)6+2(aq)')
+		'Fe(CN)_{6}^{2+}(aq)'
+		>>> string_to_latex('.NHO-(aq)')
+		'^\\bullet NHO^{-}(aq)'
+		>>> string_to_latex('alpha-FeOOH(s)')
+		'\\alpha-FeOOH(s)'
+
+	:param formula: Chemical formula, e.g. ``'H2O'``, ``'Fe+3'``, ``'Cl-'``.
+	:param prefixes: Mapping of prefixes to their LaTeX equivalents. Default greek letters and ``.``.
+	:no-default prefixes:
+	:param infixes: Mapping of infixes to their LaTeX equivalents.
+	:param suffixes: Suffixes to keep.
+
+	:return: The LaTeX representation of the formula.
 	"""
 
 	if prefixes is None:
@@ -133,8 +135,6 @@ def latex_subscript(val: Union[str, float]) -> str:
 	Returns the LaTeX subscript of the given value.
 
 	:param val: The value to superscript
-
-	:rtype: str
 	"""
 
 	return f"_{{{val}}}"
@@ -145,8 +145,6 @@ def latex_superscript(val: Union[str, float]) -> str:
 	Returns the LaTeX superscript of the given value.
 
 	:param val: The value to subscript
-
-	:rtype: str
 	"""
 
 	return f"^{{{val}}}"

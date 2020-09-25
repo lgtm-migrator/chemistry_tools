@@ -105,7 +105,7 @@
 import decimal
 
 # 3rd party
-import pytest  # type: ignore
+import pytest
 from mathematical.utils import rounders
 
 # this package
@@ -219,8 +219,9 @@ def test_calculate_mz(charge):
 	# assert Formula.from_string("C12H13N+").mass == Formula.from_string("C12H13N", charge=1).mass
 
 	assert Formula.from_string("C12H13N+").get_mz() == Formula.from_string("C12H13N", charge=1).get_mz()
-	assert Formula.from_string("C12H13N+").mz == Formula.from_string("C12H13N", charge=1).get_mz()
-	assert Formula.from_string("C12H13N+").get_mz() == Formula.from_string("C12H13N", charge=1).mz
+	assert Formula.from_string("C12H13N+").average_mz == Formula.from_string("C12H13N", charge=1).get_mz()
+	assert Formula.from_string("C12H13N+").mz == Formula.from_string("C12H13N", charge=1).get_mz(average=False)
+	assert Formula.from_string("C12H13N+").get_mz() == Formula.from_string("C12H13N", charge=1).average_mz
 
 
 def test_most_probable_isotopic_composition():
@@ -285,8 +286,8 @@ def C6Br6():
 
 
 def test___str__(Br2, C6Br6):
-	assert str(Br2) == "Formula({'Br': 2})"
-	assert str(C6Br6) == "Formula({'C': 6, 'Br': 6})"
+	assert str(Br2) == "Br2"
+	assert str(C6Br6) == "C6Br6"
 
 
 def test___repr__(Br2, C6Br6):
@@ -322,8 +323,10 @@ def test_properties():
 	assert f.mass == 20.0276085556
 	assert f.n_atoms == 3
 	assert f.n_elements == 2
+
 	assert D.nominalmass == 2
 	assert O.nominalmass == 16
+
 
 
 @pytest.mark.parametrize(
@@ -403,6 +406,9 @@ def test_equivalent(formula_1, formula_2):
 				("CuSO4.5H2O", "CuH10O9S"),
 				("C1000H1000", "CH"),
 				("Ru2(CO)8", "C4O4Ru"),
+				("H2O", "H2O"),
+				("S4", "S"),
+				("C6H12O6", "CH2O"),
 				]
 		)
 def test_empirical_formula(formula_1, formula_2):

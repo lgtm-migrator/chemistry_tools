@@ -24,6 +24,9 @@ Read data from National Library of Medicine TOXNET
 #
 
 # 3rd party
+from decimal import Decimal
+from typing import Any, Dict
+
 import requests
 from bs4 import BeautifulSoup  # type: ignore
 
@@ -49,7 +52,7 @@ def toxnet(cas):
 	except AttributeError:
 		raise ValueError(f"No Record was found for {cas}")
 
-	physical_properties = {}  # type: ignore
+	physical_properties: Dict[str, Any] = {}
 
 	for prop in data_soup.findAll("h3"):
 		prop_name = str(prop).replace("<h3>", '').replace(":</h3>", '')

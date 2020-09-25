@@ -47,6 +47,7 @@ from typing import Any, Dict, FrozenSet, List, Optional, Sequence, Type, TypeVar
 
 # 3rd party
 from domdf_python_tools.bases import Dictable
+from domdf_python_tools.doctools import prettify_docstrings
 from memoized_property import memoized_property  # type: ignore
 from pandas import DataFrame, Series  # type: ignore
 
@@ -57,7 +58,7 @@ from chemistry_tools.pubchem.bond import Bond, parse_bonds
 from chemistry_tools.pubchem.enums import CoordinateType
 from chemistry_tools.pubchem.full_record import parse_full_record, rest_get_full_record
 from chemistry_tools.pubchem.properties import (
-		_force_valid_properties,
+		force_valid_properties,
 		insert_valid_properties_table,
 		parse_properties,
 		rest_get_properties_json,
@@ -65,11 +66,14 @@ from chemistry_tools.pubchem.properties import (
 		)
 from chemistry_tools.pubchem.synonyms import get_synonyms
 
-__all__ = ["Compound", "compounds_to_frame"]
+__all__ = ["Compound", "compounds_to_frame", "C"]
 
+
+#: TypeVar bound to :class:`chemistry_tools.pubchem.compound.Compound`.
 C = TypeVar('C', bound="Compound")
 
 
+@prettify_docstrings
 class Compound(Dictable):
 	"""
 	Corresponds to a single record from the PubChem Compound database.
@@ -77,20 +81,13 @@ class Compound(Dictable):
 	The PubChem Compound database is constructed from the Substance database
 	using a standardization and deduplication process.
 	Each Compound is uniquely identified by a CID.
+
+	:param title: The title of the compound record (usually the name of the compound)
+	:param CID:
+	:param description:
 	"""
 
 	def __init__(self, title: str, CID: int, description, **_):
-		"""
-		Initialize with a record dict from the PubChem PUG REST service.
-
-		:param title: The title of the compound record (usually the name of the compound)
-		:type title: str
-		:param CID:
-		:type CID: int
-		:param description:
-		:type description: str
-		"""
-
 		super().__init__()
 
 		self.title: str = str(title)
@@ -130,10 +127,18 @@ class Compound(Dictable):
 
 	@property
 	def cid(self) -> int:
+		"""
+		Returns the ID of this compound.
+		"""
+
 		return self.CID
 
 	@property
 	def has_full_record(self) -> bool:
+		"""
+		Returns whether this compound has a full record available.
+		"""
+
 		return self._has_full_record
 
 	@memoized_property
@@ -214,12 +219,16 @@ class Compound(Dictable):
 		return parse_bonds(bonds_dict, coords_dict)
 
 	def precache(self):
+		"""
+		Precache all properties for this compound.
+		"""
+
 		self.get_properties("all")
 		_ = self._atoms
 		_ = self._bonds
 
 	@property
-	def atoms(self) -> List:
+	def atoms(self) -> List[Atom]:
 		"""
 		List of :class:`Atoms <chemistry_tools.pubchem.atom.Atom>` in this Compound.
 		"""
@@ -227,7 +236,7 @@ class Compound(Dictable):
 		return sorted(self._atoms.values(), key=lambda x: x.aid)
 
 	@property
-	def bonds(self) -> List:
+	def bonds(self) -> List[Bond]:
 		"""
 		List of :class:`Bonds <chemistry_tools.pubchem.bond.Bond>`
 		between :class:`Atoms <chemistry_tools.pubchem.atom.Atom>`
@@ -238,6 +247,9 @@ class Compound(Dictable):
 
 	@property
 	def coordinate_type(self) -> Optional[str]:
+		"""
+		The coordinate type of this compound.
+		"""
 		if CoordinateType.TWO_D in self._record["coords"][0]["type"]:
 			return "2d"
 		elif CoordinateType.THREE_D in self._record["coords"][0]["type"]:
@@ -262,15 +274,13 @@ class Compound(Dictable):
 
 		:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
 
-		:type properties: str, Sequence[str]
-
 		:return: Dictionary mapping the property names to their values
 		"""
 
 		if isinstance(properties, str) and properties.lower() == "all":
 			properties = list(valid_properties.keys())
 
-		properties = _force_valid_properties(properties)
+		properties = force_valid_properties(properties)
 
 		cached_properties = []
 		properties_to_get = []
@@ -306,11 +316,6 @@ class Compound(Dictable):
 		:param prop: The property to retrieve for the compound. See the table below.
 
 		:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
-
-		:type prop: str
-
-		:return:
-		:rtype:
 		"""
 
 		prop = str(prop)
@@ -350,10 +355,7 @@ class Compound(Dictable):
 	@classmethod
 	def from_cid(cls: Type["C"], cid, record_type: str = "2d") -> "Compound":
 		"""
-		Returns the Compound objects for the compound with the given CID
-
-		:return:
-		:rtype:
+		Returns the Compound objects for the compound with the given CID.
 		"""
 
 		# this package
@@ -390,6 +392,10 @@ class Compound(Dictable):
 
 	@property
 	def charge(self) -> int:
+		"""
+		The charge of the compound.
+		"""
+
 		return self.get_property("Charge")
 
 	@property
@@ -404,13 +410,23 @@ class Compound(Dictable):
 
 	@memoized_property
 	def canonicalized(self) -> bool:
+		"""
+		Whether the compound is canonicalized.
+		"""
+
 		for prop in self._record["properties"]:
 			if prop.label == "Compound" and prop.name == "Canonicalized":
 				return bool(prop.value)
 
 		return False
 
-	def get_iupac_name(self, type_="Systematic") -> Optional[str]:
+	def get_iupac_name(self, type_: str = "Systematic") -> Optional[str]:
+		r"""
+		Return the IUPAC name of this compound.
+
+		:param type\_: The type of IUPAC name.
+		"""
+
 		# Allowed, CAS-like Style, Markup, Preferred, Systematic, Traditional
 		for prop in self._record["properties"]:
 			if prop.label == "IUPAC Name" and prop.name == type_.capitalize():
@@ -420,10 +436,18 @@ class Compound(Dictable):
 
 	@memoized_property
 	def iupac_name(self) -> Optional[str]:
+		"""
+		The preferred IUPAC name of this compound.
+		"""
+
 		return self.get_iupac_name("Preferred")
 
 	@memoized_property
 	def systematic_name(self) -> Optional[str]:
+		"""
+		The systematic IUPAC name of this compound.
+		"""
+
 		return self.get_iupac_name("Systematic")
 
 	@property
@@ -497,7 +521,10 @@ class Compound(Dictable):
 # TODO:
 def compounds_to_frame(compounds: Union[Compound, List[Compound]]) -> DataFrame:
 	"""
-	Construct a pandas :class:`~pandas.DataFrame` from a list of :class:`~pubchempy.Compound` objects.
+	Construct a :class:`pandas.DataFrame` from a list of
+	:class:`~chemistry_tools.pubchem.compound.Compound` objects.
+
+	:param compounds:
 	"""
 
 	if isinstance(compounds, Compound):

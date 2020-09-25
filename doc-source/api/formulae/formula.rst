@@ -6,6 +6,3 @@
 	:file: formulae/requirements.txt
 
 .. automodule:: chemistry_tools.formulae.formula
-	:members:
-	:autosummary:
-	:undoc-members:

@@ -2,7 +2,7 @@
 #
 #  unicode.py
 """
-Functions and constants for convert formulae to unicode.
+Functions and constants for converting formulae to unicode.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -105,28 +105,30 @@ def string_to_unicode(
 		suffixes: Sequence[str] = ("(s)", "(l)", "(g)", "(aq)"),
 		) -> str:
 	"""
-	Convert formula string to unicode string representation
+	Convert the given formula string to a unicode string representation.
 
 	**Examples**
-	>>> string_to_unicode('NH4+') == 'NH₄⁺'
-	True
-	>>> string_to_unicode('Fe(CN)6+2') == 'Fe(CN)₆²⁺'
-	True
-	>>> string_to_unicode('Fe(CN)6+2(aq)') == 'Fe(CN)₆²⁺(aq)'
-	True
-	>>> string_to_unicode('.NHO-(aq)') == '⋅NHO⁻(aq)'
-	True
-	>>> string_to_unicode('alpha-FeOOH(s)') == 'α-FeOOH(s)'
-	True
 
-	:param formula: Chemical formula, e.g. 'H2O', 'Fe+3', 'Cl-'
-	:type formula: str
+	.. code-block:: python
+
+		>>> string_to_unicode('NH4+')
+		'NH₄⁺'
+		>>> string_to_unicode('Fe(CN)6+2')
+		'Fe(CN)₆²⁺'
+		>>> string_to_unicode('Fe(CN)6+2(aq)')
+		'Fe(CN)₆²⁺(aq)'
+		>>> string_to_unicode('.NHO-(aq)')
+		'⋅NHO⁻(aq)'
+		>>> string_to_unicode('alpha-FeOOH(s)')
+		'α-FeOOH(s)'
+
+	:param formula: Chemical formula, e.g. ``'H2O'``, ``'Fe+3'``, ``'Cl-'``
 	:param prefixes: Mapping of prefixes to their Unicode equivalents. Default greek letters and ``.``
-	:param infixes: Mapping of infixes to their Unicode equivalents. Default ``.``
-	:param suffixes: Suffixes to keep, e.g. ('(g)', '(s)')
+	:no-default prefixes:
+	:param infixes: Mapping of infixes to their Unicode equivalents.
+	:param suffixes: Suffixes to keep.
 
-	:return: The Unicode representation of the formula
-	:rtype: str
+	:return: The Unicode representation of the formula.
 	"""
 
 	if prefixes is None:
@@ -143,8 +145,6 @@ def unicode_subscript(val: Union[str, float]) -> str:
 	Returns the Unicode subscript of the given value.
 
 	:param val: The value to superscript
-
-	:rtype: str
 	"""
 
 	return ''.join(_unicode_sub[str(_)] for _ in str(val))
@@ -155,8 +155,6 @@ def unicode_superscript(val: Union[str, float]) -> str:
 	Returns the Unicode superscript of the given value.
 
 	:param val: The value to subscript
-
-	:rtype: str
 	"""
 
 	return ''.join(_unicode_sup[str(_)] for _ in str(val))

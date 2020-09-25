@@ -7,7 +7,7 @@ Test Atom class
 """
 
 # 3rd party
-import pytest  # type: ignore
+import pytest
 
 # this package
 from chemistry_tools.pubchem.atom import Atom

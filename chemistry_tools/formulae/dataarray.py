@@ -29,20 +29,24 @@ from typing import Any, Dict, List, Optional, Set
 import pandas  # type: ignore
 import tabulate
 from cawdrey import FrozenOrderedDict
+from domdf_python_tools.doctools import prettify_docstrings
 
 __all__ = ["DataArray"]
 
 
+@prettify_docstrings
 class DataArray(FrozenOrderedDict):
 	"""
 	A class that can output data as a :class:`pandas.DataFrame`, to CSV,
 	or as a pretty-printed table in a variety of formats.
 
+	To use this class it must first be subclassed.
+	Subclasses must implement :meth:`~DataArray.as_array` which handles the
+	conversion of the data to a list of lists of values.
+
 	:param formula: The formula in hill notation
-	:type formula: str
 	:param data: A dictionary of data to add to the internal
-		:class:`~cawdrey.frozenordereddict.FrozenOrderedDict`
-	:type data: dict
+		:class:`~cawdrey.FrozenOrderedDict`
 	"""
 
 	_as_array_kwargs: Set[str] = set()
@@ -54,30 +58,30 @@ class DataArray(FrozenOrderedDict):
 		self.formula: str = formula
 
 	def as_csv(self, *args, sep: str = ",", **kwargs) -> str:
-		"""
+		r"""
 		Returns the data as a CSV formatted string
 
-		:param sep: The separator for the CSV data. Default ``,``
-		:type sep: str, optional
-
-		Any additional arguments taken by ``as_array`` can also be used here.
-
-		:rtype: str
+		:param \*args: Arguments passed to :meth:`~.DataArray.as_array`.
+		:param sep: The separator for the CSV data.
+		:param \*\*kwargs: Additional keyword arguments passed to :meth:`~.DataArray.as_array`.
 		"""
 
 		return "\n".join(sep.join(x) for x in self.as_array(*args, **kwargs))
 
 	@abstractmethod
 	def as_array(self, sort_by: Any, reverse: bool = False) -> List[List[Any]]:
-		pass
+		"""
+		Must be implemented in subclasses to hand the conversion of the data to a list of lists of values.
+
+		:param sort_by:
+		:param reverse:
+		"""
 
 	def as_dataframe(self, *args, **kwargs) -> pandas.DataFrame:
 		"""
-		Returns the isotope distribution data as a pandas DataFrame
+		Returns the isotope distribution data as a :class:`pandas.DataFrame`.
 
-		Any arguments taken by ``as_array`` can also be used here.
-
-		:rtype: pandas.DataFrame
+		Any arguments taken by :meth:`~.DataArray.as_array` can also be used here.
 		"""
 
 		array = self.as_array(*args, **kwargs)
@@ -88,11 +92,9 @@ class DataArray(FrozenOrderedDict):
 		Returns the isotope distribution data as a table using
 		`tabulate <https://github.com/astanin/python-tabulate>`_
 
-		Any arguments taken by ``as_array`` can also be used here.
+		Any arguments taken by :meth:`~.DataArray.as_array` can also be used here.
 
 		Additionally, any valid keyword argument for :func:`tabulate.tabulate` can be used.
-
-		:rtype: str
 		"""
 
 		tabulate_kwargs: Dict[str, Any] = {}

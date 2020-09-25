@@ -3,6 +3,3 @@
 =================================
 
 .. automodule:: chemistry_tools.constants
-	:members:
-	:autosummary:
-	:undoc-members:

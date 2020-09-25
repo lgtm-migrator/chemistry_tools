@@ -24,7 +24,7 @@
 from typing import Any
 
 # this package
-from domdf_python_tools.enums import IntEnum, StrEnum
+from enum_tools import IntEnum, StrEnum
 
 
 class PubChemNamespace(StrEnum):

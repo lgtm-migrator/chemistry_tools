@@ -2,7 +2,7 @@
 #
 #  html.py
 """
-Functions and constants for converting formulae to html.
+Functions and constants for converting formulae to HTML.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -96,25 +96,27 @@ def string_to_html(
 	Convert formula string to HTML string representation.
 
 	**Examples**
-	>>> string_to_html("NH4+")
-	'NH<sub>4</sub><sup>+</sup>'
-	>>> string_to_html("Fe(CN)6+2")
-	'Fe(CN)<sub>6</sub><sup>2+</sup>'
-	>>> string_to_html("Fe(CN)6+2(aq)")
-	'Fe(CN)<sub>6</sub><sup>2+</sup>(aq)'
-	>>> string_to_html(".NHO-(aq)")
-	'&sdot;NHO<sup>-</sup>(aq)'
-	>>> string_to_html("alpha-FeOOH(s)")
-	'&alpha;-FeOOH(s)'
+	
+	.. code-block:: python
 
-	:param formula: Chemical formula, e.g. "H2O", "Fe+3", "Cl-"
-	:type formula: str
+		>>> string_to_html("NH4+")
+		'NH<sub>4</sub><sup>+</sup>'
+		>>> string_to_html("Fe(CN)6+2")
+		'Fe(CN)<sub>6</sub><sup>2+</sup>'
+		>>> string_to_html("Fe(CN)6+2(aq)")
+		'Fe(CN)<sub>6</sub><sup>2+</sup>(aq)'
+		>>> string_to_html(".NHO-(aq)")
+		'&sdot;NHO<sup>-</sup>(aq)'
+		>>> string_to_html("alpha-FeOOH(s)")
+		'&alpha;-FeOOH(s)'
+
+	:param formula: Chemical formula, e.g. ``'H2O'``, ``'Fe+3'``, ``'Cl-'``
 	:param prefixes: Mapping of prefixes to their HTML equivalents. Default greek letters and ``.``
-	:param infixes: Mapping of infixes to their HTML equivalents. Default ``.``
-	:param suffixes: Suffixes to keep, e.g. ("(g)", "(s)")
+	:no-default prefixes:
+	:param infixes: Mapping of infixes to their HTML equivalents.
+	:param suffixes: Suffixes to keep.
 
 	:return: The HTML representation of the formula
-	:rtype: str
 	"""
 
 	if prefixes is None:
@@ -131,8 +133,6 @@ def html_subscript(val: Union[str, float]) -> str:
 	Returns the HTML subscript of the given value.
 
 	:param val: The value to superscript
-
-	:rtype: str
 	"""
 
 	return f"<sub>{val}</sub>"
@@ -143,8 +143,6 @@ def html_superscript(val: Union[str, float]) -> str:
 	Returns the HTML superscript of the given value.
 
 	:param val: The value to subscript
-
-	:rtype: str
 	"""
 
 	return f"<sup>{val}</sup>"

@@ -101,7 +101,7 @@
 #  |
 
 # stdlib
-from typing import Dict, Optional, Type, TypeVar
+from typing import Dict, List, Optional, Type, TypeVar
 
 # 3rd party
 from cawdrey import frozendict
@@ -109,8 +109,9 @@ from cawdrey import frozendict
 # this package
 from .formula import Formula
 
-__all__ = ["Species"]
+__all__ = ["Species", "S"]
 
+#: TypeVar bound to :class:`chemistry_tools.formulae.species.Species`.
 S = TypeVar('S', bound="Species")
 
 
@@ -122,11 +123,9 @@ class Species(Formula):
 
 	:param composition: A :class:`~chemistry_tools.formulae.formula.Formula` object with the elemental
 		composition of a substance, or a :class:`python:dict` representing the same.
-		If ``None`` an empty object is created
+		If :py:obj:`None` an empty object is created
 	:param charge:
-	:type charge: int, optional
-	:param phase: Either "s", "l", "g", or "aq". ``None`` represents an unknown phase.
-	:type phase: str
+	:param phase: Either ``'s'``, ``'l'``, ``'g'``, or ``'aq'``. :py:obj:`None` represents an unknown phase.
 	"""
 
 	_phases: frozendict[str, str] = frozendict(s="Solid", l="Liquid", g="Gas", aq="Aqueous")
@@ -143,9 +142,7 @@ class Species(Formula):
 		arguments representing the elements in the compound.
 
 		:param charge: The charge of the compound
-		:type charge: int, optional
-		:param phase: The phase of the compound (e.g. ``s`` for solid)
-		:type phase: str, optional
+		:param phase: The phase of the compound (e.g. ``'s'`` for solid)
 		"""
 
 		return cls(kwargs, charge=charge, phase=phase)
@@ -158,28 +155,29 @@ class Species(Formula):
 		.. note:: Isotopes cannot (currently) be parsed using this method
 
 		:param formula: A string with a chemical formula
-		:type formula: str
-		:param phase: Either "s", "l", "g", or "aq". ``None`` represents an unknown phase.
-		:type phase: str
+		:param phase: Either ``'s'``, ``'l'``, ``'g'``, or ``'aq'``. :py:obj:`None` represents an unknown phase.
 		:param charge:
-		:type charge: int, optional
+
 
 		**Examples**
-		>>> water = Species.from_string('H2O')
-		>>> water.phase
-		None
-		>>> NaCl = Species.from_string('NaCl(s)')
-		>>> NaCl.phase
-		s
-		>>> Hg_l = Species.from_string('Hg(l)')
-		>>> Hg_l.phase
-		l
-		>>> CO2g = Species.from_string('CO2(g)')
-		>>> CO2g.phase
-		g
-		>>> CO2aq = Species.from_string('CO2(aq)')
-		>>> CO2aq.phase
-		aq
+
+		.. code-block:: python
+
+			>>> water = Species.from_string('H2O')
+			>>> water.phase
+			None
+			>>> NaCl = Species.from_string('NaCl(s)')
+			>>> NaCl.phase
+			s
+			>>> Hg_l = Species.from_string('Hg(l)')
+			>>> Hg_l.phase
+			l
+			>>> CO2g = Species.from_string('CO2(g)')
+			>>> CO2g.phase
+			g
+			>>> CO2aq = Species.from_string('CO2(aq)')
+			>>> CO2aq.phase
+			aq
 		"""
 
 		if phase is None:
@@ -211,7 +209,7 @@ class Species(Formula):
 
 		return super().__eq__(other)
 
-	def _repr_elements(self) -> str:
+	def _repr_elements(self) -> List[str]:
 		elements = super()._repr_elements()
 
 		if self.phase:
@@ -221,12 +219,6 @@ class Species(Formula):
 
 	@property
 	def hill_formula(self) -> str:
-		"""
-
-		:return:
-		:rtype: str
-		"""
-
 		hill = super().hill_formula
 
 		if self.phase:
@@ -236,12 +228,6 @@ class Species(Formula):
 
 	@property
 	def empirical_formula(self) -> str:
-		"""
-
-		:return:
-		:rtype: str
-		"""
-
 		hill = super().empirical_formula
 
 		if self.phase:

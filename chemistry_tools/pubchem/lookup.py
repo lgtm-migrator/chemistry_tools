@@ -37,21 +37,17 @@ __all__ = ["get_compounds"]
 
 def get_compounds(
 		identifier: Union[str, int, Sequence[Union[str, int]]],
-		namespace: Union[PubChemNamespace, str] = "name",
+		namespace: Union[PubChemNamespace, str] = PubChemNamespace.name,
 		) -> List[Compound]:
 	"""
-	Returns a list of Compound objects for compounds that match the search criteria
+	Returns a list of Compound objects for compounds that match the search criteria.
+
 	As more than one compound may be identified the results are returned in a list.
 
 	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
-	:type identifier: str, Sequence[str]
-	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`. Default "name"
-	:type namespace: PubChemNamespace, optional
-
-	:return:
-	:rtype:
+	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`.
 	"""
 
 	data = rest_get_description(identifier, namespace)

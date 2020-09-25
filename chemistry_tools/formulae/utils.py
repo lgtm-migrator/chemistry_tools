@@ -106,12 +106,18 @@ General utility functions.
 # stdlib
 import re
 from functools import lru_cache
-from typing import Dict, Iterable, List, Sequence, Tuple
+from typing import Dict, Iterator, List, Sequence, Tuple
 
 # this package
 from chemistry_tools.elements import ELEMENTS
 
-# Common chemical groups
+__all__ = [
+		"GROUPS",
+		"split_isotope",
+		"hill_order",
+		]
+
+#: Common chemical groups
 GROUPS: Dict[str, str] = {
 		"Abu": "C4H7NO",
 		"Acet": "C2H3O",
@@ -237,14 +243,13 @@ _hill_hydrogen_re = re.compile(_hill_isotope_re % "H")
 
 
 @lru_cache()
-def _split_isotope(string: str) -> Tuple[str, int]:
+def split_isotope(string: str) -> Tuple[str, int]:
 	"""
-	Returns the symbol and massnumber for the isotope represented by ``string``.
+	Returns the symbol and mass number for the isotope represented by ``string``.
 
-	Valid isotopes include [C12], C[12] and [12C]
+	Valid isotopes include ``'[C12]'``, ``'C[12]'`` and ``'[12C]'``.
 
 	:param string:
-	:type string: str
 
 	:return: Tuple representing the element and the isotope number
 	"""
@@ -275,13 +280,16 @@ def _split_isotope(string: str) -> Tuple[str, int]:
 	return ELEMENTS[elem].symbol, int(isotope)
 
 
-def _hill_order(symbols: Sequence[str]) -> Iterable[str]:
+def hill_order(symbols: Sequence[str]) -> Iterator[str]:
 	"""
-	Returns iterator over element symbols in order of Hill notation.
+	Returns an iterator over the given element symbols in order of Hill notation.
 
-	**Examples**
-	>>> for i in _hill_order("H", "C[12]", "O"): print(i, end='')
-	CHO
+	**Example**
+
+	.. code-block:: python
+
+		>>> for i in hill_order("H", "C[12]", "O"): print(i, end='')
+		CHO
 	"""
 
 	symbols_list: List[str] = list(set(symbols))

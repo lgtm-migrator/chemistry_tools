@@ -3,6 +3,3 @@
 ===========================
 
 .. automodule:: chemistry_tools.cas
-	:members:
-	:autosummary:
-	:undoc-members:

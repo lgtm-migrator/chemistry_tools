@@ -6,6 +6,3 @@
 	:file: pubchem/requirements.txt
 
 .. automodule:: chemistry_tools.pubchem.full_record
-	:members:
-	:autosummary:
-	:undoc-members:

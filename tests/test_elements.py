@@ -1,5 +1,5 @@
 # 3rd party
-import pytest  # type: ignore
+import pytest
 
 # this package
 from chemistry_tools.elements import ELEMENTS, H, Isotope, groups

@@ -19,7 +19,6 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
-#
 #  Based on ChemPy (https://github.com/bjodah/chempy)
 #  |  Copyright (c) 2015-2018, Björn Dahlgren
 #  |  All rights reserved.
@@ -53,7 +52,20 @@ from typing import Dict, NamedTuple, Optional
 # 3rd party
 import quantities  # type: ignore
 
-__all__ = ["Constant"]
+__all__ = [
+		"Constant",
+		"avogadro_number",
+		"plancks_constant",
+		"speed_of_light",
+		"electron_radius",
+		"neutron_mass",
+		"atomic_mass_constant",
+		"faraday_constant",
+		"vacuum_permittivity",
+		"boltzmann_constant",
+		"molar_gas_constant",
+		"prefixes",
+		]
 
 
 _anions = {  # Incomplete
@@ -119,39 +131,42 @@ _cation_oxidation_states = {  # This needs to be reviewed, just from the top of 
 		}
 
 
-class __BaseConstant(NamedTuple):
+class Constant(NamedTuple):
+	"""
+	Represents a scientific constant.
+	"""
+
+	#: The name of the constant.
 	name: str
+
+	#: The value of the constant.
 	value: float
+
+	#: The constant's unit.
 	unit: quantities.quantity.Quantity
-	symbol: Optional[str]
 
+	#: An optional symbol for the constant. Default :py:obj:`None`.
+	symbol: Optional[str] = None
 
-class Constant(__BaseConstant):
-	# TODO: docstring
-
-	# make symbol and unit optional
-	def __new__(
-			cls,
-			name: str,
-			value: float,
-			unit: quantities.quantity.Quantity,
-			symbol: Optional[str] = None,
-			):
-		return super().__new__(cls, name, value, unit, symbol)
-
-	def as_quantity(self):
+	def as_quantity(self) -> quantities.quantity.Quantity:
 		"""
 		Returns the constant as a :class:`quantities.quantity.Quantity` object.
-
-		:rtype: :class:`quantities.quantity.Quantity`
 		"""
 
 		return self.value * self.unit
 
 	def __float__(self) -> float:
+		"""
+		Returns the constant as a float (without the unit).
+		"""
+
 		return float(self.value)
 
 	def __int__(self) -> int:
+		"""
+		Returns the constant as an integer (without the unit).
+		"""
+
 		return int(self.value)
 
 
@@ -159,10 +174,12 @@ class Constant(__BaseConstant):
 # Public Domain data
 # Author: Paul Kienzle
 
+#: Avogadro's constant (Avogadro's number)
 avogadro_number = avogadro_constant = Constant(
 		name="Avogadro constant", value=6.02214179e23, unit=1 / quantities.mol, symbol="N<sub>A</sub>"
 		)  # (30)
 
+#: Planck's constant
 plancks_constant = planck_constant = Constant(
 		name="Planck's constant",
 		value=4.13566733e-15 * (10**34),
@@ -170,36 +187,50 @@ plancks_constant = planck_constant = Constant(
 		symbol='h'
 		)  # (10)
 
+
+#: The speed of light in a vacuum.
 speed_of_light = Constant(
-		name="Speed of Light", value=299792458, unit=quantities.m / quantities.second, symbol='c'
+		name="Speed of light", value=299792458, unit=quantities.m / quantities.second, symbol='c'
 		)  # (exact)
 
-electron_radius = Constant(name="Electron Radius", value=2.8179402894e-15, unit=quantities.m, symbol="rₑ")  # (58)
+#: Electron Radius
+electron_radius = Constant(name="Electron radius", value=2.8179402894e-15, unit=quantities.m, symbol="rₑ")  # (58)
 
 # From NIST Reference on Constants, Units, and Uncertainty
 #   http://physics.nist.gov/cuu/index.html
 # neutron mass = 1.008 664 915 97(43) u
 # atomic mass constant m_u = 1.660 538 782(83) x 10-27 kg
 
+#: Neutron mass
 neutron_mass = Constant(
 		name="Neutron mass", value=1.00866491597, unit=quantities.atomic_mass_unit, symbol="n<sup>o</sup>"
 		)  # (43)
+
+#: The atomic mass constant.
 atomic_mass_constant = float(quantities.atomic_mass_unit.rescale(quantities.kg))
+
+#: Faraday constant
 faraday_constant = Constant(
 		name="Faraday constant",
 		value=96485.3321233100184,
 		unit=quantities.coulomb * (1 / quantities.mol),
 		symbol='F'
 		)
+
+#: Vacuum permittivity
 vacuum_permittivity = Constant(
 		"Vacuum permittivity", value=8.8541878128e-12, unit=quantities.farad / quantities.metre, symbol="ε₀"
 		)
+
+#: Boltzmann constant
 boltzmann_constant = Constant(
 		name="Boltzmann constant",
 		value=1.380649e-23,
 		unit=quantities.joule / quantities.kelvin,
 		symbol="k<sub>B</sub>"
 		)
+
+#: Molar gas constant
 molar_gas_constant = Constant(
 		name="Molar gas constant",
 		value=8.31446261815324,
@@ -207,7 +238,7 @@ molar_gas_constant = Constant(
 		symbol='R'
 		)
 
-# IUPAC prefixes
+#: Numerical IUPAC prefixes (e.g. **mono-**).
 prefixes: Dict[int, str] = {
 		1: "mono",
 		2: "di",

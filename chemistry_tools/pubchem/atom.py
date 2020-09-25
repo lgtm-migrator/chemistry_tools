@@ -47,15 +47,25 @@ from itertools import zip_longest
 from typing import Any, Dict, FrozenSet, Optional
 
 # this package
+from domdf_python_tools.doctools import prettify_docstrings
+
 from chemistry_tools.elements import ELEMENTS
 from chemistry_tools.pubchem.errors import ResponseParseError
 
 __all__ = ["Atom", "parse_atoms"]
 
 
+@prettify_docstrings
 class Atom:
 	"""
-	Class to represent an atom in a :class:`~pubchempy.Compound`.
+	Class to represent an atom in a :class:`~chemistry_tools.pubchem.compound.Compound`.
+
+	:param aid: The Atom ID within the owning Compound.
+	:param number: The Atomic number for this atom.
+	:param x: The x coordinate for this atom.
+	:param y: The y coordinate for this atom.
+	:param z: The z coordinate for this atom. Will be :py:obj:`None` in 2D Compound records.
+	:param charge: Formal charge on atom.
 	"""
 
 	def __init__(
@@ -67,23 +77,6 @@ class Atom:
 			z: Optional[float] = None,
 			charge: int = 0,
 			):
-		"""
-		Initialize with an atom ID, atomic number, coordinates and optional change.
-
-		:param aid: The Atom ID within the owning Compound.
-		:type aid: int
-		:param number: The Atomic number for this atom.
-		:type number: int
-		:param x: The x coordinate for this atom.
-		:type x: float, optional
-		:param y: The y coordinate for this atom.
-		:type y: float, optional
-		:param z: The z coordinate for this atom. Will be ``None`` in 2D Compound records.
-		:type z: float, optional
-		:param charge: Formal charge on atom.
-		:type charge: int, optional
-		"""
-
 		self.aid: int = aid
 		self.number: int = number
 		self.x: Optional[float] = x
@@ -109,8 +102,6 @@ class Atom:
 	def element(self) -> str:
 		"""
 		The element symbol for this atom.
-
-		:rtype: str
 		"""
 
 		return ELEMENTS[self.number].symbol
@@ -144,8 +135,6 @@ class Atom:
 	def coordinate_type(self) -> str:
 		"""
 		Returns whether this atom has 2D or 3D coordinates.
-
-		:rtype: str
 		"""
 
 		if self.z is None:
@@ -154,15 +143,12 @@ class Atom:
 			return "3d"
 
 
-def parse_atoms(atoms_dict: Dict[str, Any], coords_dict: Optional[Dict] = None) -> Dict[FrozenSet[int], Atom]:
+def parse_atoms(atoms_dict: Dict[str, Any], coords_dict: Optional[Dict] = None,) -> Dict[FrozenSet[int], Atom]:
 	"""
+	Parse atoms from the given dictionary.
 
 	:param atoms_dict:
-	:type atoms_dict: dict
 	:param coords_dict:
-
-	:return:
-	:rtype: dict
 	"""
 
 	atoms: Dict[FrozenSet[int], Atom] = {}

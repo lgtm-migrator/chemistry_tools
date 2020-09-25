@@ -2,8 +2,9 @@
 #
 #  utils.py
 """
-Various tools
+General utility functions.
 """
+#
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -58,6 +59,8 @@ __all__ = ["format_string"]
 def format_string(stringwithmarkup: Dict[str, Any]) -> str:
 	"""
 	Convert a PubChem formatted string into an HTML formatted string
+
+	:param stringwithmarkup:
 	"""
 
 	string = list(stringwithmarkup["String"])
@@ -84,14 +87,16 @@ def format_string(stringwithmarkup: Dict[str, Any]) -> str:
 	return ''.join(string)
 
 
-def _force_sequence_or_csv(value: Union[str, int, Iterable[Union[str, int]]], name: str) -> List[str]:
+def _force_sequence_or_csv(
+		value: Union[str, int, Iterable[Union[str, int]]],
+		name: str,
+		) -> List[str]:
 	"""
 	Coerce ``value`` into a list of strings, including splitting comma-separated values.
 	If that is not possible a :exc:`ValueError` is raised.
 
 	:param value: The value to coerce to a list of strings.
 	:param name: The name of the property. Used for error messages.
-	:type name: str
 	"""
 
 	err_msg = f"Please supply one or more {name}, either as a comma-separated string or a Sequence of strings."
@@ -135,6 +140,11 @@ def _make_base_url(
 		namespace: Union[PubChemNamespace, str],
 		identifier: Union[str, int, Iterable[Union[str, int]]],
 		) -> str:
+	"""
+
+	:param namespace:
+	:param identifier:
+	"""
 
 	identifier = _force_sequence_or_csv(identifier, "identifier")
 	namespace = str(namespace)

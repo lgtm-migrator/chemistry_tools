@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #
 #  enums.py
+"""
+Enumerations.
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -24,12 +27,16 @@
 from typing import Any
 
 # 3rd party
-from domdf_python_tools.enums import IntEnum, StrEnum
+from enum_tools import IntEnum, StrEnum
 
 __all__ = ["PubChemNamespace", "PubChemFormats", "CoordinateType"]
 
 
 class PubChemNamespace(StrEnum):
+	"""
+	Enumeration of possible values for the PubChem namespace.
+	"""
+
 	CID = Cid = cid = "cid", "PubChem Compound ID"
 	Name = NAME = name = "name", "Compound Name"
 	SMILES = Smiles = smiles = "smiles", "SMILES String"
@@ -49,13 +56,19 @@ class PubChemNamespace(StrEnum):
 
 	@classmethod
 	def is_valid_value(cls, value: Any) -> bool:
-		return str(value) in {str(item) for item in PubChemNamespace}  # type: ignore
+		"""
+		Returns whether the value is a valid member of this :class:`enum.Enum`.
+
+		:param value:
+		"""
+
+		return str(value) in {str(item) for item in PubChemNamespace}
 
 
 # @document_enum
 class PubChemFormats(StrEnum):
 	"""
-	Enum of supported formats for the PubChem REST API.
+	Enumeration of supported formats for the PubChem REST API.
 	"""
 
 	JSON = Json = json = "JSON"
@@ -71,10 +84,20 @@ class PubChemFormats(StrEnum):
 
 	@classmethod
 	def is_valid_value(cls, value: Any) -> bool:
-		return str(value).upper() in {str(item) for item in PubChemFormats}  # type: ignore
+		"""
+		Returns whether the value is a valid member of this :class:`enum.Enum`.
+
+		:param value:
+		"""
+
+		return str(value).upper() in {str(item) for item in PubChemFormats}
 
 
 class CoordinateType(IntEnum):
+	"""
+	Enumeration of valid values for the coordinate type.
+	"""
+
 	TWO_D = 1
 	THREE_D = 2
 	SUBMITTED = 3
@@ -93,4 +116,10 @@ class CoordinateType(IntEnum):
 
 	@classmethod
 	def is_valid_value(cls, value: Any) -> bool:
-		return str(value).upper() in {str(item) for item in CoordinateType}  # type: ignore
+		"""
+		Returns whether the value is a valid member of this :class:`enum.Enum`.
+
+		:param value:
+		"""
+
+		return str(value).upper() in {str(item) for item in CoordinateType}

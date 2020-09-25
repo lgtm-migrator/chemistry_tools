@@ -2,7 +2,7 @@
 #
 #  pug_rest.py
 """
-Functions for interacting with PubChem PUG_REST API
+Functions for interacting with PubChem PUG_REST API.
 """
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -46,7 +46,7 @@ Functions for interacting with PubChem PUG_REST API
 
 # stdlib
 import time
-from typing import Dict, Iterable, List, Optional, Sequence, Union
+from typing import Dict, Iterable, Iterator, List, Optional, Sequence, Union
 from urllib.parse import quote
 
 # 3rd party
@@ -59,10 +59,10 @@ from chemistry_tools.pubchem.enums import PubChemFormats, PubChemNamespace
 from chemistry_tools.pubchem.errors import HTTP_ERROR_CODES, PubChemHTTPError
 from chemistry_tools.pubchem.utils import _force_sequence_or_csv, _make_base_url
 
-__all__ = ["get_full_json", "async_get", "request"]
+__all__ = ["get_full_json", "async_get", "request", "do_rest_get"]
 
 
-def _do_rest_get(
+def do_rest_get(
 		namespace: Union[PubChemNamespace, str],
 		identifier: Union[str, int, Sequence[Union[str, int]]],
 		format_: Union[PubChemFormats, str] = PubChemFormats.JSON,
@@ -71,19 +71,19 @@ def _do_rest_get(
 		png_width: int = 300,
 		png_height: int = 300,
 		) -> requests.Response:
-	"""
+	r"""
+	Responsible for performing the actual GET request.
+
+	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`.
 	:param identifier: Identifiers (e.g. name, CID) for the compounds to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
-	:type identifier: str, Sequence[str]
-	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`. Default "name"
-	:type namespace: PubChemNamespace, optional
-	:type namespace: str, optional
-	:param format_: The file format to retrieve the data in. Valid values are in :class:`PubChemFormats`, plus "PNG"
-	:type format_: PubChemFormats or str, optional
-
-	:return:
-	:rtype:
+	:param format\_: The file format to retrieve the data in.
+		Valid values are in :class:`PubChemFormats`, plus ``'PNG'``.
+	:param domain:
+	:param record_type:
+	:param png_width:
+	:param png_height:
 	"""
 
 	# domain = description, synonyms, or property followed by a comma-separated list of desired properties
@@ -107,9 +107,9 @@ def _do_rest_get(
 		query_params["image_size"] = f"{png_width}x{png_height}"
 
 	try:
-		r = _do_cached_request(namespace, parsed_identifier, format_, domain, record_type, query_params)
+		r = do_cached_request(namespace, parsed_identifier, format_, domain, record_type, query_params)
 	except requests.exceptions.ConnectionError:
-		r = _do_cached_request(namespace, parsed_identifier, format_, domain, record_type, query_params)
+		r = do_cached_request(namespace, parsed_identifier, format_, domain, record_type, query_params)
 
 	if r.status_code in HTTP_ERROR_CODES:
 		raise PubChemHTTPError(r)
@@ -117,7 +117,7 @@ def _do_rest_get(
 	return r
 
 
-def _do_cached_request(
+def do_cached_request(
 		namespace: Union[PubChemNamespace, str],
 		identifier: Union[Iterable[str], str],
 		format_: Union[PubChemFormats, str],
@@ -125,6 +125,18 @@ def _do_cached_request(
 		record_type: str,
 		query_params: Dict,
 		) -> requests.Response:
+	r"""
+	Responsible for performing cached requests.
+
+	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`.
+	:param identifier: Identifiers (e.g. name, CID) for the compounds to look up.
+		When using the CID namespace data for multiple compounds can be retrieved at once by
+		supplying either a comma-separated string or a list.
+	:param format\_: The file format to retrieve the data in. Valid values are in :class:`PubChemFormats`, plus "PNG"
+	:param domain:
+	:param record_type:
+	:param query_params:
+	"""
 
 	if domain:
 		r = cached_requests.get(f"{_make_base_url(namespace, identifier)}/{domain}/{format_}", params=query_params)
@@ -135,7 +147,13 @@ def _do_cached_request(
 	return r
 
 
-def get_full_json(cid):
+def get_full_json(cid: Union[str, int]) -> str:
+	"""
+	Returns the full JSON record for the compound with the given ID.
+
+	:param cid:
+	"""
+
 	json_file = cached_requests.get(f"{API_BASE}_view/data/compound/{cid}/JSON/")
 	return json_file.json()
 
@@ -148,10 +166,18 @@ def async_get(
 		searchtype=None,
 		**kwargs
 		) -> bytes:
+	r"""
+	Request wrapper that automatically handles asynchronous requests.
+
+	:param identifier: Identifiers (e.g. name, CID) for the compounds to look up.
+		When using the CID namespace data for multiple compounds can be retrieved at once by
+		supplying either a comma-separated string or a list.
+	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`.
+	:param operation:
+	:param output:
+	:param searchtype:
+	:param \*\*kwargs: Keyword parameters passed along with the GET request.
 	"""
-	Request wrapper that automatically handles async requests.
-	"""
-	# TODO:
 
 	if (searchtype and searchtype != "xref") or namespace in ["formula"]:
 		r = request(identifier, namespace, None, "JSON", searchtype, **kwargs)
@@ -185,6 +211,15 @@ def request(
 	Construct API request from parameters and return the response.
 
 	Full specification at http://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html
+
+	:param identifier: Identifiers (e.g. name, CID) for the compounds to look up.
+		When using the CID namespace data for multiple compounds can be retrieved at once by
+		supplying either a comma-separated string or a list.
+	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`.
+	:param operation:
+	:param output:
+	:param searchtype:
+	:param \*\*kwargs: Keyword parameters passed along with the GET request.
 	"""
 
 	# If identifier is a list, join with commas into string
@@ -203,7 +238,7 @@ def request(
 
 	urlid = quote(identifier.encode("utf8"))
 
-	comps = filter(None, [API_BASE, "compound", searchtype, namespace, urlid, operation, output])  # type: ignore
+	comps: Iterator[str] = filter(None, (API_BASE, "compound", searchtype, namespace, urlid, operation, output))
 	apiurl = '/'.join(comps)
 
 	# Filter None values from kwargs

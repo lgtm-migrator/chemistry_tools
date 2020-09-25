@@ -159,5 +159,5 @@ def test_joule_html():
 	assert joule.html == joule_htm
 
 
-def test_latex_of_unit():
-	assert units.latex_of_unit(quantities.gram / quantities.metre**2) == r"\mathrm{\frac{g}{m^{2}}}"
+def test_as_latex():
+	assert units.as_latex(quantities.gram / quantities.metre**2) == r"\mathrm{\frac{g}{m^{2}}}"

@@ -35,7 +35,7 @@ from chemistry_tools.elements import ELEMENTS
 from ._parser_core import _make_isotope_string
 from .dataarray import DataArray
 from .unicode import string_to_unicode
-from .utils import _split_isotope
+from .utils import split_isotope
 
 __all__ = ["CompositionSort", "Composition"]
 
@@ -65,14 +65,13 @@ class Composition(DataArray):
 	Class to represent the elemental composition of a :class:`~chemistry_tools.formulae.formula.Formula`.
 
 	:param formula: A :class:`~chemistry_tools.formulae.formula.Formula` object to create the composition for
-	:type formula: ~chemistry_tools.formulae.formula.Formula
 	"""
 
 	def __init__(self, formula: "formulae.Formula"):
 		data: Dict[str, Dict] = {}
 
 		for isymbol, count in formula.items():
-			symbol, isotope = _split_isotope(isymbol)
+			symbol, isotope = split_isotope(isymbol)
 			element = ELEMENTS[symbol]
 			mass = element.mass * count
 			mass_fraction = mass / formula.mass
@@ -92,9 +91,7 @@ class Composition(DataArray):
 	@property
 	def total_mass(self) -> float:
 		"""
-		Returns the total mass of the composition.
-
-		:rtype: float
+		The total mass of the composition.
 		"""
 
 		return self._total_mass
@@ -102,9 +99,7 @@ class Composition(DataArray):
 	@property
 	def n_elements(self) -> int:
 		"""
-		Returns the number of elements in the composition.
-
-		:rtype: int
+		The number of elements in the composition.
 		"""
 
 		return len(self)
@@ -122,9 +117,7 @@ class Composition(DataArray):
 		Returns the elemental composition as a list of lists.
 
 		:param sort_by: The column to sort by.
-		:type sort_by: CompositionSort
-		:param: Whether the isotopologues should be sorted in reverse order. Default ``False``.
-		:type reverse: bool, optional
+		:param reverse: Whether the isotopologues should be sorted in reverse order.
 		"""
 
 		output = []

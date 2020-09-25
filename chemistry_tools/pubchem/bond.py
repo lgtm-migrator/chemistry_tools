@@ -46,6 +46,7 @@
 from typing import Any, Dict, FrozenSet, Optional, Union
 
 # 3rd party
+from domdf_python_tools.doctools import prettify_docstrings
 from enum_tools import IntEnum
 
 # this package
@@ -55,6 +56,10 @@ __all__ = ["BondType", "Bond", "parse_bonds"]
 
 
 class BondType(IntEnum):
+	"""
+	Enumeration of possible bond types.
+	"""
+
 	SINGLE = 1
 	DOUBLE = 2
 	TRIPLE = 3
@@ -65,9 +70,16 @@ class BondType(IntEnum):
 	UNKNOWN = 255
 
 
+@prettify_docstrings
 class Bond:
 	"""
-	Class to represent a bond between two atoms in a :class:`~pubchempy.Compound`.
+	Class to represent a bond between two atoms in a
+	:class:`~chemistry_tools.pubchem.compound.Compound`.
+
+	:param aid1: ID of the begin atom of this bond
+	:param aid2: ID of the end atom of this bond
+	:param order: Bond order
+	:param style: Bond style annotation.
 	"""
 
 	def __init__(
@@ -77,19 +89,6 @@ class Bond:
 			order: Union[int, BondType] = BondType.SINGLE,
 			style=None,
 			):
-		"""
-		Initialize with begin and end atom IDs, bond order and bond style.
-
-		:param aid1: ID of the begin atom of this bond
-		:type aid1: int
-		:param aid2: ID of the end atom of this bond
-		:type aid2: int
-		:param order: Bond order
-		:type order: ~chemistry_tools.pubchem.bond.BondType
-		:param style: Bond style annotation.
-		:type style:
-		"""
-
 		self.aid1: int = aid1
 		self.aid2: int = aid2
 		self.order: BondType = BondType(order)
@@ -120,16 +119,12 @@ class Bond:
 		return data
 
 
-def parse_bonds(bonds_dict: Dict[str, Any], coords_dict: Optional[Dict] = None) -> Dict[FrozenSet[int], Bond]:
+def parse_bonds(bonds_dict: Dict[str, Any], coords_dict: Optional[Dict] = None,) -> Dict[FrozenSet[int], Bond]:
 	"""
+	Parse bonds from the given dictionary.
 
 	:param bonds_dict:
-	:type bonds_dict: dict
 	:param coords_dict:
-	:type coords_dict: dict or None
-
-	:return:
-	:rtype: dict
 	"""
 
 	bonds: Dict[FrozenSet[int], Bond] = {}

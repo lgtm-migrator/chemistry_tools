@@ -13,7 +13,7 @@ import shutil
 import tempfile
 
 # 3rd party
-import pytest  # type: ignore
+import pytest
 
 # this package
 from chemistry_tools.pubchem.images import get_structure_image

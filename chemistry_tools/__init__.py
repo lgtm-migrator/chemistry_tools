@@ -83,7 +83,7 @@ __version__ = "0.3.1"
 __email__ = "dominic@davis-foster.co.uk"
 
 # this package
-from chemistry_tools.rate_limiter import cached_requests, clear_cache
+from chemistry_tools.cache import cached_requests, clear_cache
 
 __all__ = [
 		# "spectrum_similarity",

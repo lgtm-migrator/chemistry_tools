@@ -2,7 +2,7 @@
 #
 #  errors.py
 """
-Error handling functions
+Error handling.
 """
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -48,7 +48,6 @@ Error handling functions
 import json
 
 __all__ = [
-		"PubChemPyError",
 		"ResponseParseError",
 		"PubChemHTTPError",
 		"BadRequestError",
@@ -56,9 +55,11 @@ __all__ = [
 		"MethodNotAllowedError",
 		"TimeoutError",
 		"UnimplementedError",
-		"ServerError"
+		"ServerError",
+		"HTTP_ERROR_CODES",
 		]
 
+#: Numerical list of HTTP status codes considered to be errors.
 HTTP_ERROR_CODES = [
 		400,  # Bad Request
 		401,  # Unauthorized
@@ -102,19 +103,13 @@ HTTP_ERROR_CODES = [
 		]
 
 
-class PubChemPyError(Exception):
-	"""
-	Base class for all PubChemPy exceptions.
-	"""
-
-
-class ResponseParseError(PubChemPyError):
+class ResponseParseError(Exception):
 	"""
 	PubChem response is uninterpretable.
 	"""
 
 
-class PubChemHTTPError(PubChemPyError):
+class PubChemHTTPError(Exception):
 	"""
 	Generic error class to handle all HTTP error codes.
 	"""

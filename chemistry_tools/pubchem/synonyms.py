@@ -25,12 +25,17 @@ from typing import Dict, List, Sequence, Union
 
 # this package
 from chemistry_tools.pubchem.enums import PubChemNamespace
-from chemistry_tools.pubchem.pug_rest import _do_rest_get
+from chemistry_tools.pubchem.pug_rest import do_rest_get
 
 __all__ = ["Synonyms", "get_synonyms", "rest_get_synonyms"]
 
 
-class Synonyms(list):
+class Synonyms(List[str]):
+	"""
+	Contains a list of synonyms for a compound.
+
+	:param initlist: The content to initialise the list with.
+	"""
 
 	def __init__(self, initlist):
 		super().__init__()
@@ -38,18 +43,32 @@ class Synonyms(list):
 		for val in initlist:
 			self.append(str(val))
 
-	def __contains__(self, value):
+	def __contains__(self, synonym) -> bool:
+		"""
+		Return ``synonym in self``.
+
+		The comparison treats hyphens and underscores as whitespace.
+
+		:param synonym:
+		"""
+
 		for v in self:
-			if self.__prep_contains(v) == self.__prep_contains(value):
+			if self._prep_contains(v) == self._prep_contains(synonym):
 				return True
 		return False
 
-	def append(self, item):
-		if item not in self:
-			super().append(str(item))
+	def append(self, synonym: str):
+		"""
+		Append ``synonym`` to the end of the list.
+
+		:param synonym:
+		"""
+
+		if synonym not in self:
+			super().append(str(synonym))
 
 	@staticmethod
-	def __prep_contains(val):
+	def _prep_contains(val: str) -> str:
 		val = val.casefold()
 
 		for remove in ["-", "_", " "]:
@@ -60,7 +79,7 @@ class Synonyms(list):
 
 def get_synonyms(
 		identifier: Union[str, int, Sequence[Union[str, int]]],
-		namespace: Union[PubChemNamespace, str] = "name",
+		namespace: Union[PubChemNamespace, str] = PubChemNamespace.name,
 		) -> List[Dict]:
 	"""
 	Returns a list of synonyms for the compound with the given identifier.
@@ -69,12 +88,10 @@ def get_synonyms(
 	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
-	:type identifier: str, Sequence[str]
-	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`. Default "name"
-	:type namespace: PubChemNamespace, optional
+	:param namespace: The type of identifier to look up. Valid values are in
+		:class:`PubChemNamespace`.
 
-	:return: List of dictionaries containing the CID and a list of synonyms for the compounds
-	:rtype: List[dict]
+	:return: List of dictionaries containing the CID and a list of synonyms for the compounds.
 	"""
 
 	data = rest_get_synonyms(identifier, namespace)
@@ -98,19 +115,17 @@ def rest_get_synonyms(
 		**kwargs,
 		) -> Dict:
 	"""
-	Get the list of synonyms for the given compound
+	Get the list of synonyms for the given compound.
 
 	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
 	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`
-	:type namespace: PubChemNamespace, optional
 	:param kwargs: Optional arguments that ``json.loads`` takes.
 
 	:raises ValueError: If the response body does not contain valid json.
 
-	:return: Parsed json data
-	:rtype: dict
+	:return: Parsed json data.
 	"""
 
-	return _do_rest_get(namespace, identifier, domain="synonyms").json(**kwargs)
+	return do_rest_get(namespace, identifier, domain="synonyms").json(**kwargs)

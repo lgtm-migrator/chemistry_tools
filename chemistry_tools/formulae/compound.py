@@ -81,6 +81,8 @@ import quantities  # type: ignore
 from domdf_python_tools.bases import Dictable
 
 # this package
+from domdf_python_tools.doctools import prettify_docstrings
+
 from chemistry_tools.formulae.formula import Formula
 from chemistry_tools.formulae.html import string_to_html
 from chemistry_tools.formulae.latex import string_to_latex
@@ -89,24 +91,19 @@ from chemistry_tools.formulae.unicode import string_to_unicode
 __all__ = ["Compound"]
 
 
+@prettify_docstrings
 class Compound(Dictable):
 	"""
 	Class representing a chemical compound.
 
 	:param name: The name of the compound
-	:type name: str
-	:param formula: The chemical formula of the compound. If ``None`` this is generated from the name
-	:type formula: ~chemistry_tools.formulae.formula.Formula
+	:param formula: The chemical formula of the compound. If :py:obj:`None` this is generated from the name
 	:param data: Free form dictionary. Could be simple such as ``{'mp': 0, 'bp': 100}``
 		or considerably more involved, e.g.: ``{'diffusion_coefficient': {\
 		'water': lambda T: 2.1*m**2/s/K*(T - 273.15*K)}}``.
-	:type data: dict
 	:param latex_name:
-	:type latex_name: str
 	:param unicode_name:
-	:type unicode_name: str
 	:param html_name:
-	:type html_name: str
 	"""
 
 	# 	formula:
@@ -175,9 +172,7 @@ class Compound(Dictable):
 	@property
 	def charge(self) -> int:
 		"""
-		Returns the charge of the compound.
-
-		:rtype: int
+		The charge of the compound.
 		"""
 
 		return self.formula.charge
@@ -185,9 +180,7 @@ class Compound(Dictable):
 	@property
 	def mass(self) -> float:
 		"""
-		Returns the mass of the compound.
-
-		:rtype: int
+		The mass of the compound.
 		"""
 
 		return self.formula.mass
@@ -197,10 +190,13 @@ class Compound(Dictable):
 		Returns the molar mass (with units) of the substance
 
 		**Examples**
-		>>> nh4p = Compound('NH4+')
-		>>> from chemistry_tools.units import quantities
-		>>> nh4p.molar_mass(quantities)
-		array(18.0384511...) * g/mol
+		
+		.. code-block:: python
+
+			>>> nh4p = Compound('NH4+')
+			>>> import quantities
+			>>> nh4p.molar_mass(quantities)
+			array(18.0384511...) * g/mol
 		"""
 
 		return self.mass * quantities.g / quantities.mol
@@ -210,6 +206,3 @@ class Compound(Dictable):
 
 	def __str__(self) -> str:
 		return str(self.name)
-
-	def _repr_html_(self) -> str:
-		return self.html_name

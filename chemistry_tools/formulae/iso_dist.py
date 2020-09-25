@@ -28,7 +28,9 @@ from collections import OrderedDict
 from typing import Any, List, Union
 
 # 3rd party
+from domdf_python_tools.doctools import prettify_docstrings
 from enum_tools import IntEnum
+from enum_tools.documentation import document_enum
 
 # this package
 from chemistry_tools import formulae
@@ -40,34 +42,32 @@ from .unicode import string_to_unicode
 __all__ = ["IsoDistSort", "IsotopeDistribution"]
 
 
+@document_enum
 class IsoDistSort(IntEnum):
 	"""
-	Lookup for sorting isotope distribution output
+	Lookup for sorting isotope distribution output.
 	"""
 
-	Formula = formula = 0  # "Sort isosope distribution by formulae"
-	Mass = mass = 1  # "Sort isotope distribution by masses"
-	Abundance = abundance = 2  # "Sort isotope distribution by abundances"
-	Relative_Abundance = Relative_abundance = relative_abundance = 3  # "Sort isotope distribution by relative abundances"
+	Formula = formula = 0  # doc: Sort the isosope distribution by the formulae.
+	Mass = mass = 1  # doc: Sort the isotope distribution by the masses.
+	Abundance = abundance = 2  # doc: Sort the isotope distribution by the abundances.
+	Relative_Abundance = Relative_abundance = relative_abundance = 3  # doc: Sort the isotope distribution by the relative abundances.
 
 
+@prettify_docstrings
 class IsotopeDistribution(DataArray):
 	"""
+	An isotope distribution.
 
+	:param formula: A :class:`~chemistry_tools.formulae.formula.Formula` object to create the distribution for
 
 	Each composition can be accessed with their hill formulae like a dictionary
-	(e.g. iso_dict["H[1]2O[16]"])
+	(e.g. ``iso_dict['H[1]2O[16]']``)
 	"""
 
 	# TODO: as_mass_spec
 
 	def __init__(self, formula: "formulae.Formula"):
-		"""
-
-		:param formula: A :class:`~chemistry_tools.formulae.formula.Formula`  object to create the distribution for
-		:type formula: :class:`~chemistry_tools.formulae.formula.Formula`
-		"""
-
 		iso_compositions = list(formula.iter_isotopologues())
 		compositions = OrderedDict()
 		max_abundance: float = 0
@@ -96,11 +96,8 @@ class IsotopeDistribution(DataArray):
 		Returns the isotope distribution data as a list of lists
 
 		:param sort_by: The column to sort by.
-		:type sort_by: ~chemistry_tools.formulae.iso_dist.IsoDistSort
-		:param: Whether the isotopologues should be sorted in reverse order. Default ``False``.
-		:type reverse: bool, optional
-		:param: Whether the abundances should be formatted as percentages or not. Default ``False``.
-		:type format_percentage: bool, optional
+		:param reverse: Whether the isotopologues should be sorted in reverse order.
+		:param format_percentage: Whether the abundances should be formatted as percentages or not.
 		"""
 
 		if sort_by == IsoDistSort.formula:

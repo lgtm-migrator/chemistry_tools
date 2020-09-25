@@ -55,13 +55,7 @@ API_BASE = "https://pubchem.ncbi.nlm.nih.gov/rest/pug"
 __all__ = [
 		"API_BASE",
 		"atom",
-		"bond",  # "compound",
-		# "description",
+		"bond",
 		"enums",
-		"errors",  # "full_record",
-		# "images",
-		# "properties",
-		# "pug_rest",
-		# "synonyms",
-		# "utils",
+		"errors",
 		]

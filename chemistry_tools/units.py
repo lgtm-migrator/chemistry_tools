@@ -45,49 +45,76 @@
 #  |  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# stdlib
-from collections import OrderedDict
-
 # 3rd party
+from typing import Union
+
 import numpy  # type: ignore
 import quantities  # type: ignore
 import quantities.markup  # type: ignore
 
-__all__ = ["latex_of_unit", "compare_equality", "allclose", "format_string"]
+__all__ = [
+		"as_latex",
+		"compare_equality",
+		"allclose",
+		"format_string",
+		"per100eV",
+		"dm",
+		"m3",
+		"dm3",
+		"cm3",
+		"nanomolar",
+		"molal",
+		"micromole",
+		"nanomole",
+		"kilojoule",
+		"kilogray",
+		"perMolar_perSecond",
+		"umol_per_J",
+		"SI_base_registry",
+		"dimension_codes",
+		]
 
 
-def latex_of_unit(quant):
+def as_latex(quant: quantities.quantity.Quantity):
 	r"""
-	Returns LaTeX reperesentation of the unit of a quantity
+	Returns the LaTeX reperesentation of the unit of a quantity.
 
-	**Examples**
-	>>> print(latex_of_unit(1/quantities.kelvin))
-	\mathrm{\frac{1}{K}}
+	**Example**
+
+	.. code-block:: python
+
+		>>> print(as_latex(1/quantities.kelvin))
+		\mathrm{\frac{1}{K}}
 	"""
 
 	# see https://github.com/python-quantities/python-quantities/issues/148
 	return quantities.markup.format_units_latex(quant.dimensionality, mult=r"\\cdot").strip('$')
 
 
-# NumPy like functions for compatibility:
+latex_of_unit = as_latex
 
 
-def compare_equality(a, b) -> bool:
+def compare_equality(
+		a: Union[quantities.quantity.Quantity, float],
+		b: Union[quantities.quantity.Quantity, float],
+		) -> bool:
 	"""
-	Returns ``True`` if two arguments are equal.
+	Returns :py:obj:`True` if two arguments are equal.
+
 	Both arguments need to have the same dimensionality.
 
 	**Examples**
-	>>> km, m = quantities.kilometre, quantities.metre
-	>>> compare_equality(3*km, 3)
-	False
-	>>> compare_equality(3*km, 3000*m)
-	True
+
+	.. code-block:: python
+
+		>>> km, m = quantities.kilometre, quantities.metre
+		>>> compare_equality(3*km, 3)
+		False
+		>>> compare_equality(3*km, 3000*m)
+		True
 
 	:param a:
-	:type a: quantity
 	:param b:
-	:type b: quantity
 	"""
 
 	# Work around for https://github.com/python-quantities/python-quantities/issues/146
@@ -96,23 +123,28 @@ def compare_equality(a, b) -> bool:
 	except TypeError:
 		# We might be dealing with e.g. None (None + None raises TypeError)
 		try:
-			len(a)
+			len(a)  # type: ignore
 		except TypeError:
 			# Assumed scalar
 			return a == b
 		else:
-			if len(a) != len(b):
+			if len(a) != len(b):  # type: ignore
 				return False
-			return all(compare_equality(_a, _b) for _a, _b in zip(a, b))
+			return all(compare_equality(_a, _b) for _a, _b in zip(a, b))  # type: ignore
 	except ValueError:
 		return False
 	else:
 		return a == b
 
 
-def allclose(a, b, rtol=1e-8, atol=None):
+def allclose(a, b, rtol=1e-8, atol=None) -> bool:
 	"""
-	Analogous to ``numpy.allclose``.
+	Analogous to :py:func:`numpy.allclose`.
+
+	:param a:
+	:param b:
+	:param rtol: The relative tolerance.
+	:param atol: The absolute tolerance.
 	"""
 
 	try:
@@ -143,29 +175,26 @@ def allclose(a, b, rtol=1e-8, atol=None):
 
 
 # TODO: decide whether to deprecate in favor of "number_to_scientific_latex"?
-def format_string(value, precision="%.5g", tex=False):
+def format_string(value: quantities.quantity.Quantity, precision: str = "%.5g", tex: bool = False):
 	"""
 	Formats a scalar with unit as two strings
 
-	:param value: Value with unit
-	:type value: float
-	:param precision:
-	:type precision: str, optional
-	:param tex: Whether the string should be formatted for LaTex. Default :const:`False`
-	:type tex: bool, optional
-
-	:return:
-	:rtype:
-
 	**Examples**
-	>>> print(' '.join(format_string(0.42*quantities.mol/quantities.decimetre**3)))
-	0.42 mol/decimetre**3
-	>>> print(' '.join(format_string(2/quantities.s, tex=True)))
-	2 \\mathrm{\\frac{1}{s}}
+
+	.. code-block:: python
+
+		>>> print(' '.join(format_string(0.42*quantities.mol/decimetre**3)))
+		0.42 mol/decimetre**3
+		>>> print(' '.join(format_string(2/quantities.s, tex=True)))
+		2 \\mathrm{\\frac{1}{s}}
+
+	:param value: Value with unit
+	:param precision:
+	:param tex: Whether the string should be formatted for LaTex.
 	"""
 
 	if tex:
-		unit_str = latex_of_unit(value)
+		unit_str = as_latex(value)
 	else:
 		attr = "unicode" if quantities.markup.config.use_unicode else "string"
 		unit_str = getattr(value.dimensionality, attr)
@@ -173,23 +202,48 @@ def format_string(value, precision="%.5g", tex=False):
 
 
 # Additional units to complement quantities
+#: Per 100 electronVolts.
 per100eV = quantities.UnitQuantity(
 		"per_100_eV", 1 / (100 * quantities.eV * quantities.constants.Avogadro_constant), u_symbol="(100eV)**-1"
 		)
+
+#: Decimetre
 dm = decimetre = quantities.UnitQuantity("decimetre", quantities.m / 10.0, u_symbol="dm")
+
+#: Square metre
 m3 = quantities.metre**3
+
+#: Square decimetre
 dm3 = decimetre**3
+
+#: Square cenimetre
 cm3 = quantities.centimetre**3
+
+#: Nanomolar
 nanomolar = quantities.UnitQuantity("nM", 1e-6 * quantities.mole / m3, u_symbol="nM")
+
+#: Molal (moles per kilogram)
 molal = quantities.UnitQuantity("molal", quantities.mole / quantities.kg, u_symbol="molal")
+
+#: Micromole
 micromole = quantities.UnitQuantity("micromole", quantities.mole / 1e6, u_symbol="μmol")
+
+#: Nanomole
 nanomole = quantities.UnitQuantity("nanomole", quantities.mole / 1e9, u_symbol="nmol")
+
+#: Kilojoule
 kilojoule = quantities.UnitQuantity("kilojoule", 1e3 * quantities.joule, u_symbol="kJ")
+
+#: Kilogray
 kilogray = quantities.UnitQuantity("kilogray", 1e3 * quantities.gray, u_symbol="kGy")
+
+#: Per Molar per second.
 perMolar_perSecond = 1 / quantities.molar / quantities.s
+
+#: Micro mole per joule.
 umol_per_J = quantities.umol / quantities.joule
 
-# unit registry data and logic:
+#: Mapping of SI measurements to their units.
 SI_base_registry = {
 		"length": quantities.metre,
 		"mass": quantities.kilogram,
@@ -200,6 +254,7 @@ SI_base_registry = {
 		"amount": quantities.mole
 		}
 
+#: Mapping of dimension names to symbols.
 dimension_codes = {
 		"length": 'L',
 		"mass": 'M',
