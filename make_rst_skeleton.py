@@ -1,5 +1,8 @@
+# stdlib
 import pathlib
 from typing import List, Optional
+
+# 3rd party
 from domdf_python_tools.paths import clean_writer
 
 
@@ -60,9 +63,6 @@ class Module:
 			buf += f"\n\n.. extras-require:: {extras}\n"
 			buf += f"	:file: {extras}/requirements.txt"
 		buf += f"\n\n.. automodule:: {dotted_name}\n"
-		buf += "	:members:\n"
-		buf += "	:autosummary:\n"
-		buf += "	:undoc-members:\n"
 		with (directory / self.name).with_suffix(".rst").open("w", encoding="UTF-8") as fp:
 			clean_writer(buf, fp)
 

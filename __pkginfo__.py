@@ -51,7 +51,7 @@ github_username = "domdfcoding"
 web = github_url = "https://github.com/domdfcoding/chemistry_tools"
 repo_root = pathlib.Path(__file__).parent
 install_requires = (repo_root / "requirements.txt").read_text(encoding="utf-8").split('\n')
-extras_require = {'pubchem': ['cawdrey>=0.1.5', 'domdf_python_tools>=0.3.6', 'mathematical>=0.1.7', 'memoized-property>=1.0.3', 'Pillow>=7.0.0', 'pyparsing>=2.2.0', 'tabulate>=0.8.3'], 'elements': ['domdf_python_tools>=0.3.6', 'memoized-property>=1.0.3'], 'formulae': ['cawdrey>=0.1.5', 'domdf_python_tools>=0.3.6', 'mathematical>=0.1.7', 'memoized-property>=1.0.3', 'pyparsing>=2.2.0', 'tabulate>=0.8.3'], 'plotting': ['matplotlib>=3.0.0'], 'toxnet': ['beautifulsoup4>=4.7.0'], 'all': ['Pillow>=7.0.0', 'beautifulsoup4>=4.7.0', 'cawdrey>=0.1.5', 'domdf_python_tools>=0.3.6', 'mathematical>=0.1.7', 'matplotlib>=3.0.0', 'memoized-property>=1.0.3', 'pyparsing>=2.2.0', 'tabulate>=0.8.3']}
+extras_require = {'pubchem': ['cawdrey>=0.1.7', 'mathematical>=0.1.13', 'Pillow>=7.0.0', 'pyparsing>=2.2.0', 'tabulate>=0.8.3'], 'elements': ['chemistry_tools/elements/requirements.txt'], 'formulae': ['cawdrey>=0.1.7', 'mathematical>=0.1.13', 'pyparsing>=2.2.0', 'tabulate>=0.8.3'], 'plotting': ['matplotlib>=3.0.0'], 'toxnet': ['beautifulsoup4>=4.7.0'], 'all': ['Pillow>=7.0.0', 'beautifulsoup4>=4.7.0', 'cawdrey>=0.1.7', 'chemistry_tools/elements/requirements.txt', 'mathematical>=0.1.13', 'matplotlib>=3.0.0', 'pyparsing>=2.2.0', 'tabulate>=0.8.3']}
 
 
 
