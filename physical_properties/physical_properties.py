@@ -47,17 +47,21 @@ import json
 from collections import Counter
 from itertools import zip_longest
 
+# 3rd party
+from memoized_property import memoized_property
+
 # this package
 from chemistry_tools.constants import CoordinateType
 from chemistry_tools.elements import ELEMENTS
 from chemistry_tools.property_format import *
-from chemistry_tools.toxnet import toxnet
 from chemistry_tools.pubchem.atom import Atom
 from chemistry_tools.pubchem.bond import Bond
 from chemistry_tools.pubchem.errors import ResponseParseError
-from .utils import get_full_json, get_json, request
-from memoized_property import memoized_property
+from chemistry_tools.toxnet import toxnet
+
+# this package
 from .compoundv2 import Compound as CompoundV2
+from .utils import get_full_json, get_json, request
 
 
 class PhysicalProperties:
@@ -76,7 +80,6 @@ class PhysicalProperties:
 		For most users, the ``from_cid()`` class method is probably a better way of creating Compounds.
 
 		:param record: A compound record returned by the PubChem PUG REST service.
-		:type record: dict
 		"""
 
 		self.cid = cid

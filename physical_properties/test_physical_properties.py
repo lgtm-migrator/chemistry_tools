@@ -1,25 +1,17 @@
-# stdlib
-import re
-from decimal import Decimal
-
 # 3rd party
-import pytest  # type: ignore
+import pytest
 
 # this package
-from chemistry_tools.constants import text_types
-from chemistry_tools.pubchem.lookup import get_compounds
-from chemistry_tools.pubchem.atom import Atom
-from chemistry_tools.pubchem.bond import BondType
 from chemistry_tools.pubchem.compound import Compound
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def c1():
 	"""Compound CID 241."""
 	return Compound.from_cid(241)
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def c2():
 	"""Compound CID 175."""
 	return Compound.from_cid(175)
