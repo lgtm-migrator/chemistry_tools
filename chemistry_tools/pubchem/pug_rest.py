@@ -207,7 +207,7 @@ def request(
 		searchtype=None,
 		**kwargs,
 		) -> requests.Response:
-	"""
+	r"""
 	Construct API request from parameters and return the response.
 
 	Full specification at http://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html

@@ -111,7 +111,6 @@ from .formula import Formula
 
 __all__ = ["Species", "S"]
 
-#: TypeVar bound to :class:`chemistry_tools.formulae.species.Species`.
 S = TypeVar('S', bound="Species")
 
 

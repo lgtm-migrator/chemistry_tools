@@ -125,7 +125,6 @@ from .utils import GROUPS, hill_order, split_isotope
 
 __all__ = ["Formula", "F"]
 
-#: TypeVar bound to :class:`chemistry_tools.formulae.formula.Formula`.
 F = TypeVar('F', bound="Formula")
 
 
@@ -133,7 +132,7 @@ F = TypeVar('F', bound="Formula")
 class Formula(defaultdict, Counter):
 	"""
 	A Formula object stores a chemical composition of a compound.
-	It is based on :class:`python:dict`, with the symbols of chemical elements
+	It is based on :class:`dict`, with the symbols of chemical elements
 	as keys and the values equal to the number of atoms of the corresponding
 	element in the compound.
 

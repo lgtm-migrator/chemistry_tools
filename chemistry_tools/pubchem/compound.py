@@ -68,7 +68,6 @@ from chemistry_tools.pubchem.synonyms import get_synonyms
 
 __all__ = ["Compound", "compounds_to_frame", "C"]
 
-#: TypeVar bound to :class:`chemistry_tools.pubchem.compound.Compound`.
 C = TypeVar('C', bound="Compound")
 
 
