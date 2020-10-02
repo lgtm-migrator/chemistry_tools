@@ -6,7 +6,7 @@
 	:file: formulae/requirements.txt
 	:scope: package
 
-.. toctree:: chemistry_tools.formulae
+.. toctree::
 	:maxdepth: 3
 	:glob:
 

@@ -6,7 +6,7 @@
 	:file: pubchem/requirements.txt
 	:scope: package
 
-.. toctree:: chemistry_tools.pubchem
+.. toctree::
 	:maxdepth: 3
 	:glob:
 
