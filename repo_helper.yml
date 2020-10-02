@@ -65,7 +65,6 @@ extras_require:
 # Paths to additional requirements.txt files, relative to repo root
 additional_requirements_files:
   - "chemistry_tools/pubchem/requirements.txt"
-  - "chemistry_tools/elements/requirements.txt"
   - "chemistry_tools/formulae/requirements.txt"
 
 tox_testenv_extras: all

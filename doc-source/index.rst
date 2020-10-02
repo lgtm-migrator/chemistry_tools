@@ -120,13 +120,24 @@ Installation
 
 .. end installation
 
+.. toctree::
+	:hidden:
+
+	Home<self>
 
 .. toctree::
-	:maxdepth: 6
+	:maxdepth: 2
 	:caption: API Reference
 	:glob:
 
-	api/*/index
+	api/elements/index
+	api/formulae/index
+	api/pubchem/index
+
+.. toctree::
+	:maxdepth: 6
+	:glob:
+
 	api/*
 
 .. toctree::
