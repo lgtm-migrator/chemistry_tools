@@ -26,7 +26,7 @@ all_requirements = (repo_root / "requirements.txt").read_text(encoding="utf-8").
 
 # TODO: entry_points, manifest
 
-for requires in {'pubchem': ['cawdrey>=0.1.7', 'mathematical>=0.1.13', 'Pillow>=7.0.0', 'pyparsing>=2.2.0', 'tabulate>=0.8.3'], 'formulae': ['cawdrey>=0.1.7', 'mathematical>=0.1.13', 'pyparsing>=2.2.0', 'tabulate>=0.8.3'], 'plotting': ['matplotlib>=3.0.0'], 'toxnet': ['beautifulsoup4>=4.7.0'], 'all': ['Pillow>=7.0.0', 'beautifulsoup4>=4.7.0', 'cawdrey>=0.1.7', 'mathematical>=0.1.13', 'matplotlib>=3.0.0', 'pyparsing>=2.2.0', 'tabulate>=0.8.3']}.values():
+for requires in {'pubchem': ['cawdrey>=0.1.7', 'mathematical>=0.1.13', 'pillow>=7.0.0', 'pyparsing>=2.2.0', 'tabulate>=0.8.3'], 'formulae': ['cawdrey>=0.1.7', 'mathematical>=0.1.13', 'pyparsing>=2.2.0', 'tabulate>=0.8.3'], 'plotting': ['matplotlib>=3.0.0'], 'toxnet': ['beautifulsoup4>=4.7.0'], 'all': ['beautifulsoup4>=4.7.0', 'cawdrey>=0.1.7', 'mathematical>=0.1.13', 'matplotlib>=3.0.0', 'pillow>=7.0.0', 'pyparsing>=2.2.0', 'tabulate>=0.8.3']}.values():
 	all_requirements += requires
 
 all_requirements = {x.replace(" ", '') for x in set(all_requirements)}

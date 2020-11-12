@@ -9,40 +9,27 @@ Test downloading.
 # stdlib
 import csv
 import os
-import shutil
-import tempfile
-
-# 3rd party
-import pytest
 
 # this package
 from chemistry_tools.pubchem.images import get_structure_image
 from chemistry_tools.pubchem.properties import rest_get_properties
 
 
-@pytest.fixture(scope="module")
-def tmp_dir():
-	tmpdir = tempfile.mkdtemp()
-	yield tmpdir
-	shutil.rmtree(tmpdir)
-
-
-def test_image_download(tmp_dir):
+def test_image_download(tmp_pathplus):
 	img = get_structure_image("Asprin")
-	img.save(os.path.join(tmp_dir, "aspirin.png"))
+	img.save(tmp_pathplus / "aspirin.png")
 
 
-def test_csv_download(tmp_dir):
+def test_csv_download(tmp_pathplus):
 	csv_content = rest_get_properties(
 			[1, 2, 3],
 			namespace="cid",
 			properties="CanonicalSMILES,IsomericSMILES",
 			format_="csv",
 			)
-	with open(os.path.join(tmp_dir, "s.csv"), 'w') as fp:
-		fp.write(csv_content)
+	(tmp_pathplus / "s.csv").write_text(csv_content)
 
-	with open(os.path.join(tmp_dir, "s.csv")) as f:
+	with (tmp_pathplus / "s.csv").open() as f:
 		rows = list(csv.reader(f))
 		assert rows[0] == ["CID", "CanonicalSMILES", "IsomericSMILES"]
 		assert rows[1][0] == '1'
