@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #
 #  units.py
+"""
+Functions for handling SI units.
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -267,10 +270,9 @@ dimension_codes = {
 		"amount": 'N',
 		}
 
-
 m_math_space: str = '\u205f'
 """
-A medium mathematical space, ``\u205f``` / ``\\u205f``. 
+A medium mathematical space, ``\u205f``` / ``\\u205f``.
 
 .. versionadded:: 0.4.0
 """
