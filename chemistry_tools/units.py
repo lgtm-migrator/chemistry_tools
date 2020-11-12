@@ -73,6 +73,8 @@ __all__ = [
 		"umol_per_J",
 		"SI_base_registry",
 		"dimension_codes",
+		"m_math_space",
+		"format_si_units",
 		]
 
 
@@ -264,3 +266,24 @@ dimension_codes = {
 		"temperature": 'Θ',
 		"amount": 'N',
 		}
+
+
+m_math_space: str = '\u205f'
+"""
+A medium mathematical space, ``\u205f``` / ``\\u205f``. 
+
+.. versionadded:: 0.4.0
+"""
+
+
+def format_si_units(value: float, *units: str) -> str:
+	r"""
+	Returns the given value, followed by the given units, and separated by a medium mathematical space.
+
+	:param value:
+	:param \*units:
+
+	.. versionadded:: 0.4.0
+	"""
+
+	return ''.join([str(value), m_math_space, *units]).rstrip(m_math_space)
