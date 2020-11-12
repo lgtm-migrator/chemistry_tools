@@ -2,7 +2,7 @@
 #
 #  lanthanides.py
 """
-Lanthanides (or lanthanoids) in the Periodic Table
+Lanthanides (or lanthanoids) in the Periodic Table.
 
 .. data:: La
 

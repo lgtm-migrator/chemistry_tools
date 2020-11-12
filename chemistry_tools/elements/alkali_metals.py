@@ -2,7 +2,7 @@
 #
 #  alkali_metals.py
 """
-Group 1: Alkali Metals in the Periodic Table
+Group 1: Alkali Metals in the Periodic Table.
 
 .. data:: Li
 

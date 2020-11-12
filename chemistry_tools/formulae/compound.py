@@ -2,7 +2,7 @@
 #
 #  compound.py
 """
-Parse formulae into a Python object
+Parse formulae into a Python object.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -186,9 +186,9 @@ class Compound(Dictable):
 
 	def molar_mass(self) -> quantities.quantity.Quantity:
 		"""
-		Returns the molar mass (with units) of the substance
+		Returns the molar mass (with units) of the substance.
 
-		**Examples**
+		**Example:**
 
 		.. code-block:: python
 

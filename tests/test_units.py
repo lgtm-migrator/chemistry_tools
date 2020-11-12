@@ -100,8 +100,10 @@ def test_allclose():
 	a = numpy.linspace(2, 3) * quantities.second
 	b = numpy.linspace(2 / 3600., 3 / 3600.) * quantities.hour
 	assert allclose(a, b)
-	assert allclose([3600 * quantities.second, 2 * quantities.metre / quantities.hour],
-					[1 * quantities.hour, 2 / 3600 * quantities.metre / quantities.second])
+	assert allclose(
+			[3600 * quantities.second, 2 * quantities.metre / quantities.hour],
+			[1 * quantities.hour, 2 / 3600 * quantities.metre / quantities.second],
+			)
 	c1 = [[3000, 4000], [3000, 4000]] * quantities.mol / units.m3
 	c2 = [[3000, 4000], [436.2, 5281.89]] * quantities.mol / units.m3
 	assert not allclose(c1, c2)

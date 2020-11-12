@@ -2,7 +2,7 @@
 #
 #  toxnet.py
 """
-Read data from National Library of Medicine TOXNET
+Read data from National Library of Medicine TOXNET.
 """
 #
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

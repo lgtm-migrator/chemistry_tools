@@ -44,7 +44,7 @@ def get_structure_image(
 		height: int = 300
 		) -> Image.Image:
 	"""
-	Returns an image of the structure of the compound with the given name
+	Returns an image of the structure of the compound with the given name.
 
 	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by

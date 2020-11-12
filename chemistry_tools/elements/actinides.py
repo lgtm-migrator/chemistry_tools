@@ -2,7 +2,7 @@
 #
 #  actinides.py
 """
-Actinides (or actinoids) in the Periodic Table
+Actinides (or actinoids) in the Periodic Table.
 
 .. data:: Ac
 

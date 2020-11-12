@@ -45,7 +45,7 @@ cache_dir = cache.cache_dir
 
 def clear_cache() -> None:
 	"""
-	Clear the cache
+	Clear the cache.
 	"""
 
 	cache.clear()

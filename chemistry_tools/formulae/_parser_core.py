@@ -169,12 +169,9 @@ def _formula_to_parts(
 		) -> List[Any]:
 	"""
 
-	:param formula: The formula to split into parts
-	:type formula:
+	:param formula: The formula to split into parts.
 	:param prefixes: Mapping of prefixes to their HTML equivalents. Default greek letters and ``.``
 	:param suffixes: Suffixes to keep, e.g. ("(g)", "(s)")
-
-	:return:
 	"""
 
 	# Drop prefixes and suffixes
@@ -208,13 +205,13 @@ def _formula_to_parts(
 
 def replace_substrings(string: str, patterns: Dict[str, str]) -> str:
 	"""
-	Replace substrings in a string
+	Replace substrings in a string.
 
-	:param string: The string to replace substrings in
-	:param patterns: A dictionary mapping substrings to their replacements
+	:param string: The string to replace substrings in.
+	:param patterns: A dictionary mapping substrings to their replacements.
 
-	:return: The resulting string
-	"""
+	:return: The resulting string.
+	"""  # noqa: D400
 
 	for patt, repl in patterns.items():
 		string = string.replace(patt, repl)
@@ -246,7 +243,7 @@ def _get_leading_integer(s: str) -> Tuple[int, str]:
 
 def _get_charge(charge_str: str) -> int:
 	"""
-	Parses a string representing a charge
+	Parses a string representing a charge.
 
 	:param charge_str:
 
@@ -303,8 +300,7 @@ _isotope_string = re.compile(r"^([A-Z][a-z+]*)(?:\[(\d+)])?$")
 # TODO: merge with split_isotope
 def _parse_isotope_string(label: str) -> Tuple[str, int]:
 	"""
-	Parse an string with an isotope label and return the element name and
-	the isotope number.
+	Parse an string with an isotope label and return the element name and the isotope number.
 
 	>>> _parse_isotope_string("C")
 	("C", 0)

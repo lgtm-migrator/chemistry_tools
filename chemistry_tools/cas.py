@@ -31,7 +31,7 @@ __all__ = ["cas_int_to_string", "check_cas_number", "cas_string_to_int"]
 
 def cas_int_to_string(cas_no: int) -> str:
 	"""
-	Converts an integer CAS registry number to a hyphenated string
+	Converts an integer CAS registry number to a hyphenated string.
 
 	:param cas_no:
 	"""
@@ -64,7 +64,7 @@ def check_cas_number(cas_no: int) -> int:
 	and that given as part of the CAS registry number is returned.
 
 	:param cas_no:
-	"""
+	"""  # noqa: D400
 
 	cas_no = abs(int(cas_no))
 

@@ -270,9 +270,9 @@ def string_to_composition(
 		suffixes: Sequence[str] = ("(s)", "(l)", "(g)", "(aq)"),
 		) -> Dict[int, int]:
 	"""
-	Parse composition of formula representing a chemical formula
+	Parse composition of formula representing a chemical formula.
 
-	**Examples**
+	**Examples:**
 
 	.. code-block:: python
 

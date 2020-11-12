@@ -2,7 +2,7 @@
 #
 #  iso_dist.py
 """
-Isotope Distributions
+Isotope Distributions.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -93,7 +93,7 @@ class IsotopeDistribution(DataArray):
 			format_percentage: bool = True
 			) -> List[List[Any]]:
 		"""
-		Returns the isotope distribution data as a list of lists
+		Returns the isotope distribution data as a list of lists.
 
 		:param sort_by: The column to sort by.
 		:param reverse: Whether the isotopologues should be sorted in reverse order.

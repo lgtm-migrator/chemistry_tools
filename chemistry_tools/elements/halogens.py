@@ -2,7 +2,7 @@
 #
 #  halogens.py
 """
-Group 17: Halogens in the Periodic Table
+Group 17: Halogens in the Periodic Table.
 
 .. data:: F
 

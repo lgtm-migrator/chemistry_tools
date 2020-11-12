@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #
 #  constants.py
+"""
+Scientific constants.
+"""
 #
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

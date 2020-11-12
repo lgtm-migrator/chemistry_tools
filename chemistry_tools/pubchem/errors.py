@@ -54,6 +54,7 @@ __all__ = [
 		"NotFoundError",
 		"MethodNotAllowedError",
 		"TimeoutError",
+		"HTTPTimeoutError",
 		"UnimplementedError",
 		"ServerError",
 		"HTTP_ERROR_CODES",
@@ -128,7 +129,7 @@ class PubChemHTTPError(Exception):
 		elif self.code == 405:
 			raise MethodNotAllowedError(self.msg)
 		elif self.code == 504:
-			raise TimeoutError(self.msg)
+			raise HTTPTimeoutError(self.msg)
 		elif self.code == 501:
 			raise UnimplementedError(self.msg)
 		elif self.code == 500:
@@ -165,13 +166,18 @@ class MethodNotAllowedError(PubChemHTTPError):
 		self.msg = msg
 
 
-class TimeoutError(PubChemHTTPError):
+class HTTPTimeoutError(PubChemHTTPError):
 	"""
 	The request timed out, from server overload or too broad a request.
+
+	.. versionchanged:: 0.4.0  Renamed from TimeoutErrpr
 	"""
 
 	def __init__(self, msg="The request timed out"):
 		self.msg = msg
+
+
+TimeoutError = HTTPTimeoutError
 
 
 class UnimplementedError(PubChemHTTPError):

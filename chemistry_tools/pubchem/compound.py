@@ -239,7 +239,7 @@ class Compound(Dictable):
 		List of :class:`Bonds <chemistry_tools.pubchem.bond.Bond>`
 		between :class:`Atoms <chemistry_tools.pubchem.atom.Atom>`
 		in this Compound.
-		"""
+		"""  # noqa: D400
 
 		return sorted(self._bonds.values(), key=lambda x: (x.aid1, x.aid2))
 
@@ -265,7 +265,7 @@ class Compound(Dictable):
 	@insert_valid_properties_table()
 	def get_properties(self, properties: Union[Sequence[str], str]) -> Dict[str, Any]:
 		"""
-		Returns the requested properties for the Compound
+		Returns the requested properties for the Compound.
 
 		:param properties: The properties to retrieve for the compound. See the table below.
 			Can be either a comma-separated string or a list.
@@ -309,12 +309,12 @@ class Compound(Dictable):
 	@insert_valid_properties_table()
 	def get_property(self, prop: str) -> Any:
 		"""
-		Get a single property for the compound
+		Get a single property for the compound.
 
 		:param prop: The property to retrieve for the compound. See the table below.
 
 		:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
-		"""
+		"""  # noqa: D400,RST399,RST218
 
 		prop = str(prop)
 
@@ -523,7 +523,7 @@ def compounds_to_frame(compounds: Union[Compound, List[Compound]]) -> DataFrame:
 	:class:`~chemistry_tools.pubchem.compound.Compound` objects.
 
 	:param compounds:
-	"""
+	"""  # noqa: D400
 
 	if isinstance(compounds, Compound):
 		compounds = [compounds]

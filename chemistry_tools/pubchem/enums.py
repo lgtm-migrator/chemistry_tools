@@ -48,7 +48,7 @@ class PubChemNamespace(StrEnum):
 
 	# TODO: listkey for formula lookup https://pubchemdocs.ncbi.nlm.nih.gov/pug-rest$_Toc494865583
 
-	def __new__(cls, value, doc):
+	def __new__(cls, value, doc):  # noqa: D102
 		obj = str.__new__(cls, value)  # noqa
 		obj._value_ = value
 		obj.__doc__ = doc
@@ -76,7 +76,7 @@ class PubChemFormats(StrEnum):
 	CSV = csv = Csv = "CSV"
 	PNG = png = Png = "PNG"
 
-	def __new__(cls, value):
+	def __new__(cls, value):  # noqa: D102
 		obj = str.__new__(cls, value)  # noqa
 		obj._value_ = value
 		obj.__doc__ = f"{value} Format"

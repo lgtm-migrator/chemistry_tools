@@ -2,7 +2,7 @@
 #
 #  chalcogens.py
 """
-Group 16: Chalcogens in the Periodic Table
+Group 16: Chalcogens in the Periodic Table.
 
 .. data:: O
 

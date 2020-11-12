@@ -2,7 +2,7 @@
 #
 #  pnictogens.py
 """
-Group 15: Pnictogens in the Periodic Table
+Group 15: Pnictogens in the Periodic Table.
 
 .. data:: N
 

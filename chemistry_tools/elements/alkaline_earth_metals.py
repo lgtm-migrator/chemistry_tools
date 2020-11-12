@@ -2,7 +2,7 @@
 #
 #  alkaline_earth_metals.py
 """
-Group 2: Alkaline Earth Metals in the Periodic Table
+Group 2: Alkaline Earth Metals in the Periodic Table.
 
 .. data:: Be
 

@@ -2,7 +2,7 @@
 #
 #  formula.py
 """
-Parse formulae into a Python object
+Parse formulae into a Python object.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -185,7 +185,7 @@ class Formula(defaultdict, Counter):
 	@classmethod
 	def from_string(cls: Type['F'], formula: str, charge: int = 0) -> F:
 		"""
-		Create a new :class:`~chemistry_tools.formulae.formula.Formula` object by parsing a string
+		Create a new :class:`~chemistry_tools.formulae.formula.Formula` object by parsing a string.
 
 		.. note:: Isotopes cannot (currently) be parsed using this method
 
@@ -254,7 +254,8 @@ class Formula(defaultdict, Counter):
 			precision: float = 1e-4,
 			) -> "Formula":
 		"""
-		Create a new :class:`~chemistry_tools.formulae.formula.Formula` object from elemental mass fractions by parsing a string
+		Create a new :class:`~chemistry_tools.formulae.formula.Formula` object
+		from elemental mass fractions by parsing a string.
 
 		.. note:: Isotopes cannot (currently) be parsed using this method
 
@@ -263,18 +264,19 @@ class Formula(defaultdict, Counter):
 		:param maxcount:
 		:param precision:
 
-		**Examples**
+		**Example:**
 
-		>>> Formula.from_mass_fractions({'H': 0.112, 'O': 0.888})
-		'H2O'
-		>>> Formula.from_mass_fractions({'D': 0.2, 'O': 0.8})
-		'O[2H]2'
-		>>> Formula.from_mass_fractions({'H': 8.97, 'C': 59.39, 'O': 31.64})
-		'C5H9O2'
-		>>> Formula.from_mass_fractions({'O': 0.26, '30Si': 0.74})
-		'O2[30Si]3'
+		.. code-block:: python
 
-		"""
+			>>> Formula.from_mass_fractions({'H': 0.112, 'O': 0.888})
+			'H2O'
+			>>> Formula.from_mass_fractions({'D': 0.2, 'O': 0.8})
+			'O[2H]2'
+			>>> Formula.from_mass_fractions({'H': 8.97, 'C': 59.39, 'O': 31.64})
+			'C5H9O2'
+			>>> Formula.from_mass_fractions({'O': 0.26, '30Si': 0.74})
+			'O2[30Si]3'
+		"""  # noqa: D400
 
 		# divide normalized fractions by element/isotope mass
 		numbers = {}
@@ -334,7 +336,7 @@ class Formula(defaultdict, Counter):
 		keyword arguments representing the elements in the compound.
 
 		:param charge:
-		"""
+		"""  # noqa: D400
 
 		return cls(kwargs, charge=charge)
 
@@ -507,8 +509,7 @@ class Formula(defaultdict, Counter):
 	@property
 	def isotopic_composition_abundance(self) -> float:
 		"""
-		Calculate the relative abundance of the current isotopic composition
-		of this molecule.
+		Calculate the relative abundance of the current isotopic composition of this molecule.
 
 		:returns: The relative abundance of the current isotopic composition.
 		"""
@@ -606,8 +607,8 @@ class Formula(defaultdict, Counter):
 	def isotope_distribution(self) -> IsotopeDistribution:
 		"""
 		Returns an :class:`~.IsotopeDistribution` object representing the distribution of the
-		isotopologues of the formula
-		"""
+		isotopologues of the formula.
+		"""  # noqa: D400
 
 		return IsotopeDistribution(self)
 
@@ -704,9 +705,9 @@ class Formula(defaultdict, Counter):
 	@property
 	def hill_formula(self) -> str:
 		"""
-		Returns formula in Hill notation
+		Returns the formula in Hill notation.
 
-		**Examples**
+		**Examples:**
 
 		.. code-block:: python
 
@@ -753,9 +754,9 @@ class Formula(defaultdict, Counter):
 	@property
 	def no_isotope_hill_formula(self) -> str:
 		"""
-		Returns formula in Hill notation, without any isotopes specified
+		Returns formula in Hill notation, without any isotopes specified.
 
-		**Examples**
+		**Examples:**
 
 		.. code-block:: python
 
@@ -792,9 +793,9 @@ class Formula(defaultdict, Counter):
 		Returns the empirical formula in Hill notation.
 
 		The empirical formula has the simplest whole number ratio of atoms
-		of each element present in formula.
+		of each element present in the formula.
 
-		**Examples**
+		**Examples:**
 
 		.. code-block:: python
 
@@ -828,7 +829,7 @@ class Formula(defaultdict, Counter):
 
 		**Example**
 
-			.. code-block:: python
+		.. code-block:: python
 
 			>>> Formula.from_string('CH3COOH').n_atoms
 			8

@@ -116,7 +116,7 @@ S = TypeVar('S', bound="Species")
 
 class Species(Formula):
 	"""
-	Formula with phase information (e.g. solid, liquid, gas, or aqueous)
+	Formula with phase information (e.g. solid, liquid, gas, or aqueous).
 
 	Species extends :class:`~chemistry_tools.formulae.formula.Formula` with the new attribute :attr:`phase`
 
@@ -142,7 +142,7 @@ class Species(Formula):
 
 		:param charge: The charge of the compound
 		:param phase: The phase of the compound (e.g. ``'s'`` for solid)
-		"""
+		"""  # noqa: D400
 
 		return cls(kwargs, charge=charge, phase=phase)
 
@@ -158,7 +158,7 @@ class Species(Formula):
 		:param charge:
 
 
-		**Examples**
+		**Examples:**
 
 		.. code-block:: python
 
@@ -218,6 +218,21 @@ class Species(Formula):
 
 	@property
 	def hill_formula(self) -> str:
+		"""
+		Returns the formula in Hill notation.
+
+		**Examples:**
+
+		.. code-block:: python
+
+			>>> Species.from_string('BrC2H5').hill_formula
+			'C2H5Br'
+			>>> Species.from_string('HBr').hill_formula
+			'BrH'
+			>>> Species.from_string('[(CH3)3Si2]2NNa').hill_formula
+			'C6H18NNaSi4'
+		"""
+
 		hill = super().hill_formula
 
 		if self.phase:
@@ -227,6 +242,24 @@ class Species(Formula):
 
 	@property
 	def empirical_formula(self) -> str:
+		"""
+		Returns the empirical formula in Hill notation.
+
+		The empirical formula has the simplest whole number ratio of atoms
+		of each element present in the formula.
+
+		**Examples:**
+
+		.. code-block:: python
+
+			>>> Formula.from_string('H2O').empirical_formula
+			'H2O'
+			>>> Formula.from_string('S4').empirical_formula
+			'S'
+			>>> Formula.from_string('C6H12O6').empirical_formula
+			'CH2O'
+		"""
+
 		hill = super().empirical_formula
 
 		if self.phase:

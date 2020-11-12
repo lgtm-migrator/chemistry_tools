@@ -45,9 +45,8 @@ class DataArray(FrozenOrderedDict):
 	conversion of the data to a list of lists of values.
 
 	:param formula: The formula in hill notation
-	:param data: A dictionary of data to add to the internal
-		:class:`~cawdrey.FrozenOrderedDict`
-	"""
+	:param data: A dictionary of data to add to the internal :class:`~cawdrey.FrozenOrderedDict`
+	"""  # noqa: D400
 
 	_as_array_kwargs: Set[str] = set()
 	_as_table_alignment: List[str] = []
@@ -59,7 +58,7 @@ class DataArray(FrozenOrderedDict):
 
 	def as_csv(self, *args, sep: str = ',', **kwargs) -> str:
 		r"""
-		Returns the data as a CSV formatted string
+		Returns the data as a CSV formatted string.
 
 		:param \*args: Arguments passed to :meth:`~.DataArray.as_array`.
 		:param sep: The separator for the CSV data.
@@ -90,12 +89,12 @@ class DataArray(FrozenOrderedDict):
 	def as_table(self, *args, **kwargs) -> str:
 		"""
 		Returns the isotope distribution data as a table using
-		`tabulate <https://github.com/astanin/python-tabulate>`_
+		`tabulate <https://github.com/astanin/python-tabulate>`_.
 
 		Any arguments taken by :meth:`~.DataArray.as_array` can also be used here.
 
 		Additionally, any valid keyword argument for :func:`tabulate.tabulate` can be used.
-		"""
+		"""  # noqa: D400
 
 		tabulate_kwargs: Dict[str, Any] = {}
 		array_kwargs: Dict[str, Any] = {}

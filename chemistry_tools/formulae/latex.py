@@ -94,10 +94,10 @@ def string_to_latex(
 		infixes: Optional[Dict[str, str]] = None,
 		suffixes: Sequence[str] = ("(s)", "(l)", "(g)", "(aq)"),
 		) -> str:
-	"""
+	r"""
 	Convert a formula string to its LaTeX representation.
 
-	**Examples**
+	**Examples:**
 
 	.. code-block:: python
 
@@ -108,9 +108,9 @@ def string_to_latex(
 		>>> string_to_latex('Fe(CN)6+2(aq)')
 		'Fe(CN)_{6}^{2+}(aq)'
 		>>> string_to_latex('.NHO-(aq)')
-		'^\\bullet NHO^{-}(aq)'
+		'^\bullet NHO^{-}(aq)'
 		>>> string_to_latex('alpha-FeOOH(s)')
-		'\\alpha-FeOOH(s)'
+		'\alpha-FeOOH(s)'
 
 	:param formula: Chemical formula, e.g. ``'H2O'``, ``'Fe+3'``, ``'Cl-'``.
 	:param prefixes: Mapping of prefixes to their LaTeX equivalents. Default greek letters and ``.``.

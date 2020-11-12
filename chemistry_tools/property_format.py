@@ -2,7 +2,7 @@
 #
 #  property_format.py
 """
-Format Physical Properties for Chemicals
+Format Physical Properties for Chemicals.
 """
 #
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

@@ -80,7 +80,7 @@ class Bond:
 	:param aid2: ID of the end atom of this bond
 	:param order: Bond order
 	:param style: Bond style annotation.
-	"""
+	"""  # noqa: D400
 
 	def __init__(
 			self,

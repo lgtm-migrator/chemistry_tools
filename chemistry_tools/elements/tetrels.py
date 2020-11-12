@@ -2,7 +2,7 @@
 #
 #  tetrels.py
 """
-Group 14: Tetrels, carbon group, crystallogens or adamantogens in the Periodic Table
+Group 14: Tetrels, carbon group, crystallogens or adamantogens in the Periodic Table.
 
 .. data:: C
 

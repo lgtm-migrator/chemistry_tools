@@ -263,8 +263,6 @@ def create_array(intensities: Sequence[float], mz: Sequence[float]) -> numpy.nda
 
 	:param intensities: List of intensities
 	:param mz: List of *m/z* values.
-
-	:return:
-	"""
+	"""  # noqa: D400
 
 	return numpy.column_stack((mz, intensities))

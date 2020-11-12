@@ -1,11 +1,3 @@
-"""
-test_property_format
-~~~~~~~~~~~~~
-
-Test property_format
-
-"""
-
 # this package
 from chemistry_tools.spectrum_similarity import SpectrumSimilarity, create_array
 

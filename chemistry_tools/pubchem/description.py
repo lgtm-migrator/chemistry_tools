@@ -40,7 +40,7 @@ __all__ = [
 
 def get_iupac_name(name: str) -> str:
 	"""
-	Returns the systematic IUPAC name for the compound with the given name
+	Returns the systematic IUPAC name for the compound with the given name.
 
 	:param name:
 	"""
@@ -52,7 +52,7 @@ def get_iupac_name(name: str) -> str:
 
 def get_description(name: str) -> str:
 	"""
-	Returns the description compound with the given name
+	Returns the description compound with the given name.
 
 	:param name:
 	"""
@@ -64,7 +64,7 @@ def get_description(name: str) -> str:
 
 def get_common_name(name: str) -> str:
 	"""
-	Returns the common name for the compound with the given name
+	Returns the common name for the compound with the given name.
 
 	:param name:
 	"""
@@ -76,7 +76,7 @@ def get_common_name(name: str) -> str:
 
 def get_compound_id(name: str) -> str:
 	"""
-	Returns the compound ID (CID) for the compound with the given name
+	Returns the compound ID (CID) for the compound with the given name.
 
 	:param name:
 	"""
@@ -110,7 +110,7 @@ def rest_get_description(
 
 def parse_description(description_data: Dict[str, Any]) -> List[Dict]:
 	"""
-	Parse raw data from the ``description`` endpoint of the REST API
+	Parse raw data from the ``description`` endpoint of the REST API.
 
 	:param description_data:
 

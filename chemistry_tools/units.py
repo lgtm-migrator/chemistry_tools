@@ -109,7 +109,7 @@ def compare_equality(
 
 	Both arguments need to have the same dimensionality.
 
-	**Examples**
+	**Examples:**
 
 	.. code-block:: python
 
@@ -123,7 +123,7 @@ def compare_equality(
 	:param b:
 	"""
 
-	# Work around for https://github.com/python-quantities/python-quantities/issues/146
+	# Workaround for https://github.com/python-quantities/python-quantities/issues/146
 	try:
 		a + b
 	except TypeError:
@@ -182,21 +182,21 @@ def allclose(a, b, rtol=1e-8, atol=None) -> bool:
 
 # TODO: decide whether to deprecate in favor of "number_to_scientific_latex"?
 def format_string(value: quantities.quantity.Quantity, precision: str = "%.5g", tex: bool = False):
-	"""
-	Formats a scalar with unit as two strings
+	r"""
+	Formats a scalar with unit as two strings.
 
-	**Examples**
+	**Examples:**
 
 	.. code-block:: python
 
 		>>> print(' '.join(format_string(0.42*quantities.mol/decimetre**3)))
 		0.42 mol/decimetre**3
 		>>> print(' '.join(format_string(2/quantities.s, tex=True)))
-		2 \\mathrm{\\frac{1}{s}}
+		2 \mathrm{\frac{1}{s}}
 
 	:param value: Value with unit
 	:param precision:
-	:param tex: Whether the string should be formatted for LaTex.
+	:param tex: Whether the string should be formatted for LaTeX.
 	"""
 
 	if tex:

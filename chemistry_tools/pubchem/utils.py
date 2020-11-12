@@ -58,7 +58,7 @@ __all__ = ["format_string"]
 
 def format_string(stringwithmarkup: Dict[str, Any]) -> str:
 	"""
-	Convert a PubChem formatted string into an HTML formatted string
+	Convert a PubChem formatted string into an HTML formatted string.
 
 	:param stringwithmarkup:
 	"""

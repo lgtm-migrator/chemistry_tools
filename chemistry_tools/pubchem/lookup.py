@@ -2,7 +2,7 @@
 #
 #  lookup.py
 """
-Lookup properties for compound by name or CAS number
+Lookup properties for compound by name or CAS number.
 """
 #
 #  This program is free software; you can redistribute it and/or modify

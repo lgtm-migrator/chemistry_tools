@@ -2,7 +2,7 @@
 #
 #  __init__.py
 """
-Parse formulae into a Python object
+Parse formulae into a Python object.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

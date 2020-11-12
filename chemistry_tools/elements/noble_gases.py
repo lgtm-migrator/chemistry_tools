@@ -2,7 +2,7 @@
 #
 #  noble_gases.py
 """
-Group 18: Noble Gases in the Periodic Table
+Group 18: Noble Gases in the Periodic Table.
 
 .. data:: He
 
@@ -31,7 +31,6 @@ Group 18: Noble Gases in the Periodic Table
 .. data:: Og
 
 	:class:`~chemistry_tools.elements.classes.Element` representing Oganesson
-
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

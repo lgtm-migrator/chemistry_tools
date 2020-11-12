@@ -107,7 +107,7 @@ def string_to_unicode(
 	"""
 	Convert the given formula string to a unicode string representation.
 
-	**Examples**
+	**Examples:**
 
 	.. code-block:: python
 

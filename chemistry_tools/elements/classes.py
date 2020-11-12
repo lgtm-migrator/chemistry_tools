@@ -347,7 +347,7 @@ class Element(Dictable):
 	@memoized_property
 	def oxistates(self) -> str:
 		"""
-		The oxidation states
+		The oxidation states.
 		"""
 
 		return self._oxistates
@@ -355,7 +355,7 @@ class Element(Dictable):
 	@memoized_property
 	def ionenergy(self) -> Tuple:  # TODO
 		"""
-		The ionization energies in eV
+		The ionization energies in ``eV``.
 		"""
 
 		return self._ionenergy
@@ -372,7 +372,11 @@ class Element(Dictable):
 		return self._isotopes
 
 	@memoized_property
-	def description(self):
+	def description(self) -> str:
+		"""
+		A description of the element.
+		"""
+
 		return self._description
 
 	def __str__(self) -> str:
@@ -650,7 +654,7 @@ class Elements:
 	@lru_cache()
 	def split_isotope(self, string: str):
 		# this package
-		from chemistry_tools.formulae.formula import split_isotope
+		from chemistry_tools.formulae.utils import split_isotope
 		return split_isotope(string)
 
 	def add_alternate_spelling(self, element: Element, spelling: str):
@@ -740,7 +744,7 @@ class HeavyHydrogen(Element):
 	@memoized_property
 	def as_isotope(self) -> str:
 		"""
-		Return the isotope in ``H[X]`` format
+		Return the isotope in ``H[X]`` format.
 		"""
 
 		return f"H[{self.nominalmass}]"

@@ -88,7 +88,7 @@ class PropData(NamedTuple):
 	description: str
 
 	#: The type of the property.
-	type: Callable
+	type: Callable  # noqa: A003
 
 	#: The Python attribute name of the property in a :class:`chemistry_tools.pubchem.compound.Compound`.
 	attr_name: str
@@ -415,7 +415,7 @@ def force_valid_properties(properties: Union[str, Iterable[str]]) -> List[str]:
 	or raise a :exc:`ValueError` if that is not possible.
 
 	:param properties:
-	"""
+	"""  # noqa: D400
 
 	properties = _force_sequence_or_csv(properties, "properties")
 
@@ -490,7 +490,7 @@ def get_properties(
 @insert_valid_properties_table()
 def get_property(
 		identifier: Union[str, int, Sequence[Union[str, int]]],
-		property='',
+		property: str = '',  # noqa: A002
 		namespace: Union[PubChemNamespace, str] = PubChemNamespace.name
 		) -> Any:
 	"""
@@ -524,7 +524,7 @@ def get_property(
 
 def parse_properties(property_data: Dict) -> List[Dict]:
 	"""
-	Parse raw data from the ``property`` endpoint of the REST API
+	Parse raw data from the ``property`` endpoint of the REST API.
 
 	:param property_data:
 
@@ -578,7 +578,7 @@ class PubChemProperty(__BasePubChemProperty):
 
 	__slots__: List[str] = []
 
-	def __new__(cls, label, name=None, value=None, dtype=None, source=None):
+	def __new__(cls, label, name=None, value=None, dtype=None, source=None):  # noqa: D102
 		if source is None:
 			source = {}
 

@@ -2,7 +2,7 @@
 #
 #  transition_metals.py
 """
-Transition Metals block in the Periodic Table
+Transition Metals block in the Periodic Table.
 
 .. data:: Sc
 

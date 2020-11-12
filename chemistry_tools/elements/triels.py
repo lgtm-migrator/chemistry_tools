@@ -2,7 +2,7 @@
 #
 #  triels.py
 """
-Group 13: Triels (or boron group) in the Periodic Table
+Group 13: Triels (or boron group) in the Periodic Table.
 
 .. data:: B
 
