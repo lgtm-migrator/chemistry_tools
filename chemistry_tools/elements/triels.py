@@ -108,18 +108,18 @@ Group 13: Triels (or boron group) in the Periodic Table
 # this package
 from .classes import Element
 
-__all__ = ("B", "Al", "Ga", "In", "Tl", "Nh")
+__all__ = ('B', "Al", "Ga", "In", "Tl", "Nh")
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.
 
 B = Element(
 		5,
-		"B",
+		'B',
 		"Boron",
 		group=13,
 		period=2,
-		block="p",
+		block='p',
 		series=5,
 		mass=10.811,
 		eleneg=2.04,
@@ -166,7 +166,7 @@ Al = Element(
 		"Aluminium",
 		group=13,
 		period=3,
-		block="p",
+		block='p',
 		series=7,
 		mass=26.9815385,
 		eleneg=1.61,
@@ -234,7 +234,7 @@ Ga = Element(
 		"Gallium",
 		group=13,
 		period=4,
-		block="p",
+		block='p',
 		series=7,
 		mass=69.723,
 		eleneg=1.81,
@@ -297,7 +297,7 @@ In = Element(
 		"Indium",
 		group=13,
 		period=5,
-		block="p",
+		block='p',
 		series=7,
 		mass=114.818,
 		eleneg=1.78,
@@ -366,7 +366,7 @@ Tl = Element(
 		"Thallium",
 		group=13,
 		period=6,
-		block="p",
+		block='p',
 		series=7,
 		mass=204.3834,
 		eleneg=2.04,
@@ -440,7 +440,7 @@ Nh = Element(
 		"Nihonium",
 		group=13,
 		period=7,
-		block="p",
+		block='p',
 		series=8,
 		isotopes={
 				283: (283.17645, 0.0),

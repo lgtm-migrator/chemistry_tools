@@ -31,7 +31,7 @@ __all__ = ["degC", "equals", "scientific", "uscg1999", "trailspace", "f2c", "pro
 
 deg_c_re = re.compile(r"(\s*)(deg|DEG)(\s*)(C)")
 dec_c_symbol = "°C"
-mmath_space = "\u205F"
+mmath_space = '\u205f'
 equals_re = re.compile(r"\s*=\s*")
 scientific_regex = re.compile("X10.[0-9]+")
 f2c_regex = re.compile(r"\d*\.?\d+ *° *F")

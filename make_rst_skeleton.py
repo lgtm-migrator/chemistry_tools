@@ -17,10 +17,10 @@ class Package:
 		for filename in self.path.iterdir():
 			# print(filename)
 			if is_package(filename):
-				if not filename.name.startswith("_"):
+				if not filename.name.startswith('_'):
 					self.subpackages.append(Package(filename.name, self.path))
 			elif is_module(filename):
-				if not filename.stem.startswith("_"):
+				if not filename.stem.startswith('_'):
 					self.submodules.append(Module(filename.stem))
 
 		self.submodules.sort(key=lambda m: m.name)
@@ -50,9 +50,9 @@ class Module:
 		return self.__repr__()
 
 	def make_rst(self, parent_names: List[str], directory: pathlib.Path, extras: Optional[str] = None):
-		dotted_name = ".".join(parent_names + [self.name])
+		dotted_name = '.'.join(parent_names + [self.name])
 		print(dotted_name)
-		buf = '========'
+		buf = "========"
 		buf += '=' * len(dotted_name)
 		if dotted_name.startswith("chemistry_tools.elements"):
 			buf += f"\n:mod:`~{dotted_name}`\n========"
@@ -63,7 +63,7 @@ class Module:
 			buf += f"\n\n.. extras-require:: {extras}\n"
 			buf += f"	:file: {extras}/requirements.txt"
 		buf += f"\n\n.. automodule:: {dotted_name}\n"
-		with (directory / self.name).with_suffix(".rst").open("w", encoding="UTF-8") as fp:
+		with (directory / self.name).with_suffix(".rst").open('w', encoding="UTF-8") as fp:
 			clean_writer(buf, fp)
 
 
@@ -75,7 +75,7 @@ def is_module(path: pathlib.Path):
 	return path.is_file() and path.suffix == ".py"
 
 
-chemistry_tools = Package("chemistry_tools", pathlib.Path("."))
+chemistry_tools = Package("chemistry_tools", pathlib.Path('.'))
 
 docs_api_dir = pathlib.Path("doc-source") / "api"
 if not docs_api_dir.is_dir():
@@ -89,10 +89,10 @@ for subpackage in chemistry_tools.subpackages:
 	if not subpackage_dir.is_dir():
 		subpackage_dir.mkdir(parents=True)
 
-	with (subpackage_dir / "index.rst").open("w", encoding="UTF-8") as fp:
-		dotted_name = ".".join([chemistry_tools.name, subpackage_dir.name])
+	with (subpackage_dir / "index.rst").open('w', encoding="UTF-8") as fp:
+		dotted_name = '.'.join([chemistry_tools.name, subpackage_dir.name])
 		print(dotted_name)
-		buf = '========'
+		buf = "========"
 		buf += '=' * len(dotted_name)
 		buf += f"\n:mod:`{dotted_name}`\n========"
 		buf += '=' * len(dotted_name)
@@ -102,7 +102,7 @@ for subpackage in chemistry_tools.subpackages:
 		buf += f"\n\n.. toctree:: {dotted_name}\n"
 		buf += "	:maxdepth: 3\n"
 		buf += "	:glob:\n\n"
-		buf += "	./*"
+		buf += "\t./*"
 		clean_writer(buf, fp)
 
 	for submodule in subpackage.submodules:

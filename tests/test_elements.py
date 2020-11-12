@@ -8,29 +8,29 @@ from chemistry_tools.elements import ELEMENTS, H, Isotope, groups
 @pytest.mark.parametrize(
 		"massnumber, symbol",
 		[
-				(1, "H"),
+				(1, 'H'),
 				(4, "He"),
 				(7, "Li"),
 				(9, "Be"),
-				(11, "B"),
-				(12, "C"),
-				(14, "N"),
-				(16, "O"),
-				(19, "F"),
+				(11, 'B'),
+				(12, 'C'),
+				(14, 'N'),
+				(16, 'O'),
+				(19, 'F'),
 				(20, "Ne"),
 				(23, "Na"),
 				(24, "Mg"),
 				(27, "Al"),
 				(28, "Si"),
-				(31, "P"),
-				(32, "S"),
+				(31, 'P'),
+				(32, 'S'),
 				(35, "Cl"),
 				(40, "Ar"),
-				(39, "K"),
+				(39, 'K'),
 				(40, "Ca"),
 				(45, "Sc"),
 				(48, "Ti"),
-				(51, "V"),
+				(51, 'V'),
 				(52, "Cr"),
 				(55, "Mn"),
 				(56, "Fe"),
@@ -46,7 +46,7 @@ from chemistry_tools.elements import ELEMENTS, H, Isotope, groups
 				(84, "Kr"),
 				(85, "Rb"),
 				(88, "Sr"),
-				(89, "Y"),
+				(89, 'Y'),
 				(90, "Zr"),
 				(93, "Nb"),
 				(98, "Mo"),
@@ -59,7 +59,7 @@ from chemistry_tools.elements import ELEMENTS, H, Isotope, groups
 				(120, "Sn"),
 				(121, "Sb"),
 				(130, "Te"),
-				(127, "I"),
+				(127, 'I'),
 				(132, "Xe"),
 				(133, "Cs"),
 				(138, "Ba"),
@@ -79,7 +79,7 @@ from chemistry_tools.elements import ELEMENTS, H, Isotope, groups
 				(175, "Lu"),
 				(180, "Hf"),
 				(181, "Ta"),
-				(184, "W"),
+				(184, 'W'),
 				(187, "Re"),
 				(192, "Os"),
 				(193, "Ir"),
@@ -90,7 +90,7 @@ from chemistry_tools.elements import ELEMENTS, H, Isotope, groups
 				(208, "Pb"),
 				(209, "Bi"),
 				(232, "Th"),
-				(238, "U"),
+				(238, 'U'),
 				]
 		)
 def test_isotopes(symbol, massnumber):
@@ -111,38 +111,38 @@ def test_hydrogen():
 	assert str(ELEMENTS[1]) == "Hydrogen"
 	repr(ELEMENTS[1])
 
-	assert (ELEMENTS["H"] == ELEMENTS["Hydrogen"])
-	assert (ELEMENTS["H"] == ELEMENTS["hydrogen"])
-	assert (ELEMENTS["H"] == ELEMENTS["hydrOgen"])
-	assert (ELEMENTS["H"] != ELEMENTS[2])
+	assert (ELEMENTS['H'] == ELEMENTS["Hydrogen"])
+	assert (ELEMENTS['H'] == ELEMENTS["hydrogen"])
+	assert (ELEMENTS['H'] == ELEMENTS["hydrOgen"])
+	assert (ELEMENTS['H'] != ELEMENTS[2])
 
-	assert ELEMENTS["H"].number == 1
-	assert ELEMENTS["H"].symbol == "H"
-	assert ELEMENTS["H"].name == "Hydrogen"
+	assert ELEMENTS['H'].number == 1
+	assert ELEMENTS['H'].symbol == 'H'
+	assert ELEMENTS['H'].name == "Hydrogen"
 
-	assert ELEMENTS["H"].electrons == ELEMENTS["H"].number
-	assert ELEMENTS["H"].protons == ELEMENTS["H"].number
+	assert ELEMENTS['H'].electrons == ELEMENTS['H'].number
+	assert ELEMENTS['H'].protons == ELEMENTS['H'].number
 
-	assert ELEMENTS["H"].group == 1
-	assert ELEMENTS["H"].period == 1
-	assert ELEMENTS["H"].block == "s"
-	assert ELEMENTS["H"].series == 1
+	assert ELEMENTS['H'].group == 1
+	assert ELEMENTS['H'].period == 1
+	assert ELEMENTS['H'].block == 's'
+	assert ELEMENTS['H'].series == 1
 
-	assert ELEMENTS["H"].mass == 1.007941
-	assert ELEMENTS["H"].eleneg == 2.2
-	assert ELEMENTS["H"].eleaffin == 0.75420375
-	assert ELEMENTS["H"].covrad == 0.32
-	assert ELEMENTS["H"].atmrad == 0.79
-	assert ELEMENTS["H"].vdwrad == 1.2
-	assert ELEMENTS["H"].tboil == 20.28
-	assert ELEMENTS["H"].tmelt == 13.81
+	assert ELEMENTS['H'].mass == 1.007941
+	assert ELEMENTS['H'].eleneg == 2.2
+	assert ELEMENTS['H'].eleaffin == 0.75420375
+	assert ELEMENTS['H'].covrad == 0.32
+	assert ELEMENTS['H'].atmrad == 0.79
+	assert ELEMENTS['H'].vdwrad == 1.2
+	assert ELEMENTS['H'].tboil == 20.28
+	assert ELEMENTS['H'].tmelt == 13.81
 
-	assert ELEMENTS["H"].density == 0.084
-	assert ELEMENTS["H"].eleconfig == "1s"
-	assert ELEMENTS["H"].oxistates == "1*, -1"
-	assert ELEMENTS["H"].ionenergy == (13.5984, )
+	assert ELEMENTS['H'].density == 0.084
+	assert ELEMENTS['H'].eleconfig == "1s"
+	assert ELEMENTS['H'].oxistates == "1*, -1"
+	assert ELEMENTS['H'].ionenergy == (13.5984, )
 
-	assert ELEMENTS["H"].isotopes == {
+	assert ELEMENTS['H'].isotopes == {
 			1: Isotope(1.00782503207, 0.999885, 1),
 			2: Isotope(2.0141017778, 0.000115, 2),
 			3: Isotope(3.0160492777, 0.0, 3),
@@ -154,13 +154,13 @@ def test_hydrogen():
 
 	repr(ELEMENTS[1:10:2])
 
-	assert ELEMENTS["Hydrogen"] == ELEMENTS["H"]
+	assert ELEMENTS["Hydrogen"] == ELEMENTS['H']
 	assert ELEMENTS["Hydrogen"] == ELEMENTS["hydrogen"]
 	assert ELEMENTS["Hydrogen"] == ELEMENTS["hydrOgen"]
 	assert ELEMENTS["Hydrogen"] == ELEMENTS["HydrOgen"]
 	assert ELEMENTS["Hydrogen"] == H
 
-	assert ELEMENTS["H"].description == (
+	assert ELEMENTS['H'].description == (
 			"Colourless, odourless gaseous chemical element. Lightest and most "
 			"abundant element in the universe. Present in water and in all "
 			"organic compounds. Chemically reacts with most elements. Discovered "
@@ -180,7 +180,7 @@ def test_groups():
 
 
 def test_atomic_number():
-	assert ELEMENTS["U"].number == 92
+	assert ELEMENTS['U'].number == 92
 	assert ELEMENTS["carbon"].number == 6
 	assert ELEMENTS["moscovium"].number == 115
 	with pytest.raises(KeyError):

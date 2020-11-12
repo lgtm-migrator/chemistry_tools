@@ -68,7 +68,7 @@ from .tetrels import *
 from .transition_metals import *
 from .triels import *
 
-__all__ = ("ELEMENTS", "H", "D", "T")
+__all__ = ("ELEMENTS", 'H', 'D', 'T')
 
 # TODO: nominal mass (massnumber) and monoisotopic mass
 

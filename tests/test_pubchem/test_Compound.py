@@ -23,18 +23,27 @@ from chemistry_tools.pubchem.lookup import get_compounds
 
 @pytest.fixture(scope="module")
 def c1():
-	"""Compound CID 241."""
+	"""
+	Compound CID 241.
+	"""
+
 	return Compound.from_cid(241)
 
 
 @pytest.fixture(scope="module")
 def c2():
-	"""Compound CID 175."""
+	"""
+	Compound CID 175.
+	"""
+
 	return Compound.from_cid(175)
 
 
 def test_basic(c1):
-	"""Test Compound can be retrieved and has a record with the correct CID."""
+	"""
+	Test Compound can be retrieved and has a record with the correct CID.
+	"""
+
 	assert c1.cid == 241
 	assert repr(c1) == "Compound(241)"
 
@@ -47,7 +56,10 @@ def test_atoms(c1):
 
 
 def test_single_atom():
-	"""Test Compound when there is a single atom and no bonds."""
+	"""
+	Test Compound when there is a single atom and no bonds.
+	"""
+
 	c = Compound.from_cid(259)
 	assert c.atoms == [Atom(aid=1, number=35, x=2, y=0, charge=-1)]
 	assert c.bonds == []

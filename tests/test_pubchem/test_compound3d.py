@@ -15,7 +15,10 @@ from chemistry_tools.pubchem.compound import Compound
 
 @pytest.fixture()
 def c3d():
-	"""Compound CID 1234, 3D."""
+	"""
+	Compound CID 1234, 3D.
+	"""
+
 	return Compound.from_cid(1234, record_type="3d")
 
 

@@ -74,7 +74,7 @@ def format_string(stringwithmarkup: Dict[str, Any]) -> str:
 		start = markup["Start"]
 		end = markup["Length"] + start - 1
 		if markup["Type"] == "Italics":
-			style = "i"
+			style = 'i'
 		# handle Other formats
 
 		if style is None:
@@ -111,7 +111,7 @@ def _force_sequence_or_csv(
 	parsed_value: List[str]
 
 	if isinstance(value, str):
-		parsed_value = value.split(",")
+		parsed_value = value.split(',')
 
 	elif isinstance(value, int):
 		parsed_value = [str(value)]

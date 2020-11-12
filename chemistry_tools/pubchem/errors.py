@@ -175,14 +175,18 @@ class TimeoutError(PubChemHTTPError):
 
 
 class UnimplementedError(PubChemHTTPError):
-	"""The requested operation has not (yet) been implemented by the server."""
+	"""
+	The requested operation has not (yet) been implemented by the server.
+	"""
 
 	def __init__(self, msg="The requested operation has not been implemented"):
 		self.msg = msg
 
 
 class ServerError(PubChemHTTPError):
-	"""Some problem on the server side (such as a database server down, etc.)."""
+	"""
+	Some problem on the server side (such as a database server down, etc.).
+	"""
 
 	def __init__(self, msg="Some problem on the server side"):
 		self.msg = msg

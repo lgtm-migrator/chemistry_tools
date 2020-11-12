@@ -186,9 +186,9 @@ __all__ = (
 		"ELEMENTS",
 		"period_lengths",
 		"accum_period_lengths",  # "groups",
-		"H",
-		"D",
-		"T",
+		'H',
+		'D',
+		'T',
 		"Li",  # Alkali Metals
 		"Na",
 		'K',
@@ -201,34 +201,34 @@ __all__ = (
 		"Sr",
 		"Ba",
 		"Ra",
-		"B",  # Triels
+		'B',  # Triels
 		"Al",
 		"Ga",
 		"In",
 		"Tl",
 		"Nh",
-		"C",  # Tetrels
+		'C',  # Tetrels
 		"Si",
 		"Ge",
 		"Sn",
 		"Pb",
 		"Fl",
-		"N",  # pnictogens
-		"P",
+		'N',  # pnictogens
+		'P',
 		"As",
 		"Sb",
 		"Bi",
 		"Mc",
-		"O",  # chalcogens
-		"S",
+		'O',  # chalcogens
+		'S',
 		"Se",
 		"Te",
 		"Po",
 		"Lv",
-		"F",  # halogens
+		'F',  # halogens
 		"Cl",
 		"Br",
-		"I",
+		'I',
 		"At",
 		"Ts",
 		"He",  # noble_gases
@@ -256,7 +256,7 @@ __all__ = (
 		"Ac",  # actinides
 		"Th",
 		"Pa",
-		"U",
+		'U',
 		"Np",
 		"Pu",
 		"Am",
@@ -270,7 +270,7 @@ __all__ = (
 		"Lr",
 		"Sc",  # transition_metals
 		"Ti",
-		"V",
+		'V',
 		"Cr",
 		"Mn",
 		"Fe",
@@ -278,7 +278,7 @@ __all__ = (
 		"Ni",
 		"Cu",
 		"Zn",
-		"Y",
+		'Y',
 		"Zr",
 		"Nb",
 		"Mo",
@@ -290,7 +290,7 @@ __all__ = (
 		"Cd",
 		"Hf",
 		"Ta",
-		"W",
+		'W',
 		"Re",
 		"Os",
 		"Ir",

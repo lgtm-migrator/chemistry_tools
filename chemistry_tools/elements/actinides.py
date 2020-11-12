@@ -143,7 +143,7 @@ Actinides (or actinoids) in the Periodic Table
 # this package
 from . import classes
 
-__all__ = ("Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr")
+__all__ = ("Ac", "Th", "Pa", 'U', "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr")
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.
@@ -904,7 +904,7 @@ Lr = Element(
 		"Lawrencium",
 		group=3,
 		period=7,
-		block="d",
+		block='d',
 		series=10,
 		mass=262.1096,
 		eleneg=1.3,

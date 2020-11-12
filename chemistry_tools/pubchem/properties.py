@@ -49,7 +49,7 @@ from typing import Any, Callable, Dict, Iterable, List, NamedTuple, Sequence, Un
 
 # 3rd party
 from pandas import DataFrame  # type: ignore
-from tabulate import tabulate
+from tabulate import tabulate  # nodep
 
 # this package
 from chemistry_tools.formulae import Formula

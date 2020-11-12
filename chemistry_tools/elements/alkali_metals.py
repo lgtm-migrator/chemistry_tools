@@ -214,7 +214,7 @@ Na = Element(
 
 K = Element(
 		19,
-		"K",
+		'K',
 		"Potassium",
 		group=1,
 		period=4,

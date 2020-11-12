@@ -81,7 +81,7 @@ from string import ascii_lowercase, ascii_uppercase
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Union
 
 # 3rd party
-import pyparsing  # type: ignore
+import pyparsing  # type: ignore  # nodep
 
 # this package
 from chemistry_tools.elements import ELEMENTS
@@ -111,12 +111,12 @@ isotopes_re: List[str]
 # Construct regular expression to match all elements, plus D and T
 element_re_dict: Dict[str, List[str]] = {}
 
-for element in (ELEMENTS.symbols + ["D", "T"]):
+for element in (ELEMENTS.symbols + ['D', 'T']):
 	if len(element) == 1:
 		if element in element_re_dict:
-			element_re_dict[element].append("?")
+			element_re_dict[element].append('?')
 		else:
-			element_re_dict[element] = ["?"]
+			element_re_dict[element] = ['?']
 	else:
 		upper, lower = list(element)
 		if upper in element_re_dict:
@@ -132,13 +132,13 @@ element_re = []
 for upper, lowers in element_re_dict.items():
 	lowers = sorted(lowers)
 
-	if lowers == ["?"]:
+	if lowers == ['?']:
 		element_re.append(upper)
 		invalid_uppers.remove(upper)
 	elif len(lowers) == 1:
 		element_re.append(f"{upper}{lowers[0]}")
-	elif "?" in lowers:
-		lowers.remove("?")
+	elif '?' in lowers:
+		lowers.remove('?')
 		invalid_uppers.remove(upper)
 		for lower in lowers:
 			invalid_lowers[upper].remove(lower)
@@ -203,7 +203,7 @@ def _get_formula_parser():
 	# and multiplication at parse time
 	integer.setParseAction(lambda t: int(t[0]))
 
-	element = pyparsing.Regex('|'.join(isotopes_re + element_re) + "$")
+	element = pyparsing.Regex('|'.join(isotopes_re + element_re) + '$')
 
 	# element = pyparsing.Regex(
 	# 		r"A[cglmrstu]|B[aehikr]?|C[adeflmorsu]?|D[bsy]|E[rsu]|F[emr]?|G[ade]"
@@ -256,7 +256,7 @@ def _parse_stoich(stoich) -> Dict[int, Any]:
 	if stoich == 'e':  # special case, the electron is not an element
 		return {}
 
-	symbols = ELEMENTS.symbols + ["D", "T"]
+	symbols = ELEMENTS.symbols + ['D', 'T']
 
 	if re.findall('|'.join(invalid_re), stoich):
 		raise ValueError(f"Unrecognised formula: {stoich}")

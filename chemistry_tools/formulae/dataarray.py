@@ -27,8 +27,8 @@ from typing import Any, Dict, List, Optional, Set
 
 # 3rd party
 import pandas  # type: ignore
-import tabulate
-from cawdrey import FrozenOrderedDict
+import tabulate  # nodep
+from cawdrey import FrozenOrderedDict  # nodep
 from domdf_python_tools.doctools import prettify_docstrings
 
 __all__ = ["DataArray"]
@@ -57,7 +57,7 @@ class DataArray(FrozenOrderedDict):
 		super().__init__(**data)
 		self.formula: str = formula
 
-	def as_csv(self, *args, sep: str = ",", **kwargs) -> str:
+	def as_csv(self, *args, sep: str = ',', **kwargs) -> str:
 		r"""
 		Returns the data as a CSV formatted string
 
@@ -66,7 +66,7 @@ class DataArray(FrozenOrderedDict):
 		:param \*\*kwargs: Additional keyword arguments passed to :meth:`~.DataArray.as_array`.
 		"""
 
-		return "\n".join(sep.join(x) for x in self.as_array(*args, **kwargs))
+		return '\n'.join(sep.join(x) for x in self.as_array(*args, **kwargs))
 
 	@abstractmethod
 	def as_array(self, sort_by: Any, reverse: bool = False) -> List[List[Any]]:

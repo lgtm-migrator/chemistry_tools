@@ -108,18 +108,18 @@ Group 15: Pnictogens in the Periodic Table
 # this package
 from .classes import Element
 
-__all__ = ("N", "P", "As", "Sb", "Bi", "Mc")
+__all__ = ('N', 'P', "As", "Sb", "Bi", "Mc")
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.
 
 N = Element(
 		7,
-		"N",
+		'N',
 		"Nitrogen",
 		group=15,
 		period=2,
-		block="p",
+		block='p',
 		series=1,
 		mass=14.006703,
 		eleneg=3.04,
@@ -172,11 +172,11 @@ N = Element(
 
 P = Element(
 		15,
-		"P",
+		'P',
 		"Phosphorus",
 		group=15,
 		period=3,
-		block="p",
+		block='p',
 		series=1,
 		mass=30.973761998,
 		eleneg=2.19,
@@ -244,7 +244,7 @@ As = Element(
 		"Arsenic",
 		group=15,
 		period=4,
-		block="p",
+		block='p',
 		series=5,
 		mass=74.921595,
 		eleneg=2.18,
@@ -314,7 +314,7 @@ Sb = Element(
 		"Antimony",
 		group=15,
 		period=5,
-		block="p",
+		block='p',
 		series=5,
 		mass=121.76,
 		eleneg=2.05,
@@ -389,7 +389,7 @@ Bi = Element(
 		"Bismuth",
 		group=15,
 		period=6,
-		block="p",
+		block='p',
 		series=7,
 		mass=208.9804,
 		eleneg=2.02,
@@ -463,7 +463,7 @@ Mc = Element(
 		"Moscovium",
 		group=15,
 		period=7,
-		block="p",
+		block='p',
 		series=8,
 		isotopes={
 				287: (287.19119, 0.0),

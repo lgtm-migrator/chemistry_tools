@@ -71,8 +71,8 @@ class Synonyms(List[str]):
 	def _prep_contains(val: str) -> str:
 		val = val.casefold()
 
-		for remove in ["-", "_", " "]:
-			val = val.replace(remove, " ")
+		for remove in ['-', '_', ' ']:
+			val = val.replace(remove, ' ')
 
 		return val
 

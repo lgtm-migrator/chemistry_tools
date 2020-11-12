@@ -104,12 +104,12 @@
 from typing import Dict, List, Optional, Type, TypeVar
 
 # 3rd party
-from cawdrey import frozendict
+from cawdrey import frozendict  # nodep
 
 # this package
-from .formula import Formula
+from chemistry_tools.formulae.formula import Formula
 
-__all__ = ["Species", "S"]
+__all__ = ["Species", 'S']
 
 S = TypeVar('S', bound="Species")
 
@@ -135,7 +135,7 @@ class Species(Formula):
 		self.phase = phase
 
 	@classmethod
-	def from_kwargs(cls: Type["S"], *, charge: int = 0, phase: Optional[str] = None, **kwargs) -> S:
+	def from_kwargs(cls: Type['S'], *, charge: int = 0, phase: Optional[str] = None, **kwargs) -> S:
 		"""
 		Create a new :class:`~chemistry_tools.formulae.species.Species` object from keyword
 		arguments representing the elements in the compound.
@@ -147,7 +147,7 @@ class Species(Formula):
 		return cls(kwargs, charge=charge, phase=phase)
 
 	@classmethod
-	def from_string(cls: Type["S"], formula: str, charge: int = 0, phase: Optional[str] = None) -> S:
+	def from_string(cls: Type['S'], formula: str, charge: int = 0, phase: Optional[str] = None) -> S:
 		"""
 		Create a new :class:`~chemistry_tools.formulae.species.Species` object by parsing a string.
 

@@ -28,7 +28,7 @@ from io import BytesIO
 from typing import Sequence, Union
 
 # 3rd party
-from PIL import Image  # type: ignore
+from PIL import Image  # type: ignore  # nodep
 
 # this package
 from .enums import PubChemNamespace

@@ -98,7 +98,7 @@ def test_compound():
 	assert sorted([OH_m, H2O], key=attrgetter("name")) == [H2O, OH_m]
 
 	H2O = Compound(name="H2O", formula=Formula.from_string("H2O"))
-	assert H2O.formula == {"H": 2, "O": 1}
+	assert H2O.formula == {'H': 2, 'O': 1}
 	assert H2O.latex_name == "H_{2}O"
 	assert H2O.unicode_name == "H₂O"
 	assert H2O.html_name == "H<sub>2</sub>O"

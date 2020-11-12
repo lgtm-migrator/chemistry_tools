@@ -291,7 +291,7 @@ def _make_isotope_string(element_name: str, isotope_num: Union[str, int]) -> str
 	:return: The isotope string
 	"""
 
-	if isotope_num in {0, "0"}:
+	if isotope_num in {0, '0'}:
 		return element_name
 	else:
 		return f"[{isotope_num}{element_name}]"

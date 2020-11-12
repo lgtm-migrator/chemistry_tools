@@ -111,7 +111,7 @@ from typing import Dict, Iterator, List, Optional, Sequence, Tuple, Type, TypeVa
 
 # 3rd party
 from domdf_python_tools.doctools import prettify_docstrings
-from mathematical.utils import gcd_array
+from mathematical.utils import gcd_array  # nodep
 
 # this package
 from chemistry_tools.elements import ELEMENTS, D, T, isotope_data
@@ -123,7 +123,7 @@ from .composition import Composition
 from .iso_dist import IsotopeDistribution
 from .utils import GROUPS, hill_order, split_isotope
 
-__all__ = ["Formula", "F"]
+__all__ = ["Formula", 'F']
 
 F = TypeVar('F', bound="Formula")
 
@@ -247,7 +247,7 @@ class Formula(defaultdict, Counter):
 
 	@classmethod
 	def from_mass_fractions(
-			cls: Type["F"],
+			cls: Type['F'],
 			fractions: Dict[str, float],
 			charge: int = 0,
 			maxcount: int = 10,
@@ -328,7 +328,7 @@ class Formula(defaultdict, Counter):
 		return cls.from_string(''.join(formula), charge=charge)
 
 	@classmethod
-	def from_kwargs(cls: Type["F"], *, charge: int = 0, **kwargs) -> F:
+	def from_kwargs(cls: Type['F'], *, charge: int = 0, **kwargs) -> F:
 		"""
 		Create a new :class:`~chemistry_tools.formulae.formula.Formula` object from
 		keyword arguments representing the elements in the compound.
@@ -349,9 +349,9 @@ class Formula(defaultdict, Counter):
 		mass = 0.0
 
 		for element, count in self.items():
-			if element == "D":
+			if element == 'D':
 				iso_mass = D.mass
-			elif element == "T":
+			elif element == 'T':
 				iso_mass = T.mass
 			else:
 				symbol, isotope = split_isotope(element)
@@ -395,9 +395,9 @@ class Formula(defaultdict, Counter):
 		mass = 0.0
 
 		for element, count in self.items():
-			if element == "D":
+			if element == 'D':
 				iso_mass = D.mass
-			elif element == "T":
+			elif element == 'T':
 				iso_mass = T.mass
 			else:
 				symbol, isotope = split_isotope(element)

@@ -238,8 +238,8 @@ _isotope_regex_2 = re.compile(r"^(\[[A-z]+)(\d*\])$")
 _isotope_regex_3 = re.compile(r"^(\[\d*)([A-z]+\])$")
 _iso_bracket_regex = re.compile(r"^(\[)(\d+)(\])$")
 _hill_isotope_re = r"^(%s)(\[[0-9]*\])?$"
-_hill_carbon_re = re.compile(_hill_isotope_re % "C")
-_hill_hydrogen_re = re.compile(_hill_isotope_re % "H")
+_hill_carbon_re = re.compile(_hill_isotope_re % 'C')
+_hill_hydrogen_re = re.compile(_hill_isotope_re % 'H')
 
 
 @lru_cache()
@@ -254,7 +254,7 @@ def split_isotope(string: str) -> Tuple[str, int]:
 	:return: Tuple representing the element and the isotope number
 	"""
 
-	isotope = "0"
+	isotope = '0'
 
 	iso_re_1 = _isotope_regex_1.findall(string)
 	iso_re_2 = _isotope_regex_2.findall(string)
@@ -265,12 +265,12 @@ def split_isotope(string: str) -> Tuple[str, int]:
 		isotope = _iso_bracket_regex.findall(isotope)[0][1]
 	elif iso_re_2:
 		elem, isotope = iso_re_2[0]
-		elem = elem.lstrip("[")
-		isotope = isotope.rstrip("]")
+		elem = elem.lstrip('[')
+		isotope = isotope.rstrip(']')
 	elif iso_re_3:
 		isotope, elem = iso_re_3[0]
-		isotope = isotope.lstrip("[")
-		elem = elem.rstrip("]")
+		isotope = isotope.lstrip('[')
+		elem = elem.rstrip(']')
 	else:
 		elem = string
 

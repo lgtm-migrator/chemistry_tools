@@ -154,7 +154,7 @@ def spectrum_similarity(
 
 	if print_graphic:
 		# 3rd party
-		import matplotlib.pyplot as plt  # type: ignore
+		import matplotlib.pyplot as plt  # type: ignore  # nodep
 
 		fig, ax = plt.subplots()
 		# fig.scatter(top_plot["mz"],top_plot["intensity"], s=0)

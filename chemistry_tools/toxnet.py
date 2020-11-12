@@ -29,7 +29,7 @@ from typing import Any, Dict
 
 # 3rd party
 import requests
-from bs4 import BeautifulSoup  # type: ignore
+from bs4 import BeautifulSoup  # type: ignore  # nodep
 
 # this package
 from .property_format import *
@@ -57,7 +57,7 @@ def toxnet(cas):
 
 	for prop in data_soup.findAll("h3"):
 		prop_name = str(prop).replace("<h3>", '').replace(":</h3>", '')
-		prop_value_and_unit = prop.nextSibling.replace("\n", '')
+		prop_value_and_unit = prop.nextSibling.replace('\n', '')
 
 		if prop_name in ["Molecular Formula", "Molecular Weight"]:
 			continue

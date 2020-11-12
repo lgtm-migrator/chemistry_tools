@@ -66,7 +66,7 @@ from chemistry_tools.pubchem.properties import (
 		)
 from chemistry_tools.pubchem.synonyms import get_synonyms
 
-__all__ = ["Compound", "compounds_to_frame", "C"]
+__all__ = ["Compound", "compounds_to_frame", 'C']
 
 C = TypeVar('C', bound="Compound")
 
@@ -351,7 +351,7 @@ class Compound(Dictable):
 		return self._synonyms
 
 	@classmethod
-	def from_cid(cls: Type["C"], cid, record_type: str = "2d") -> "Compound":
+	def from_cid(cls: Type['C'], cid, record_type: str = "2d") -> "Compound":
 		"""
 		Returns the Compound objects for the compound with the given CID.
 		"""

@@ -171,9 +171,9 @@ def parse_atoms(
 	if coords_dict:
 		coord_ids = coords_dict[0]["aid"]
 
-		xs = coords_dict[0]["conformers"][0]["x"]
-		ys = coords_dict[0]["conformers"][0]["y"]
-		zs = coords_dict[0]["conformers"][0].get("z", [])
+		xs = coords_dict[0]["conformers"][0]['x']
+		ys = coords_dict[0]["conformers"][0]['y']
+		zs = coords_dict[0]["conformers"][0].get('z', [])
 
 		if not len(coord_ids) == len(xs) == len(ys) == len(atoms) or (zs and not len(zs) == len(coord_ids)):
 			raise ResponseParseError("Error parsing atom coordinates")

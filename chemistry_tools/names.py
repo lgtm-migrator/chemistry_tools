@@ -306,4 +306,4 @@ def cas_from_iupac_name(iupac_name: str) -> str:
 	if r.status_code in HTTP_ERROR_CODES:
 		raise ValueError(f"No compound found for name {iupac_name}.")
 
-	return r.text.split("\n")[0]
+	return r.text.split('\n')[0]

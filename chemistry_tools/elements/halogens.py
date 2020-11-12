@@ -107,14 +107,14 @@ Group 17: Halogens in the Periodic Table
 # this package
 from .classes import Element
 
-__all__ = ("F", "Cl", "Br", "I", "At", "Ts")
+__all__ = ('F', "Cl", "Br", 'I', "At", "Ts")
 
 # Isotope 0 Key:
 # mass of the most abundant isotope and 1.0 abundance.
 
 F = Element(
 		9,
-		"F",
+		'F',
 		"Fluorine",
 		group=17,
 		period=2,
@@ -316,7 +316,7 @@ Br = Element(
 
 I = Element(
 		53,
-		"I",
+		'I',
 		"Iodine",
 		group=17,
 		period=5,

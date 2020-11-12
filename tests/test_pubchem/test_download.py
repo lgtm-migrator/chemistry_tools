@@ -39,7 +39,7 @@ def test_csv_download(tmp_dir):
 			properties="CanonicalSMILES,IsomericSMILES",
 			format_="csv",
 			)
-	with open(os.path.join(tmp_dir, "s.csv"), "w") as fp:
+	with open(os.path.join(tmp_dir, "s.csv"), 'w') as fp:
 		fp.write(csv_content)
 
 	with open(os.path.join(tmp_dir, "s.csv")) as f:

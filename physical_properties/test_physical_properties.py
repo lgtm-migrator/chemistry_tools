@@ -7,13 +7,19 @@ from chemistry_tools.pubchem.compound import Compound
 
 @pytest.fixture(scope="module")
 def c1():
-	"""Compound CID 241."""
+	"""
+	Compound CID 241.
+	"""
+
 	return Compound.from_cid(241)
 
 
 @pytest.fixture(scope="module")
 def c2():
-	"""Compound CID 175."""
+	"""
+	Compound CID 175.
+	"""
+
 	return Compound.from_cid(175)
 
 
