@@ -31,19 +31,19 @@ __version__ = "0.4.0"
 repo_root = pathlib.Path(__file__).parent
 install_requires = (repo_root / "requirements.txt").read_text(encoding="utf-8").split('\n')
 extras_require = {
-		'pubchem': [
-				'cawdrey>=0.1.7', 'mathematical>=0.1.13', 'pillow>=7.0.0', 'pyparsing>=2.2.0', 'tabulate>=0.8.3'
+		"pubchem": [
+				"cawdrey>=0.1.7", "mathematical>=0.1.13", "pillow>=7.0.0", "pyparsing>=2.2.0", "tabulate>=0.8.3"
 				],
-		'formulae': ['cawdrey>=0.1.7', 'mathematical>=0.1.13', 'pyparsing>=2.2.0', 'tabulate>=0.8.3'],
-		'plotting': ['matplotlib>=3.0.0'],
-		'toxnet': ['beautifulsoup4>=4.7.0'],
-		'all': [
-				'beautifulsoup4>=4.7.0',
-				'cawdrey>=0.1.7',
-				'mathematical>=0.1.13',
-				'matplotlib>=3.0.0',
-				'pillow>=7.0.0',
-				'pyparsing>=2.2.0',
-				'tabulate>=0.8.3'
+		"formulae": ["cawdrey>=0.1.7", "mathematical>=0.1.13", "pyparsing>=2.2.0", "tabulate>=0.8.3"],
+		"plotting": ["matplotlib>=3.0.0"],
+		"toxnet": ["beautifulsoup4>=4.7.0"],
+		"all": [
+				"beautifulsoup4>=4.7.0",
+				"cawdrey>=0.1.7",
+				"mathematical>=0.1.13",
+				"matplotlib>=3.0.0",
+				"pillow>=7.0.0",
+				"pyparsing>=2.2.0",
+				"tabulate>=0.8.3"
 				]
 		}
