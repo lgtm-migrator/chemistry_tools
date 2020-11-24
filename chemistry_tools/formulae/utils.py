@@ -237,9 +237,8 @@ _isotope_regex_1 = re.compile(r"^([A-z]+)(\[\d*])$")
 _isotope_regex_2 = re.compile(r"^(\[[A-z]+)(\d*])$")
 _isotope_regex_3 = re.compile(r"^(\[\d*)([A-z]+])$")
 _iso_bracket_regex = re.compile(r"^(\[)(\d+)(])$")
-_hill_isotope_re = r"^(%s\[[0-9]*\]|\[[0-9]*%s\])?$"
-_hill_carbon_re = re.compile(r"^(C\[[0-9]*]|\[[0-9]*C])?$")
-_hill_hydrogen_re = re.compile(r"^(H\[[0-9]*]|\[[0-9]*H])?$")
+_hill_carbon_re   = re.compile(r"(C(?:\[[0-9]+])?|\[[0-9]+C])")
+_hill_hydrogen_re = re.compile(r"(H(?:\[[0-9]+])?|\[[0-9]+H])")
 
 
 @lru_cache()
@@ -295,6 +294,7 @@ def hill_order(symbols: Sequence[str]) -> Iterator[str]:
 	symbols_list: List[str] = list(set(symbols))
 
 	carbon_isotopes = list(filter(_hill_carbon_re.findall, symbols_list))
+	print(carbon_isotopes)
 
 	if carbon_isotopes:
 		for isotope in sorted(carbon_isotopes):
