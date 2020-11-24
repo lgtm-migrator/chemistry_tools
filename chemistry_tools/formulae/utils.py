@@ -237,7 +237,7 @@ _isotope_regex_1 = re.compile(r"^([A-z]+)(\[\d*])$")
 _isotope_regex_2 = re.compile(r"^(\[[A-z]+)(\d*])$")
 _isotope_regex_3 = re.compile(r"^(\[\d*)([A-z]+])$")
 _iso_bracket_regex = re.compile(r"^(\[)(\d+)(])$")
-_hill_carbon_re   = re.compile(r"(C(?:\[[0-9]+])?|\[[0-9]+C])")
+_hill_carbon_re = re.compile(r"(C(?:\[[0-9]+])?|\[[0-9]+C])")
 _hill_hydrogen_re = re.compile(r"(H(?:\[[0-9]+])?|\[[0-9]+H])")
 
 
@@ -250,7 +250,7 @@ def split_isotope(string: str) -> Tuple[str, int]:
 
 	:param string:
 
-	:return: Tuple representing the element and the isotope number
+	:return: Tuple representing the element and the isotope number.
 	"""
 
 	isotope = '0'
