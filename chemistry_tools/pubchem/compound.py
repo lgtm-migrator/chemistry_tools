@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 #
 #  compound.py
+"""
+Represents a chemical compound.
+"""
 #
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -468,7 +471,7 @@ class Compound(Dictable):
 		Each bit in the fingerprint represents the presence or absence of one of 881 chemical substructures.
 
 		More information at ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt
-		"""
+		"""  # noqa: D403
 
 		# Skip first 4 bytes (contain length of fingerprint) and last 7 bits (padding) then re-pad to 881 bits
 

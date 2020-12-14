@@ -103,6 +103,7 @@
 
 # stdlib
 import decimal
+import re
 
 # 3rd party
 import pytest
@@ -164,7 +165,10 @@ def test_charged_formula():
 	assert f5 == f2
 
 	for charge in [1, 2, 3]:
-		with pytest.raises(ValueError):
+		with pytest.raises(
+				ValueError,
+				match="Cannot supply 'charge' when the formula already has a charge!",
+				):
 			Formula.from_string(f"BCHFKOH+{charge:d}", charge + 1)
 
 
@@ -426,7 +430,6 @@ def test_empirical_formula(formula_1, formula_2):
 				'2',
 				'a',
 				"(a)",  # TODO: "C:H", "H:", "C[H", "H)2",  # failing
-				'A',
 				"Aa",
 				"2lC",
 				"1C",
@@ -440,8 +443,15 @@ def test_empirical_formula(formula_1, formula_2):
 				]
 		)
 def test_invalid_formulae(formula):
-	with pytest.raises(ValueError):
-		print(Formula.from_string(formula))
+	pattern = f"Unrecognised formula: {re.escape(formula.replace(' ', ''))}"
+	with pytest.raises(ValueError, match=pattern):
+		Formula.from_string(formula)
+
+
+@pytest.mark.parametrize("formula", ['A'])
+def test_invalid_formulae_unknown_element(formula):
+	with pytest.raises(ValueError, match=f"Unknown chemical element with symbol {formula}"):
+		Formula.from_string(formula)
 
 
 @pytest.mark.parametrize(

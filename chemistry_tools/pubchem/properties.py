@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #
 #  properties.py
+"""
+Functions and classes to access properties of compounds in the PubChem database.
+"""
 #
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

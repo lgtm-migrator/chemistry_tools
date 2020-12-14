@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #
 #  synonyms.py
+"""
+Functions for obtaining the synonyms of a compound from the PubChem database.
+"""
 #
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

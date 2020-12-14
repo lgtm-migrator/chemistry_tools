@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #
 #  full_record.py
+"""
+Functions for access the complete set of data held by PubChem for a compound.
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

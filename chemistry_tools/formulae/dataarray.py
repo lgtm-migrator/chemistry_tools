@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 #
 #  dataarray.py
+"""
+Provides a base class which can output data as a :class:`pandas.DataFrame`,
+to CSV, or as a pretty-printed table in a variety of formats.
+"""  # noqa: D400
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -37,7 +41,7 @@ __all__ = ["DataArray"]
 @prettify_docstrings
 class DataArray(FrozenOrderedDict):
 	"""
-	A class that can output data as a :class:`pandas.DataFrame`, to CSV,
+	A class which can output data as a :class:`pandas.DataFrame`, to CSV,
 	or as a pretty-printed table in a variety of formats.
 
 	To use this class it must first be subclassed.

@@ -27,7 +27,7 @@ Format Physical Properties for Chemicals.
 import re
 from decimal import Decimal
 
-__all__ = ["degC", "equals", "scientific", "uscg1999", "trailspace", "f2c", "property_format"]
+__all__ = ["degC", "equals", "scientific", "uscg1999", "f2c", "property_format"]
 
 deg_c_re = re.compile(r"(\s*)(deg|DEG)(\s*)(C)")
 dec_c_symbol = "°C"
@@ -67,10 +67,6 @@ def uscg1999(string: str) -> str:
 	return string.replace("(USCG, 1999)", '')
 
 
-def trailspace(string: str) -> str:
-	return string.rstrip(' ')
-
-
 def f2c(string: str) -> str:
 	try:
 		temperature = f2c_regex.findall(string)[0].replace('F', '').replace('°', '').replace(' ', '')
@@ -85,4 +81,4 @@ def f2c(string: str) -> str:
 
 
 def property_format(string: str) -> str:
-	return trailspace(f2c(uscg1999(scientific(degC(equals(string))))))
+	return f2c(uscg1999(scientific(degC(equals(string))))).rstrip(' ')

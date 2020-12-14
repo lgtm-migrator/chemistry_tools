@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 #
 #  atom.py
+"""
+Represents an atom in a :class:`~chemistry_tools.pubchem.compound.Compound`.
+"""
 #
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

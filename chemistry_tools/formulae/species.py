@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #
 #  species.py
+"""
+Class to represent a formula with phase information (e.g. solid, liquid, gas, or aqueous).
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

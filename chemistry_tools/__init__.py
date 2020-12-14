@@ -1,6 +1,9 @@
-#  !/usr/bin/env python
+#!/usr/bin/env python
 #
 #  __init__.py
+"""
+Python tools for analysis of chemical compounds.
+"""
 #
 #  Copyright (c) 2019-2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -75,24 +78,16 @@
 #  |  DOI: `10.1021/acs.jproteome.8b00717 <http://dx.doi.org/10.1021/acs.jproteome.8b00717>`_
 #
 
-__author__ = "Dominic Davis-Foster"
-__copyright__ = "2019-2020 Dominic Davis-Foster"
-
-__license__ = "LGPL"
-__version__ = "0.4.1"
-__email__ = "dominic@davis-foster.co.uk"
-
 # this package
 from chemistry_tools.cache import cached_requests, clear_cache
 
+__author__ = "Dominic Davis-Foster"
+__copyright__ = "2019-2020 Dominic Davis-Foster"
+__license__ = "LGPLv3+"
+__version__ = "0.4.1"
+__email__ = "dominic@davis-foster.co.uk"
+
 __all__ = [
-		# "spectrum_similarity",
-		# "constants",
-		# "property_format",
-		# "toxnet",
-		# "formulae",
-		# "pubchem",
-		# "units",
 		"cached_requests",
 		"clear_cache",
 		]

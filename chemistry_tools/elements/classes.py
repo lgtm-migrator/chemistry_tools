@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #
 #  elements.py
+"""
+Provides classes to model period table elements.
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -653,8 +656,19 @@ class Elements:
 
 	@lru_cache()
 	def split_isotope(self, string: str):
+		"""
+		Returns the symbol and mass number for the isotope represented by ``string``.
+
+		Valid isotopes include ``'[C12]'``, ``'C[12]'`` and ``'[12C]'``.
+
+		:param string:
+
+		:return: Tuple representing the element and the isotope number.
+		"""
+
 		# this package
 		from chemistry_tools.formulae.utils import split_isotope
+
 		return split_isotope(string)
 
 	def add_alternate_spelling(self, element: Element, spelling: str):

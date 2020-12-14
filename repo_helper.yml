@@ -20,9 +20,9 @@ additional_ignore:
 
 # Versions to run tests for
 python_versions:
- - '3.6'
- - '3.7'
- - "3.8"
+ - 3.6
+ - 3.7
+ - 3.8
  - 3.9
 
 # travis secure password for PyPI
@@ -32,10 +32,6 @@ manifest_additional:
  - recursive-include chemistry_tools requirements.txt
  - recursive-exclude tests *
  - prune tests*
-
-# directory that contains tests
-tests_dir: "tests"
-
 
 classifiers:
  - 'Development Status :: 4 - Beta'
@@ -48,6 +44,7 @@ classifiers:
  - "Topic :: Scientific/Engineering :: Bio-Informatics"
  - "Topic :: Scientific/Engineering :: Chemistry"
  - 'Topic :: Software Development :: Libraries :: Python Modules'
+
 extras_require:
   pubchem: "chemistry_tools/pubchem/requirements.txt"
   formulae: "chemistry_tools/formulae/requirements.txt"
@@ -55,7 +52,6 @@ extras_require:
    - matplotlib>=3.0.0
   toxnet:
    - beautifulsoup4>=4.7.0
-
 
 # Paths to additional requirements.txt files, relative to repo root
 additional_requirements_files:

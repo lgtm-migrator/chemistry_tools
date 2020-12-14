@@ -141,6 +141,7 @@ def _make_base_url(
 		identifier: Union[str, int, Iterable[Union[str, int]]],
 		) -> str:
 	"""
+	Constructs the base URL for accessing data about a compound.
 
 	:param namespace:
 	:param identifier:
