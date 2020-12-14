@@ -11,7 +11,7 @@
 #
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 #  GNU Lesser General Public License for more details.
 #
 #  You should have received a copy of the GNU Lesser General Public License
@@ -84,7 +84,7 @@ def test_formula_to_composition():
 	assert string_to_composition(".ONOO") == {'N': 1, 'O': 3}
 	assert string_to_composition(".NO3-2") == {0: -2, 'N': 1, 'O': 3}
 
-	with pytest.raises(ValueError):
+	with pytest.raises(ValueError, match=r"invalid literal for int\(\) with base 10: 'F'"):
 		string_to_composition("F-F")
 
 	# TODO: parse greek prefixes

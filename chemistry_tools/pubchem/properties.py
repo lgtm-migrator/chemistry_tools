@@ -14,7 +14,7 @@ Functions and classes to access properties of compounds in the PubChem database.
 #
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 #  GNU Lesser General Public License for more details.
 #
 #  You should have received a copy of the GNU Lesser General Public License
@@ -117,7 +117,7 @@ _properties: List[PropData] = [
 				),
 		PropData(
 				"IsomericSMILES",
-				"Isomeric SMILES string.  It is a SMILES string with stereochemical and isotopic specifications.",
+				"Isomeric SMILES string. It is a SMILES string with stereochemical and isotopic specifications.",
 				str,
 				"isomeric_smiles"
 				),
