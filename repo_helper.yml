@@ -24,8 +24,7 @@ python_versions:
  - 3.7
  - 3.8
  - 3.9
-
-# travis secure password for PyPI
+ - 3.10-dev
 
 # additional lines for MANIFEST.in
 manifest_additional:
@@ -70,6 +69,3 @@ keywords:
 
 extra_sphinx_extensions:
  - enum_tools.autoenum
-
-#yapf_exclude:
-# - "*.pyi"
