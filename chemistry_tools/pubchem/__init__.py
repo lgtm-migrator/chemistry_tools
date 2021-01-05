@@ -47,10 +47,17 @@ Data for compounds can be accessed using the :func:`chemistry_tools.pubchem.look
 #  |  THE SOFTWARE.
 #
 
+# 3rd party
+from apeye import RequestsURL
+
+# this package
+from chemistry_tools.cache import cached_requests
+
 # this package
 from . import atom, bond, enums, errors
 
-API_BASE = "https://pubchem.ncbi.nlm.nih.gov/rest/pug"
+API_BASE = RequestsURL("https://pubchem.ncbi.nlm.nih.gov/rest/pug")
+API_BASE.session = cached_requests
 
 __all__ = [
 		"API_BASE",

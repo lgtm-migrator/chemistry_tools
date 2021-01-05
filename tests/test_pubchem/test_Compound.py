@@ -55,7 +55,7 @@ def test_atoms(c1):
 	assert set(c1.elements) == {'C', 'H'}
 
 
-def test_single_atom():
+def test_single_atom(pubchem_cassette):
 	"""
 	Test Compound when there is a single atom and no bonds.
 	"""
@@ -161,7 +161,7 @@ def test_coordinate_type(c1):
 	assert c1.coordinate_type == "2d"
 
 
-def test_compound_equality():
+def test_compound_equality(pubchem_cassette):
 	assert Compound.from_cid(241) == Compound.from_cid(241)
 	assert get_compounds("Benzene", "name")[0], get_compounds("c1ccccc1" == "smiles")[0]
 

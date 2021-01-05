@@ -139,10 +139,10 @@ def do_cached_request(
 	"""
 
 	if domain:
-		r = cached_requests.get(f"{_make_base_url(namespace, identifier)}/{domain}/{format_}", params=query_params)
+		r = (_make_base_url(namespace, identifier) / f"{domain}/{format_}").get(params=query_params)
 	else:
 		query_params["record_type"] = record_type
-		r = cached_requests.get(f"{_make_base_url(namespace, identifier)}/{format_}", params=query_params)
+		r = (_make_base_url(namespace, identifier) / str(format_)).get(params=query_params)
 
 	return r
 
@@ -154,7 +154,7 @@ def get_full_json(cid: Union[str, int]) -> str:
 	:param cid:
 	"""
 
-	json_file = cached_requests.get(f"{API_BASE}_view/data/compound/{cid}/JSON/")
+	json_file = (API_BASE / f"_view/data/compound/{cid}/JSON").get()
 	return json_file.json()
 
 
@@ -238,8 +238,8 @@ def request(
 
 	urlid = quote(identifier.encode("utf8"))
 
-	comps: Iterator[str] = filter(None, (API_BASE, "compound", searchtype, namespace, urlid, operation, output))
-	apiurl = '/'.join(comps)
+	comps: Iterator[str] = filter(None, ("compound", searchtype, namespace, urlid, operation, output))
+	apiurl = API_BASE / '/'.join(comps)
 
 	# Filter None values from kwargs
 	for key, val in kwargs.items():
@@ -249,7 +249,7 @@ def request(
 	# print(f'Request URL: {apiurl}')
 	# print(f'Request data: {params}')
 
-	response = cached_requests.get(apiurl, params=params)
+	response = apiurl.get(params=params)
 	if response.status_code in HTTP_ERROR_CODES:
 		raise PubChemHTTPError(response)
 

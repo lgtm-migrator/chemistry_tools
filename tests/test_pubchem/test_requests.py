@@ -10,7 +10,7 @@ Test basic requests.
 from chemistry_tools.pubchem.pug_rest import do_rest_get
 
 
-def test_requests():
+def test_requests(pubchem_cassette):
 	"""
 	Test a variety of basic raw requests and ensure they don't return an error code.
 	"""
@@ -25,7 +25,22 @@ def test_requests():
 			).status_code == 200
 
 
-def test_content_type():
+def test_requests_no_cassette():
+	"""
+	Test a variety of basic raw requests (without using betamax) and ensure they don't return an error code.
+	"""
+
+	assert do_rest_get(identifier="c1ccccc1", namespace="smiles").status_code == 200
+	assert do_rest_get(
+			identifier="coumarin",
+			namespace="name",
+			format_="PNG",
+			png_width=50,
+			png_height=50,
+			).status_code == 200
+
+
+def test_content_type(pubchem_cassette):
 	"""
 	Test content type header matches desired output format.
 	"""

@@ -46,8 +46,10 @@ General utility functions.
 #
 
 # stdlib
-from collections.abc import Sequence, Set
-from typing import Any, Dict, Iterable, List, Union
+from typing import Any, Dict, Iterable, List, Sequence, Set, Union
+
+# 3rd party
+from apeye import RequestsURL
 
 # this package
 from chemistry_tools.pubchem import API_BASE
@@ -139,14 +141,16 @@ def _force_sequence_or_csv(
 def _make_base_url(
 		namespace: Union[PubChemNamespace, str],
 		identifier: Union[str, int, Iterable[Union[str, int]]],
-		) -> str:
+		) -> RequestsURL:
 	"""
 	Constructs the base URL for accessing data about a compound.
 
 	:param namespace:
 	:param identifier:
+
+	.. versionchanged:: 0.5.0  Now returns a :class:`apeye.requests_url.RequestsURL`.
 	"""
 
 	identifier = _force_sequence_or_csv(identifier, "identifier")
 	namespace = str(namespace)
-	return f"{API_BASE}/compound/{namespace}/{','.join(identifier)}"
+	return API_BASE / f"compound/{namespace}/{','.join(identifier)}"

@@ -28,7 +28,7 @@ from chemistry_tools.pubchem.properties import get_properties
 # 	assert 'exact_mass' in columns
 
 
-def test_properties_dataframe():
+def test_properties_dataframe(pubchem_cassette):
 	df = get_properties("1,2,3,4", ["IsomericSMILES", "XLogP", "InChIKey"], "cid", as_dataframe=True)
 	assert df.ndim == 2
 	assert df.index.names == ["CID"]
@@ -36,11 +36,11 @@ def test_properties_dataframe():
 	assert df.columns.values.tolist() == ["IsomericSMILES", "InChIKey", "XLogP"]
 
 
-def test_compound_series():
+def test_compound_series(pubchem_cassette):
 	s = Compound.from_cid(241).to_series()
 	assert isinstance(s, pandas.Series)
 
 
-def test_compound_to_frame():
+def test_compound_to_frame(pubchem_cassette):
 	s = compounds_to_frame(Compound.from_cid(241))
 	assert isinstance(s, pandas.DataFrame)

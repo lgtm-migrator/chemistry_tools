@@ -20,7 +20,7 @@ def test_image_download(tmp_pathplus):
 	img.save(tmp_pathplus / "aspirin.png")
 
 
-def test_csv_download(tmp_pathplus):
+def test_csv_download(tmp_pathplus, pubchem_cassette):
 	csv_content = rest_get_properties(
 			[1, 2, 3],
 			namespace="cid",

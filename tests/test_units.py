@@ -45,18 +45,12 @@
 #  |  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# stdlib
-from collections import defaultdict
-from typing import Dict
-
 # 3rd party
 import numpy  # type: ignore
-import pytest
 import quantities  # type: ignore
 
 # this package
 from chemistry_tools import units
-from chemistry_tools.units import SI_base_registry
 
 UncertainQuantity = quantities.UncertainQuantity
 

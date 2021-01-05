@@ -49,7 +49,6 @@ Scientific constants.
 #
 
 # stdlib
-from collections import namedtuple
 from typing import Dict, NamedTuple, Optional
 
 # 3rd party

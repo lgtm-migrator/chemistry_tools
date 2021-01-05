@@ -1,7 +1,7 @@
 # TODO: Numpy is broken in Windows 2004 except for 1.19.3
 # A fix should be out by end of Jan 2021 🙈
 # https://developercommunity.visualstudio.com/content/problem/1207405/fmod-after-an-update-to-windows-2004-is-causing-a.html
-apeye>=0.1.0
+apeye>=0.5.1
 domdf-python-tools>=0.9.1
 enum-tools>=0.1.3
 memoized-property>=1.0.3
