@@ -98,7 +98,7 @@ Chemistry Tools
 	:target: https://github.com/domdfcoding/chemistry_tools/commit/master
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2020
+.. |maintained| image:: https://img.shields.io/maintenance/yes/2021
 	:alt: Maintenance
 
 .. |pre_commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white

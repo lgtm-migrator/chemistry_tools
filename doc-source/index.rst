@@ -99,7 +99,7 @@ Chemistry Tools
 	:last-commit:
 	:alt: GitHub last commit
 
-.. |maintained| maintained-shield:: 2020
+.. |maintained| maintained-shield:: 2021
 	:alt: Maintenance
 
 .. |pre_commit| pre-commit-shield::

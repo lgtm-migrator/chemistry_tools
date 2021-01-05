@@ -31,7 +31,7 @@ author = "Dominic Davis-Foster"
 project = "chemistry_tools"
 slug = re.sub(r'\W+', '-', project.lower())
 release = version = __version__
-copyright = "2019-2020 Dominic Davis-Foster"  # pylint: disable=redefined-builtin
+copyright = "2019-2021 Dominic Davis-Foster"  # pylint: disable=redefined-builtin
 language = "en"
 package_root = "chemistry_tools"
 
