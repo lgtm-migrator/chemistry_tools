@@ -35,13 +35,17 @@ extras_require = {
 				"cawdrey>=0.1.7", "mathematical>=0.1.13", "pillow>=7.0.0", "pyparsing>=2.2.0", "tabulate>=0.8.3"
 				],
 		"formulae": ["cawdrey>=0.1.7", "mathematical>=0.1.13", "pyparsing>=2.2.0", "tabulate>=0.8.3"],
-		"plotting": ["matplotlib>=3.0.0"],
+		"plotting": [
+				'matplotlib>=3.0.0; platform_machine != "aarch64" or python_version > "3.6"',
+				'matplotlib<=3.2.2; platform_machine == "aarch64" and python_version == "3.6"'
+				],
 		"toxnet": ["beautifulsoup4>=4.7.0"],
 		"all": [
 				"beautifulsoup4>=4.7.0",
 				"cawdrey>=0.1.7",
 				"mathematical>=0.1.13",
-				"matplotlib>=3.0.0",
+				'matplotlib<=3.2.2;platform_machine=="aarch64"andpython_version=="3.6"',
+				'matplotlib>=3.0.0;platform_machine!="aarch64"orpython_version>"3.6"',
 				"pillow>=7.0.0",
 				"pyparsing>=2.2.0",
 				"tabulate>=0.8.3"
