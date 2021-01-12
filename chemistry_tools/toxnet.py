@@ -37,7 +37,13 @@ from .property_format import *
 __all__ = ["toxnet"]
 
 
-def toxnet(cas):
+def toxnet(cas: str):
+	"""
+	Obtain physical properties for the compound with the given CAS number from the ToxNet database.
+
+	:param cas:
+	"""
+
 	try:
 		base_url = "https://toxnet.nlm.nih.gov"
 		origin_url = f"{base_url}/cgi-bin/sis/search2/r?dbs+hsdb:@term+@rn+@rel+{cas}"

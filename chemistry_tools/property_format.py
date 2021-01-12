@@ -38,19 +38,32 @@ f2c_regex = re.compile(r"\d*\.?\d+ *° *F")
 
 
 def degC(string: str) -> str:
+	"""
+	Correctly format a temperature in degrees Celsius.
+
+	:param string:
+	"""
+
 	return deg_c_re.sub(f"{mmath_space}{dec_c_symbol}", string)
 
 
 def equals(string: str) -> str:
+	"""
+	Correctly format an equals sign in a string.
+
+	:param string:
+	"""
+
 	return equals_re.sub(" = ", string)
 
 
 def scientific(string: str) -> str:
 	"""
-	TODO: Finish
+	Correctly format a string containing scientific notation.
+
+	..TODO: Finish
 
 	:param string:
-	:return:
 	"""
 
 	try:
@@ -64,10 +77,22 @@ def scientific(string: str) -> str:
 
 
 def uscg1999(string: str) -> str:
+	"""
+	Strip references to the USCG dataset from the values.
+
+	:param string:
+	"""
+
 	return string.replace("(USCG, 1999)", '')
 
 
 def f2c(string: str) -> str:
+	"""
+	Convert temperature strings in degrees Fahrenheit to degrees Celsius.
+
+	:param string:
+	"""
+
 	try:
 		temperature = f2c_regex.findall(string)[0].replace('F', '').replace('°', '').replace(' ', '')
 	except IndexError:
@@ -81,4 +106,10 @@ def f2c(string: str) -> str:
 
 
 def property_format(string: str) -> str:
+	"""
+	Apply all property formatting functions to the string.
+
+	:param string:
+	"""
+
 	return f2c(uscg1999(scientific(degC(equals(string))))).rstrip(' ')
