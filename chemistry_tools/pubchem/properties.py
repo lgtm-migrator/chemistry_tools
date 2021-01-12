@@ -91,7 +91,7 @@ class PropData(NamedTuple):
 	description: str
 
 	#: The type of the property.
-	type: Callable  # noqa: A003
+	type: Callable  # noqa: A003  # pylint: disable=redefined-builtin
 
 	#: The Python attribute name of the property in a :class:`chemistry_tools.pubchem.compound.Compound`.
 	attr_name: str
@@ -493,7 +493,7 @@ def get_properties(
 @insert_valid_properties_table()
 def get_property(
 		identifier: Union[str, int, Sequence[Union[str, int]]],
-		property: str = '',  # noqa: A002
+		property: str = '',  # noqa: A002  # pylint: disable=redefined-builtin
 		namespace: Union[PubChemNamespace, str] = PubChemNamespace.name
 		) -> Any:
 	"""
