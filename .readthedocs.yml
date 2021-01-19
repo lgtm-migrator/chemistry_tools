@@ -13,3 +13,5 @@ python:
    - requirements: doc-source/requirements.txt
    - requirements: chemistry_tools/pubchem/requirements.txt
    - requirements: chemistry_tools/formulae/requirements.txt
+   - method: pip
+     path: .
