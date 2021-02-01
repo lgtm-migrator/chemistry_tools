@@ -46,7 +46,7 @@
 #
 
 # 3rd party
-import numpy  # type: ignore
+import numpy
 import quantities  # type: ignore
 
 # this package

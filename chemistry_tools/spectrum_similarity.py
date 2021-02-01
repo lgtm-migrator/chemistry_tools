@@ -53,7 +53,7 @@ Mass spectrum similarity calculations.
 from typing import Mapping, Optional, Sequence, Tuple, Union
 
 # 3rd party
-import numpy  # type: ignore
+import numpy
 import pandas  # type: ignore
 
 __all__ = ["spectrum_similarity", "normalize", "create_array"]

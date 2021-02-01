@@ -52,7 +52,7 @@ Functions for handling SI units.
 from typing import Union
 
 # 3rd party
-import numpy  # type: ignore
+import numpy
 import quantities  # type: ignore
 import quantities.markup  # type: ignore
 
@@ -175,9 +175,9 @@ def allclose(a, b, rtol=1e-8, atol=None) -> bool:
 		try:
 			len(lim)
 		except TypeError:
-			return numpy.all([_d <= lim for _d in d])
+			return numpy.all([_d <= lim for _d in d])  # type: ignore
 		else:
-			return numpy.all([_d <= _lim for _d, _lim in zip(d, lim)])
+			return numpy.all([_d <= _lim for _d, _lim in zip(d, lim)])  # type: ignore
 
 
 # TODO: decide whether to deprecate in favor of "number_to_scientific_latex"?
