@@ -1,3 +1,42 @@
 [build-system]
-requires = ["setuptools>=40.6.0", "wheel>=0.34.2"]
+requires = [ "setuptools>=40.6.0", "wheel>=0.34.2",]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "chemistry_tools"
+version = "0.4.1"
+description = "Python tools for analysis of chemical compounds."
+readme = "README.rst"
+keywords = [ "chemistry", "utility",]
+dynamic = [ "requires-python", "classifiers", "dependencies",]
+[[project.authors]]
+email = "dominic@davis-foster.co.uk"
+name = "Dominic Davis-Foster"
+
+[project.license]
+file = "LICENSE"
+
+[project.urls]
+Homepage = "https://github.com/domdfcoding/chemistry_tools"
+"Issue Tracker" = "https://github.com/domdfcoding/chemistry_tools/issues"
+"Source Code" = "https://github.com/domdfcoding/chemistry_tools"
+Documentation = "https://chemistry_tools.readthedocs.io/en/latest"
+
+[project.optional-dependencies]
+pubchem = [ "cawdrey>=0.1.7", "mathematical>=0.1.13", "pillow>=7.0.0", "pyparsing>=2.2.0", "tabulate>=0.8.9",]
+formulae = [ "cawdrey>=0.1.7", "mathematical>=0.1.13", "pyparsing>=2.2.0", "tabulate>=0.8.9",]
+plotting = [
+    "matplotlib>=3.0.0; platform_machine != \"aarch64\" or python_version > \"3.6\"",
+    "matplotlib<=3.2.2; platform_machine == \"aarch64\" and python_version == \"3.6\"",
+]
+toxnet = [ "beautifulsoup4>=4.7.0",]
+all = [
+    "beautifulsoup4>=4.7.0",
+    "cawdrey>=0.1.7",
+    "mathematical>=0.1.13",
+    "matplotlib>=3.0.0; platform_machine != \"aarch64\" or python_version > \"3.6\"",
+    "matplotlib<=3.2.2; platform_machine == \"aarch64\" and python_version == \"3.6\"",
+    "pillow>=7.0.0",
+    "pyparsing>=2.2.0",
+    "tabulate>=0.8.9",
+]

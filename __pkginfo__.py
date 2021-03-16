@@ -27,14 +27,13 @@ __copyright__ = """
 """
 
 __version__ = "0.4.1"
-
 repo_root = pathlib.Path(__file__).parent
 install_requires = (repo_root / "requirements.txt").read_text(encoding="utf-8").split('\n')
 extras_require = {
 		"pubchem": [
-				"cawdrey>=0.1.7", "mathematical>=0.1.13", "pillow>=7.0.0", "pyparsing>=2.2.0", "tabulate>=0.8.3"
+				"cawdrey>=0.1.7", "mathematical>=0.1.13", "pillow>=7.0.0", "pyparsing>=2.2.0", "tabulate>=0.8.9"
 				],
-		"formulae": ["cawdrey>=0.1.7", "mathematical>=0.1.13", "pyparsing>=2.2.0", "tabulate>=0.8.3"],
+		"formulae": ["cawdrey>=0.1.7", "mathematical>=0.1.13", "pyparsing>=2.2.0", "tabulate>=0.8.9"],
 		"plotting": [
 				'matplotlib>=3.0.0; platform_machine != "aarch64" or python_version > "3.6"',
 				'matplotlib<=3.2.2; platform_machine == "aarch64" and python_version == "3.6"'
@@ -44,10 +43,10 @@ extras_require = {
 				"beautifulsoup4>=4.7.0",
 				"cawdrey>=0.1.7",
 				"mathematical>=0.1.13",
-				'matplotlib<=3.2.2;platform_machine=="aarch64"andpython_version=="3.6"',
-				'matplotlib>=3.0.0;platform_machine!="aarch64"orpython_version>"3.6"',
+				'matplotlib>=3.0.0; platform_machine != "aarch64" or python_version > "3.6"',
+				'matplotlib<=3.2.2; platform_machine == "aarch64" and python_version == "3.6"',
 				"pillow>=7.0.0",
 				"pyparsing>=2.2.0",
-				"tabulate>=0.8.3"
+				"tabulate>=0.8.9"
 				]
 		}

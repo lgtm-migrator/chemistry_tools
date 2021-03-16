@@ -28,7 +28,7 @@ rst_prolog = f""".. |pkgname| replace:: chemistry_tools
 """
 
 author = "Dominic Davis-Foster"
-project = "chemistry_tools"
+project = "chemistry_tools".replace('_', '-')
 slug = re.sub(r'\W+', '-', project.lower())
 release = version = __version__
 copyright = "2019-2021 Dominic Davis-Foster"  # pylint: disable=redefined-builtin
@@ -40,6 +40,7 @@ extensions = [
 		"sphinx_toolbox.more_autodoc",
 		"sphinx_toolbox.more_autosummary",
 		"sphinx_toolbox.tweaks.param_dash",
+		"sphinx_toolbox.tweaks.latex_toc",
 		"sphinx.ext.intersphinx",
 		"sphinx.ext.mathjax",
 		"sphinxcontrib.httpdomain",
@@ -50,6 +51,7 @@ extensions = [
 		"sphinx_copybutton",
 		"sphinxcontrib.default_values",
 		"sphinxcontrib.toctree_plus",
+		"sphinx_debuginfo",
 		"seed_intersphinx_mapping",
 		"enum_tools.autoenum",
 		]
