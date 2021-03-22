@@ -4,7 +4,7 @@ Chemistry Tools
 
 .. start short_desc
 
-**Python tools for analysis of chemical compounds.**
+.. documentation-summary::
 
 .. end short_desc
 .. start shields
