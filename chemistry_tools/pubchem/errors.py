@@ -177,7 +177,7 @@ class HTTPTimeoutError(PubChemHTTPError):
 		self.msg = msg
 
 
-TimeoutError = HTTPTimeoutError  # noqa: A001
+TimeoutError = HTTPTimeoutError  # noqa: A001  # pylint: disable=redefined-builtin
 
 
 class UnimplementedError(PubChemHTTPError):

@@ -23,9 +23,8 @@
 # stdlib
 from typing import Any
 
-# this package
+# 3rd party
 from enum_tools import IntEnum, StrEnum
-
 
 class PubChemNamespace(StrEnum):
 	CID = Cid = cid = "cid"
@@ -38,13 +37,12 @@ class PubChemNamespace(StrEnum):
 	@classmethod
 	def is_valid_value(cls, value: Any) -> bool: ...
 
-
 # @document_enum
+
 class PubChemFormats(StrEnum):
 	"""
 	Enum of supported formats for the PubChem REST API.
 	"""
-
 	JSON = Json = json = "JSON"
 	XML = Xml = xml = "XML"
 	CSV = csv = Csv = "CSV"
@@ -54,7 +52,6 @@ class PubChemFormats(StrEnum):
 
 	@classmethod
 	def is_valid_value(cls, value: Any) -> bool: ...
-
 
 class CoordinateType(IntEnum):
 	TWO_D = ...
