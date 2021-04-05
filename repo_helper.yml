@@ -8,11 +8,12 @@ username: "domdfcoding"
 license: 'LGPLv3+'
 short_desc: 'Python tools for analysis of chemical compounds.'
 
-conda_channels:
- - domdfcoding
- - conda-forge
-
 python_deploy_version: 3.7
+tox_testenv_extras: all
+use_whey: true
+
+conda_channels:
+ - conda-forge
 
 # Additional lines for .gitignore
 additional_ignore:
@@ -59,8 +60,6 @@ extras_require:
 additional_requirements_files:
  - "chemistry_tools/pubchem/requirements.txt"
  - "chemistry_tools/formulae/requirements.txt"
-
-tox_testenv_extras: all
 
 sphinx_conf_preamble:
  - import warnings
