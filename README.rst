@@ -25,7 +25,7 @@ Chemistry Tools
 	* - Activity
 	  - |commits-latest| |commits-since| |maintained| |pypi-downloads|
 	* - QA
-	  - |codefactor| |actions_flake8| |actions_mypy| |pre_commit_ci|
+	  - |codefactor| |actions_flake8| |actions_mypy|
 	* - Other
 	  - |license| |language| |requires|
 
@@ -114,10 +114,6 @@ Chemistry Tools
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/chemistry_tools
 	:target: https://pypi.org/project/chemistry_tools/
 	:alt: PyPI - Downloads
-
-.. |pre_commit_ci| image:: https://results.pre-commit.ci/badge/github/domdfcoding/chemistry_tools/master.svg
-	:target: https://results.pre-commit.ci/latest/github/domdfcoding/chemistry_tools/master
-	:alt: pre-commit.ci status
 
 .. end shields
 
