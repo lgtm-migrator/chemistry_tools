@@ -17,3 +17,5 @@ python:
    - requirements: chemistry_tools/pubchem/requirements.txt
    - method: pip
      path: .
+     extra_requirements:
+      - all
