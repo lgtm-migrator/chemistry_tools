@@ -11,6 +11,7 @@ short_desc: 'Python tools for analysis of chemical compounds.'
 python_deploy_version: 3.7
 tox_testenv_extras: all
 use_whey: true
+min_coverage: 74
 
 conda_channels:
  - conda-forge
@@ -72,7 +73,8 @@ keywords:
 extra_sphinx_extensions:
  - enum_tools.autoenum
 
-tox_requirements:
-  - "tox-pip-version>=0.0.7"
-
-min_coverage: 74
+github_ci_requirements:
+ macOS:
+  post:
+   - brew install openblas
+   - OPENBLAS="$(brew --prefix openblas)" pip wheel numpy
