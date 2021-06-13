@@ -48,7 +48,7 @@ Data for compounds can be accessed using the :func:`chemistry_tools.pubchem.look
 #
 
 # 3rd party
-from apeye import RequestsURL
+from apeye.requests_url import RequestsURL
 
 # this package
 from chemistry_tools.cache import cached_requests

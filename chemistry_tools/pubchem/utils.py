@@ -49,7 +49,7 @@ General utility functions.
 from typing import Any, Dict, Iterable, List, Sequence, Set, Union
 
 # 3rd party
-from apeye import RequestsURL
+from apeye.requests_url import RequestsURL
 
 # this package
 from chemistry_tools.pubchem import API_BASE
