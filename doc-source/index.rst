@@ -5,6 +5,7 @@ Chemistry Tools
 .. start short_desc
 
 .. documentation-summary::
+	:meta:
 
 .. end short_desc
 .. start shields
@@ -58,7 +59,8 @@ Chemistry Tools
 		:workflow: mypy
 		:alt: mypy status
 
-	.. |requires| requires-io-shield::
+	.. |requires| image:: https://dependency-dash.herokuapp.com/github/domdfcoding/chemistry_tools/badge.svg
+		:target: https://dependency-dash.herokuapp.com/github/domdfcoding/chemistry_tools/
 		:alt: Requirements Status
 
 	.. |coveralls| coveralls-shield::
@@ -111,7 +113,7 @@ Chemistry Tools
 		:last-commit:
 		:alt: GitHub last commit
 
-	.. |maintained| maintained-shield:: 2021
+	.. |maintained| maintained-shield:: 2022
 		:alt: Maintenance
 
 	.. |pypi-downloads| pypi-shield::
@@ -160,6 +162,13 @@ Installation
 
 	contributing
 	Source
+	license
+
+.. sidebar-links::
+	:caption: Links
+	:github:
+	:pypi: chemistry_tools
+
 
 .. start links
 
@@ -167,6 +176,6 @@ Installation
 
 	View the :ref:`Function Index <genindex>` or browse the `Source Code <_modules/index.html>`__.
 
-	`Browse the GitHub Repository <https://github.com/domdfcoding/chemistry_tools>`__
+	:github:repo:`Browse the GitHub Repository <domdfcoding/chemistry_tools>`
 
 .. end links
