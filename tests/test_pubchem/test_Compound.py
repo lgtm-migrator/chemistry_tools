@@ -102,7 +102,9 @@ def test_properties_types(c1):
 
 	assert isinstance(c1.molecular_mass, float)
 	assert isinstance(c1.molecular_weight, float)
-	assert isinstance(c1.get_property("MolecularWeight"), float)
+	# Note: this used to be a float, some time before March 2022 it changed to be a string
+	# The .molecular_weight attribute converts it to a float.
+	assert isinstance(c1.get_property("MolecularWeight"), str)
 	assert isinstance(c1.iupac_name, str)
 	assert isinstance(c1.systematic_name, str)
 	assert isinstance(c1.get_property("XLogP"), float)
@@ -137,8 +139,8 @@ def test_properties_values(c1):
 	assert c1.iupac_name == "benzene"
 	assert c1.systematic_name == "benzene"
 	assert c1.get_property("XLogP") == 2.1
-	assert c1.get_property("ExactMass") == 78.04695
-	assert c1.get_property("MonoisotopicMass") == 78.04695
+	assert c1.get_property("ExactMass") == 78.0469501914
+	assert c1.get_property("MonoisotopicMass") == 78.0469501914
 	assert c1.get_property("TPSA") == Decimal(0)
 	# assert c1.get_property("Complexity") == 15.5  # TODO: full record has 15.5 but getting just property gives 15
 	assert c1.get_property("HBondDonorCount") == Decimal('0')
