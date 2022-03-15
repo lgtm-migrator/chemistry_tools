@@ -78,3 +78,6 @@ github_ci_requirements:
   post:
    - brew install openblas
    - OPENBLAS="$(brew --prefix openblas)" pip wheel numpy
+
+tox_unmanaged:
+ - testenv
