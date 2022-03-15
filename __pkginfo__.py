@@ -19,9 +19,9 @@ __all__ = [
 __version__ = "0.4.1"
 extras_require = {
 		"pubchem": [
-				"cawdrey>=0.1.7", "mathematical>=0.1.13", "pillow>=7.0.0", "pyparsing>=2.2.0", "tabulate>=0.8.9"
+				"cawdrey>=0.1.7", "mathematical>=0.1.13", "pillow>=7.0.0", "pyparsing>=2.4.6", "tabulate>=0.8.9"
 				],
-		"formulae": ["cawdrey>=0.1.7", "mathematical>=0.1.13", "pyparsing>=2.2.0", "tabulate>=0.8.9"],
+		"formulae": ["cawdrey>=0.1.7", "mathematical>=0.1.13", "pyparsing>=2.4.6", "tabulate>=0.8.9"],
 		"plotting": [
 				'matplotlib>=3.0.0; platform_machine != "aarch64" or python_version > "3.6"',
 				'matplotlib<=3.2.2; platform_machine == "aarch64" and python_version == "3.6"'
@@ -34,7 +34,7 @@ extras_require = {
 				'matplotlib>=3.0.0; platform_machine != "aarch64" or python_version > "3.6"',
 				'matplotlib<=3.2.2; platform_machine == "aarch64" and python_version == "3.6"',
 				"pillow>=7.0.0",
-				"pyparsing>=2.2.0",
+				"pyparsing>=2.4.6",
 				"tabulate>=0.8.9"
 				]
 		}
