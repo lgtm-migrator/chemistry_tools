@@ -211,7 +211,7 @@ def replace_substrings(string: str, patterns: Dict[str, str]) -> str:
 	:param patterns: A dictionary mapping substrings to their replacements.
 
 	:return: The resulting string.
-	"""  # noqa: D400
+	"""
 
 	for patt, repl in patterns.items():
 		string = string.replace(patt, repl)

@@ -317,7 +317,7 @@ class Compound(Dictable):
 		:param prop: The property to retrieve for the compound. See the table below.
 
 		:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
-		"""  # noqa: D400,RST399,RST218
+		"""  # noqa: RST218
 
 		prop = str(prop)
 
@@ -325,11 +325,11 @@ class Compound(Dictable):
 			raise ValueError(f"Unknown property '{prop}'")
 
 		if self._properties[prop] is not None:
-			print("Getting from cache")
+			# print("Getting from cache")
 			return self._properties[prop]
 
 		else:
-			print("Getting from API")
+			# print("Getting from API")
 			data = rest_get_properties_json(self.CID, "cid", prop)
 			new_properties = parse_properties(data)[0]
 
