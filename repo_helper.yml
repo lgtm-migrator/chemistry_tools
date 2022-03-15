@@ -35,8 +35,8 @@ python_versions:
 # additional lines for MANIFEST.in
 manifest_additional:
  - recursive-include chemistry_tools requirements.txt
- - recursive-exclude tests *
- - prune tests*
+# - recursive-exclude tests *
+# - prune tests*
 
 classifiers:
  - 'Development Status :: 4 - Beta'
