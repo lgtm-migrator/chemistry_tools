@@ -103,8 +103,9 @@ def test_properties_types(c1):
 	assert isinstance(c1.molecular_mass, float)
 	assert isinstance(c1.molecular_weight, float)
 	# Note: this used to be a float, some time before March 2022 it changed to be a string
+	# Sometimes it still seems to be a float
 	# The .molecular_weight attribute converts it to a float.
-	assert isinstance(c1.get_property("MolecularWeight"), str)
+	assert isinstance(c1.get_property("MolecularWeight"), (float, str))
 	assert isinstance(c1.iupac_name, str)
 	assert isinstance(c1.systematic_name, str)
 	assert isinstance(c1.get_property("XLogP"), float)
