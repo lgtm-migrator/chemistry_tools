@@ -295,7 +295,7 @@ class Compound(Dictable):
 		output = {}
 
 		if properties_to_get:
-			print("Getting from API")
+			# print("Getting from API")
 			data = rest_get_properties_json(self.CID, "cid", properties)
 			new_properties = parse_properties(data)[0]
 
@@ -304,7 +304,7 @@ class Compound(Dictable):
 				output[prop] = new_properties[prop]
 
 		for prop in cached_properties:
-			print("Getting from cache")
+			# print("Getting from cache")
 			output[prop] = self._properties[prop]
 
 		return output
@@ -405,7 +405,7 @@ class Compound(Dictable):
 		Molecular Weight.
 		"""
 
-		return self.get_property("MolecularWeight")
+		return float(self.get_property("MolecularWeight"))
 
 	molecular_mass = molecular_weight
 
