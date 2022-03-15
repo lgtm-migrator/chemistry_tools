@@ -80,7 +80,7 @@ github_ci_requirements:
    - OPENBLAS="$(brew --prefix openblas)" pip wheel numpy
  Linux:
   post:
-   - apt install zlib1g zlib1g-dev
+   - sudo apt install zlib1g zlib1g-dev
 
 tox_unmanaged:
  - testenv
