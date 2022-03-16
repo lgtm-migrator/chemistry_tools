@@ -367,9 +367,9 @@ def rest_get_properties_json(
 
 	:param kwargs: Optional arguments that ``json.loads`` takes.
 
-	:raises ValueError: If the response body does not contain valid json.
+	:raises ValueError: If the response body does not contain valid JSON.
 
-	:return: Parsed json data
+	:return: Parsed JSON data
 	"""
 
 	properties = force_valid_properties(properties)
@@ -461,7 +461,7 @@ def get_properties(
 	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`.
 	:param as_dataframe: Automatically extract the properties into a pandas :class:`~pandas.DataFrame`.
 
-	:raises ValueError: If the response body does not contain valid json.
+	:raises ValueError: If the response body does not contain valid JSON.
 	:raises NotFoundError: If the compound with the requested identifier was not found in PubChem.
 
 	:return: List of dictionaries mapping properties to values
@@ -512,7 +512,7 @@ def get_property(
 
 	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`.
 
-	:raises ValueError: If the response body does not contain valid json.
+	:raises ValueError: If the response body does not contain valid JSON.
 	:raises NotFoundError: If the compound with the requested identifier was not found in PubChem.
 
 	:return: The requested property. Type depends on the property requested

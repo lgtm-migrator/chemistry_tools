@@ -96,9 +96,9 @@ def rest_get_full_record(
 	:param record_type:
 	:param kwargs: Optional arguments that ``json.loads`` takes.
 
-	:raises ValueError: If the response body does not contain valid json.
+	:raises ValueError: If the response body does not contain valid JSON.
 
-	:return: Parsed json data
+	:return: Parsed JSON data
 	"""
 
 	return do_rest_get(namespace, identifier, record_type=record_type).json(**kwargs)

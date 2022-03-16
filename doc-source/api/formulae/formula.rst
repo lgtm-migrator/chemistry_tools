@@ -7,3 +7,4 @@
 
 .. automodule:: chemistry_tools.formulae.formula
 	:undoc-members:
+	:exclude-members: __missing__

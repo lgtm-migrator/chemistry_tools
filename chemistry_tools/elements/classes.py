@@ -55,14 +55,17 @@ Provides classes to model period table elements.
 #
 
 # stdlib
+import functools
 from functools import lru_cache
-from typing import Dict, List, Mapping, Optional, Tuple, Union
+from typing import Dict, Iterable, Iterator, List, Optional, Tuple, Union, overload
 
 # 3rd party
 from domdf_python_tools import doctools
 from domdf_python_tools.bases import Dictable
 from domdf_python_tools.doctools import prettify_docstrings
-from memoized_property import memoized_property  # type: ignore
+
+# this package
+from chemistry_tools._memoized_property import memoized_property
 
 # this package
 from . import _elements, _table
@@ -78,27 +81,27 @@ class Element(Dictable):
 	"""
 	Chemical element.
 
-	:param number:
-	:param symbol:
-	:param name:
-	:param group:
-	:param period:
-	:param block:
-	:param series:
-	:param mass:
-	:param eleneg:
-	:param eleaffin:
-	:param covrad:
-	:param atmrad:
-	:param vdwrad:
-	:param tboil:
-	:param tmelt:
-	:param density:
-	:param eleconfig:
-	:param oxistates:
-	:param ionenergy:
-	:param isotopes:
-	:param description:
+	:param number: The atomic number of the element.
+	:param symbol: The chemical symbol of the element.
+	:param name: The name of the element in English.
+	:param group: The number of electrons in the element.
+	:param period: The number of protons in the element.
+	:param block: The group of the element in the periodic table.
+	:param series: The Period of the element in the periodic table.
+	:param mass: The relative atomic mass.
+	:param eleneg: The Electronegativity (Pauling scale).
+	:param eleaffin: The electron affinity in eV.
+	:param covrad: The Covalent radius in Angstrom.
+	:param atmrad: The Atomic radius in Angstrom.
+	:param vdwrad: The Van der Waals radius in Angstrom.
+	:param tboil: The boiling temperature in K.
+	:param tmelt: The melting temperature in K.
+	:param density: The density at 295K in g/cm³ respectively g/L.
+	:param eleconfig: The Ground state electron configuration.
+	:param oxistates: The oxidation states.
+	:param ionenergy: The ionization energies in ``eV``.
+	:param isotopes: The Isotopic composition. A mapping of isotope mass numbers to :class:`~.Isotope` objects.
+	:param description: A description of the element.
 	"""
 
 	_ionenergy: Tuple
@@ -334,7 +337,7 @@ class Element(Dictable):
 	@memoized_property
 	def density(self) -> float:
 		"""
-		The density at 295K in g/cm3 respectively g/L.
+		The density at 295K in g/cm³ respectively g/L.
 		"""
 
 		return self._density
@@ -492,7 +495,9 @@ class Element(Dictable):
 
 	def validate(self) -> None:
 		"""
-		Check consistency of data. Raise Error on failure.
+		Check consistency of the data.
+
+		:raises ValueError: If there are any validation issues.
 		"""
 
 		assert self.period in _table.PERIODS
@@ -592,14 +597,14 @@ class Isotope(Dictable):
 
 # TODO: make frozen
 @prettify_docstrings
-class Elements:
+class Elements(Iterable[Element]):
 	r"""
 	Ordered dict of Elements with lookup by number, symbol, and name.
 
 	:param \*elements: The elements to add to the dictionary.
 	"""
 
-	def __init__(self, *elements):
+	def __init__(self, *elements: Element):
 		self._list: List[Element] = []
 		self._dict: Dict[Union[str, int], Element] = {}
 
@@ -628,13 +633,36 @@ class Elements:
 	def __contains__(self, item) -> bool:
 		return item in self._dict
 
-	def __iter__(self):
+	def __iter__(self) -> Iterator[Element]:
+		"""
+		Returns an iterator over the elements, in order.
+		"""
+
 		return iter(self._list)
 
 	def __len__(self) -> int:
+		"""
+		Returns the number of elements.
+		"""
+
 		return len(self._list)
 
+	@overload
+	def __getitem__(self, key: slice) -> List[Element]: ...
+
+	@overload
+	def __getitem__(self, key: Union[str, int, float]) -> Element: ...
+
 	def __getitem__(self, key):
+		"""
+		Return ``self[key]``.
+
+		:param key: If a string, return the :class:`~.Element` with that name or symbol.
+			If a number, return the element with that atomic number.
+		"""
+
+		# TODO: slice docstring
+
 		if isinstance(key, str):
 			try:
 				return self._dict[key.casefold()]
@@ -651,11 +679,11 @@ class Elements:
 			try:
 				symbol, isotope = self.split_isotope(key)
 				return self._dict[symbol.capitalize()]
-			except:
+			except (ValueError, KeyError):
 				raise KeyError(f"Unknown key: '{key}'")
 
 	@lru_cache()
-	def split_isotope(self, string: str):
+	def split_isotope(self, string: str) -> Tuple[str, int]:
 		"""
 		Returns the symbol and mass number for the isotope represented by ``string``.
 
@@ -671,7 +699,7 @@ class Elements:
 
 		return split_isotope(string)
 
-	def add_alternate_spelling(self, element: Element, spelling: str):
+	def add_alternate_spelling(self, element: Element, spelling: str) -> None:
 		"""
 		Adds an alternate spelling for an element.
 
@@ -711,31 +739,10 @@ class Elements:
 @doctools.append_docstring_from(Element)
 class HeavyHydrogen(Element):
 	"""
-	Subclass of Element to handle the Heavy Hydrogen isotopes Deuterium and Tritium.
-
-	:param number:
-	:param symbol:
-	:param name:
-	:param group:
-	:param period:
-	:param block:
-	:param series:
-	:param mass:
-	:param eleneg:
-	:param eleaffin:
-	:param covrad:
-	:param atmrad:
-	:param vdwrad:
-	:param tboil:
-	:param tmelt:
-	:param density:
-	:param eleconfig:
-	:param oxistates:
-	:param ionenergy:
-	:param isotopes:
-	:param description:
+	Subclass of :class:`~.Element` to handle the Heavy Hydrogen isotopes Deuterium and Tritium.
 	"""
 
+	@functools.wraps(Element.__init__)
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 

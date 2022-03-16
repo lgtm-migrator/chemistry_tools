@@ -51,10 +51,10 @@ from typing import Any, Dict, FrozenSet, List, Optional, Sequence, Type, TypeVar
 # 3rd party
 from domdf_python_tools.bases import Dictable
 from domdf_python_tools.doctools import prettify_docstrings
-from memoized_property import memoized_property  # type: ignore
 from pandas import DataFrame, Series  # type: ignore
 
 # this package
+from chemistry_tools._memoized_property import memoized_property
 from chemistry_tools.formulae import Formula
 from chemistry_tools.pubchem.atom import Atom, parse_atoms
 from chemistry_tools.pubchem.bond import Bond, parse_bonds
@@ -470,7 +470,7 @@ class Compound(Dictable):
 
 		Each bit in the fingerprint represents the presence or absence of one of 881 chemical substructures.
 
-		More information at ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt
+		.. seealso:: ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt
 		"""  # noqa: D403
 
 		# Skip first 4 bytes (contain length of fingerprint) and last 7 bits (padding) then re-pad to 881 bits

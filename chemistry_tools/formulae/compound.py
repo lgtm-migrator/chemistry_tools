@@ -97,12 +97,22 @@ class Compound(Dictable):
 
 	:param name: The name of the compound
 	:param formula: The chemical formula of the compound. If :py:obj:`None` this is generated from the name
-	:param data: Free form dictionary. Could be simple such as ``{'mp': 0, 'bp': 100}``
-		or considerably more involved, e.g.: ``{'diffusion_coefficient': {\
-		'water': lambda T: 2.1*m**2/s/K*(T - 273.15*K)}}``.
+	:param data: Free form dictionary.
 	:param latex_name:
 	:param unicode_name:
 	:param html_name:
+
+	``data`` could be simple such as ``{'mp': 0, 'bp': 100}`` or considerably more involved,
+	e.g.:
+
+	.. code-block:: python
+
+		{
+			'diffusion_coefficient': {
+				'water': lambda T: 2.1*m**2/s/K*(T - 273.15*K),
+			}
+		}
+
 	"""
 
 	# 	formula:
