@@ -2,7 +2,10 @@
 :mod:`chemistry_tools.pubchem.atom`
 ====================================
 
-.. extras-require:: pubchem
-	:file: pubchem/requirements.txt
+.. only:: html
+
+	.. extras-require:: pubchem
+		:file: pubchem/requirements.txt
 
 .. automodule:: chemistry_tools.pubchem.atom
+.. latex:clearpage::

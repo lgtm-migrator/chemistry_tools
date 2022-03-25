@@ -2,7 +2,9 @@
 :mod:`chemistry_tools.pubchem.utils`
 =====================================
 
-.. extras-require:: pubchem
-	:file: pubchem/requirements.txt
+.. only:: html
+
+	.. extras-require:: pubchem
+		:file: pubchem/requirements.txt
 
 .. automodule:: chemistry_tools.pubchem.utils

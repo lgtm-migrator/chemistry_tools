@@ -283,7 +283,7 @@ def hill_order(symbols: Sequence[str]) -> Iterator[str]:
 	"""
 	Returns an iterator over the given element symbols in order of Hill notation.
 
-	**Example**
+	:bold-title:`Example:`
 
 	.. code-block:: python
 

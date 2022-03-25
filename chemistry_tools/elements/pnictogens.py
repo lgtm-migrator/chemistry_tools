@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 #
 #  pnictogens.py
-"""
+r"""
 Group 15: Pnictogens in the Periodic Table.
+
+.. raw:: latex
+
+	\begin{multicols}{2}
 
 .. data:: N
 
@@ -28,7 +32,9 @@ Group 15: Pnictogens in the Periodic Table.
 
 	:class:`~chemistry_tools.elements.classes.Element` representing Moscovium
 
+.. raw:: latex
 
+	\end{multicols}
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

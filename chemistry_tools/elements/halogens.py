@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 #
 #  halogens.py
-"""
+r"""
 Group 17: Halogens in the Periodic Table.
+
+.. raw:: latex
+
+	\begin{multicols}{2}
 
 .. data:: F
 
@@ -28,6 +32,9 @@ Group 17: Halogens in the Periodic Table.
 
 	:class:`~chemistry_tools.elements.classes.Element` representing Tennessine
 
+.. raw:: latex
+
+	\end{multicols}
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

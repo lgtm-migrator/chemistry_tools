@@ -95,7 +95,7 @@ def string_to_html(
 	"""
 	Convert formula string to HTML string representation.
 
-	**Examples:**
+	:bold-title:`Examples:`
 
 	.. code-block:: python
 

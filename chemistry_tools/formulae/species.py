@@ -160,8 +160,11 @@ class Species(Formula):
 		:param phase: Either ``'s'``, ``'l'``, ``'g'``, or ``'aq'``. :py:obj:`None` represents an unknown phase.
 		:param charge:
 
+		:rtype:
 
-		**Examples:**
+		.. latex:clearpage::
+
+		:bold-title:`Examples:`
 
 		.. code-block:: python
 
@@ -224,7 +227,7 @@ class Species(Formula):
 		"""
 		Returns the formula in Hill notation.
 
-		**Examples:**
+		:bold-title:`Examples:`
 
 		.. code-block:: python
 
@@ -251,7 +254,7 @@ class Species(Formula):
 		The empirical formula has the simplest whole number ratio of atoms
 		of each element present in the formula.
 
-		**Examples:**
+		:bold-title:`Examples:`
 
 		.. code-block:: python
 

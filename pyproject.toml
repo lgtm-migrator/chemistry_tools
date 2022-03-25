@@ -106,6 +106,10 @@ extensions = [
     "seed_intersphinx_mapping",
     "html_section",
     "enum_tools.autoenum",
+    "_internal_extension",
+    "sphinx_toolbox_experimental.needspace",
+    "sphinx_toolbox_experimental.autosummary_widths",
+    "sphinx_toolbox_experimental.succinct_seealso",
 ]
 sphinxemoji_style = "twemoji"
 gitstamp_fmt = "%d %b %Y"

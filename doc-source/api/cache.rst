@@ -2,6 +2,8 @@
 :mod:`chemistry_tools.cache`
 ====================================
 
+.. autosummary-widths:: 3/10
+
 .. automodule:: chemistry_tools.cache
 	:no-members:
 	:autosummary-members:

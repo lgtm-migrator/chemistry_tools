@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 #
 #  actinides.py
-"""
+r"""
 Actinides (or actinoids) in the Periodic Table.
+
+.. raw:: latex
+
+	\begin{multicols}{2}
 
 .. data:: Ac
 
@@ -64,6 +68,9 @@ Actinides (or actinoids) in the Periodic Table.
 
 	:class:`~chemistry_tools.elements.classes.Element` representing Lawrencium
 
+.. raw:: latex
+
+	\end{multicols}
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

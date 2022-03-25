@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 #
 #  triels.py
-"""
+r"""
 Group 13: Triels (or boron group) in the Periodic Table.
+
+.. raw:: latex
+
+	\begin{multicols}{2}
 
 .. data:: B
 
@@ -28,7 +32,9 @@ Group 13: Triels (or boron group) in the Periodic Table.
 
 	:class:`~chemistry_tools.elements.classes.Element` representing Nihonium
 
+.. raw:: latex
 
+	\end{multicols}
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

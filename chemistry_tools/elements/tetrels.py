@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 #
 #  tetrels.py
-"""
+r"""
 Group 14: Tetrels, carbon group, crystallogens or adamantogens in the Periodic Table.
+
+.. raw:: latex
+
+	\begin{multicols}{2}
 
 .. data:: C
 
@@ -28,7 +32,9 @@ Group 14: Tetrels, carbon group, crystallogens or adamantogens in the Periodic T
 
 	:class:`~chemistry_tools.elements.classes.Element` representing Flerovium
 
+.. raw:: latex
 
+	\end{multicols}
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

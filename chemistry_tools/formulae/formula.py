@@ -140,6 +140,8 @@ class Formula(defaultdict, Counter):
 		composition of a substance, or a :class:`python:dict` representing the same.
 		If :py:obj:`None` an empty object is created
 	:param charge:
+
+	.. autosummary-widths:: 55/100
 	"""
 
 	# TODO: option to convert D and T to H[2] and H[3] ("heavy hydrogen")
@@ -187,7 +189,11 @@ class Formula(defaultdict, Counter):
 		"""
 		Create a new :class:`~chemistry_tools.formulae.formula.Formula` object by parsing a string.
 
+		.. latex:vspace:: -5px
+
 		.. note:: Isotopes cannot (currently) be parsed using this method
+
+		.. latex:vspace:: -5px
 
 		:param formula: A string with a chemical formula
 		:param charge:
@@ -257,14 +263,18 @@ class Formula(defaultdict, Counter):
 		Create a new :class:`~chemistry_tools.formulae.formula.Formula` object
 		from elemental mass fractions by parsing a string.
 
+		.. latex:vspace:: -5px
+
 		.. note:: Isotopes cannot (currently) be parsed using this method
+
+		.. latex:vspace:: -5px
 
 		:param fractions: A dictionary of elements and mass fractions
 		:param charge:
 		:param maxcount:
 		:param precision:
 
-		**Example:**
+		:bold-title:`Examples:`
 
 		.. code-block:: python
 
@@ -336,6 +346,10 @@ class Formula(defaultdict, Counter):
 		keyword arguments representing the elements in the compound.
 
 		:param charge:
+
+		:rtype:
+
+		.. latex:clearpage::
 		"""  # noqa: D400
 
 		return cls(kwargs, charge=charge)
@@ -707,7 +721,7 @@ class Formula(defaultdict, Counter):
 		"""
 		Returns the formula in Hill notation.
 
-		**Examples:**
+		:bold-title:`Example:`
 
 		.. code-block:: python
 
@@ -756,7 +770,7 @@ class Formula(defaultdict, Counter):
 		"""
 		Returns formula in Hill notation, without any isotopes specified.
 
-		**Examples:**
+		:bold-title:`Example:`
 
 		.. code-block:: python
 
@@ -795,7 +809,7 @@ class Formula(defaultdict, Counter):
 		The empirical formula has the simplest whole number ratio of atoms
 		of each element present in the formula.
 
-		**Examples:**
+		:bold-title:`Examples:`
 
 		.. code-block:: python
 
@@ -827,7 +841,7 @@ class Formula(defaultdict, Counter):
 		"""
 		Return the number of atoms in the formula.
 
-		**Example**
+		:bold-title:`Example:`
 
 		.. code-block:: python
 
@@ -842,12 +856,17 @@ class Formula(defaultdict, Counter):
 		"""
 		Return the number of elements in the formula.
 
-		**Example**
+		:rtype:
+
+		:bold-title:`Example:`
 
 		.. code-block:: python
 
 			>>> Formula.from_string('CH3COOH').n_elements
 			3
+
+
+		.. latex:clearpage::
 		"""
 
 		return len(self)

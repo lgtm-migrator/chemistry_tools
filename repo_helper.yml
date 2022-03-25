@@ -72,6 +72,11 @@ keywords:
 
 extra_sphinx_extensions:
  - enum_tools.autoenum
+ - _internal_extension
+ - sphinx_toolbox_experimental.needspace
+ - sphinx_toolbox_experimental.autosummary_widths
+ - sphinx_toolbox_experimental.succinct_seealso
+
 
 github_ci_requirements:
  macOS:
@@ -84,3 +89,8 @@ github_ci_requirements:
 
 tox_unmanaged:
  - testenv
+
+sphinx_conf_epilogue:
+ - latex_elements["preamble"] = "\\usepackage{textgreek}\\usepackage{multicol}"
+ - autosummary_widths_builders = ["latex"]
+ - nitpicky = True

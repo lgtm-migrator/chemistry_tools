@@ -102,6 +102,8 @@ class Element(Dictable):
 	:param ionenergy: The ionization energies in ``eV``.
 	:param isotopes: The Isotopic composition. A mapping of isotope mass numbers to :class:`~.Isotope` objects.
 	:param description: A description of the element.
+
+	.. autosummary-widths:: 30/100
 	"""
 
 	_ionenergy: Tuple
@@ -543,6 +545,8 @@ class Isotope(Dictable):
 	:param mass: The mass of the isotope.
 	:param abundance: The natural abundance of the isotope.
 	:param massnumber: The mass number of the isotope.
+
+	.. latex:clearpage::
 	"""
 
 	def __init__(self, mass: float = 0.0, abundance: float = 1.0, massnumber: int = 0):
@@ -602,6 +606,8 @@ class Elements(Iterable[Element]):
 	Ordered dict of Elements with lookup by number, symbol, and name.
 
 	:param \*elements: The elements to add to the dictionary.
+
+	.. autosummary-widths:: 1/2
 	"""
 
 	def __init__(self, *elements: Element):

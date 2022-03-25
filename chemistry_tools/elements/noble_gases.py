@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 #
 #  noble_gases.py
-"""
+r"""
 Group 18: Noble Gases in the Periodic Table.
+
+.. raw:: latex
+
+	\begin{multicols}{2}
 
 .. data:: He
 
@@ -31,6 +35,10 @@ Group 18: Noble Gases in the Periodic Table.
 .. data:: Og
 
 	:class:`~chemistry_tools.elements.classes.Element` representing Oganesson
+
+.. raw:: latex
+
+	\end{multicols}
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

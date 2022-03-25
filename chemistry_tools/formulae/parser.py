@@ -272,7 +272,7 @@ def string_to_composition(
 	"""
 	Parse composition of formula representing a chemical formula.
 
-	**Examples:**
+	:bold-title:`Examples:`
 
 	.. code-block:: python
 
@@ -331,18 +331,20 @@ def string_to_composition(
 
 def mass_from_composition(composition: Mapping[Union[str, int], int], charge: int = 0) -> float:
 	"""
-	Calculates molecular mass from atomic weights.
+	Calculates molecular mass, in atomic mass units, from atomic weights.
 
-	.. note::
+	.. latex:vspace:: -5px
 
-		Atomic number 0 denotes charge or "net electron defficiency"
+	.. note:: Atomic number 0 denotes charge or "net electron defficiency"
 
-	:param composition: Dictionary mapping str or int (element symbol or atomic number) to int (coefficient)
+	.. latex:vspace:: -5px
+
+	:param composition: Dictionary mapping :class:`str` or :class:`int` (element symbol or atomic number) to int (coefficient)
 	:param charge: The charge of the composition.
 
-	:return: Molecular weight in atomic mass units
+	:rtype:
 
-	**Example**
+	:bold-title:`Example:`
 
 	.. code-block:: python
 

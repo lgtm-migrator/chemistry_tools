@@ -532,6 +532,8 @@ def parse_properties(property_data: Dict) -> List[Dict]:
 	:param property_data:
 
 	:return: A list of dictionaries mapping the properties to values for each compound
+
+	.. latex:clearpage::
 	"""
 
 	compounds = {}

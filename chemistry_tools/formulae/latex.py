@@ -97,7 +97,7 @@ def string_to_latex(
 	r"""
 	Convert a formula string to its LaTeX representation.
 
-	**Examples:**
+	:bold-title:`Examples:`
 
 	.. code-block:: python
 

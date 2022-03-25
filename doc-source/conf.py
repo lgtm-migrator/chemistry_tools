@@ -75,3 +75,8 @@ def setup(app):
 	from sphinx_toolbox.latex import better_header_layout
 
 	app.connect("config-inited", lambda app, config: better_header_layout(config))
+
+
+latex_elements["preamble"] = "\\usepackage{textgreek}\\usepackage{multicol}"
+autosummary_widths_builders = ["latex"]
+nitpicky = True

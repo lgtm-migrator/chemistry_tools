@@ -85,7 +85,7 @@ def as_latex(quant: quantities.quantity.Quantity):
 	r"""
 	Returns the LaTeX reperesentation of the unit of a quantity.
 
-	**Example**
+	:bold-title:`Example:`
 
 	.. code-block:: python
 
@@ -109,7 +109,7 @@ def compare_equality(
 
 	Both arguments need to have the same dimensionality.
 
-	**Examples:**
+	:bold-title:`Examples:`
 
 	.. code-block:: python
 
@@ -185,7 +185,7 @@ def format_string(value: quantities.quantity.Quantity, precision: str = "%.5g", 
 	r"""
 	Formats a scalar with unit as two strings.
 
-	**Examples:**
+	:bold-title:`Examples:`
 
 	.. code-block:: python
 
@@ -249,7 +249,6 @@ perMolar_perSecond = 1 / quantities.molar / quantities.s
 #: Micro mole per joule.
 umol_per_J = quantities.umol / quantities.joule
 
-#: Mapping of SI measurements to their units.
 SI_base_registry = {
 		"length": quantities.metre,
 		"mass": quantities.kilogram,
@@ -259,6 +258,11 @@ SI_base_registry = {
 		"luminous_intensity": quantities.candela,
 		"amount": quantities.mole
 		}
+"""
+Mapping of SI measurements to their units.
+
+.. latex:clearpage::
+"""
 
 #: Mapping of dimension names to symbols.
 dimension_codes = {

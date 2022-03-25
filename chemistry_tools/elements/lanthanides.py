@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 #
 #  lanthanides.py
-"""
+r"""
 Lanthanides (or lanthanoids) in the Periodic Table.
+
+.. raw:: latex
+
+	\begin{multicols}{2}
 
 .. data:: La
 
@@ -64,6 +68,9 @@ Lanthanides (or lanthanoids) in the Periodic Table.
 
 	:class:`~chemistry_tools.elements.classes.Element` representing Lutetium
 
+.. raw:: latex
+
+	\end{multicols}
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

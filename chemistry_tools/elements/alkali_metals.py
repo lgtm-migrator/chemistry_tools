@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 #
 #  alkali_metals.py
-"""
+r"""
 Group 1: Alkali Metals in the Periodic Table.
+
+.. raw:: latex
+
+	\begin{multicols}{2}
 
 .. data:: Li
 
@@ -28,6 +32,9 @@ Group 1: Alkali Metals in the Periodic Table.
 
 	:class:`~chemistry_tools.elements.classes.Element` representing Francium
 
+.. raw:: latex
+
+	\end{multicols}
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

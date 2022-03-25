@@ -70,6 +70,8 @@ class Atom:
 	:param y: The y coordinate for this atom.
 	:param z: The z coordinate for this atom. Will be :py:obj:`None` in 2D Compound records.
 	:param charge: Formal charge on atom.
+
+	.. latex:clearpage::
 	"""
 
 	def __init__(

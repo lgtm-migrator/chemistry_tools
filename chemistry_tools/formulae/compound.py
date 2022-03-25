@@ -102,6 +102,8 @@ class Compound(Dictable):
 	:param unicode_name:
 	:param html_name:
 
+	.. autosummary-widths:: 4/10
+
 	``data`` could be simple such as ``{'mp': 0, 'bp': 100}`` or considerably more involved,
 	e.g.:
 
@@ -198,7 +200,7 @@ class Compound(Dictable):
 		"""
 		Returns the molar mass (with units) of the substance.
 
-		**Example:**
+		:bold-title:`Example:`
 
 		.. code-block:: python
 

@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 #
 #  transition_metals.py
-"""
+r"""
 Transition Metals block in the Periodic Table.
+
+.. raw:: latex
+
+	\begin{multicols}{2}
 
 .. data:: Sc
 
@@ -156,7 +160,9 @@ Transition Metals block in the Periodic Table.
 
 	:class:`~chemistry_tools.elements.classes.Element` representing Roentgenium
 
+.. raw:: latex
 
+	\end{multicols}
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

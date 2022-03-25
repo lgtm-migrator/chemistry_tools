@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 #
 #  chalcogens.py
-"""
+r"""
 Group 16: Chalcogens in the Periodic Table.
+
+.. raw:: latex
+
+	\begin{multicols}{2}
 
 .. data:: O
 
@@ -28,6 +32,9 @@ Group 16: Chalcogens in the Periodic Table.
 
 	:class:`~chemistry_tools.elements.classes.Element` representing Livermorium
 
+.. raw:: latex
+
+	\end{multicols}
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
