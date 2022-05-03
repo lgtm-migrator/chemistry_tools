@@ -81,7 +81,7 @@ from string import ascii_lowercase, ascii_uppercase
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Union
 
 # 3rd party
-import pyparsing  # type: ignore  # nodep
+import pyparsing  # nodep
 
 # this package
 from chemistry_tools.elements import ELEMENTS
@@ -193,7 +193,7 @@ def _get_formula_parser():
 	"""
 
 	Forward, Group, OneOrMore = pyparsing.Forward, pyparsing.Group, pyparsing.OneOrMore
-	Optional, ParseResults = pyparsing.Optional, pyparsing.ParseResults
+	ParseResults = pyparsing.ParseResults
 	Suppress, Word, nums = pyparsing.Suppress, pyparsing.Word, pyparsing.nums
 
 	LPAR, RPAR = map(Suppress, "()")
@@ -213,7 +213,7 @@ def _get_formula_parser():
 	# forward declare 'formula' so it can be used in definition of 'term'
 	formula = Forward()
 
-	term = Group((element | Group(LPAR + formula + RPAR)("subgroup")) + Optional(integer, default=1)("mult"))
+	term = Group((element | Group(LPAR + formula + RPAR)("subgroup")) + pyparsing.Optional(integer, default=1)("mult"))
 
 	# add parse actions for parse-time processing
 
