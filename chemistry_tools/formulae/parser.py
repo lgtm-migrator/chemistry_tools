@@ -213,8 +213,8 @@ def _get_formula_parser():
 	# forward declare 'formula' so it can be used in definition of 'term'
 	formula = Forward()
 
-	term = Group((element | Group(LPAR + formula + RPAR)("subgroup"))
-					+ pyparsing.Optional(integer, default=1)("mult"))
+	_term_subgroup = (element | Group(LPAR + formula + RPAR)("subgroup"))
+	term = Group(_term_subgroup + pyparsing.Optional(integer, default=1)("mult"))
 
 	# add parse actions for parse-time processing
 
@@ -247,7 +247,7 @@ def _get_formula_parser():
 			return ParseResults([ParseResults([k, v]) for k, v in ctr.items()])
 
 	# define contents of a formula as one or more terms
-	formula << OneOrMore(term)
+	formula << OneOrMore(term)  # pylint: disable=expression-not-assigned
 	formula.setParseAction(sum_by_element)
 
 	return formula
