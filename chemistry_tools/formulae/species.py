@@ -108,6 +108,7 @@ from typing import Dict, List, Optional, Type, TypeVar
 
 # 3rd party
 from cawdrey import frozendict  # nodep
+from typing_extensions import Literal  # nodep
 
 # this package
 from chemistry_tools.formulae.formula import Formula
@@ -121,7 +122,7 @@ class Species(Formula):
 	"""
 	Formula with phase information (e.g. solid, liquid, gas, or aqueous).
 
-	Species extends :class:`~chemistry_tools.formulae.formula.Formula` with the new attribute :attr:`phase`
+	Species extends :class:`~chemistry_tools.formulae.formula.Formula` with the new attribute :attr:`~.phase`
 
 	:param composition: A :class:`~chemistry_tools.formulae.formula.Formula` object with the elemental
 		composition of a substance, or a :class:`python:dict` representing the same.
@@ -132,7 +133,15 @@ class Species(Formula):
 
 	_phases: frozendict[str, str] = frozendict(s="Solid", l="Liquid", g="Gas", aq="Aqueous")
 
-	def __init__(self, composition: Optional[Dict[str, int]] = None, charge: int = 0, phase=None):
+	#: The phase of the species (e.g. solid, liquid, gas, or aqueous). :py:obj:`None` represents an unknown phase.
+	phase: Optional[Literal["s", "l", "g", "aq"]]
+
+	def __init__(
+			self,
+			composition: Optional[Dict[str, int]] = None,
+			charge: int = 0,
+			phase: Optional[Literal['s', 'l', 'g', "aq"]] = None,
+			):
 		super().__init__(composition, charge)
 
 		self.phase = phase
