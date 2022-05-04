@@ -258,7 +258,7 @@ def normalize(row: Union[Mapping, pandas.Series], max_val: Union[float, str]) ->
 
 def create_array(intensities: Sequence[float], mz: Sequence[float]) -> numpy.ndarray:
 	"""
-	Create a :class:`numpy.ndarray`, in a format appropriate for :func:`.~SpectrumSimilarity`,
+	Create a :class:`numpy.ndarray`, in a format appropriate for :func:`~.spectrum_similarity`,
 	from a list of intensities and a list of *m/z* values.
 
 	:param intensities: List of intensities

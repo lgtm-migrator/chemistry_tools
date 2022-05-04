@@ -359,7 +359,7 @@ def rest_get_properties_json(
 	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
-	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`
+	:param namespace: The type of identifier to look up. Valid values are in :class:`~.PubChemNamespace`.
 	:param properties: The properties to retrieve for the compound. See the table below. Can be either a
 		comma-separated string or a list.
 
@@ -394,7 +394,7 @@ def rest_get_properties(
 	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
-	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`
+	:param namespace: The type of identifier to look up. Valid values are in :class:`~.PubChemNamespace`
 	:param properties: The properties to retrieve for the compound. See the table below. Can be either a
 		comma-separated string or a list.
 
@@ -458,7 +458,7 @@ def get_properties(
 
 	:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
 
-	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`.
+	:param namespace: The type of identifier to look up. Valid values are in :class:`~.PubChemNamespace`.
 	:param as_dataframe: Automatically extract the properties into a pandas :class:`~pandas.DataFrame`.
 
 	:raises ValueError: If the response body does not contain valid JSON.
@@ -510,7 +510,7 @@ def get_property(
 
 	:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
 
-	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`.
+	:param namespace: The type of identifier to look up. Valid values are in :class:`~.PubChemNamespace`.
 
 	:raises ValueError: If the response body does not contain valid JSON.
 	:raises NotFoundError: If the compound with the requested identifier was not found in PubChem.

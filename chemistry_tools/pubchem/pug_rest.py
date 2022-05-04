@@ -74,12 +74,12 @@ def do_rest_get(
 	r"""
 	Responsible for performing the actual GET request.
 
-	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`.
+	:param namespace: The type of identifier to look up. Valid values are in :class:`~.PubChemNamespace`.
 	:param identifier: Identifiers (e.g. name, CID) for the compounds to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
 	:param format\_: The file format to retrieve the data in.
-		Valid values are in :class:`PubChemFormats`, plus ``'PNG'``.
+		Valid values are in :class:`~.PubChemFormats`, plus ``'PNG'``.
 	:param domain:
 	:param record_type:
 	:param png_width:
@@ -128,11 +128,11 @@ def do_cached_request(
 	r"""
 	Responsible for performing cached requests.
 
-	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`.
+	:param namespace: The type of identifier to look up. Valid values are in :class:`~.PubChemNamespace`.
 	:param identifier: Identifiers (e.g. name, CID) for the compounds to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
-	:param format\_: The file format to retrieve the data in. Valid values are in :class:`PubChemFormats`, plus "PNG"
+	:param format\_: The file format to retrieve the data in. Valid values are in :class:`~.PubChemFormats`, plus "PNG"
 	:param domain:
 	:param record_type:
 	:param query_params:
@@ -172,7 +172,7 @@ def async_get(
 	:param identifier: Identifiers (e.g. name, CID) for the compounds to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
-	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`.
+	:param namespace: The type of identifier to look up. Valid values are in :class:`~.PubChemNamespace`.
 	:param operation:
 	:param output:
 	:param searchtype:
@@ -215,7 +215,7 @@ def request(
 	:param identifier: Identifiers (e.g. name, CID) for the compounds to look up.
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
-	:param namespace: The type of identifier to look up. Valid values are in :class:`PubChemNamespace`.
+	:param namespace: The type of identifier to look up. Valid values are in :class:`~.PubChemNamespace`.
 	:param operation:
 	:param output:
 	:param searchtype:

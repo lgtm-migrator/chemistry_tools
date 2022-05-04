@@ -2,6 +2,9 @@
 :mod:`chemistry_tools.elements`
 ================================
 
+.. automodule:: chemistry_tools.elements
+	:no-members:
+
 .. toctree::
 	:maxdepth: 3
 	:glob:

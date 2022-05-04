@@ -2,6 +2,9 @@
 :mod:`chemistry_tools.pubchem`
 ===============================
 
+.. automodule:: chemistry_tools.pubchem
+	:no-members:
+
 .. extras-require:: pubchem
 	:scope: package
 
