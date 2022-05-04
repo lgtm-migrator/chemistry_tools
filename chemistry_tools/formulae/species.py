@@ -104,7 +104,7 @@ Class to represent a formula with phase information (e.g. solid, liquid, gas, or
 #  |
 
 # stdlib
-from typing import Dict, List, Optional, Type, TypeVar
+from typing import cast, Dict, List, Optional, Type, TypeVar
 
 # 3rd party
 from cawdrey import frozendict  # nodep
@@ -147,7 +147,13 @@ class Species(Formula):
 		self.phase = phase
 
 	@classmethod
-	def from_kwargs(cls: Type['S'], *, charge: int = 0, phase: Optional[str] = None, **kwargs) -> S:
+	def from_kwargs(
+			cls: Type['S'],
+			*,
+			charge: int = 0,
+			phase: Optional[Literal['s', 'l', 'g', "aq"]] = None,
+			**kwargs
+			) -> S:
 		"""
 		Create a new :class:`~chemistry_tools.formulae.species.Species` object from keyword
 		arguments representing the elements in the compound.
@@ -159,7 +165,12 @@ class Species(Formula):
 		return cls(kwargs, charge=charge, phase=phase)
 
 	@classmethod
-	def from_string(cls: Type['S'], formula: str, charge: int = 0, phase: Optional[str] = None) -> S:
+	def from_string(
+			cls: Type['S'],
+			formula: str,
+			charge: int = 0,
+			phase: Optional[Literal['s', 'l', 'g', "aq"]] = None,
+			) -> S:
 		"""
 		Create a new :class:`~chemistry_tools.formulae.species.Species` object by parsing a string.
 
@@ -197,7 +208,7 @@ class Species(Formula):
 		if phase is None:
 			for p in cls._phases:
 				if formula.endswith(f"({p})"):
-					phase = p
+					phase = cast(Optional[Literal['s', 'l', 'g', "aq"]], p)
 					break
 
 		f = super().from_string(formula, charge)
@@ -210,7 +221,11 @@ class Species(Formula):
 		Returns a copy of the :class:`~.Species`.
 		"""
 
-		return self.__class__(self, charge=self.charge, phase=self.phase)
+		return self.__class__(
+				self,
+				charge=self.charge,
+				phase=cast(Optional[Literal['s', 'l', 'g', "aq"]], self.phase),
+				)
 
 	def __eq__(self, other) -> bool:
 		"""
