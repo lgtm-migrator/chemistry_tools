@@ -76,6 +76,7 @@ extra_sphinx_extensions:
  - sphinx_toolbox_experimental.needspace
  - sphinx_toolbox_experimental.autosummary_widths
  - sphinx_toolbox_experimental.succinct_seealso
+ - sphinx_toolbox_experimental.missing_xref
 
 
 github_ci_requirements:
@@ -94,3 +95,4 @@ sphinx_conf_epilogue:
  - latex_elements["preamble"] = "\\usepackage{textgreek}\\usepackage{multicol}"
  - autosummary_widths_builders = ["latex"]
  - nitpicky = True
+ - ignore_missing_xrefs = ["^quantities\.quantity\.Quantity$", "^quantities\.unitquantity\.UnitQuantity$", "^cawdrey\.", "^tabulate\.", "^FrozenOrderedDict$", "^PIL.Image.Image$",]
