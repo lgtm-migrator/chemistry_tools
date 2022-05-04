@@ -213,7 +213,8 @@ def _get_formula_parser():
 	# forward declare 'formula' so it can be used in definition of 'term'
 	formula = Forward()
 
-	term = Group((element | Group(LPAR + formula + RPAR)("subgroup")) + pyparsing.Optional(integer, default=1)("mult"))
+	term = Group((element | Group(LPAR + formula + RPAR)("subgroup"))
+					+ pyparsing.Optional(integer, default=1)("mult"))
 
 	# add parse actions for parse-time processing
 
