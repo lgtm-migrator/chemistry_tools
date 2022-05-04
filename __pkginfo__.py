@@ -19,7 +19,7 @@ extras_require = {
 				"mathematical>=0.1.13",
 				"pyparsing>=2.4.6",
 				"tabulate>=0.8.9",
-				"typing-extensions>=4.2.0"
+				"typing-extensions>=4.1.1"
 				],
 		"plotting": [
 				'matplotlib>=3.0.0; platform_machine != "aarch64" or python_version > "3.6"',
@@ -39,6 +39,6 @@ extras_require = {
 				'pillow<8.0.0,>=7.0.0; platform_python_implementation == "PyPy" and python_version == "3.6"',
 				"pyparsing>=2.4.6",
 				"tabulate>=0.8.9",
-				"typing-extensions>=4.2.0"
+				"typing-extensions>=4.1.1"
 				]
 		}
