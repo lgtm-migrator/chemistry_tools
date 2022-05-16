@@ -4,7 +4,17 @@
 """
 This module provides a wrapper around the PubChem PUG_REST API.
 
-Data for compounds can be accessed using the :func:`chemistry_tools.pubchem.lookup.get_compounds` function.
+Data for compounds can be accessed using the
+:func:`pubchem.lookup.get_compounds <chemistry_tools.pubchem.lookup.get_compounds>` function.
+
+.. _properties table:
+
+The following table lists the various properties that can be obtained from the PubChem API:
+
+.. collapse:: Click to expand
+
+	.. properties-table::
+
 """
 #
 #  Copyright (c) 2019-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>

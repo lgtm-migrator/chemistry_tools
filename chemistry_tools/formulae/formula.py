@@ -582,6 +582,8 @@ class Formula(defaultdict, Counter):
 		:param overall_threshold: The threshold abundance of the calculated isotopic composition.
 
 		:return: Iterator over possible isotopic compositions.
+
+		.. latex:clearpage::
 		"""
 
 		dict_elem_isotopes = {}

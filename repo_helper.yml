@@ -73,9 +73,8 @@ keywords:
 extra_sphinx_extensions:
  - enum_tools.autoenum
  - _internal_extension
- - sphinx_toolbox_experimental.needspace
- - sphinx_toolbox_experimental.autosummary_widths
- - sphinx_toolbox_experimental.succinct_seealso
+ - sphinx_toolbox.more_autosummary.column_widths
+ - sphinx_toolbox.latex.succinct_seealso
  - sphinx_toolbox_experimental.missing_xref
 
 
@@ -93,6 +92,6 @@ tox_unmanaged:
 
 sphinx_conf_epilogue:
  - latex_elements["preamble"] = "\\usepackage{textgreek}\\usepackage{multicol}"
- - autosummary_widths_builders = ["latex"]
  - nitpicky = True
  - ignore_missing_xrefs = ["^quantities\.quantity\.Quantity$", "^quantities\.unitquantity\.UnitQuantity$", "^cawdrey\.", "^tabulate\.", "^FrozenOrderedDict$", "^PIL.Image.Image$",]
+ - needspace_amount = r"3\baselineskip"

@@ -62,7 +62,6 @@ from chemistry_tools.pubchem.enums import CoordinateType
 from chemistry_tools.pubchem.full_record import parse_full_record, rest_get_full_record
 from chemistry_tools.pubchem.properties import (
 		force_valid_properties,
-		insert_valid_properties_table,
 		parse_properties,
 		rest_get_properties_json,
 		valid_properties
@@ -86,6 +85,8 @@ class Compound(Dictable):
 	:param title: The title of the compound record (usually the name of the compound)
 	:param CID:
 	:param description:
+
+	.. latex:vspace:: 60px
 	"""
 
 	def __init__(self, title: str, CID: int, description, **_):
@@ -265,15 +266,13 @@ class Compound(Dictable):
 
 		return [a.element for a in self.atoms]
 
-	@insert_valid_properties_table()
 	def get_properties(self, properties: Union[Sequence[str], str]) -> Dict[str, Any]:
 		"""
 		Returns the requested properties for the Compound.
 
-		:param properties: The properties to retrieve for the compound. See the table below.
+		:param properties: The properties to retrieve for the compound.
 			Can be either a comma-separated string or a list.
-
-		:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
+			See :ref:`the table at the start of this chapter <properties table>` for a list of valid properties.
 
 		:return: Dictionary mapping the property names to their values
 		"""
@@ -309,14 +308,12 @@ class Compound(Dictable):
 
 		return output
 
-	@insert_valid_properties_table()
 	def get_property(self, prop: str) -> Any:
 		"""
 		Get a single property for the compound.
 
-		:param prop: The property to retrieve for the compound. See the table below.
-
-		:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
+		:param prop: The property to retrieve for the compound.
+			See :ref:`the table at the start of this chapter <properties table>` for a list of valid properties.
 		"""  # noqa: RST218
 
 		prop = str(prop)

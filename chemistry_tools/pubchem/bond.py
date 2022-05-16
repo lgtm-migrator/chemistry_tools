@@ -111,7 +111,11 @@ class Bond:
 
 	def to_dict(self) -> Dict[str, Any]:
 		"""
-		Return a dictionary containing Bond data.
+		Return a dictionary containing bond data.
+
+		:rtype:
+
+		.. latex:clearpage::
 		"""
 
 		data = {"aid1": self.aid1, "aid2": self.aid2, "order": self.order}

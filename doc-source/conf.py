@@ -78,7 +78,6 @@ def setup(app):
 
 
 latex_elements["preamble"] = "\\usepackage{textgreek}\\usepackage{multicol}"
-autosummary_widths_builders = ["latex"]
 nitpicky = True
 ignore_missing_xrefs = [
 		"^quantities\\.quantity\\.Quantity$",
@@ -88,3 +87,4 @@ ignore_missing_xrefs = [
 		"^FrozenOrderedDict$",
 		"^PIL.Image.Image$",
 		]
+needspace_amount = r"3\baselineskip"

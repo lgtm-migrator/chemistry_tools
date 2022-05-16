@@ -78,6 +78,10 @@ class DataArray(FrozenOrderedDict):
 
 		:param sort_by:
 		:param reverse:
+
+		:rtype:
+
+		.. latex:clearpage::
 		"""
 
 	def as_dataframe(self, *args, **kwargs) -> pandas.DataFrame:

@@ -3,6 +3,8 @@
 #  unicode.py
 """
 Functions and constants for converting formulae to unicode.
+
+.. latex:vspace:: -10px
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>

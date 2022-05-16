@@ -8,3 +8,5 @@
 		:file: pubchem/requirements.txt
 
 .. automodule:: chemistry_tools.pubchem.pug_rest
+
+	.. latex:vspace:: -10px

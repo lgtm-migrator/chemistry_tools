@@ -64,10 +64,8 @@ from .utils import _force_sequence_or_csv
 
 __all__ = [
 		"PropData",
-		"valid_property_descriptions",
 		"valid_properties",
 		"PROPERTY_MAP",
-		"insert_valid_properties_table",
 		"rest_get_properties_json",
 		"rest_get_properties",
 		"force_valid_properties",
@@ -307,13 +305,6 @@ _properties: List[PropData] = [
 				),
 		]
 
-#: Table giving descriptions of valid properties.
-valid_property_descriptions: str = tabulate(
-		[(prop.name, prop.description) for prop in _properties],
-		headers=["Property", "Description"],
-		tablefmt="rst",
-		)
-
 #: Properties for PubChem REST API
 valid_properties: Dict[str, Callable] = {prop.name: prop.type for prop in _properties}
 
@@ -321,32 +312,6 @@ valid_properties: Dict[str, Callable] = {prop.name: prop.type for prop in _prope
 PROPERTY_MAP: Dict[str, str] = {prop.attr_name: prop.name for prop in _properties}
 
 
-def insert_valid_properties_table() -> Callable:
-	"""
-	Decorator to insert table of valid properties into the docstring of the decorated function.
-	"""
-
-	def wrapper(target: Callable) -> Callable:
-		target_doc = target.__doc__
-
-		if not target_doc:
-			return target
-
-		deindented_doc = dedent(target_doc)
-
-		replaced_doc = deindented_doc.replace(
-				":: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::",
-				valid_property_descriptions
-				)
-
-		target.__doc__ = replaced_doc
-
-		return target
-
-	return wrapper
-
-
-@insert_valid_properties_table()
 def rest_get_properties_json(
 		identifier: Union[str, int, Sequence[Union[str, int]]],
 		namespace=PubChemNamespace.name,
@@ -360,10 +325,9 @@ def rest_get_properties_json(
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
 	:param namespace: The type of identifier to look up. Valid values are in :class:`~.PubChemNamespace`.
-	:param properties: The properties to retrieve for the compound. See the table below. Can be either a
-		comma-separated string or a list.
-
-	:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
+	:param properties: The properties to retrieve for the compound.
+		Can be either a comma-separated string or a list.
+		See :ref:`the table at the start of this chapter <properties table>` for a list of valid properties.
 
 	:param kwargs: Optional arguments that ``json.loads`` takes.
 
@@ -381,7 +345,6 @@ def rest_get_properties_json(
 	return do_rest_get(namespace, identifier, domain=f"property/{','.join(properties)}").json(**kwargs)
 
 
-@insert_valid_properties_table()
 def rest_get_properties(
 		identifier: Union[str, int, Sequence[Union[str, int]]],
 		namespace=PubChemNamespace.name,
@@ -395,10 +358,9 @@ def rest_get_properties(
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
 	:param namespace: The type of identifier to look up. Valid values are in :class:`~.PubChemNamespace`
-	:param properties: The properties to retrieve for the compound. See the table below. Can be either a
-		comma-separated string or a list.
-
-	:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
+	:param properties: The properties to retrieve for the compound.
+		Can be either a comma-separated string or a list.
+		See :ref:`the table at the start of this chapter <properties table>` for a list of valid properties.
 
 	:param format\_: The format to obtain the data in
 	"""
@@ -438,7 +400,6 @@ def force_valid_properties(properties: Union[str, Iterable[str]]) -> List[str]:
 	return ordered_properties
 
 
-@insert_valid_properties_table()
 def get_properties(
 		identifier: Union[str, int, Sequence[Union[str, int]]],
 		properties: Union[Sequence[str], str] = '',
@@ -453,10 +414,9 @@ def get_properties(
 		When using the CID namespace data for multiple compounds can be retrieved at once by
 		supplying either a comma-separated string or a list.
 
-	:param properties: The properties to retrieve for the compound. See the table below. Can be either a
-		comma-separated string or a list.
-
-	:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
+	:param properties: The properties to retrieve for the compound.
+		Can be either a comma-separated string or a list.
+		See :ref:`the table at the start of this chapter <properties table>` for a list of valid properties.
 
 	:param namespace: The type of identifier to look up. Valid values are in :class:`~.PubChemNamespace`.
 	:param as_dataframe: Automatically extract the properties into a pandas :class:`~pandas.DataFrame`.
@@ -490,7 +450,6 @@ def get_properties(
 	return results
 
 
-@insert_valid_properties_table()
 def get_property(
 		identifier: Union[str, int, Sequence[Union[str, int]]],
 		property: str = '',  # noqa: A002  # pylint: disable=redefined-builtin
@@ -506,16 +465,18 @@ def get_property(
 
 	:param identifier: Identifiers (e.g. name, CID) for the compound to look up.
 
-	:param property: The property to retrieve for the compound. See the table below.
-
-	:: See chemistry_tools.pubchem.properties.valid_property_descriptions for a list of valid properties ::
+	:param properties: The properties to retrieve for the compound.
+		Can be either a comma-separated string or a list.
+		See :ref:`the table at the start of this chapter <properties table>` for a list of valid properties.
 
 	:param namespace: The type of identifier to look up. Valid values are in :class:`~.PubChemNamespace`.
 
 	:raises ValueError: If the response body does not contain valid JSON.
 	:raises NotFoundError: If the compound with the requested identifier was not found in PubChem.
 
-	:return: The requested property. Type depends on the property requested
+	:return: The requested property. Type depends on the property requested.
+
+	.. latex:clearpage::
 	"""
 
 	property_ = force_valid_properties(property)[0]
@@ -532,8 +493,6 @@ def parse_properties(property_data: Dict) -> List[Dict]:
 	:param property_data:
 
 	:return: A list of dictionaries mapping the properties to values for each compound
-
-	.. latex:clearpage::
 	"""
 
 	compounds = {}

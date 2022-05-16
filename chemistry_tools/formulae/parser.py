@@ -2,7 +2,9 @@
 #
 #  parser.py
 """
-Functions and constants for parsing formulae.
+Functions and parsing formulae.
+
+.. latex:vspace:: -10px
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -284,6 +286,8 @@ def string_to_composition(
 		>>> string_to_composition('Na2CO3.7H2O') == {"Na": 2, "C": 1, "O": 10, "H": 14}
 		True
 
+	.. latex:vspace:: -10px
+
 	:param formula: Chemical formula, e.g. ``'H2O'``, ``'Fe+3'``, ``'Cl-'``
 	:param prefixes: Prefixes to ignore, e.g. ``('.', 'alpha-')``
 	:param suffixes: Suffixes to ignore.
@@ -338,12 +342,7 @@ def mass_from_composition(composition: Mapping[Union[str, int], int], charge: in
 
 	.. note:: Atomic number 0 denotes charge or "net electron defficiency"
 
-	.. latex:vspace:: -5px
-
-	:param composition: Dictionary mapping :class:`str` or :class:`int` (element symbol or atomic number) to int (coefficient)
-	:param charge: The charge of the composition.
-
-	:rtype:
+	.. latex:vspace:: -15px
 
 	:bold-title:`Example:`
 
@@ -351,6 +350,9 @@ def mass_from_composition(composition: Mapping[Union[str, int], int], charge: in
 
 		>>> f'{mass_from_composition({0: -1, "H": 1, 8: 1}):.2f}'
 		'17.01'
+
+	:param composition: Dictionary mapping :class:`str` or :class:`int` (element symbol or atomic number) to int (coefficient)
+	:param charge: The charge of the composition.
 	"""
 
 	if charge and 0 in composition:

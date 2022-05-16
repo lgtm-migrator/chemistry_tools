@@ -14,6 +14,7 @@
 	pyparsing>=2.4.6
 	tabulate>=0.8.9
 
+.. latex:vspace:: -20px
 
 .. toctree::
 	:maxdepth: 3

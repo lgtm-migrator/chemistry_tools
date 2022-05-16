@@ -284,6 +284,10 @@ class Element(Dictable):
 	def eleneg(self) -> float:
 		"""
 		The Electronegativity (Pauling scale).
+
+		:rtype:
+
+		.. latex:clearpage::
 		"""
 
 		return self._eleneg
@@ -373,8 +377,10 @@ class Element(Dictable):
 		"""
 		The Isotopic composition.
 
-		| **keys**: isotope mass number
-		| **values**: Isotope(relative atomic mass, abundance)
+		* **keys**: isotope mass number
+		* **values**: Isotope(relative atomic mass, abundance)
+
+		.. latex:vspace:: -10px
 		"""
 
 		return self._isotopes
@@ -608,6 +614,7 @@ class Elements(Iterable[Element]):
 	:param \*elements: The elements to add to the dictionary.
 
 	.. autosummary-widths:: 1/2
+	.. latex:vspace:: -10px
 	"""
 
 	def __init__(self, *elements: Element):
