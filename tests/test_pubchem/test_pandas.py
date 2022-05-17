@@ -30,10 +30,10 @@ from chemistry_tools.pubchem.properties import get_properties
 
 def test_properties_dataframe(pubchem_cassette):
 	df = get_properties("1,2,3,4", ["IsomericSMILES", "XLogP", "InChIKey"], "cid", as_dataframe=True)
-	assert df.ndim == 2
-	assert df.index.names == ["CID"]
-	assert len(df.index) == 4
-	assert df.columns.values.tolist() == ["IsomericSMILES", "InChIKey", "XLogP"]
+	assert df.ndim == 2  # type: ignore
+	assert df.index.names == ["CID"]  # type: ignore
+	assert len(df.index) == 4  # type: ignore
+	assert df.columns.values.tolist() == ["IsomericSMILES", "InChIKey", "XLogP"]  # type: ignore
 
 
 def test_compound_series(pubchem_cassette):

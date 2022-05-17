@@ -104,7 +104,7 @@ Class to represent a formula with phase information (e.g. solid, liquid, gas, or
 #  |
 
 # stdlib
-from typing import cast, Dict, List, Optional, Type, TypeVar
+from typing import Dict, List, Optional, Type, TypeVar, cast
 
 # 3rd party
 from cawdrey import frozendict  # nodep

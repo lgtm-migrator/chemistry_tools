@@ -314,7 +314,7 @@ class Compound(Dictable):
 
 		:param prop: The property to retrieve for the compound.
 			See :ref:`the table at the start of this chapter <properties table>` for a list of valid properties.
-		"""  # noqa: RST218
+		"""
 
 		prop = str(prop)
 
